@@ -119,18 +119,37 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
         }
       } else {
         // Handle non-streaming response
-        const data = await response.json()
+        const responseText = await response.text()
+        console.log('Raw response:', responseText) // Debug log
         
-        setMessages(prev => 
-          prev.map(msg => 
-            msg.id === assistantMessageId 
-              ? { ...msg, content: data.response }
-              : msg
+        try {
+          const data = JSON.parse(responseText)
+          console.log('Parsed data:', data) // Debug log
+          
+          // Extract the response content
+          const responseContent = typeof data === 'string' ? data : (data.response || data)
+          
+          setMessages(prev => 
+            prev.map(msg => 
+              msg.id === assistantMessageId 
+                ? { ...msg, content: responseContent }
+                : msg
+            )
           )
-        )
-        
-        if (data.sessionId) {
-          setSessionId(data.sessionId)
+          
+          if (data.sessionId) {
+            setSessionId(data.sessionId)
+          }
+        } catch (parseError) {
+          console.error('Failed to parse response:', parseError)
+          // If parsing fails, use the raw text
+          setMessages(prev => 
+            prev.map(msg => 
+              msg.id === assistantMessageId 
+                ? { ...msg, content: responseText }
+                : msg
+            )
+          )
         }
       }
     } catch (error) {

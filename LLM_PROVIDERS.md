@@ -16,13 +16,13 @@ This guide provides comprehensive information about the latest LLM providers and
 
 ## Provider Overview
 
-| Provider | Best Models | Max Context | Strengths | API Endpoint |
-|----------|-------------|-------------|-----------|--------------|
-| OpenAI | o4-mini, o3, GPT-4o | 128k tokens | Reasoning, coding, multimodal | api.openai.com |
-| Anthropic | Claude 4 Opus/Sonnet | 200k tokens | Writing, coding, safety | api.anthropic.com |
-| Google | Gemini 2.5 Pro/Flash | 1M-2M tokens | Massive context, video | generativelanguage.googleapis.com |
-| Meta | Llama 4 | 10M tokens | Open source, huge context | Various |
-| Groq | Mixtral, Llama variants | 32k tokens | Ultra-fast inference | api.groq.com |
+| Provider  | Best Models             | Max Context  | Strengths                     | API Endpoint                      |
+| --------- | ----------------------- | ------------ | ----------------------------- | --------------------------------- |
+| OpenAI    | o4-mini, o3, GPT-4o     | 128k tokens  | Reasoning, coding, multimodal | api.openai.com                    |
+| Anthropic | Claude 4 Opus/Sonnet    | 200k tokens  | Writing, coding, safety       | api.anthropic.com                 |
+| Google    | Gemini 2.5 Pro/Flash    | 1M-2M tokens | Massive context, video        | generativelanguage.googleapis.com |
+| Meta      | Llama 4                 | 10M tokens   | Open source, huge context     | Various                           |
+| Groq      | Mixtral, Llama variants | 32k tokens   | Ultra-fast inference          | api.groq.com                      |
 
 ## OpenAI Models
 
@@ -87,8 +87,8 @@ This guide provides comprehensive information about the latest LLM providers and
 - **Strengths**: Fast inference, good for real-time
 - **Use Cases**: Quick suggestions, real-time analysis
 
-### Gemini 2.0 Flash
-- **Model ID**: `gemini-2.0-flash`
+### Gemini 2.5 Flash Lite
+- **Model ID**: `gemini-2.5-flash-lite`
 - **Speed**: 718 tokens/second (fastest)
 - **Use Cases**: Rapid iteration, development testing
 

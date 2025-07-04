@@ -5,7 +5,7 @@ export const liteLLMConfig = {
   apiKey: process.env.LITELLM_API_KEY || '',
   
   // Model Settings
-  defaultModel: process.env.LITELLM_MODEL || 'o4-mini',
+  defaultModel: process.env.LITELLM_MODEL || 'gemini/gemini-2.5-flash-lite-preview-06-17',
   temperature: 0.7,
   maxTokens: 1000,
   streamingEnabled: true,
@@ -33,9 +33,10 @@ export const liteLLMConfig = {
     { id: 'claude-3-sonnet', name: 'Claude 3 Sonnet (Legacy)', provider: 'anthropic' },
     
     // Google Models (July 2025)
-    { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro (1M context)', provider: 'google' },
-    { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', provider: 'google' },
-    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'google' },
+    { id: 'gemini/gemini-2.5-flash-lite-preview-06-17', name: 'Gemini 2.5 Flash Lite (Recommended)', provider: 'google' },
+    { id: 'gemini/gemini-2.5-flash', name: 'Gemini 2.5 Flash', provider: 'google' },
+    { id: 'gemini/gemini-2.5-pro', name: 'Gemini 2.5 Pro (1M context)', provider: 'google' },
+    { id: 'gemini/gemini-2.0-flash', name: 'Gemini 2.0 Flash (Legacy)', provider: 'google' },
     
     // Meta/Llama Models (July 2025)
     { id: 'llama-4', name: 'Llama 4 (10M context)', provider: 'meta' },
