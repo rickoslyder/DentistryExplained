@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Search, Clock, Filter, FileText, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useDebounce } from 'use-debounce'
+import { usePagination } from '@/hooks/use-pagination'
+import { PaginationWrapper, PaginationInfo } from '@/components/ui/pagination-wrapper'
 
 interface SearchResult {
   id: string
@@ -46,6 +48,14 @@ export default function SearchPage() {
   const [totalResults, setTotalResults] = useState(0)
   const [hasMore, setHasMore] = useState(false)
   
+  // Pagination
+  const itemsPerPage = 20
+  const pagination = usePagination({ 
+    totalItems: totalResults, 
+    itemsPerPage,
+    syncWithUrl: true 
+  })
+  
   // Define categories statically for now
   const categories = [
     { id: '1', name: 'Dental Problems', slug: 'dental-problems' },
@@ -68,7 +78,9 @@ export default function SearchPage() {
       try {
         const params = new URLSearchParams({
           q: debouncedQuery,
-          ...(categoryFilter !== 'all' && { category: categoryFilter })
+          ...(categoryFilter !== 'all' && { category: categoryFilter }),
+          limit: itemsPerPage.toString(),
+          offset: pagination.offset.toString()
         })
         
         const response = await fetch(`/api/search?${params}`)
@@ -87,16 +99,14 @@ export default function SearchPage() {
     }
     
     performSearch()
-  }, [debouncedQuery, categoryFilter])
+  }, [debouncedQuery, categoryFilter, pagination.offset])
   
-  // Update URL when query changes
+  // Reset pagination when query or filter changes
   useEffect(() => {
-    const newParams = new URLSearchParams()
-    if (query) newParams.set('q', query)
-    
-    const newUrl = `/search${newParams.toString() ? `?${newParams}` : ''}`
-    window.history.replaceState({}, '', newUrl)
-  }, [query])
+    if (pagination.currentPage !== 1) {
+      pagination.goToPage(1)
+    }
+  }, [query, categoryFilter])
   
   const highlightMatch = (text: string, query: string) => {
     if (!query) return text
@@ -160,10 +170,13 @@ export default function SearchPage() {
             </div>
           ) : results.length > 0 ? (
             <>
-              <div className="mb-4">
-                <p className="text-sm text-gray-600">
-                  Found {totalResults} result{totalResults !== 1 ? 's' : ''} for "{debouncedQuery}"
-                </p>
+              <div className="mb-4 flex justify-between items-center">
+                <PaginationInfo
+                  currentPage={pagination.currentPage}
+                  totalPages={pagination.totalPages}
+                  totalItems={totalResults}
+                  itemsPerPage={itemsPerPage}
+                />
                 {suggestions.length > 0 && (
                   <div className="mt-2">
                     <p className="text-xs text-gray-500 mb-1">Did you mean:</p>
@@ -212,13 +225,17 @@ export default function SearchPage() {
                   </Card>
                 </Link>
               ))}
-              {hasMore && (
-                <div className="mt-6 text-center">
-                  <p className="text-sm text-gray-500">
-                    Showing top {results.length} results. Refine your search for more specific results.
-                  </p>
-                </div>
-              )}
+              
+              {/* Pagination */}
+              <PaginationWrapper
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                pageNumbers={pagination.pageNumbers}
+                hasNextPage={pagination.hasNextPage}
+                hasPreviousPage={pagination.hasPreviousPage}
+                onPageChange={pagination.goToPage}
+                className="mt-8"
+              />
             </>
           ) : debouncedQuery ? (
             <Card className="text-center py-12">

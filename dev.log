@@ -232,3 +232,30 @@ Suggestions error: {
  ✓ Compiled in 226ms (675 modules)
  ✓ Compiled in 405ms (675 modules)
  ✓ Compiled in 162ms (675 modules)
+ GET / 200 in 774ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1048ms (979 modules)
+ GET /robots.txt?486565 404 in 1523ms
+ GET / 200 in 248ms
+ GET /robots.txt?486565 404 in 122ms
+ ✓ Compiled in 664ms (675 modules)
+ GET / 200 in 100ms
+ ✓ Compiled in 574ms (675 modules)
+ GET / 200 in 151ms
+ ✓ Compiled in 256ms (675 modules)
+ GET / 200 in 67ms
+ ✓ Compiled in 447ms (675 modules)
+ GET / 200 in 124ms
+ ✓ Compiled in 294ms (675 modules)
+ GET / 200 in 122ms
+ ✓ Compiled in 406ms (675 modules)
+ GET / 200 in 50ms
+ ✓ Compiled in 472ms (675 modules)
+ GET / 200 in 76ms
+ ✓ Compiled in 947ms (675 modules)
+ GET / 200 in 147ms
+ ✓ Compiled in 820ms (675 modules)
+ GET / 200 in 81ms
+ ✓ Compiled in 653ms (675 modules)
+ GET / 200 in 287ms
+ ✓ Compiled in 2.4s (1877 modules)
