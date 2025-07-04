@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { Database } from '@/types/database'
 import { toUserProfile } from '@/types/user'
+import { supabaseAdmin } from './supabase'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -94,7 +95,8 @@ export async function getCurrentUserProfile() {
         return null
       }
       
-      const { data: newProfile, error: createError } = await supabase
+      // Use admin client to bypass RLS for profile creation
+      const { data: newProfile, error: createError } = await supabaseAdmin
         .from('profiles')
         .insert({
           clerk_id: userId,

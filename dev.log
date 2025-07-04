@@ -153,3 +153,66 @@ Error creating user profile: {
  GET / 200 in 106ms
  ✓ Compiled in 454ms (692 modules)
  GET / 200 in 72ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 693ms (1133 modules)
+ GET / 200 in 142ms
+Error creating user profile: {
+  code: '42501',
+  details: null,
+  hint: null,
+  message: 'new row violates row-level security policy for table "profiles"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:43:15.235Z'
+}
+ POST /api/chat 404 in 1993ms
+ GET / 200 in 377ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 763ms (1134 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1056ms
+ GET /robots.txt?486568 404 in 1005ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 811ms (1136 modules)
+ GET / 200 in 95ms
+Error creating user profile: {
+  code: '42501',
+  details: null,
+  hint: null,
+  message: 'new row violates row-level security policy for table "profiles"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:43:26.365Z'
+}
+ GET /api/bookmarks 404 in 1567ms
+Error creating user profile: {
+  code: '42501',
+  details: null,
+  hint: null,
+  message: 'new row violates row-level security policy for table "profiles"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:43:31.065Z'
+}
+ POST /api/chat 404 in 667ms
+ ✓ Compiled in 556ms (1003 modules)
+ ✓ Compiled in 464ms (692 modules)
+ GET / 200 in 204ms
+ ✓ Compiled in 446ms (692 modules)
+ GET / 200 in 152ms
+ ✓ Compiled in 267ms (692 modules)
+ GET / 200 in 119ms
+ ✓ Compiled in 386ms (692 modules)
+ GET / 200 in 112ms
+ ✓ Compiled in 1642ms (1695 modules)
+ GET / 200 in 204ms
+ ✓ Compiled in 2.4s (1695 modules)
+ GET / 200 in 113ms
