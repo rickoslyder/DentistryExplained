@@ -12,7 +12,8 @@ const chatMessageSchema = z.object({
   pageContext: z.object({
     title: z.string().optional(),
     url: z.string().optional(),
-    category: z.string().optional()
+    category: z.string().optional(),
+    content: z.string().optional()
   }).optional(),
   stream: z.boolean().optional().default(false)
 })

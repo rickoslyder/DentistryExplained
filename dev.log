@@ -643,3 +643,5 @@ Error creating user profile: {
  GET /treatments/dental-fillings 200 in 372ms
  ✓ Compiled in 1957ms (2450 modules)
  GET /treatments/dental-fillings 200 in 189ms
+ ✓ Compiled in 662ms (1421 modules)
+ GET /treatments/dental-fillings 200 in 107ms
