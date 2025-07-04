@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { auth } from '@clerk/nextjs/server'
+import { auth, currentUser } from '@clerk/nextjs/server'
 import { Database } from '@/types/database'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -86,6 +86,35 @@ export async function getCurrentUserProfile() {
     .single()
   
   if (error) {
+    // If profile doesn't exist, create it
+    if (error.code === 'PGRST116') {
+      const user = await currentUser()
+      if (!user) {
+        return null
+      }
+      
+      const { data: newProfile, error: createError } = await supabase
+        .from('profiles')
+        .insert({
+          clerk_id: userId,
+          email: user.emailAddresses[0]?.emailAddress || '',
+          user_type: 'patient', // Default to patient
+          // Set display_name from Clerk user data
+          display_name: user.firstName && user.lastName 
+            ? `${user.firstName} ${user.lastName}`.trim()
+            : user.firstName || user.lastName || user.username || 'User',
+        })
+        .select()
+        .single()
+      
+      if (createError) {
+        console.error('Error creating user profile:', createError)
+        return null
+      }
+      
+      return newProfile
+    }
+    
     console.error('Error fetching user profile:', error)
     return null
   }

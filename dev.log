@@ -25,3 +25,84 @@ Estimated release dates:
 
  ✓ Starting...
  ✓ Ready in 2.8s
+ ✓ Compiled /middleware in 349ms (224 modules)
+ ○ Compiling /topics ...
+ ✓ Compiled /topics in 4.2s (1584 modules)
+ ✓ Compiled in 892ms (645 modules)
+ GET /topics 200 in 5125ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 900ms (1571 modules)
+ GET /robots.txt?486568 404 in 1272ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 1595ms (1697 modules)
+(node:47659) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Error fetching user profile: {
+  code: 'PGRST116',
+  details: 'The result contains 0 rows',
+  hint: null,
+  message: 'JSON object requested, multiple (or no) rows returned'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:24:50.590Z'
+}
+ GET /api/bookmarks 404 in 2590ms
+ GET /topics 200 in 376ms
+ GET /robots.txt?486568 404 in 75ms
+Error fetching user profile: {
+  code: 'PGRST116',
+  details: 'The result contains 0 rows',
+  hint: null,
+  message: 'JSON object requested, multiple (or no) rows returned'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:24:57.972Z'
+}
+ GET /api/bookmarks 404 in 380ms
+ ○ Compiling / ...
+ ✓ Compiled / in 941ms (1808 modules)
+ GET / 200 in 1181ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+Error fetching user profile: {
+  code: 'PGRST116',
+  details: 'The result contains 0 rows',
+  hint: null,
+  message: 'JSON object requested, multiple (or no) rows returned'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:25:08.759Z'
+}
+ GET /api/bookmarks 404 in 573ms
+Error fetching user profile: {
+  code: 'PGRST116',
+  details: 'The result contains 0 rows',
+  hint: null,
+  message: 'JSON object requested, multiple (or no) rows returned'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:25:09.346Z'
+}
+ GET /api/bookmarks 404 in 471ms
+ ✓ Compiled in 466ms (1130 modules)
+ ✓ Compiled in 2.2s (1821 modules)
+ GET / 200 in 477ms
+ ✓ Compiled in 614ms (1695 modules)
+ GET / 200 in 241ms
+ ✓ Compiled in 589ms (692 modules)
+ GET / 200 in 183ms
+ ✓ Compiled in 1268ms (1695 modules)
+ GET / 200 in 138ms
+ ✓ Compiled in 1314ms (1695 modules)
+ GET / 200 in 1096ms

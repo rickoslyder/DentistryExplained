@@ -48,6 +48,13 @@ export const liteLLMConfig = {
 
 // Validate configuration
 export function isLiteLLMConfigured(): boolean {
+  // On client-side, we can't access server env vars
+  // The actual check happens server-side in the API route
+  if (typeof window !== 'undefined') {
+    // For client-side, we'll rely on the server to tell us if it's configured
+    // This is just for UI display purposes
+    return true // Assume configured, let server handle actual validation
+  }
   return !!(liteLLMConfig.proxyUrl && liteLLMConfig.apiKey)
 }
 
