@@ -106,3 +106,50 @@ Error fetching user profile: {
  GET / 200 in 138ms
  ✓ Compiled in 1314ms (1695 modules)
  GET / 200 in 1096ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 740ms (1810 modules)
+Error creating user profile: {
+  code: 'PGRST204',
+  details: null,
+  hint: null,
+  message: "Could not find the 'display_name' column of 'profiles' in the schema cache"
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:29:11.112Z'
+}
+ POST /api/chat 404 in 2200ms
+ ✓ Compiled /_not-found in 366ms (1133 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 839ms
+Error creating user profile: {
+  code: 'PGRST204',
+  details: null,
+  hint: null,
+  message: "Could not find the 'display_name' column of 'profiles' in the schema cache"
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T16:29:44.581Z'
+}
+ POST /api/chat 404 in 811ms
+ ✓ Compiled in 698ms (1824 modules)
+ GET / 200 in 121ms
+ ✓ Compiled in 414ms (1003 modules)
+ ✓ Compiled in 337ms (692 modules)
+ GET / 200 in 185ms
+ ✓ Compiled in 508ms (692 modules)
+ GET / 200 in 55ms
+ ✓ Compiled in 365ms (692 modules)
+ GET / 200 in 206ms
+ ✓ Compiled in 185ms (692 modules)
+ GET / 200 in 57ms
+ ✓ Compiled in 621ms (692 modules)
+ GET / 200 in 125ms
+ ✓ Compiled in 371ms (692 modules)
+ GET / 200 in 106ms
+ ✓ Compiled in 454ms (692 modules)
+ GET / 200 in 72ms

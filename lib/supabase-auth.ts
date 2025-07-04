@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { Database } from '@/types/database'
+import { toUserProfile } from '@/types/user'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -99,10 +100,9 @@ export async function getCurrentUserProfile() {
           clerk_id: userId,
           email: user.emailAddresses[0]?.emailAddress || '',
           user_type: 'patient', // Default to patient
-          // Set display_name from Clerk user data
-          display_name: user.firstName && user.lastName 
-            ? `${user.firstName} ${user.lastName}`.trim()
-            : user.firstName || user.lastName || user.username || 'User',
+          first_name: user.firstName || null,
+          last_name: user.lastName || null,
+          avatar_url: user.imageUrl || null,
         })
         .select()
         .single()
@@ -112,12 +112,12 @@ export async function getCurrentUserProfile() {
         return null
       }
       
-      return newProfile
+      return toUserProfile(newProfile)
     }
     
     console.error('Error fetching user profile:', error)
     return null
   }
   
-  return data
+  return toUserProfile(data)
 }

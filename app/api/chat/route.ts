@@ -57,7 +57,7 @@ const chatHandler = compose(
         .insert({
           session_id: newSessionId,
           user_id: userProfile.id,
-          metadata: pageContext || {},
+          page_context: pageContext || {},
           expires_at: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString() // 180 days
         })
         .select()
@@ -116,25 +116,43 @@ const chatHandler = compose(
         stream
       )
 
-      // Store assistant message (non-blocking)
-      if (!stream) {
-        supabase
-          .from('chat_messages')
-          .insert({
-            session_id: chatSession.session_id,
-            role: 'assistant',
-            content: aiResponse
-          })
-          .then(({ error }) => {
-            if (error) {
-              console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
-            }
-          })
+      // Handle streaming response
+      if (stream && aiResponse instanceof ReadableStream) {
+        // For streaming, we need to store the message after the stream completes
+        // This would require a more complex implementation
+        // For now, return the stream with proper headers
+        return new NextResponse(aiResponse, {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'X-Session-Id': chatSession.session_id,
+          },
+        })
       }
 
+      // Store assistant message (non-blocking) for non-streaming responses
+      const responseContent = aiResponse as string
+      supabase
+        .from('chat_messages')
+        .insert({
+          session_id: chatSession.session_id,
+          role: 'assistant',
+          content: responseContent
+        })
+        .then(({ error }) => {
+          if (error) {
+            console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
+          }
+        })
+
       return NextResponse.json({
-        message: aiResponse,
+        response: responseContent,
         sessionId: chatSession.session_id
+      }, {
+        headers: {
+          'X-Session-Id': chatSession.session_id
+        }
       })
     } catch (error: any) {
       // Handle LiteLLM specific errors
