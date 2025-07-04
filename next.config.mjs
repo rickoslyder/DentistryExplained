@@ -64,6 +64,7 @@ const nextConfig = {
               connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com https://challenges.cloudflare.com;
               media-src 'self';
               object-src 'none';
+              worker-src 'self' blob:;
               frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com;
               base-uri 'self';
               form-action 'self' https://*.clerk.accounts.dev;

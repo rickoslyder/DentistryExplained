@@ -43,16 +43,19 @@ export function useBookmarks() {
         }))
         setBookmarks(formattedBookmarks)
         setHasFetched(true)
-      } else if (response.status === 404) {
-        // User profile not found - this is expected for new users
+      } else if (response.status === 404 || response.status === 401) {
+        // User profile not found or not authenticated - this is expected for new users
         setBookmarks([])
         setHasFetched(true)
       } else {
         throw new Error('Failed to fetch bookmarks')
       }
     } catch (error) {
-      console.error("Error fetching bookmarks:", error)
-      toast.error("Failed to load bookmarks")
+      // Only log errors that aren't auth-related
+      if (!error.message?.includes('401')) {
+        console.error("Error fetching bookmarks:", error)
+        toast.error("Failed to load bookmarks")
+      }
     } finally {
       setIsLoading(false)
     }

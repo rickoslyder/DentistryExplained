@@ -51,11 +51,12 @@ export function OptimizedImage({
       <div 
         className={cn(
           'bg-gray-100 flex items-center justify-center',
+          fill && 'h-full w-full',
           className
         )}
         style={{
           ...(aspectRatio && { aspectRatio }),
-          ...(!aspectRatio && width && height && { width, height })
+          ...(!aspectRatio && !fill && width && height && { width, height })
         }}
       >
         <img 
@@ -76,7 +77,7 @@ export function OptimizedImage({
   if (fill || aspectRatio) {
     return (
       <div 
-        className={cn(containerClasses)}
+        className={cn(containerClasses, fill && 'h-full w-full')}
         style={aspectRatio ? { aspectRatio } : undefined}
       >
         <Image

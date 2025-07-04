@@ -655,3 +655,385 @@ Import trace for requested module:
  GET / 200 in 214ms
  ✓ Compiled in 2s (3680 modules)
  GET / 200 in 245ms
+ GET / 200 in 590ms
+ GET /robots.txt?486567 404 in 112ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:33:28.537Z'
+}
+ GET /api/bookmarks 401 in 140ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 184ms
+ ✓ Compiled in 862ms (1040 modules)
+ ✓ Compiled in 3.1s (2690 modules)
+ GET / 200 in 836ms
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+
+✘ next.js v15.3.5 is not yet supported in the Community edition of Console Ninja.
+We are working hard on it for you https://tinyurl.com/3h9mtwra.
+
+Estimated release dates:
+  - Community users: around 29th September, 2025 (subject to team availability)
+  - PRO users:       priority access is available now
+
+   ▲ Next.js 15.3.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.50.210:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 5.2s
+ ✓ Compiled /middleware in 306ms (224 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 5.8s (1686 modules)
+ GET / 200 in 7795ms
+ ✓ Compiled in 1120ms (691 modules)
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ○ Compiling /_not-found ...
+ ✓ Compiled /api/bookmarks in 4.2s (1799 modules)
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:39:35.833Z'
+}
+(node:30519) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /api/bookmarks 401 in 3448ms
+ GET /robots.txt?486567 404 in 4839ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 140ms
+ ✓ Compiled in 1271ms (1686 modules)
+ GET / 200 in 256ms
+ GET / 200 in 574ms
+ GET / 200 in 265ms
+ ✓ Compiled /api/bookmarks in 405ms (1121 modules)
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:45:23.632Z'
+}
+ GET /api/bookmarks 401 in 627ms
+ GET / 200 in 361ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:47:16.626Z'
+}
+ GET /api/bookmarks 401 in 1488ms
+ GET / 200 in 371ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 656ms (1122 modules)
+ GET /robots.txt?486567 404 in 904ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:47:38.935Z'
+}
+ GET /api/bookmarks 401 in 748ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 83ms
+ ✓ Compiled in 2.1s (1686 modules)
+ GET / 200 in 689ms
+ ✓ Compiled in 1273ms (1686 modules)
+ GET / 200 in 811ms
+ ✓ Compiled in 900ms (1686 modules)
+ GET / 200 in 865ms
+ ○ Compiling /dental-problems/gum-disease ...
+ ✓ Compiled /dental-problems/gum-disease in 2.5s (1683 modules)
+ GET /dental-problems/gum-disease 200 in 2819ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 996ms (1128 modules)
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:50:54.115Z'
+}
+ GET /api/bookmarks 401 in 1659ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:50:54.270Z'
+}
+ GET /api/bookmarks 401 in 126ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:25.523Z'
+}
+ GET /api/bookmarks 401 in 80ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:25.642Z'
+}
+ GET /api/bookmarks 401 in 107ms
+ ○ Compiling /dental-problems/tooth-decay ...
+ ✓ Compiled /dental-problems/tooth-decay in 1646ms (1826 modules)
+ GET /dental-problems/tooth-decay 200 in 3052ms
+ ○ Compiling /topics ...
+ ✓ Compiled /topics in 945ms (1835 modules)
+ GET /topics 200 in 2244ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:32.316Z'
+}
+ GET /api/bookmarks 401 in 307ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:32.735Z'
+}
+ GET /api/bookmarks 401 in 295ms
+ GET /dental-problems/tooth-decay 200 in 997ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:34.832Z'
+}
+ GET /api/bookmarks 401 in 347ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:35.157Z'
+}
+ GET /api/bookmarks 401 in 293ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:35.716Z'
+}
+ GET /api/bookmarks 401 in 540ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:36.630Z'
+}
+ GET /api/bookmarks 401 in 654ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:37.700Z'
+}
+ GET /api/bookmarks 401 in 161ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:51:38.127Z'
+}
+ GET /api/bookmarks 401 in 297ms
+ ○ Compiling /[category]/[slug] ...
+ ✓ Compiled /[category]/[slug] in 2.1s (3362 modules)
+(node:66685) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getArticle (app/[category]/[slug]/page.tsx:16:19)
+    at async ArticlePage (app/[category]/[slug]/page.tsx:99:18)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: 'f7c60d790b51bfced91b2ba0eb86dc30',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '3775542218'
+}
+ GET /prevention/daily-oral-hygiene 200 in 11952ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:15.241Z'
+}
+ GET /api/bookmarks 401 in 799ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:15.675Z'
+}
+ GET /api/bookmarks 401 in 188ms
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getArticle (app/[category]/[slug]/page.tsx:16:19)
+    at async ArticlePage (app/[category]/[slug]/page.tsx:99:18)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: 'b8dee2f10d2870082634e6c4c909cde4',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '3775542218'
+}
+ GET /treatments/dental-fillings 200 in 919ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:20.490Z'
+}
+ GET /api/bookmarks 401 in 509ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:20.931Z'
+}
+ GET /api/bookmarks 401 in 313ms
+ ○ Compiling /categories/[slug] ...
+ ✓ Compiled /categories/[slug] in 2.1s (3380 modules)
+(node:68089) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:68275) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getCategoryWithArticles (app/categories/[slug]/page.tsx:21:19)
+    at async CategoryPage (app/categories/[slug]/page.tsx:100:19)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: 'b778d7cda086b45165dd9975efee69a4',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '2213134967'
+}
+ GET /categories/dental-problems 200 in 4878ms
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getCategoryWithArticles (app/categories/[slug]/page.tsx:21:19)
+    at async CategoryPage (app/categories/[slug]/page.tsx:100:19)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: '8a7a533fcc8d64dc081332e362361ba2',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '2213134967'
+}
+ GET /categories/dental-problems 200 in 703ms
+(node:68424) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:28.064Z'
+}
+ GET /api/bookmarks 401 in 330ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:52:28.515Z'
+}
+ GET /api/bookmarks 401 in 430ms
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getArticle (app/[category]/[slug]/page.tsx:16:19)
+    at async ArticlePage (app/[category]/[slug]/page.tsx:99:18)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: '1baaee844e7dd72b198c5abdbd279a3f',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '3775542218'
+}
+ GET /dental-problems/tooth-sensitivity 200 in 379ms
+(node:68501) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:16.321Z'
+}
+ GET /api/bookmarks 401 in 3781ms
+ GET /dental-problems/tooth-decay 200 in 4467ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:20.447Z'
+}
+ GET /api/bookmarks 401 in 2101ms
+ GET /dental-problems/tooth-decay 200 in 1421ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:24.381Z'
+}
+ GET /api/bookmarks 401 in 1541ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:25.155Z'
+}
+ GET /api/bookmarks 401 in 653ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:25.760Z'
+}
+ GET /api/bookmarks 401 in 436ms
+[API Error] UNAUTHORIZED: Unauthorized {
+  status: 401,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T15:53:26.599Z'
+}
+ GET /api/bookmarks 401 in 650ms

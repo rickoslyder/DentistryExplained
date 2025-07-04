@@ -46,14 +46,13 @@ export default function HomePage() {
 
             {/* Hero Image */}
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
                 <OptimizedImage
                   src="/images/hero.webp"
                   alt="Happy family smiling showing healthy teeth - dental health concept"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
-                  className="rounded-2xl"
                 />
               </div>
               {/* Floating elements for visual interest */}
