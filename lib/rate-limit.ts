@@ -1,5 +1,15 @@
 import { NextRequest } from 'next/server'
 import { RateLimitError } from './errors'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
+
+// Initialize Redis client if configured
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    })
+  : null
 
 // Simple in-memory rate limiter for development
 // In production, use Redis or Upstash for distributed rate limiting
@@ -70,9 +80,30 @@ class InMemoryRateLimiter {
 
 // Rate limiter instances for different endpoints
 const rateLimiters = {
-  api: new InMemoryRateLimiter(60000, 60), // 60 requests per minute
-  auth: new InMemoryRateLimiter(60000, 10), // 10 requests per minute
-  ai: new InMemoryRateLimiter(60000, 20), // 20 requests per minute
+  api: redis
+    ? new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(60, '1 m'),
+        analytics: true,
+        prefix: '@upstash/ratelimit',
+      })
+    : new InMemoryRateLimiter(60000, 60), // 60 requests per minute
+  auth: redis
+    ? new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(10, '1 m'),
+        analytics: true,
+        prefix: '@upstash/ratelimit/auth',
+      })
+    : new InMemoryRateLimiter(60000, 10), // 10 requests per minute
+  ai: redis
+    ? new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(20, '1 m'),
+        analytics: true,
+        prefix: '@upstash/ratelimit/ai',
+      })
+    : new InMemoryRateLimiter(60000, 20), // 20 requests per minute
 }
 
 export async function rateLimit(
@@ -81,16 +112,18 @@ export async function rateLimit(
 ): Promise<void> {
   // Get identifier (IP address or user ID)
   const forwarded = request.headers.get('x-forwarded-for')
-  const ip = forwarded ? forwarded.split(',')[0] : 'anonymous'
+  const realIp = request.headers.get('x-real-ip')
+  const cfIp = request.headers.get('cf-connecting-ip')
+  const ip = cfIp || forwarded?.split(',')[0] || realIp || 'anonymous'
   
   // Get the appropriate rate limiter
   const limiter = rateLimiters[type]
   
   // Check rate limit
-  const { success, limit, remaining, reset } = await limiter.limit(ip)
+  const result = await limiter.limit(ip)
   
-  if (!success) {
-    const retryAfter = Math.ceil((reset - Date.now()) / 1000)
+  if (!result.success) {
+    const retryAfter = Math.ceil((result.reset - Date.now()) / 1000)
     throw new RateLimitError(retryAfter)
   }
 }

@@ -20,6 +20,7 @@ Copy all variables from `.env.local` to Vercel's environment variables:
 - `RESEND_API_KEY` (for email notifications)
 - `NEXT_PUBLIC_POSTHOG_KEY` (for analytics)
 - `UPSTASH_REDIS_REST_URL` (for rate limiting)
+- `UPSTASH_REDIS_REST_TOKEN` (for rate limiting)
 
 ### Clerk Webhook Setup
 

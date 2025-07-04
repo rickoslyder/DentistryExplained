@@ -216,3 +216,14 @@ Error creating user profile: {
  GET / 200 in 204ms
  ✓ Compiled in 2.4s (1695 modules)
  GET / 200 in 113ms
+   Reload env: .env.local
+ ✓ Compiled in 3.1s (1919 modules)
+ GET / 200 in 621ms
+ ✓ Compiled in 2.2s (692 modules)
+ GET / 200 in 56ms
+ ✓ Compiled in 468ms (692 modules)
+ GET / 200 in 51ms
+ ✓ Compiled in 523ms (692 modules)
+ GET / 200 in 306ms
+ ✓ Compiled in 693ms (692 modules)
+ GET / 200 in 143ms
