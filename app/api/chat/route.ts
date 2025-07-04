@@ -109,15 +109,12 @@ const chatHandler = compose(
 
     // Generate AI response
     try {
-      const aiResponse = await generateAIResponse({
-        messages: conversationHistory,
-        stream,
-        context: {
-          userType: userProfile.user_type,
-          pageContext,
-          sessionId: chatSession.session_id
-        }
-      })
+      const aiResponse = await generateAIResponse(
+        message,
+        conversationHistory.slice(0, -1), // Exclude the current message we just added
+        pageContext,
+        stream
+      )
 
       // Store assistant message (non-blocking)
       if (!stream) {

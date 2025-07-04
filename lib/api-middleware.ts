@@ -29,7 +29,7 @@ export function withAuth<T = any>(
   return async (request: NextRequest) => {
     try {
       // Check authentication
-      const { userId } = auth()
+      const { userId } = await auth()
       if (!userId) {
         return ApiErrors.unauthorized()
       }
@@ -80,7 +80,7 @@ export function withOptionalAuth<T = any>(
 ): (request: NextRequest) => Promise<NextResponse> {
   return async (request: NextRequest) => {
     try {
-      const { userId } = auth()
+      const { userId } = await auth()
       const context: Partial<ApiContext> = {
         supabase: await createServerSupabaseClient(),
         requestId: `req_${Date.now()}_${Math.random().toString(36).substring(7)}`
