@@ -1,10 +1,18 @@
+"use client"
+
+import { useState } from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
-import { Phone, AlertCircle, Clock, MapPin, ExternalLink } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Phone, AlertCircle, Clock, MapPin, ExternalLink, Stethoscope, Navigation } from "lucide-react"
 import Link from "next/link"
+import { SymptomChecker } from "@/components/emergency/symptom-checker"
+import { EmergencyTimeline } from "@/components/emergency/emergency-timeline"
+import { NearestServices } from "@/components/emergency/nearest-services"
+import { NHS111Widget } from "@/components/emergency/nhs-111-widget"
 
 const emergencyConditions = [
   {
@@ -110,6 +118,8 @@ const emergencyConditions = [
 ]
 
 export default function EmergencyPage() {
+  const [selectedEmergency, setSelectedEmergency] = useState<'knocked-out-tooth' | 'severe-pain' | 'bleeding' | 'general'>('general')
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -190,6 +200,72 @@ export default function EmergencyPage() {
               </Button>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Interactive Emergency Tools */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Emergency Assessment Tools</h2>
+          
+          <Tabs defaultValue="checker" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="checker">
+                <Stethoscope className="w-4 h-4 mr-2" />
+                Symptom Checker
+              </TabsTrigger>
+              <TabsTrigger value="timeline">
+                <Clock className="w-4 h-4 mr-2" />
+                Emergency Timeline
+              </TabsTrigger>
+              <TabsTrigger value="services">
+                <Navigation className="w-4 h-4 mr-2" />
+                Find Services
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="checker" className="mt-6">
+              <SymptomChecker />
+            </TabsContent>
+            
+            <TabsContent value="timeline" className="mt-6">
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    variant={selectedEmergency === 'knocked-out-tooth' ? 'default' : 'outline'}
+                    onClick={() => setSelectedEmergency('knocked-out-tooth')}
+                  >
+                    Knocked-Out Tooth
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={selectedEmergency === 'severe-pain' ? 'default' : 'outline'}
+                    onClick={() => setSelectedEmergency('severe-pain')}
+                  >
+                    Severe Pain
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={selectedEmergency === 'bleeding' ? 'default' : 'outline'}
+                    onClick={() => setSelectedEmergency('bleeding')}
+                  >
+                    Bleeding
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={selectedEmergency === 'general' ? 'default' : 'outline'}
+                    onClick={() => setSelectedEmergency('general')}
+                  >
+                    General Emergency
+                  </Button>
+                </div>
+                <EmergencyTimeline emergencyType={selectedEmergency} />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="services" className="mt-6">
+              <NearestServices />
+            </TabsContent>
+          </Tabs>
         </div>
 
         {/* Emergency Conditions */}
@@ -276,6 +352,11 @@ export default function EmergencyPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* NHS 111 Integration */}
+        <div className="mb-12">
+          <NHS111Widget />
+        </div>
 
         {/* Important Notes */}
         <Alert>
