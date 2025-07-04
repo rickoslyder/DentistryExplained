@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
     }
 
-    const { message, sessionId, pageContext } = await request.json()
+    const { message, sessionId, pageContext, stream = false } = await request.json()
 
     if (!message) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 })
@@ -91,16 +91,51 @@ export async function POST(request: NextRequest) {
       .limit(10)
 
     // Generate AI response using LiteLLM
-    const aiResponse = await generateAIResponse(message, chatHistory || [], pageContext)
+    const aiResponse = await generateAIResponse(message, chatHistory || [], pageContext, stream)
 
-    // Save AI response
+    // Handle streaming response
+    if (stream && aiResponse instanceof ReadableStream) {
+      // Create a TransformStream to capture the response for saving
+      let fullResponse = ''
+      const transformStream = new TransformStream({
+        transform(chunk, controller) {
+          const text = new TextDecoder().decode(chunk)
+          fullResponse += text
+          controller.enqueue(chunk)
+        },
+        async flush() {
+          // Save the complete AI response after streaming is done
+          await supabase
+            .from('chat_messages')
+            .insert([
+              {
+                session_id: chatSession.id,
+                role: 'assistant',
+                content: fullResponse,
+              },
+            ])
+        },
+      })
+
+      // Return streaming response with session info in headers
+      return new Response(aiResponse.pipeThrough(transformStream), {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'X-Session-Id': chatSession.session_id,
+        },
+      })
+    }
+
+    // Save non-streaming AI response
     const { data: aiMsg } = await supabase
       .from('chat_messages')
       .insert([
         {
           session_id: chatSession.id,
           role: 'assistant',
-          content: aiResponse,
+          content: aiResponse as string,
         },
       ])
       .select()
