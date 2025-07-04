@@ -1276,3 +1276,37 @@ Import trace for requested module:
  GET / 200 in 534ms
  ✓ Compiled in 2.1s (1786 modules)
  GET / 200 in 480ms
+ ✓ Compiled in 3.5s (3198 modules)
+ GET / 200 in 220ms
+ ✓ Compiled in 3.4s (1786 modules)
+ GET / 200 in 1131ms
+ ✓ Compiled in 2.1s (1786 modules)
+ GET / 200 in 209ms
+ ✓ Compiled in 735ms (1786 modules)
+ GET / 200 in 98ms
+ ✓ Compiled in 1104ms (1786 modules)
+ GET / 200 in 203ms
+ ✓ Compiled in 1325ms (1786 modules)
+ GET / 200 in 192ms
+ ✓ Compiled in 765ms (1786 modules)
+ GET / 200 in 110ms
+ ✓ Compiled in 760ms (1786 modules)
+ GET / 200 in 105ms
+ ✓ Compiled in 1195ms (1786 modules)
+ GET / 200 in 161ms
+ ✓ Compiled in 2.5s (1786 modules)
+ GET / 200 in 324ms
+ ✓ Compiled in 2.8s (1786 modules)
+ GET / 200 in 217ms
+ GET / 200 in 655ms
+ ✓ Compiled in 6.9s (3408 modules)
+ ✓ Compiled in 1291ms (1786 modules)
+ ○ Compiling /topics ...
+ ✓ Compiled /topics in 5s (1420 modules)
+ ✓ Compiled in 5.7s (3408 modules)
+ ✓ Compiled in 4.3s (3198 modules)
+ ✓ Compiled in 804ms (1786 modules)
+ ✓ Compiled in 808ms (1786 modules)
+ ✓ Compiled in 1796ms (1786 modules)
+ ✓ Compiled in 908ms (1786 modules)
+ ✓ Compiled in 2.4s (1786 modules)

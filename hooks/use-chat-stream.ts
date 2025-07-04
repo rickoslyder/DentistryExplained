@@ -117,6 +117,25 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
             )
           )
         }
+        
+        // Save the assistant message to the database after streaming completes
+        if (sessionId && accumulatedContent) {
+          try {
+            await fetch('/api/chat/messages', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                sessionId,
+                content: accumulatedContent,
+                role: 'assistant',
+              }),
+            })
+          } catch (saveError) {
+            console.error('Failed to save assistant message:', saveError)
+          }
+        }
       } else {
         // Handle non-streaming response
         const responseText = await response.text()

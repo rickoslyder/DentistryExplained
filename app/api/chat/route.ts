@@ -111,9 +111,25 @@ const chatHandler = compose(
 
     // Log conversation history for debugging
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[Chat ${requestId}] Conversation history:`, {
+      console.log(`[Chat ${requestId}] Session details:`, {
+        sessionId: chatSession.session_id,
+        dbSessionId: chatSession.id,
+        userId: userProfile.id,
+        isNewSession: !sessionId
+      })
+      
+      console.log(`[Chat ${requestId}] Message flow:`, {
+        recentMessagesCount: recentMessages?.length || 0,
         historyLength: conversationHistory.length,
-        currentMessage: message.substring(0, 50) + '...'
+        messages: conversationHistory.map(msg => ({
+          role: msg.role,
+          preview: msg.content.substring(0, 50) + '...'
+        })),
+        currentMessage: {
+          role: 'user',
+          preview: message.substring(0, 50) + '...'
+        },
+        streamingEnabled: stream
       })
     }
 

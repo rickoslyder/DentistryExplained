@@ -68,16 +68,26 @@ export async function generateAIResponse(
       { role: "system", content: systemPrompt },
     ]
 
-    // Add contextual prompts based on query type
+    // Add contextual prompts based on query type (only for first message or emergencies)
+    const isFirstMessage = chatHistory.length === 0
+    
     if (isEmergency) {
       messages.push({
         role: "system",
         content: dentalKnowledgeBase.contextualPrompts.emergency
       })
-    } else if (queryCategory && dentalKnowledgeBase.contextualPrompts[queryCategory]) {
+    } else if (isFirstMessage && queryCategory && dentalKnowledgeBase.contextualPrompts[queryCategory]) {
       messages.push({
         role: "system",
         content: dentalKnowledgeBase.contextualPrompts[queryCategory]
+      })
+    }
+    
+    // Add conversation context prompt if there's history
+    if (chatHistory.length > 0) {
+      messages.push({
+        role: "system",
+        content: "This is a continuing conversation. Focus on answering the user's current question while maintaining context from previous messages. Avoid repeating information already discussed."
       })
     }
 
