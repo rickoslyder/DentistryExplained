@@ -55,7 +55,8 @@ CREATE TABLE practice_listings (
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
   description TEXT,
-  location GEOGRAPHY(POINT, 4326),
+  latitude DECIMAL(10, 8),
+  longitude DECIMAL(11, 8),
   address JSONB NOT NULL,
   contact JSONB NOT NULL,
   services TEXT[],
@@ -171,7 +172,7 @@ CREATE INDEX idx_chat_sessions_user ON chat_sessions(user_id);
 CREATE INDEX idx_chat_sessions_expires ON chat_sessions(expires_at);
 CREATE INDEX idx_chat_messages_session ON chat_messages(session_id);
 CREATE INDEX idx_chat_messages_created ON chat_messages(created_at);
-CREATE INDEX idx_practices_location ON practice_listings USING GIST(location);
+CREATE INDEX idx_practices_lat_long ON practice_listings(latitude, longitude);
 CREATE INDEX idx_practices_services ON practice_listings USING GIN(services);
 CREATE INDEX idx_practices_claimed ON practice_listings(claimed_by) WHERE claimed_by IS NOT NULL;
 CREATE INDEX idx_article_views_slug ON article_views(article_slug);

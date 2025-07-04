@@ -1,0 +1,128 @@
+
+> my-v0-project@0.1.0 dev
+> next dev
+
+[32m✔[0m [33mConsole Ninja[0m extension is connected to [33mNext.js[0m, see [36mhttps://tinyurl.com/2vt8jxzw[0m
+   ▲ Next.js 15.3.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.50.210:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.4s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 719ms (224 modules)
+ ○ Compiling / ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (150kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled / in 5.7s (1662 modules)
+ GET / 200 in 6844ms
+ ✓ Compiled in 1196ms (675 modules)
+ ⨯ Error [TypeError]: auth(...).protect is not a function
+    at eval (middleware.ts:27:11)
+  25 |   // Protect non-public routes
+  26 |   if (!isPublicRoute(req)) {
+> 27 |     auth().protect()
+     |           ^
+  28 |   }
+  29 |
+  30 |   // Check professional routes
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1440ms (1972 modules)
+ GET / 200 in 399ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 877ms (1973 modules)
+ GET /robots.txt?486563 404 in 1345ms
+ ✓ Compiled in 990ms (1144 modules)
+ GET / 200 in 267ms
+ GET / 200 in 549ms
+ GET /api/search?q=dental 404 in 155ms
+ GET /api/search?q=dental 404 in 80ms
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (150kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled in 625ms (1144 modules)
+ GET / 200 in 299ms
+ ○ Compiling /api/search ...
+ ✓ Compiled /api/search in 1315ms (2043 modules)
+Search error: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column p.is_active does not exist'
+}
+ GET /api/search?q=dental 500 in 2188ms
+ ✓ Compiled in 338ms (920 modules)
+ GET / 200 in 213ms
+ ✓ Compiled in 534ms (920 modules)
+ GET / 200 in 54ms
+ ✓ Compiled in 245ms (920 modules)
+ GET / 200 in 87ms
+Search error: {
+  code: '42804',
+  details: 'Returned type character varying does not match expected type text in column 3.',
+  hint: null,
+  message: 'structure of query does not match function result type'
+}
+ GET /api/search?q=dental 500 in 290ms
+ ✓ Compiled in 302ms (920 modules)
+ GET / 200 in 69ms
+ ✓ Compiled in 383ms (920 modules)
+ GET / 200 in 152ms
+ ✓ Compiled in 530ms (920 modules)
+ GET / 200 in 109ms
+ ✓ Compiled in 499ms (1023 modules)
+ ✓ Compiled /api/search in 286ms (1136 modules)
+Search error: {
+  code: '42804',
+  details: 'Returned type double precision does not match expected type real in column 7.',
+  hint: null,
+  message: 'structure of query does not match function result type'
+}
+ GET /api/search?q=dental 500 in 700ms
+ ✓ Compiled in 616ms (920 modules)
+ GET / 200 in 484ms
+ ✓ Compiled in 473ms (920 modules)
+ GET / 200 in 77ms
+ ✓ Compiled in 617ms (920 modules)
+ GET / 200 in 75ms
+ ✓ Compiled in 529ms (1023 modules)
+ ✓ Compiled in 819ms (920 modules)
+ GET / 200 in 262ms
+ ✓ Compiled in 908ms (920 modules)
+ GET / 200 in 52ms
+ ○ Compiling /topics ...
+ ✓ Compiled /topics in 1822ms (1936 modules)
+ GET /topics 200 in 2373ms
+ GET /topics 200 in 93ms
+ ○ Compiling /dental-problems/tooth-decay ...
+ ✓ Compiled /dental-problems/tooth-decay in 1077ms (1955 modules)
+ GET /dental-problems/tooth-decay 200 in 1252ms
+ ○ Compiling /find-dentist ...
+ ✓ Compiled /find-dentist in 807ms (1995 modules)
+ GET /find-dentist 200 in 1043ms
+ ✓ Compiled /_not-found in 482ms (1063 modules)
+ GET /robots.txt?486563 404 in 760ms
+ GET /robots.txt?486563 404 in 52ms
+ ✓ Compiled in 521ms (947 modules)
+ ○ Compiling /api/search ...
+ ✓ Compiled /api/search in 553ms (1176 modules)
+Suggestions error: {
+  code: '42702',
+  details: 'It could refer to either a PL/pgSQL variable or a table column.',
+  hint: null,
+  message: 'column reference "suggestion" is ambiguous'
+}
+ GET /api/search?q=dental 200 in 1113ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 572ms (2107 modules)
+ POST /api/chat 401 in 770ms
+ ✓ Compiled /topics in 487ms (1180 modules)
+ GET /topics 200 in 826ms
+ ✓ Compiled in 775ms (1178 modules)
+ GET /find-dentist 200 in 235ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 531ms (1179 modules)
+ GET /emergency 404 in 712ms
+ ✓ Compiled in 633ms (1063 modules)
+ ✓ Compiled in 1429ms (1171 modules)
+ ○ Compiling /emergency ...
+ ✓ Compiled /emergency in 2.4s (2085 modules)
+ GET /emergency 200 in 2926ms

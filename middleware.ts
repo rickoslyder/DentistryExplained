@@ -11,9 +11,16 @@ const isPublicRoute = createRouteMatcher([
   "/cosmetic-dentistry/(.*)",
   "/pediatric-dentistry/(.*)",
   "/find-dentist",
+  "/emergency",
+  "/glossary",
   "/about",
+  "/contact",
   "/privacy",
   "/terms",
+  "/api/search",
+  "/api/search/(.*)",
+  "/api/chat",
+  "/api/chat/(.*)",
   "/api/webhooks/(.*)",
   "/sign-in(.*)",
   "/sign-up(.*)",
@@ -21,15 +28,15 @@ const isPublicRoute = createRouteMatcher([
 
 const isProfessionalRoute = createRouteMatcher(["/professional(.*)"])
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   // Protect non-public routes
   if (!isPublicRoute(req)) {
-    auth().protect()
+    await auth.protect()
   }
 
   // Check professional routes
   if (isProfessionalRoute(req)) {
-    const { sessionClaims } = auth()
+    const { sessionClaims } = await auth()
     const userType = sessionClaims?.metadata?.userType
 
     if (userType !== "professional") {

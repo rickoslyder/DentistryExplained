@@ -224,7 +224,7 @@ BEGIN
       'article'::TEXT as type,
       a.title,
       a.excerpt,
-      a.slug,
+      a.slug::TEXT,
       c.name as category,
       ts_rank(a.search_vector, websearch_to_tsquery('english', search_query)) as rank
     FROM articles a
@@ -246,7 +246,7 @@ BEGIN
       ts_rank(p.search_vector, websearch_to_tsquery('english', search_query)) * 0.8 as rank
     FROM practice_listings p
     WHERE p.search_vector @@ websearch_to_tsquery('english', search_query)
-      AND p.is_active = true
+      AND p.claim_status = 'claimed'
       AND (search_category IS NULL OR search_category = 'practices')
     
     UNION ALL
@@ -257,7 +257,7 @@ BEGIN
       'glossary'::TEXT as type,
       g.term as title,
       g.definition as excerpt,
-      g.term as slug,
+      g.term::TEXT as slug,
       'Glossary'::TEXT as category,
       ts_rank(g.search_vector, websearch_to_tsquery('english', search_query)) * 0.9 as rank
     FROM glossary_terms g
