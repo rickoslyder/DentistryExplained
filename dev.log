@@ -651,3 +651,86 @@ Error creating user profile: {
  GET /treatments/dental-fillings 200 in 92ms
  ✓ Compiled in 1767ms (1421 modules)
  GET /treatments/dental-fillings 200 in 499ms
+ ○ Compiling /categories/[slug] ...
+ ✓ Compiled /categories/[slug] in 2.9s (2565 modules)
+ GET / 200 in 1354ms
+ ✓ Compiled /api/bookmarks in 418ms (1170 modules)
+ GET /treatments/dental-fillings 200 in 79ms
+(node:20110) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /api/bookmarks 200 in 1727ms
+ GET /categories/dental-problems 200 in 5860ms
+ ✓ Compiled /_not-found in 456ms (1171 modules)
+ GET /robots.txt?486570 404 in 810ms
+ GET /treatments/dental-fillings 200 in 680ms
+ GET /api/bookmarks 200 in 1173ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 600ms (1176 modules)
+ GET /treatments/dental-fillings 200 in 506ms
+ GET /categories/dental-problems 200 in 903ms
+Database error during create_session: {
+  code: '42501',
+  details: null,
+  hint: null,
+  message: 'new row violates row-level security policy for table "chat_sessions"'
+}
+[API Error] INTERNAL_ERROR: new row violates row-level security policy for table "chat_sessions" {
+  status: 500,
+  details: {
+    error: 'new row violates row-level security policy for table "chat_sessions"',
+    stack: undefined,
+    context: 'Database operation failed: create_session'
+  },
+  requestId: 'req_1751652363953_xuue4o',
+  timestamp: '2025-07-04T18:06:03.991Z'
+}
+ POST /api/chat 500 in 1874ms
+(node:20485) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 282ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 138ms
+ GET /categories/dental-problems 200 in 850ms
+ GET /robots.txt?486570 404 in 162ms
+(node:21685) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /api/bookmarks 200 in 898ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 109ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 195ms
+ GET /categories/dental-problems 200 in 1070ms
+ GET /robots.txt?486570 404 in 119ms
+ GET /api/bookmarks 200 in 1203ms
+(node:22906) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Database error during create_session: {
+  code: '42501',
+  details: null,
+  hint: null,
+  message: 'new row violates row-level security policy for table "chat_sessions"'
+}
+[API Error] INTERNAL_ERROR: new row violates row-level security policy for table "chat_sessions" {
+  status: 500,
+  details: {
+    error: 'new row violates row-level security policy for table "chat_sessions"',
+    stack: undefined,
+    context: 'Database operation failed: create_session'
+  },
+  requestId: 'req_1751652439230_zp7nq',
+  timestamp: '2025-07-04T18:07:19.308Z'
+}
+ POST /api/chat 500 in 1055ms
+ ✓ Compiled in 1233ms (1166 modules)
+ ✓ Compiled in 2.8s (2572 modules)
+ GET /treatments/dental-fillings 200 in 244ms
+ GET /categories/dental-problems 200 in 558ms
+(node:27814) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1886ms (1426 modules)
+ GET /treatments/dental-fillings 200 in 1158ms
+ GET /categories/dental-problems 200 in 1586ms
+(node:28432) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1476ms (1426 modules)
+ GET /treatments/dental-fillings 200 in 598ms
+ GET /categories/dental-problems 200 in 1133ms
+(node:30147) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

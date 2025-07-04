@@ -3,6 +3,7 @@ import { generateId } from '@/lib/utils'
 import { generateAIResponse } from '@/lib/litellm'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { withAuth, withRateLimit, withBodyLimit, compose } from '@/lib/api-middleware'
+import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 
 // Schema for chat message
@@ -31,7 +32,9 @@ const chatHandler = compose(
     // Validate request body
     const params = chatMessageSchema.parse(body)
     const { message, sessionId, pageContext, stream } = params
-    const { userProfile, supabase } = context
+    const { userProfile } = context
+    // Use admin client to bypass RLS for chat operations
+    const supabase = supabaseAdmin
 
     // Get or create chat session
     let chatSession
@@ -181,7 +184,9 @@ const getChatHistoryHandler = compose(
   const requestId = getRequestId(request)
   
   try {
-    const { userProfile, supabase } = context
+    const { userProfile } = context
+    // Use admin client to bypass RLS
+    const supabase = supabaseAdmin
     const { searchParams } = new URL(request.url)
     const sessionId = searchParams.get('sessionId')
 
