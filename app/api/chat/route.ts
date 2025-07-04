@@ -75,7 +75,7 @@ const chatHandler = compose(
       chatSession = newSession
     }
 
-    // Get recent messages for context
+    // Get recent messages for context (BEFORE storing the current message)
     const { data: recentMessages, error: messagesError } = await supabase
       .from('chat_messages')
       .select('role, content')
@@ -87,7 +87,7 @@ const chatHandler = compose(
       return ApiErrors.fromDatabaseError(messagesError, 'fetch_messages', requestId)
     }
 
-    // Store user message
+    // Store user message (AFTER fetching history to avoid duplication)
     const { error: insertError } = await supabase
       .from('chat_messages')
       .insert({
@@ -101,7 +101,7 @@ const chatHandler = compose(
       return ApiErrors.fromDatabaseError(insertError, 'store_user_message', requestId)
     }
 
-    // Build conversation history
+    // Build conversation history (without current message)
     const conversationHistory = recentMessages
       ?.reverse()
       .map(msg => ({
@@ -109,8 +109,15 @@ const chatHandler = compose(
         content: msg.content
       })) || []
 
-    // Add current message
-    conversationHistory.push({ role: 'user', content: message })
+    // Log conversation history for debugging
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Chat ${requestId}] Conversation history:`, {
+        historyLength: conversationHistory.length,
+        currentMessage: message.substring(0, 50) + '...'
+      })
+    }
+
+    // Don't add current message here - it will be added in generateAIResponse
 
     // Get user preferences from Clerk
     const clerkUser = await currentUser()
@@ -131,7 +138,7 @@ const chatHandler = compose(
     try {
       const aiResponse = await generateAIResponse(
         message,
-        conversationHistory.slice(0, -1), // Exclude the current message we just added
+        conversationHistory, // Pass the conversation history without the current message
         pageContext,
         stream,
         userContext

@@ -13,6 +13,9 @@ import Link from "next/link"
 import { useBookmarks } from "@/hooks/use-bookmarks"
 import { useDashboardData } from "@/hooks/use-dashboard-data"
 import { DashboardSkeleton } from "@/components/loading/dashboard-skeleton"
+import { ReadingStreak } from "@/components/dashboard/reading-streak"
+import { RecentChats } from "@/components/dashboard/recent-chats"
+import { QuickActions } from "@/components/dashboard/quick-actions"
 
 interface UserMetadata {
   userType?: "patient" | "professional"
@@ -237,6 +240,18 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Enhanced Dashboard Features */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Reading Streak */}
+              <ReadingStreak userId={user?.id || ""} />
+              
+              {/* Quick Actions */}
+              <QuickActions userType={userMetadata.userType} />
+            </div>
+
+            {/* Recent Chats */}
+            <RecentChats userId={user?.id || ""} />
 
             {/* Recommended Articles */}
             <Card>

@@ -7,6 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useRouter } from 'next/navigation'
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 const consentForms = [
   {
@@ -82,6 +91,7 @@ const categories = ['All', 'General', 'Oral Surgery', 'Endodontics', 'Implants',
 
 export default function ConsentFormsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [previewForm, setPreviewForm] = useState<typeof consentForms[0] | null>(null)
   const { user, isSignedIn } = useUser()
   const router = useRouter()
   
@@ -109,12 +119,14 @@ export default function ConsentFormsPage() {
   }
   
   const handlePreview = (form: typeof consentForms[0]) => {
-    // Show preview modal or redirect to preview page
-    console.log(`Previewing: ${form.title}`)
+    setPreviewForm(form)
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <>
+      <Header />
+      <main className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Dental Consent Forms
@@ -300,6 +312,93 @@ export default function ConsentFormsPage() {
           </Button>
         </div>
       </div>
+      
+      {/* Preview Dialog */}
+      <Dialog open={!!previewForm} onOpenChange={() => setPreviewForm(null)}>
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{previewForm?.title}</DialogTitle>
+            <DialogDescription>
+              Preview of the consent form template
+            </DialogDescription>
+          </DialogHeader>
+          
+          {previewForm && (
+            <div className="mt-4 space-y-4">
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2">Form Information</h3>
+                <p className="text-sm text-gray-600 mb-2">{previewForm.description}</p>
+                <div className="flex items-center gap-4 text-sm">
+                  <Badge variant="outline">{previewForm.category}</Badge>
+                  <span className="text-gray-500">Last updated: {previewForm.lastUpdated}</span>
+                </div>
+              </div>
+              
+              <div className="border rounded-lg p-6">
+                <h3 className="text-center text-xl font-semibold mb-4">
+                  [Your Practice Name]<br />
+                  <span className="text-base font-normal">{previewForm.title}</span>
+                </h3>
+                
+                <div className="space-y-4 text-sm">
+                  <div>
+                    <p className="font-semibold mb-2">Patient Information:</p>
+                    <div className="border rounded p-3 bg-gray-50">
+                      <p>Name: _______________________________________</p>
+                      <p className="mt-2">Date of Birth: _____________ Today's Date: _____________</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold mb-2">Treatment Information:</p>
+                    <p className="text-gray-600">
+                      I understand that I will be receiving the following treatment:
+                      {previewForm.category === 'General' && ' routine dental care including examinations, cleanings, and minor restorative work.'}
+                      {previewForm.category === 'Oral Surgery' && ' tooth extraction(s) as discussed with my dentist.'}
+                      {previewForm.category === 'Endodontics' && ' root canal treatment on tooth/teeth as identified.'}
+                      {previewForm.category === 'Implants' && ' dental implant placement and restoration.'}
+                      {previewForm.category === 'Cosmetic' && ' cosmetic dental procedures to improve appearance.'}
+                      {previewForm.category === 'Orthodontics' && ' orthodontic treatment to align teeth and improve bite.'}
+                      {previewForm.category === 'Sedation' && ' sedation to help manage anxiety during treatment.'}
+                      {previewForm.category === 'Pediatric' && ' age-appropriate dental care for my child.'}
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold mb-2">Risks and Benefits:</p>
+                    <p className="text-gray-600 mb-2">
+                      The risks, benefits, and alternatives have been explained to me. I understand that no guarantee 
+                      can be made regarding the outcome of treatment.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold mb-2">Consent:</p>
+                    <p className="text-gray-600 mb-3">
+                      I consent to the treatment described above. I have had the opportunity to ask questions, 
+                      and all my questions have been answered to my satisfaction.
+                    </p>
+                    <div className="border rounded p-3 bg-gray-50">
+                      <p>Patient/Guardian Signature: _______________________________</p>
+                      <p className="mt-2">Date: _____________</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="text-sm text-blue-700">
+                  <strong>Note:</strong> This is a template preview. The actual form will include more detailed 
+                  information specific to the procedure and your practice requirements.
+                </p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
+      </main>
+      <Footer />
+    </>
   )
 }

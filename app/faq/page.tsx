@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
 
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions | Dentistry Explained',
@@ -97,7 +99,10 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <>
+      <Header />
+      <main className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Frequently Asked Questions
@@ -150,5 +155,8 @@ export default function FAQPage() {
         </a>
       </div>
     </div>
+      </main>
+      <Footer />
+    </>
   )
 }

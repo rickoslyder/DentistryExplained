@@ -150,6 +150,318 @@ const glossaryTerms = [
   {
     term: "Xerostomia",
     definition: "The medical term for dry mouth caused by reduced saliva flow."
+  },
+  {
+    term: "Abutment",
+    definition: "A tooth or implant that supports a dental prosthesis such as a bridge or denture."
+  },
+  {
+    term: "Air Abrasion",
+    definition: "A drill-free technique using a stream of fine particles to remove tooth decay."
+  },
+  {
+    term: "Alveolar Bone",
+    definition: "The part of the jawbone that holds the tooth sockets and supports the teeth."
+  },
+  {
+    term: "Anterior Teeth",
+    definition: "The front teeth including incisors and canines, used for cutting and tearing food."
+  },
+  {
+    term: "Bicuspid",
+    definition: "A premolar tooth with two cusps, located between the canines and molars."
+  },
+  {
+    term: "Biofilm",
+    definition: "A thin layer of microorganisms, including bacteria, that forms on tooth surfaces; dental plaque is a type of biofilm."
+  },
+  {
+    term: "Bonding",
+    definition: "A cosmetic procedure using tooth-colored composite resin to repair or improve tooth appearance."
+  },
+  {
+    term: "Bridge",
+    definition: "A fixed dental restoration that replaces one or more missing teeth by joining artificial teeth to adjacent teeth or implants."
+  },
+  {
+    term: "Canine",
+    definition: "The pointed teeth located between the incisors and premolars, also called cuspids."
+  },
+  {
+    term: "Cementum",
+    definition: "The thin layer of bone-like tissue covering the tooth root that helps anchor it to the jawbone."
+  },
+  {
+    term: "Composite Resin",
+    definition: "A tooth-colored filling material made of plastic and fine glass particles."
+  },
+  {
+    term: "Crossbite",
+    definition: "A misalignment where upper teeth fit inside lower teeth when biting down."
+  },
+  {
+    term: "Cusp",
+    definition: "The pointed or rounded elevation on the chewing surface of a tooth."
+  },
+  {
+    term: "Debridement",
+    definition: "The removal of plaque, calculus, and stain from teeth, especially when buildup is heavy."
+  },
+  {
+    term: "Deciduous Teeth",
+    definition: "Primary or baby teeth that are eventually replaced by permanent teeth."
+  },
+  {
+    term: "Dental Dam",
+    definition: "A thin sheet of rubber used to isolate teeth during dental procedures."
+  },
+  {
+    term: "Dental Floss",
+    definition: "A thin thread used to remove food and plaque from between teeth."
+  },
+  {
+    term: "Diastema",
+    definition: "A gap or space between two teeth, commonly seen between upper front teeth."
+  },
+  {
+    term: "Edentulous",
+    definition: "Having no natural teeth remaining in the mouth."
+  },
+  {
+    term: "Eruption",
+    definition: "The process of teeth breaking through the gums as they grow."
+  },
+  {
+    term: "Exfoliation",
+    definition: "The natural loss of baby teeth as permanent teeth develop."
+  },
+  {
+    term: "Fissure",
+    definition: "A deep groove or cleft in the chewing surface of a tooth."
+  },
+  {
+    term: "Frenectomy",
+    definition: "Surgical removal or modification of the frenum (tissue connecting lips or tongue to gums)."
+  },
+  {
+    term: "Gingiva",
+    definition: "The medical term for gums; the soft tissue that surrounds and supports teeth."
+  },
+  {
+    term: "Gingival Recession",
+    definition: "The pulling back of gum tissue from teeth, exposing tooth roots."
+  },
+  {
+    term: "Gutta-percha",
+    definition: "A rubber-like material used to fill root canals after cleaning."
+  },
+  {
+    term: "Hypersensitivity",
+    definition: "Tooth sensitivity to temperature, touch, or certain foods due to exposed dentin."
+  },
+  {
+    term: "Incisor",
+    definition: "The flat, sharp-edged front teeth used for cutting food."
+  },
+  {
+    term: "Interproximal",
+    definition: "The area between adjacent teeth."
+  },
+  {
+    term: "Irrigation",
+    definition: "Flushing of a specific area with a stream of fluid to remove debris."
+  },
+  {
+    term: "Mandible",
+    definition: "The lower jaw bone."
+  },
+  {
+    term: "Maxilla",
+    definition: "The upper jaw bone."
+  },
+  {
+    term: "Mesial",
+    definition: "The surface of a tooth closest to the midline of the face."
+  },
+  {
+    term: "Mouthguard",
+    definition: "A protective device worn over teeth to prevent injury during sports or to treat bruxism."
+  },
+  {
+    term: "Nitrous Oxide",
+    definition: "A gas used for mild sedation during dental procedures, also known as laughing gas."
+  },
+  {
+    term: "Obturation",
+    definition: "The process of filling and sealing a root canal."
+  },
+  {
+    term: "Oral Prophylaxis",
+    definition: "Professional teeth cleaning to prevent dental disease."
+  },
+  {
+    term: "Overbite",
+    definition: "Vertical overlap of upper front teeth over lower front teeth."
+  },
+  {
+    term: "Overjet",
+    definition: "Horizontal projection of upper teeth beyond lower teeth."
+  },
+  {
+    term: "Palate",
+    definition: "The roof of the mouth, consisting of hard and soft portions."
+  },
+  {
+    term: "Panoramic X-ray",
+    definition: "A dental X-ray that captures the entire mouth in a single image."
+  },
+  {
+    term: "Partial Denture",
+    definition: "A removable appliance that replaces some missing teeth."
+  },
+  {
+    term: "Periapical",
+    definition: "The area around the tip of a tooth root."
+  },
+  {
+    term: "Periodontal Ligament",
+    definition: "The connective tissue that attaches teeth to the jawbone."
+  },
+  {
+    term: "Periodontal Pocket",
+    definition: "A deepened space between tooth and gum caused by gum disease."
+  },
+  {
+    term: "Pit",
+    definition: "A small depression in tooth enamel, often found on chewing surfaces."
+  },
+  {
+    term: "Pontic",
+    definition: "The artificial tooth in a bridge that replaces a missing natural tooth."
+  },
+  {
+    term: "Post",
+    definition: "A metal or fiber rod placed in a root canal to support a crown."
+  },
+  {
+    term: "Posterior Teeth",
+    definition: "The back teeth including premolars and molars, used for grinding food."
+  },
+  {
+    term: "Premolar",
+    definition: "Teeth located between canines and molars, also called bicuspids."
+  },
+  {
+    term: "Prophylaxis",
+    definition: "Professional cleaning of teeth to remove plaque, calculus, and stains."
+  },
+  {
+    term: "Prosthodontics",
+    definition: "The dental specialty focused on replacing missing teeth and jaw structures."
+  },
+  {
+    term: "Pulpectomy",
+    definition: "Complete removal of pulp tissue from a tooth."
+  },
+  {
+    term: "Pulpitis",
+    definition: "Inflammation of the tooth pulp, often causing pain."
+  },
+  {
+    term: "Pulpotomy",
+    definition: "Partial removal of pulp tissue, typically in baby teeth."
+  },
+  {
+    term: "Radiograph",
+    definition: "An X-ray image used to diagnose dental conditions."
+  },
+  {
+    term: "Recession",
+    definition: "The loss of gum tissue resulting in exposure of tooth roots."
+  },
+  {
+    term: "Reimplantation",
+    definition: "Replacing a tooth in its socket after it has been knocked out."
+  },
+  {
+    term: "Remineralization",
+    definition: "The natural repair process of tooth enamel using minerals from saliva."
+  },
+  {
+    term: "Resorption",
+    definition: "The body's process of breaking down and absorbing tissue, such as tooth roots."
+  },
+  {
+    term: "Restoration",
+    definition: "Any dental work that repairs or replaces tooth structure."
+  },
+  {
+    term: "Retainer",
+    definition: "An appliance worn after orthodontic treatment to maintain tooth position."
+  },
+  {
+    term: "Root Planing",
+    definition: "Deep cleaning of tooth roots to remove bacteria and smooth rough spots."
+  },
+  {
+    term: "Rubber Dam",
+    definition: "A sheet of rubber used to isolate teeth during dental procedures."
+  },
+  {
+    term: "Saliva",
+    definition: "The watery substance produced in the mouth that aids digestion and protects teeth."
+  },
+  {
+    term: "Space Maintainer",
+    definition: "A device used to keep space open for a permanent tooth after early loss of a baby tooth."
+  },
+  {
+    term: "Splint",
+    definition: "A device used to stabilize loose teeth or protect teeth from grinding."
+  },
+  {
+    term: "Supernumerary Teeth",
+    definition: "Extra teeth beyond the normal number."
+  },
+  {
+    term: "Suture",
+    definition: "Stitches used to close wounds after oral surgery."
+  },
+  {
+    term: "Temporomandibular Disorder (TMD)",
+    definition: "Problems affecting the jaw joint and muscles that control jaw movement."
+  },
+  {
+    term: "Torus",
+    definition: "A benign bony growth in the mouth, often on the palate or lower jaw."
+  },
+  {
+    term: "Trismus",
+    definition: "Limited ability to open the mouth, often due to muscle spasm or joint problems."
+  },
+  {
+    term: "Underbite",
+    definition: "A condition where lower teeth extend beyond upper teeth when biting."
+  },
+  {
+    term: "Unerupted Tooth",
+    definition: "A tooth that has not yet broken through the gum."
+  },
+  {
+    term: "Vestibule",
+    definition: "The space between teeth/gums and the lips or cheeks."
+  },
+  {
+    term: "Vitality Test",
+    definition: "A test to determine if a tooth's nerve is alive and healthy."
+  },
+  {
+    term: "Xeroradiography",
+    definition: "A type of X-ray imaging that uses less radiation than traditional X-rays."
+  },
+  {
+    term: "Zinc Oxide Eugenol",
+    definition: "A temporary filling material with soothing properties."
   }
 ].sort((a, b) => a.term.localeCompare(b.term))
 

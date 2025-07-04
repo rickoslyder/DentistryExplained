@@ -30,6 +30,7 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
   const { user } = useUser()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const hasInitialized = useRef(false)
+  const inputRef = useRef<HTMLInputElement>(null)
   
   const {
     messages,
@@ -109,6 +110,10 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
 
   const handleSuggestedQuestion = (question: string) => {
     setInput(question)
+    // Focus input field after setting the question
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
   }
 
   const handleQuickAction = (action: any, originalMessage: string) => {
@@ -261,6 +266,7 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
         <div className="p-4 border-t">
           <div className="flex space-x-2">
             <Input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}

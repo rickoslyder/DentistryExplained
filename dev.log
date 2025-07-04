@@ -946,3 +946,333 @@ Database error during fetch_messages: {
  GET /categories/dental-problems 200 in 483ms
 (node:65240) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 653ms (1421 modules)
+ GET /treatments/dental-fillings 200 in 840ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /api/bookmarks in 2.3s (1422 modules)
+ ✓ Compiled (1439 modules)
+ GET /robots.txt?486571 404 in 3768ms
+ GET / 200 in 803ms
+ GET /api/bookmarks 200 in 3143ms
+ GET /api/bookmarks 200 in 817ms
+ GET /api/bookmarks 200 in 948ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 728ms (1444 modules)
+ ✓ Compiled in 1ms (1444 modules)
+ ✓ Compiled in 1ms (1444 modules)
+ ✓ Compiled in 0ms (1444 modules)
+ GET / 200 in 4630ms
+ GET /api/bookmarks 200 in 4861ms
+ GET /categories/dental-problems 200 in 4854ms
+Database error during fetch_messages: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "vz8lt18z12pb6u8p3g57"'
+}
+[API Error] BAD_REQUEST: Invalid data format {
+  status: 400,
+  details: undefined,
+  requestId: 'req_1751655858136_fzousi',
+  timestamp: '2025-07-04T19:04:18.218Z'
+}
+ GET /api/chat?sessionId=vz8lt18z12pb6u8p3g57 400 in 5747ms
+(node:74101) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ POST /api/chat 200 in 4177ms
+ POST /api/chat 200 in 2228ms
+ ✓ Compiled in 927ms (1421 modules)
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 1447ms (1441 modules)
+ POST /api/chat 200 in 5355ms
+ ✓ Compiled in 1822ms (2882 modules)
+ GET / 200 in 389ms
+ GET /categories/dental-problems 200 in 780ms
+(node:5422) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 851ms (1442 modules)
+ GET /apple-touch-icon.png 404 in 1421ms
+ GET /apple-touch-icon-precomposed.png 404 in 1415ms
+ GET / 200 in 285ms
+ ○ Compiling /find-dentist ...
+ ✓ Compiled /find-dentist in 5.5s (2913 modules)
+ GET /find-dentist?emergency=true 200 in 5945ms
+ GET /find-dentist?emergency=true 200 in 153ms
+ GET /find-dentist?emergency=true 200 in 228ms
+ GET /find-dentist?emergency=true 200 in 110ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 1984ms (1469 modules)
+ ○ Compiling /glossary ...
+ ✓ Compiled /glossary in 1172ms (2925 modules)
+ GET /api/bookmarks 200 in 3812ms
+ GET /glossary 200 in 1385ms
+ GET /api/bookmarks 200 in 1624ms
+ GET /api/bookmarks 200 in 856ms
+ GET /api/bookmarks 200 in 870ms
+ ○ Compiling /faq ...
+ ✓ Compiled /faq in 1937ms (2928 modules)
+ GET /faq 200 in 2172ms
+ GET /api/bookmarks 200 in 1668ms
+ GET /api/bookmarks 200 in 967ms
+ ○ Compiling /consent-forms ...
+ ✓ Compiled /consent-forms in 2.7s (2936 modules)
+ GET /consent-forms 200 in 3493ms
+ GET /consent-forms 200 in 105ms
+ GET /categories/dental-problems 200 in 643ms
+ ⨯ Failed to generate static paths for /categories/[slug]:
+TypeError: __webpack_require__.C is not a function
+    at <unknown> (.next/server/app/categories/[slug]/page.js:1086:21)
+    at Object.<anonymous> (.next/server/app/categories/[slug]/page.js:1091:3) {
+  type: 'TypeError'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (150kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled in 7.6s (3110 modules)
+ ✓ Compiled in 1829ms (2886 modules)
+ ✓ Compiled in 1564ms (2886 modules)
+ ✓ Compiled in 2.1s (2869 modules)
+ ✓ Compiled in 2.7s (2869 modules)
+ ✓ Compiled in 1947ms (2869 modules)
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /support in 12.7s (2887 modules)
+ GET /support 200 in 12050ms
+ GET /glossary 200 in 13849ms
+ ○ Compiling /about ...
+ GET /api/bookmarks 200 in 16083ms
+ ✓ Compiled /about in 3.8s (2919 modules)
+ GET /about 200 in 4836ms
+ GET /support 200 in 3965ms
+ GET /about 200 in 191ms
+ GET /about 200 in 238ms
+ GET /about 200 in 50ms
+ GET /about 200 in 59ms
+ GET /about 200 in 247ms
+ GET /about 200 in 67ms
+ GET /api/bookmarks 200 in 1071ms
+ GET /api/bookmarks 200 in 1133ms
+ ✓ Compiled in 3.9s (2916 modules)
+ GET /about 200 in 419ms
+ ✓ Compiled in 5.4s (2778 modules)
+ GET /about 200 in 463ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.4s (1333 modules)
+ GET / 200 in 3900ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 1031ms (1437 modules)
+ GET /api/bookmarks 200 in 2429ms
+ GET /api/bookmarks 200 in 5888ms
+ ○ Compiling /api/search/trending ...
+ ✓ Compiled /api/search/trending in 1802ms (2910 modules)
+Trending searches error: {
+  code: 'PGRST202',
+  details: 'Searched for the function public.get_trending_searches with parameters limit_results, time_window or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.',
+  hint: 'Perhaps you meant to call the function public.get_trending_searches(limit_count)',
+  message: 'Could not find the function public.get_trending_searches(limit_results, time_window) in the schema cache'
+}
+ GET /api/search/trending?window=7%20days&limit=5 500 in 3058ms
+ ○ Compiling /api/search ...
+ ✓ Compiled /api/search in 2.3s (2914 modules)
+Database error during database operation: {
+  code: '42702',
+  details: 'It could refer to either a PL/pgSQL variable or a table column.',
+  hint: null,
+  message: 'column reference "suggestion" is ambiguous'
+}
+[API Error] INTERNAL_ERROR: column reference "suggestion" is ambiguous {
+  status: 500,
+  details: {
+    error: 'column reference "suggestion" is ambiguous',
+    stack: undefined,
+    context: 'Database operation failed: database operation'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-04T19:22:21.945Z'
+}
+ GET /api/search/suggestions?q=Tooth%20Decay 500 in 3794ms
+ GET /api/search?q=Tooth%20Decay 200 in 3853ms
+[Search req_1751656941991_84sudm] Tracking error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "user_2zPiF5T2aRztuDTL9j7xPN3QK8q"'
+}
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 3.4s (2939 modules)
+ GET /dashboard 200 in 3543ms
+ ○ Compiling /dashboard/settings ...
+ ✓ Compiled /dashboard/settings in 3.5s (2959 modules)
+ GET /dashboard/settings 200 in 4105ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 831ms (1463 modules)
+ GET /api/bookmarks 200 in 2212ms
+ GET /api/bookmarks 200 in 2211ms
+ GET /api/bookmarks 200 in 2247ms
+ GET /api/bookmarks 200 in 2493ms
+ GET /api/bookmarks 200 in 1643ms
+ GET /api/bookmarks 200 in 1690ms
+ GET /api/bookmarks 200 in 1675ms
+ GET /api/bookmarks 200 in 1679ms
+ GET /api/bookmarks 200 in 1692ms
+ GET /api/bookmarks 200 in 1754ms
+ GET /dashboard 200 in 439ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /api/bookmarks in 3.3s (1330 modules)
+ ✓ Compiled (1463 modules)
+ GET /robots.txt?486571 404 in 6000ms
+ GET /api/bookmarks 200 in 4451ms
+Database error during fetch_messages: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "o3ttz8l42rrn4tt5scw3n"'
+}
+[API Error] BAD_REQUEST: Invalid data format {
+  status: 400,
+  details: undefined,
+  requestId: 'req_1751657377581_kz71fl',
+  timestamp: '2025-07-04T19:29:37.721Z'
+}
+ GET /api/chat?sessionId=o3ttz8l42rrn4tt5scw3n 400 in 4486ms
+ GET /api/bookmarks 200 in 805ms
+ POST /api/chat 200 in 2777ms
+ POST /api/chat 200 in 2337ms
+ POST /api/chat 200 in 2239ms
+ GET / 200 in 436ms
+ GET /api/bookmarks 200 in 1950ms
+ GET /api/bookmarks 200 in 2791ms
+ ✓ Compiled in 5.7s (1329 modules)
+ ✓ Compiled in 3s (1503 modules)
+ GET / 200 in 2674ms
+ ✓ Compiled in 1484ms (1503 modules)
+ GET / 200 in 64ms
+ ✓ Compiled in 2.7s (1503 modules)
+ GET / 200 in 120ms
+ ✓ Compiled in 8.3s (1503 modules)
+ GET / 200 in 1057ms
+ ✓ Compiled in 3s (1503 modules)
+ GET / 200 in 252ms
+ ✓ Compiled in 1262ms (1503 modules)
+ GET / 200 in 153ms
+ ✓ Compiled in 1195ms (1503 modules)
+ GET / 200 in 269ms
+ ✓ Compiled in 2.3s (1503 modules)
+ GET / 200 in 70ms
+ ✓ Compiled in 3.3s (2832 modules)
+ GET / 200 in 292ms
+ ✓ Compiled in 1045ms (2832 modules)
+ GET / 200 in 183ms
+ ✓ Compiled in 1050ms (2832 modules)
+ GET / 200 in 114ms
+ ⨯ ./app/consent-forms/page.tsx
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:126:1]
+ [2m123[0m |   }
+ [2m124[0m | 
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+     : [35;1m     ^[0m
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+     `----
+  [31mx[0m Expected ',', got 'className'
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:128:1]
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+     : [35;1m            ^^^^^^^^^[0m
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+ [2m130[0m |       <div className="mb-8">
+ [2m131[0m |         <h1 className="text-4xl font-bold text-gray-900 mb-4">
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/consent-forms/page.tsx
+ ○ Compiling /_error ...
+ ⨯ ./app/consent-forms/page.tsx
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:126:1]
+ [2m123[0m |   }
+ [2m124[0m | 
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+     : [35;1m     ^[0m
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+     `----
+  [31mx[0m Expected ',', got 'className'
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:128:1]
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+     : [35;1m            ^^^^^^^^^[0m
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+ [2m130[0m |       <div className="mb-8">
+ [2m131[0m |         <h1 className="text-4xl font-bold text-gray-900 mb-4">
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/consent-forms/page.tsx
+ GET / 500 in 7470ms
+ GET / 500 in 38ms
+ GET / 500 in 28ms
+ GET / 500 in 59ms
+ ⨯ ./app/consent-forms/page.tsx
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:126:1]
+ [2m123[0m |   }
+ [2m124[0m | 
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+     : [35;1m     ^[0m
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+     `----
+  [31mx[0m Expected ',', got 'className'
+     ,-[[36;1;4m/Users/rkb/DentistryExplained/dentistry-explained/app/consent-forms/page.tsx[0m:128:1]
+ [2m125[0m |   return (
+ [2m126[0m |     <>
+ [2m127[0m |       <Header />
+ [2m128[0m |       <main className="min-h-screen bg-gray-50">
+     : [35;1m            ^^^^^^^^^[0m
+ [2m129[0m |         <div className="max-w-7xl mx-auto px-4 py-8">
+ [2m130[0m |       <div className="mb-8">
+ [2m131[0m |         <h1 className="text-4xl font-bold text-gray-900 mb-4">
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/consent-forms/page.tsx
+ GET /robots.txt?486571 500 in 1145ms
+ ✓ Compiled /_not-found in 1814ms (3152 modules)
+ GET /_next/static/webpack/a77483fb8b9680e3.webpack.hot-update.json 500 in 2203ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 200 in 668ms
+ GET /robots.txt?486571 404 in 152ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 6s (1545 modules)
+ GET /api/bookmarks 200 in 7916ms
+ ✓ Compiled in 2.1s (1748 modules)
+ GET / 200 in 531ms
+ ✓ Compiled in 2.9s (1748 modules)
+ GET / 200 in 706ms
+ ✓ Compiled in 1940ms (1748 modules)
+ GET / 200 in 277ms
+ ✓ Compiled in 5s (3122 modules)
+ GET / 200 in 214ms
+ ✓ Compiled in 5.6s (3198 modules)
+ GET / 200 in 534ms
+ ✓ Compiled in 2.1s (1786 modules)
+ GET / 200 in 480ms

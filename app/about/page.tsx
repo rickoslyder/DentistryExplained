@@ -101,7 +101,7 @@ export default function AboutPage() {
           </p>
           <div className="flex items-center justify-center space-x-4">
             <Badge variant="secondary" className="bg-primary/10 text-primary">
-              Established 2024
+              Established 2025
             </Badge>
             <Badge variant="secondary" className="bg-green-100 text-green-800">
               UK-Based
