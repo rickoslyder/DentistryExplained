@@ -619,3 +619,23 @@ Error creating user profile: {
  GET /treatments/dental-fillings 200 in 180ms
  ✓ Compiled in 897ms (2447 modules)
  GET /treatments/dental-fillings 200 in 272ms
+ ✓ Compiled in 1796ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 323ms
+ ✓ Compiled in 2.3s (1420 modules)
+ GET /treatments/dental-fillings 200 in 48ms
+ ✓ Compiled in 462ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 44ms
+ ✓ Compiled in 1602ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 82ms
+ ✓ Compiled in 850ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 379ms
+ ✓ Compiled in 1448ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 69ms
+ ✓ Compiled in 785ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 47ms
+ ✓ Compiled in 689ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 81ms
+ ✓ Compiled in 773ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 105ms
+ ✓ Compiled in 469ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 74ms

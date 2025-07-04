@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ArticlesDataTable } from '@/components/admin/articles-data-table'
 import { Button } from '@/components/ui/button'

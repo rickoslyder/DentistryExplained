@@ -4,6 +4,8 @@ import { FileText, Eye, Users, TrendingUp, Calendar, Edit, Clock, CheckCircle } 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
+export const dynamic = 'force-dynamic'
+
 async function getAdminStats() {
   const supabase = await createServerSupabaseClient()
   

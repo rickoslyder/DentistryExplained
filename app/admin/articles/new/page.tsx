@@ -1,4 +1,6 @@
 import { ArticleEditor } from '@/components/admin/article-editor'
+export const dynamic = 'force-dynamic'
+
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 
 async function getCategories() {

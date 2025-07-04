@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
-import { Mail, MessageCircle, FileQuestion, Clock, Phone, MapPin } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Mail, Phone, MapPin } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+import { QuickLinks } from './quick-links'
 
 export const metadata: Metadata = {
   title: 'Support | Dentistry Explained',
@@ -20,43 +21,7 @@ export default function SupportPage() {
       </div>
 
       {/* Quick Links */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = '/faq'}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileQuestion className="w-5 h-5 text-primary" />
-              FAQ
-            </CardTitle>
-            <CardDescription>
-              Find answers to frequently asked questions
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = '/emergency'}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-red-600" />
-              Emergency Guide
-            </CardTitle>
-            <CardDescription>
-              Get help with dental emergencies
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = '/glossary'}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageCircle className="w-5 h-5 text-primary" />
-              Dental Glossary
-            </CardTitle>
-            <CardDescription>
-              Look up dental terms and procedures
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
+      <QuickLinks />
 
       {/* Contact Options */}
       <div className="grid md:grid-cols-2 gap-8">
