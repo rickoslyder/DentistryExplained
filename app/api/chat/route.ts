@@ -8,7 +8,7 @@ import { z } from 'zod'
 // Schema for chat message
 const chatMessageSchema = z.object({
   message: z.string().min(1).max(4000),
-  sessionId: z.string().optional(),
+  sessionId: z.string().nullable().optional(),
   pageContext: z.object({
     title: z.string().optional(),
     url: z.string().optional(),
