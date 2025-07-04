@@ -226,7 +226,8 @@ export const paginationSchema = z.object({
 // Validate request body against a Zod schema
 export function validateRequestBody<T>(
   body: unknown,
-  schema: z.ZodSchema<T>
+  schema: z.ZodSchema<T>,
+  requestId?: string
 ): { data: T; error: null } | { data: null; error: NextResponse<ApiError> } {
   try {
     const data = schema.parse(body)
@@ -235,12 +236,12 @@ export function validateRequestBody<T>(
     if (error instanceof z.ZodError) {
       return { 
         data: null, 
-        error: ApiErrors.fromValidationError(error, getRequestId(new Request(''))) 
+        error: ApiErrors.fromValidationError(error, requestId) 
       }
     }
     return { 
       data: null, 
-      error: ApiErrors.internal(error, 'Validation error', getRequestId(new Request(''))) 
+      error: ApiErrors.internal(error, 'Validation error', requestId) 
     }
   }
 }
@@ -248,7 +249,8 @@ export function validateRequestBody<T>(
 // Validate query parameters against a Zod schema
 export function validateQueryParams<T>(
   searchParams: URLSearchParams,
-  schema: z.ZodSchema<T>
+  schema: z.ZodSchema<T>,
+  requestId?: string
 ): { data: T; error: null } | { data: null; error: NextResponse<ApiError> } {
   try {
     // Convert URLSearchParams to object
@@ -263,18 +265,18 @@ export function validateQueryParams<T>(
     if (error instanceof z.ZodError) {
       return { 
         data: null, 
-        error: ApiErrors.fromValidationError(error, getRequestId(new Request(''))) 
+        error: ApiErrors.fromValidationError(error, requestId) 
       }
     }
     return { 
       data: null, 
-      error: ApiErrors.internal(error, 'Query validation error', getRequestId(new Request(''))) 
+      error: ApiErrors.internal(error, 'Query validation error', requestId) 
     }
   }
 }
 
 // Map database errors to appropriate API errors
-export function mapDatabaseError(error: any, operation?: string): NextResponse<ApiError> {
-  return ApiErrors.fromDatabaseError(error, operation || 'database operation', getRequestId(new Request('')))
+export function mapDatabaseError(error: any, operation?: string, requestId?: string): NextResponse<ApiError> {
+  return ApiErrors.fromDatabaseError(error, operation || 'database operation', requestId)
 }
 

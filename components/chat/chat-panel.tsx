@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
-import { X, Send, Download, Loader2, StopCircle, Bot, AlertCircle } from "lucide-react"
+import { X, Send, Download, Loader2, StopCircle, Bot, AlertCircle, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -74,6 +74,26 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape to close
+      if (e.key === 'Escape' && isOpen) {
+        onClose()
+      }
+      // Cmd/Ctrl + K to clear chat
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k' && isOpen) {
+        e.preventDefault()
+        if (messages.length > 0 && window.confirm('Clear chat history?')) {
+          clearMessages()
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, messages.length, onClose, clearMessages])
+
   const handleSendMessage = () => {
     if (!input.trim() || isLoading) return
     sendMessage(input)
@@ -99,7 +119,12 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
       <div className="flex-1 bg-black/20 backdrop-blur-sm" onClick={onClose} />
 
       {/* Chat Panel */}
-      <div className="w-full max-w-md bg-white shadow-2xl chat-slide-in flex flex-col">
+      <div 
+        className="w-full sm:max-w-md bg-white shadow-2xl chat-slide-in flex flex-col"
+        role="dialog"
+        aria-modal="true"
+        aria-label="AI Dental Assistant"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-primary text-white">
           <div className="flex items-center space-x-2">
@@ -120,9 +145,10 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
                 size="icon"
                 onClick={clearMessages}
                 className="text-white hover:bg-white/20"
-                title="Clear chat"
+                title="Clear chat history"
+                aria-label="Clear chat history"
               >
-                <X className="w-3 h-3" />
+                <Trash2 className="w-4 h-4" />
               </Button>
             )}
             <Button
@@ -131,7 +157,8 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
               onClick={exportChat}
               className="text-white hover:bg-white/20"
               disabled={messages.length === 0}
-              title="Export chat"
+              title="Export chat as text file"
+              aria-label="Export chat as text file"
             >
               <Download className="w-4 h-4" />
             </Button>
@@ -140,7 +167,8 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
               size="icon" 
               onClick={onClose} 
               className="text-white hover:bg-white/20"
-              title="Close chat"
+              title="Close chat panel"
+              aria-label="Close chat panel"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -231,7 +259,7 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
             </Button>
           </div>
           <p className="text-xs text-gray-500 mt-2">
-            Press Enter to send • {isConfigured ? "AI powered by LiteLLM" : "Using fallback responses"}
+            Press Enter to send • Esc to close • {typeof window !== 'undefined' && navigator.platform.includes('Mac') ? 'Cmd' : 'Ctrl'}+K to clear • {isConfigured ? "AI powered by LiteLLM" : "Using fallback responses"}
           </p>
         </div>
       </div>

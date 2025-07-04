@@ -110,6 +110,19 @@ export async function getCurrentUserProfile() {
         .single()
       
       if (createError) {
+        // If it's a duplicate key error, try to fetch the existing profile
+        if (createError.code === '23505') {
+          const { data: existingProfile, error: fetchError } = await supabaseAdmin
+            .from('profiles')
+            .select('*')
+            .eq('clerk_id', userId)
+            .single()
+          
+          if (!fetchError && existingProfile) {
+            return toUserProfile(existingProfile)
+          }
+        }
+        
         console.error('Error creating user profile:', createError)
         return null
       }

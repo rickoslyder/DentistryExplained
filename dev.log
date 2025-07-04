@@ -227,3 +227,395 @@ Error creating user profile: {
  GET / 200 in 306ms
  ✓ Compiled in 693ms (692 modules)
  GET / 200 in 143ms
+ ✓ Compiled in 851ms (692 modules)
+ GET / 200 in 226ms
+ ○ Compiling /dental-problems/tooth-decay ...
+ ✓ Compiled /dental-problems/tooth-decay in 1427ms (1714 modules)
+ GET /dental-problems/tooth-decay 200 in 1668ms
+ GET /dental-problems/tooth-decay 200 in 92ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/bookmarks in 1204ms (1142 modules)
+ GET /dental-problems/tooth-decay 200 in 157ms
+[API Error] INTERNAL_ERROR: Failed to parse URL from  {
+  status: 500,
+  details: {
+    error: 'Failed to parse URL from ',
+    stack: 'TypeError: Failed to parse URL from \n' +
+      '    at new Request (node:internal/deps/undici/undici:9562:19)\n' +
+      '    at mapDatabaseError (webpack-internal:///(rsc)/./lib/api-errors.ts:237:95)\n' +
+      '    at eval (webpack-internal:///(rsc)/./app/api/bookmarks/route.ts:82:81)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:52:20)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:16.801Z'
+}
+ GET /api/bookmarks 500 in 3216ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:17.416Z'
+}
+ GET /api/bookmarks 404 in 602ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:17.997Z'
+}
+ GET /api/bookmarks 404 in 572ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:18.523Z'
+}
+ GET /api/bookmarks 404 in 510ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:33.682Z'
+}
+ GET /api/bookmarks 404 in 754ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:34.361Z'
+}
+ GET /api/bookmarks 404 in 665ms
+ ○ Compiling /dental-problems/gum-disease ...
+ ✓ Compiled /dental-problems/gum-disease in 557ms (1837 modules)
+ GET /dental-problems/gum-disease 200 in 777ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:35.712Z'
+}
+ GET /api/bookmarks 404 in 648ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:14:36.221Z'
+}
+ GET /api/bookmarks 404 in 501ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:03.087Z'
+}
+ GET /api/bookmarks 404 in 647ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:03.805Z'
+}
+ GET /api/bookmarks 404 in 656ms
+ ○ Compiling /treatments/dental-implants ...
+ ✓ Compiled /treatments/dental-implants in 902ms (1844 modules)
+ GET /treatments/dental-implants 200 in 1020ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:05.657Z'
+}
+ GET /api/bookmarks 404 in 623ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:06.172Z'
+}
+ GET /api/bookmarks 404 in 507ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:06.746Z'
+}
+ GET /api/bookmarks 404 in 537ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:07.442Z'
+}
+ GET /api/bookmarks 404 in 684ms
+ ○ Compiling /[category]/[slug] ...
+ ✓ Compiled /[category]/[slug] in 1556ms (3371 modules)
+(node:87080) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /treatments/teeth-whitening 200 in 4085ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:13.235Z'
+}
+ GET /api/bookmarks 404 in 546ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:13.758Z'
+}
+ GET /api/bookmarks 404 in 512ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:14.645Z'
+}
+ GET /api/bookmarks 404 in 862ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:15.176Z'
+}
+ GET /api/bookmarks 404 in 515ms
+ GET /topics 200 in 107ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:39.356Z'
+}
+ GET /api/bookmarks 404 in 738ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:39.898Z'
+}
+ GET /api/bookmarks 404 in 524ms
+ ○ Compiling /treatments/dental-fillings ...
+ ✓ Compiled /treatments/dental-fillings in 1132ms (3380 modules)
+ GET /treatments/dental-fillings 200 in 1328ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:47.262Z'
+}
+ GET /api/bookmarks 404 in 930ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:47.846Z'
+}
+ GET /api/bookmarks 404 in 576ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:48.412Z'
+}
+ GET /api/bookmarks 404 in 547ms
+Error creating user profile: {
+  code: '23505',
+  details: 'Key (clerk_id)=(user_2zPiF5T2aRztuDTL9j7xPN3QK8q) already exists.',
+  hint: null,
+  message: 'duplicate key value violates unique constraint "profiles_clerk_id_key"'
+}
+[API Error] NOT_FOUND: User profile not found {
+  status: 404,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-04T17:15:48.900Z'
+}
+ GET /api/bookmarks 404 in 478ms
+ ✓ Compiled in 1471ms (1975 modules)
+ ✓ Compiled in 5.3s (2573 modules)
+ GET /treatments/dental-fillings 200 in 1175ms
+ ✓ Compiled in 2.2s (2575 modules)
+ GET /treatments/dental-fillings 200 in 130ms
+ ✓ Compiled in 729ms (2447 modules)
+ GET /treatments/dental-fillings 200 in 192ms
+ ✓ Compiled in 1048ms (2447 modules)
+ GET /treatments/dental-fillings 200 in 243ms
+ ✓ Compiled in 381ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 71ms
+ ✓ Compiled in 2.3s (1420 modules)
+ GET /treatments/dental-fillings 200 in 377ms
+ ✓ Compiled in 351ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 44ms
+ ✓ Compiled in 2.6s (1420 modules)
+ GET /treatments/dental-fillings 200 in 35ms
+ ✓ Compiled in 1265ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 71ms
+ ✓ Compiled in 719ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 169ms
+ ✓ Compiled in 216ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 31ms
+ ✓ Compiled in 671ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 80ms
+ ✓ Compiled in 354ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 428ms
+ ✓ Compiled in 1181ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 55ms
+ ✓ Compiled in 521ms (1420 modules)
+ GET /treatments/dental-fillings 200 in 417ms
+ ✓ Compiled in 3s (2447 modules)
+ GET /treatments/dental-fillings 200 in 296ms
+ ✓ Compiled in 1577ms (2447 modules)
+ GET /treatments/dental-fillings 200 in 180ms
+ ✓ Compiled in 897ms (2447 modules)
+ GET /treatments/dental-fillings 200 in 272ms

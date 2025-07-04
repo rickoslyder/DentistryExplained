@@ -19,7 +19,8 @@ const createBookmarkHandler = compose(
   // Validate request body
   const { data: params, error: validationError } = validateRequestBody(
     body,
-    createBookmarkSchema
+    createBookmarkSchema,
+    context.requestId
   )
   
   if (validationError) {
@@ -38,7 +39,7 @@ const createBookmarkHandler = compose(
     .single()
 
   if (checkError && checkError.code !== 'PGRST116') {
-    return mapDatabaseError(checkError)
+    return mapDatabaseError(checkError, 'check_bookmark', context.requestId)
   }
 
   if (existing) {
@@ -60,7 +61,7 @@ const createBookmarkHandler = compose(
     .single()
 
   if (error) {
-    return mapDatabaseError(error)
+    return mapDatabaseError(error, 'create_bookmark', context.requestId)
   }
 
   return NextResponse.json({ 
@@ -84,7 +85,8 @@ const getBookmarksHandler = withAuth(async (request: NextRequest, context) => {
   // Validate query parameters
   const { data: params, error: validationError } = validateQueryParams(
     searchParams,
-    getBookmarksSchema
+    getBookmarksSchema,
+    context.requestId
   )
   
   if (validationError) {
@@ -108,7 +110,7 @@ const getBookmarksHandler = withAuth(async (request: NextRequest, context) => {
     .range(offset, offset + limit - 1)
 
   if (error) {
-    return mapDatabaseError(error)
+    return mapDatabaseError(error, 'fetch_bookmarks', context.requestId)
   }
 
   return NextResponse.json({ 
@@ -158,7 +160,7 @@ const deleteBookmarkHandler = compose(
     if (checkError.code === 'PGRST116') {
       return ApiErrors.notFound('Bookmark')
     }
-    return mapDatabaseError(checkError)
+    return mapDatabaseError(checkError, 'check_bookmark_exists', context.requestId)
   }
 
   // Delete bookmark
@@ -169,7 +171,7 @@ const deleteBookmarkHandler = compose(
     .eq('article_slug', articleSlug)
 
   if (error) {
-    return mapDatabaseError(error)
+    return mapDatabaseError(error, 'delete_bookmark', context.requestId)
   }
 
   return NextResponse.json({ 
