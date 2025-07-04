@@ -48,8 +48,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <OptimizedImage
-                  // src="/placeholder.svg?height=600&width=800"
-                  src="/images/hero-image.jpg?height=600&width=800"
+                  src="/images/hero.webp"
                   alt="Happy family smiling showing healthy teeth - dental health concept"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

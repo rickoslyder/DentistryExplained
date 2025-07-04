@@ -63,7 +63,8 @@ async function getArticle(category: string, slug: string) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const article = await getArticle(params.category, params.slug)
+  const { category, slug } = await params
+  const article = await getArticle(category, slug)
   
   if (!article) {
     return {
@@ -94,7 +95,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function ArticlePage({ params }: PageProps) {
-  const article = await getArticle(params.category, params.slug)
+  const { category, slug } = await params
+  const article = await getArticle(category, slug)
   
   if (!article) {
     notFound()

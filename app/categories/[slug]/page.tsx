@@ -74,11 +74,12 @@ async function getCategoryWithArticles(slug: string) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params
   const supabase = await createServerSupabaseClient()
   const { data: category } = await supabase
     .from('categories')
     .select('name, description')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single()
   
   if (!category) {
@@ -95,7 +96,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-  const category = await getCategoryWithArticles(params.slug)
+  const { slug } = await params
+  const category = await getCategoryWithArticles(slug)
   
   if (!category) {
     notFound()

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 
 export interface ApiError {
   error: string
@@ -63,6 +64,11 @@ export class ApiErrors {
   // 409 Conflict
   static conflict(message: string = 'Conflict', details?: any, requestId?: string) {
     return this.createError(message, 'CONFLICT', 409, details, requestId)
+  }
+
+  // 409 Conflict - Duplicate resource
+  static duplicate(resource: string, field: string, requestId?: string) {
+    return this.conflict(`${resource} with this ${field} already exists`, { field }, requestId)
   }
 
   // 413 Payload Too Large
@@ -208,3 +214,67 @@ export function getRequestId(request: Request): string {
   return request.headers.get('x-request-id') || 
          `req_${Date.now()}_${Math.random().toString(36).substring(7)}`
 }
+
+// Additional helper functions for API routes
+
+// Pagination schema for consistent pagination across endpoints
+export const paginationSchema = z.object({
+  limit: z.coerce.number().min(1).max(100).default(20),
+  offset: z.coerce.number().min(0).default(0),
+})
+
+// Validate request body against a Zod schema
+export function validateRequestBody<T>(
+  body: unknown,
+  schema: z.ZodSchema<T>
+): { data: T; error: null } | { data: null; error: NextResponse<ApiError> } {
+  try {
+    const data = schema.parse(body)
+    return { data, error: null }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { 
+        data: null, 
+        error: ApiErrors.fromValidationError(error, getRequestId(new Request(''))) 
+      }
+    }
+    return { 
+      data: null, 
+      error: ApiErrors.internal(error, 'Validation error', getRequestId(new Request(''))) 
+    }
+  }
+}
+
+// Validate query parameters against a Zod schema
+export function validateQueryParams<T>(
+  searchParams: URLSearchParams,
+  schema: z.ZodSchema<T>
+): { data: T; error: null } | { data: null; error: NextResponse<ApiError> } {
+  try {
+    // Convert URLSearchParams to object
+    const params: Record<string, string> = {}
+    searchParams.forEach((value, key) => {
+      params[key] = value
+    })
+    
+    const data = schema.parse(params)
+    return { data, error: null }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return { 
+        data: null, 
+        error: ApiErrors.fromValidationError(error, getRequestId(new Request(''))) 
+      }
+    }
+    return { 
+      data: null, 
+      error: ApiErrors.internal(error, 'Query validation error', getRequestId(new Request(''))) 
+    }
+  }
+}
+
+// Map database errors to appropriate API errors
+export function mapDatabaseError(error: any, operation?: string): NextResponse<ApiError> {
+  return ApiErrors.fromDatabaseError(error, operation || 'database operation', getRequestId(new Request('')))
+}
+
