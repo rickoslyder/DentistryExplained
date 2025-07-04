@@ -246,6 +246,22 @@ This is a startup project with tight MVP deadline (July 1st, 2025). The platform
 - `resend`: Email service (optional, fails gracefully)
 - React 19.1.0 with legacy peer deps flag
 
+### Security Configuration (Jan 4, 2025)
+Added comprehensive security headers in `next.config.mjs`:
+- **Content Security Policy (CSP)**: Restricts resource loading to trusted sources
+- **Strict-Transport-Security**: Forces HTTPS with 2-year max-age
+- **X-Frame-Options**: Prevents clickjacking attacks
+- **X-Content-Type-Options**: Prevents MIME type sniffing
+- **Referrer-Policy**: Controls referrer information sent
+- **Permissions-Policy**: Disables unused browser features
+- **CORS Headers**: Configured for API routes
+
+Allowed CSP domains:
+- Clerk authentication: `https://clerk.accounts.dev`
+- AI proxy: `https://openai-proxy-0l7e.onrender.com`
+- Supabase: `https://*.supabase.co`
+- Resend email: `https://api.resend.com`
+
 ### Known Issues
 1. **React Version Conflicts**: Some packages expect React 18, using `--legacy-peer-deps`
 2. **Build Warnings**: Type checking and linting temporarily skipped during build

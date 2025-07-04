@@ -126,3 +126,66 @@ Suggestions error: {
  ○ Compiling /emergency ...
  ✓ Compiled /emergency in 2.4s (2085 modules)
  GET /emergency 200 in 2926ms
+ ✓ Compiled in 1454ms (993 modules)
+ ✓ Compiled in 1284ms (993 modules)
+ ✓ Compiled in 1275ms (993 modules)
+ ✓ Compiled in 1289ms (993 modules)
+ ✓ Compiled in 473ms (993 modules)
+ ✓ Compiled in 2.4s (993 modules)
+ ✓ Compiled in 2.4s (993 modules)
+ ✓ Compiled in 665ms (993 modules)
+ ✓ Compiled in 357ms (993 modules)
+ ✓ Compiled in 845ms (993 modules)
+ ✓ Compiled in 666ms (993 modules)
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.50.210:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 4.3s
+ ✓ Compiled /middleware in 484ms (224 modules)
+ ○ Compiling / ...
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (150kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled / in 7.3s (1653 modules)
+ HEAD / 200 in 9086ms
+ ✓ Compiled in 1829ms (675 modules)
+ ○ Compiling /api/search ...
+ ✓ Compiled /api/search in 866ms (1765 modules)
+ HEAD /api/search?q=test 200 in 1725ms
+ ✓ Compiled in 385ms (675 modules)
+ ✓ Compiled in 463ms (675 modules)
+ ✓ Compiled in 532ms (675 modules)
+ ✓ Compiled /api/search in 245ms (318 modules)
+[API Error] INVALID_INPUT: Validation failed {
+  status: 400,
+  details: [
+    { field: 'q', message: 'Expected string, received null' },
+    { field: 'category', message: 'Expected string, received null' },
+    {
+      field: 'limit',
+      message: 'Number must be greater than or equal to 1'
+    }
+  ],
+  requestId: 'req_1751631985468_8wx3ys',
+  timestamp: '2025-07-04T12:26:25.469Z'
+}
+ GET /api/search 400 in 643ms
+[API Error] INVALID_INPUT: Validation failed {
+  status: 400,
+  details: [
+    { field: 'category', message: 'Expected string, received null' },
+    {
+      field: 'limit',
+      message: 'Number must be greater than or equal to 1'
+    }
+  ],
+  requestId: 'req_1751631997575_hzq3k',
+  timestamp: '2025-07-04T12:26:37.575Z'
+}
+ GET /api/search?q=dental 400 in 176ms
+ ✓ Compiled in 2.4s (993 modules)
+ ✓ Compiled in 1882ms (993 modules)
+ GET /api/search?q=dental 200 in 472ms
+ ✓ Compiled in 1136ms (675 modules)

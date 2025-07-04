@@ -1,210 +1,211 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
-import { createRouteSupabaseClient, getCurrentUserProfile } from '@/lib/supabase-auth'
 import { generateId } from '@/lib/utils'
 import { generateAIResponse } from '@/lib/litellm'
+import { ApiErrors, getRequestId } from '@/lib/api-errors'
+import { withAuth, withRateLimit, withBodyLimit, compose } from '@/lib/api-middleware'
+import { z } from 'zod'
 
-export async function POST(request: NextRequest) {
+// Schema for chat message
+const chatMessageSchema = z.object({
+  message: z.string().min(1).max(4000),
+  sessionId: z.string().optional(),
+  pageContext: z.object({
+    title: z.string().optional(),
+    url: z.string().optional(),
+    category: z.string().optional()
+  }).optional(),
+  stream: z.boolean().optional().default(false)
+})
+
+const chatHandler = compose(
+  withRateLimit(60000, 30), // 30 messages per minute
+  withBodyLimit(1024 * 50), // 50KB limit
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
-    const { userId } = auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    // Get the user's profile to get their database ID
-    const userProfile = await getCurrentUserProfile()
-    if (!userProfile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
-    }
-
-    const { message, sessionId, pageContext, stream = false } = await request.json()
-
-    if (!message) {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 })
-    }
-
-    // Create authenticated Supabase client
-    const supabase = await createRouteSupabaseClient()
+    const body = await request.json()
+    
+    // Validate request body
+    const params = chatMessageSchema.parse(body)
+    const { message, sessionId, pageContext, stream } = params
+    const { userProfile, supabase } = context
 
     // Get or create chat session
     let chatSession
     if (sessionId) {
-      const { data: existingSession } = await supabase
+      const { data: existingSession, error: sessionError } = await supabase
         .from('chat_sessions')
         .select('*')
         .eq('session_id', sessionId)
         .eq('user_id', userProfile.id)
         .single()
 
-      if (existingSession) {
-        chatSession = existingSession
-        
-        // Update last activity
-        await supabase
-          .from('chat_sessions')
-          .update({ last_activity: new Date().toISOString() })
-          .eq('id', existingSession.id)
+      if (sessionError && sessionError.code !== 'PGRST116') {
+        return ApiErrors.fromDatabaseError(sessionError, 'fetch_session', requestId)
       }
+
+      chatSession = existingSession
     }
 
+    // Create new session if needed
     if (!chatSession) {
-      // Create new session
-      const newSessionId = generateId()
-      const { data: newSession, error } = await supabase
+      const newSessionId = sessionId || generateId()
+      const { data: newSession, error: createError } = await supabase
         .from('chat_sessions')
-        .insert([
-          {
-            user_id: userProfile.id,
-            session_id: newSessionId,
-            page_context: pageContext,
-          },
-        ])
+        .insert({
+          session_id: newSessionId,
+          user_id: userProfile.id,
+          metadata: pageContext || {},
+          expires_at: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString() // 180 days
+        })
         .select()
         .single()
 
-      if (error) {
-        throw error
+      if (createError) {
+        return ApiErrors.fromDatabaseError(createError, 'create_session', requestId)
       }
 
       chatSession = newSession
     }
 
-    // Save user message
-    const { data: userMsg } = await supabase
+    // Get recent messages for context
+    const { data: recentMessages, error: messagesError } = await supabase
       .from('chat_messages')
-      .insert([
-        {
-          session_id: chatSession.id,
-          role: 'user',
-          content: message,
-        },
-      ])
-      .select()
-      .single()
-
-    // Get recent chat history for context
-    const { data: chatHistory } = await supabase
-      .from('chat_messages')
-      .select('*')
-      .eq('session_id', chatSession.id)
-      .order('created_at', { ascending: true })
+      .select('role, content')
+      .eq('session_id', chatSession.session_id)
+      .order('created_at', { ascending: false })
       .limit(10)
 
-    // Generate AI response using LiteLLM
-    const aiResponse = await generateAIResponse(message, chatHistory || [], pageContext, stream)
-
-    // Handle streaming response
-    if (stream && aiResponse instanceof ReadableStream) {
-      // Create a TransformStream to capture the response for saving
-      let fullResponse = ''
-      const transformStream = new TransformStream({
-        transform(chunk, controller) {
-          const text = new TextDecoder().decode(chunk)
-          fullResponse += text
-          controller.enqueue(chunk)
-        },
-        async flush() {
-          // Save the complete AI response after streaming is done
-          await supabase
-            .from('chat_messages')
-            .insert([
-              {
-                session_id: chatSession.id,
-                role: 'assistant',
-                content: fullResponse,
-              },
-            ])
-        },
-      })
-
-      // Return streaming response with session info in headers
-      return new Response(aiResponse.pipeThrough(transformStream), {
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-          'X-Session-Id': chatSession.session_id,
-        },
-      })
+    if (messagesError) {
+      return ApiErrors.fromDatabaseError(messagesError, 'fetch_messages', requestId)
     }
 
-    // Save non-streaming AI response
-    const { data: aiMsg } = await supabase
+    // Store user message
+    const { error: insertError } = await supabase
       .from('chat_messages')
-      .insert([
-        {
-          session_id: chatSession.id,
-          role: 'assistant',
-          content: aiResponse as string,
-        },
-      ])
-      .select()
-      .single()
+      .insert({
+        session_id: chatSession.session_id,
+        role: 'user',
+        content: message,
+        metadata: { pageContext }
+      })
 
-    return NextResponse.json({
-      response: aiResponse,
-      sessionId: chatSession.session_id,
-    })
+    if (insertError) {
+      return ApiErrors.fromDatabaseError(insertError, 'store_user_message', requestId)
+    }
+
+    // Build conversation history
+    const conversationHistory = recentMessages
+      ?.reverse()
+      .map(msg => ({
+        role: msg.role as 'user' | 'assistant',
+        content: msg.content
+      })) || []
+
+    // Add current message
+    conversationHistory.push({ role: 'user', content: message })
+
+    // Generate AI response
+    try {
+      const aiResponse = await generateAIResponse({
+        messages: conversationHistory,
+        stream,
+        context: {
+          userType: userProfile.user_type,
+          pageContext,
+          sessionId: chatSession.session_id
+        }
+      })
+
+      // Store assistant message (non-blocking)
+      if (!stream) {
+        supabase
+          .from('chat_messages')
+          .insert({
+            session_id: chatSession.session_id,
+            role: 'assistant',
+            content: aiResponse
+          })
+          .then(({ error }) => {
+            if (error) {
+              console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
+            }
+          })
+      }
+
+      return NextResponse.json({
+        message: aiResponse,
+        sessionId: chatSession.session_id
+      })
+    } catch (error: any) {
+      // Handle LiteLLM specific errors
+      if (error.status === 429) {
+        return ApiErrors.rateLimit(60, requestId)
+      }
+      
+      return ApiErrors.fromExternalError('LiteLLM', error, requestId)
+    }
   } catch (error) {
-    console.error('Chat API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    if (error instanceof z.ZodError) {
+      return ApiErrors.fromValidationError(error, requestId)
+    }
+    return ApiErrors.internal(error, 'chat', requestId)
   }
-}
+})
 
+export const POST = chatHandler
 
-export async function GET(request: NextRequest) {
+// GET endpoint for retrieving chat history
+const getChatHistoryHandler = compose(
+  withRateLimit(60000, 100),
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
-    const { userId } = auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    // Get the user's profile to get their database ID
-    const userProfile = await getCurrentUserProfile()
-    if (!userProfile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
-    }
-
+    const { userProfile, supabase } = context
     const { searchParams } = new URL(request.url)
     const sessionId = searchParams.get('sessionId')
 
     if (!sessionId) {
-      return NextResponse.json({ error: 'Session ID is required' }, { status: 400 })
+      return ApiErrors.badRequest('Session ID is required', undefined, requestId)
     }
 
-    // Create authenticated Supabase client
-    const supabase = await createRouteSupabaseClient()
-
-    // Get chat history
-    const { data: session } = await supabase
+    // Verify session belongs to user
+    const { data: session, error: sessionError } = await supabase
       .from('chat_sessions')
-      .select('*')
+      .select('session_id')
       .eq('session_id', sessionId)
       .eq('user_id', userProfile.id)
       .single()
 
-    if (!session) {
-      return NextResponse.json({ error: 'Session not found' }, { status: 404 })
+    if (sessionError) {
+      if (sessionError.code === 'PGRST116') {
+        return ApiErrors.notFound('Chat session', requestId)
+      }
+      return ApiErrors.fromDatabaseError(sessionError, 'verify_session', requestId)
     }
 
-    const { data: messages } = await supabase
+    // Get messages
+    const { data: messages, error: messagesError } = await supabase
       .from('chat_messages')
       .select('*')
-      .eq('session_id', session.id)
+      .eq('session_id', sessionId)
       .order('created_at', { ascending: true })
 
+    if (messagesError) {
+      return ApiErrors.fromDatabaseError(messagesError, 'fetch_messages', requestId)
+    }
+
     return NextResponse.json({
-      session,
-      messages: messages || [],
+      sessionId,
+      messages: messages || []
     })
   } catch (error) {
-    console.error('Chat history API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return ApiErrors.internal(error, 'get_chat_history', requestId)
   }
-}
+})
+
+export const GET = getChatHistoryHandler

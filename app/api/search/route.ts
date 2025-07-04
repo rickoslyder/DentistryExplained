@@ -1,19 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
+import { ApiErrors, getRequestId } from '@/lib/api-errors'
+import { withOptionalAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { z } from 'zod'
 
-export async function GET(request: NextRequest) {
+// Validation schema for search parameters
+const searchParamsSchema = z.object({
+  q: z.string().min(1).max(100),
+  category: z.string().nullable().optional(),
+  limit: z.coerce.number().min(1).max(100).optional().default(20),
+  offset: z.coerce.number().min(0).optional().default(0)
+})
+
+const searchHandler = compose(
+  withRateLimit(60000, 100), // 100 requests per minute
+  withOptionalAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
     const { searchParams } = new URL(request.url)
-    const query = searchParams.get('q')
-    const category = searchParams.get('category')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const offset = parseInt(searchParams.get('offset') || '0')
     
-    if (!query || query.length < 2) {
-      return NextResponse.json({ results: [], suggestions: [] })
+    // Validate query parameters
+    const params = searchParamsSchema.parse({
+      q: searchParams.get('q'),
+      category: searchParams.get('category') || undefined,
+      limit: searchParams.get('limit') || undefined,
+      offset: searchParams.get('offset') || undefined
+    })
+    
+    const { q: query, category, limit, offset } = params
+    
+    // Return empty results for short queries
+    if (query.length < 2) {
+      return NextResponse.json({ 
+        results: [], 
+        suggestions: [],
+        totalResults: 0,
+        hasMore: false
+      })
     }
     
-    const supabase = await createServerSupabaseClient()
+    const supabase = context.supabase!
     
     // Use our PostgreSQL full-text search function
     const { data: searchResults, error: searchError } = await supabase
@@ -25,32 +53,45 @@ export async function GET(request: NextRequest) {
       })
     
     if (searchError) {
-      console.error('Search error:', searchError)
-      return NextResponse.json({ error: 'Search failed' }, { status: 500 })
+      return ApiErrors.fromDatabaseError(searchError, 'search_content', requestId)
     }
     
     // Get search suggestions for autocomplete
-    const { data: suggestions, error: suggestionsError } = await supabase
-      .rpc('get_search_suggestions', {
-        partial_query: query,
-        suggestion_limit: 5
-      })
-    
-    if (suggestionsError) {
-      console.error('Suggestions error:', suggestionsError)
+    let suggestions = []
+    try {
+      const { data, error } = await supabase
+        .rpc('get_search_suggestions', {
+          partial_query: query,
+          suggestion_limit: 5
+        })
+      
+      if (!error && data) {
+        suggestions = data
+      }
+    } catch (error) {
+      // Log but don't fail the request if suggestions fail
+      console.error(`[Search ${requestId}] Suggestions error:`, error)
     }
     
-    // Track the search query for analytics
-    const { error: trackingError } = await supabase
-      .from('search_queries')
-      .insert({
-        query: query,
-        results_count: searchResults?.length || 0,
-        session_id: request.headers.get('x-session-id') || null
-      })
-    
-    if (trackingError) {
-      console.error('Search tracking error:', trackingError)
+    // Track the search query for analytics (non-blocking)
+    if (context.userId) {
+      supabase
+        .from('search_queries')
+        .insert({
+          query: query,
+          results_count: searchResults?.length || 0,
+          session_id: request.headers.get('x-session-id') || null,
+          user_id: context.userId,
+          category: category
+        })
+        .then(({ error }) => {
+          if (error) {
+            console.error(`[Search ${requestId}] Tracking error:`, error)
+          }
+        })
+        .catch(error => {
+          console.error(`[Search ${requestId}] Tracking error:`, error)
+        })
     }
     
     // Transform results to match frontend expectations
@@ -58,56 +99,77 @@ export async function GET(request: NextRequest) {
       id: result.id,
       title: result.title,
       description: result.excerpt,
-      type: result.content_type,
+      type: result.type,
       category: result.category,
-      url: result.url_path,
+      slug: result.slug,
       relevance: result.rank
     })) || []
     
     return NextResponse.json({ 
       results: transformedResults,
-      suggestions: suggestions || [],
+      suggestions: suggestions,
       totalResults: transformedResults.length,
       hasMore: transformedResults.length === limit
     })
-    
   } catch (error) {
-    console.error('Search error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    if (error instanceof z.ZodError) {
+      return ApiErrors.fromValidationError(error, requestId)
+    }
+    return ApiErrors.internal(error, 'search', requestId)
   }
-}
+})
 
-export async function POST(request: NextRequest) {
+export const GET = searchHandler
+
+// Schema for click tracking
+const clickTrackingSchema = z.object({
+  query: z.string().min(1),
+  resultId: z.string().uuid(),
+  resultType: z.enum(['article', 'glossary', 'practice']),
+  position: z.number().min(0).optional()
+})
+
+const clickTrackingHandler = compose(
+  withRateLimit(60000, 200), // 200 requests per minute
+  withOptionalAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
     const body = await request.json()
-    const { query, clicked_result_id, clicked_result } = body
     
-    if (!query) {
-      return NextResponse.json({ error: 'Query is required' }, { status: 400 })
-    }
+    // Validate request body
+    const params = clickTrackingSchema.parse(body)
+    const { query, resultId, resultType, position } = params
     
-    const supabase = await createServerSupabaseClient()
+    const supabase = context.supabase!
     
-    // Update the search query record with the clicked result
+    // Update the most recent search query record with the clicked result
     const { error } = await supabase
       .from('search_queries')
       .update({
-        clicked_result_id: clicked_result_id,
-        clicked_result: clicked_result
+        clicked_result_id: resultId,
+        clicked_result_type: resultType
       })
       .eq('query', query)
+      .eq('user_id', context.userId || null)
       .order('created_at', { ascending: false })
       .limit(1)
     
     if (error) {
-      console.error('Failed to update search query:', error)
-      return NextResponse.json({ error: 'Failed to track click' }, { status: 500 })
+      return ApiErrors.fromDatabaseError(error, 'update_search_click', requestId)
     }
     
-    return NextResponse.json({ success: true })
-    
+    return NextResponse.json({ 
+      success: true,
+      message: 'Click tracked successfully'
+    })
   } catch (error) {
-    console.error('Search tracking error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    if (error instanceof z.ZodError) {
+      return ApiErrors.fromValidationError(error, requestId)
+    }
+    return ApiErrors.internal(error, 'click_tracking', requestId)
   }
-}
+})
+
+export const POST = clickTrackingHandler

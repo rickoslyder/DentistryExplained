@@ -1,154 +1,181 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
-import { createRouteSupabaseClient, getCurrentUserProfile } from '@/lib/supabase-auth'
+import { ApiErrors, validateRequestBody, validateQueryParams, paginationSchema, mapDatabaseError } from '@/lib/api-errors'
+import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { z } from 'zod'
 
-export async function POST(request: NextRequest) {
-  try {
-    const { userId } = auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+// Schema for creating bookmark
+const createBookmarkSchema = z.object({
+  articleSlug: z.string().min(1).max(255),
+  articleTitle: z.string().min(1).max(500),
+  articleCategory: z.string().optional(),
+})
 
-    // Get the user's profile to get their database ID
-    const userProfile = await getCurrentUserProfile()
-    if (!userProfile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
-    }
-
-    const { articleSlug, articleTitle, articleCategory } = await request.json()
-
-    if (!articleSlug) {
-      return NextResponse.json({ error: 'Article slug is required' }, { status: 400 })
-    }
-
-    // Create authenticated Supabase client
-    const supabase = await createRouteSupabaseClient()
-
-    // Check if bookmark already exists
-    const { data: existing } = await supabase
-      .from('bookmarks')
-      .select('id')
-      .eq('user_id', userProfile.id)
-      .eq('article_slug', articleSlug)
-      .single()
-
-    if (existing) {
-      return NextResponse.json({ error: 'Article already bookmarked' }, { status: 409 })
-    }
-
-    // Create bookmark
-    const { error } = await supabase
-      .from('bookmarks')
-      .insert([
-        {
-          user_id: userProfile.id,
-          article_slug: articleSlug,
-          article_title: articleTitle,
-          article_category: articleCategory,
-        },
-      ])
-
-    if (error) {
-      throw error
-    }
-
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Bookmark creation error:', error)
-    return NextResponse.json(
-      { error: 'Failed to create bookmark' },
-      { status: 500 }
-    )
+const createBookmarkHandler = compose(
+  withRateLimit(60000, 50), // 50 bookmarks per minute
+  withAuth
+)(async (request: NextRequest, context) => {
+  const body = await request.json()
+  
+  // Validate request body
+  const { data: params, error: validationError } = validateRequestBody(
+    body,
+    createBookmarkSchema
+  )
+  
+  if (validationError) {
+    return validationError
   }
-}
+  
+  const { articleSlug, articleTitle, articleCategory } = params
+  const { userProfile, supabase } = context
 
-export async function GET(request: NextRequest) {
-  try {
-    const { userId } = auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+  // Check if bookmark already exists
+  const { data: existing, error: checkError } = await supabase
+    .from('bookmarks')
+    .select('id')
+    .eq('user_id', userProfile.id)
+    .eq('article_slug', articleSlug)
+    .single()
 
-    // Get the user's profile to get their database ID
-    const userProfile = await getCurrentUserProfile()
-    if (!userProfile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
-    }
-
-    const { searchParams } = new URL(request.url)
-    const category = searchParams.get('category')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const offset = parseInt(searchParams.get('offset') || '0')
-
-    // Create authenticated Supabase client
-    const supabase = await createRouteSupabaseClient()
-
-    let query = supabase
-      .from('bookmarks')
-      .select('*')
-      .eq('user_id', userProfile.id)
-      .order('created_at', { ascending: false })
-
-    if (category) {
-      query = query.eq('article_category', category)
-    }
-
-    const { data: bookmarks, error } = await query
-      .range(offset, offset + limit - 1)
-
-    if (error) {
-      throw error
-    }
-
-    return NextResponse.json({ bookmarks })
-  } catch (error) {
-    console.error('Bookmarks fetch error:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch bookmarks' },
-      { status: 500 }
-    )
+  if (checkError && checkError.code !== 'PGRST116') {
+    return mapDatabaseError(checkError)
   }
-}
 
-export async function DELETE(request: NextRequest) {
-  try {
-    const { userId } = auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    // Get the user's profile to get their database ID
-    const userProfile = await getCurrentUserProfile()
-    if (!userProfile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
-    }
-
-    const { searchParams } = new URL(request.url)
-    const articleSlug = searchParams.get('articleSlug')
-
-    if (!articleSlug) {
-      return NextResponse.json({ error: 'Article slug is required' }, { status: 400 })
-    }
-
-    // Create authenticated Supabase client
-    const supabase = await createRouteSupabaseClient()
-
-    const { error } = await supabase
-      .from('bookmarks')
-      .delete()
-      .eq('user_id', userProfile.id)
-      .eq('article_slug', articleSlug)
-
-    if (error) {
-      throw error
-    }
-
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Bookmark deletion error:', error)
-    return NextResponse.json(
-      { error: 'Failed to delete bookmark' },
-      { status: 500 }
-    )
+  if (existing) {
+    return ApiErrors.duplicate('Bookmark', 'article')
   }
-}
+
+  // Create bookmark
+  const { data: bookmark, error } = await supabase
+    .from('bookmarks')
+    .insert([
+      {
+        user_id: userProfile.id,
+        article_slug: articleSlug,
+        article_title: articleTitle,
+        article_category: articleCategory,
+      },
+    ])
+    .select()
+    .single()
+
+  if (error) {
+    return mapDatabaseError(error)
+  }
+
+  return NextResponse.json({ 
+    success: true,
+    bookmark,
+    message: 'Bookmark created successfully'
+  })
+})
+
+export const POST = createBookmarkHandler
+
+// Schema for fetching bookmarks
+const getBookmarksSchema = z.object({
+  category: z.string().optional(),
+  ...paginationSchema.shape,
+})
+
+const getBookmarksHandler = withAuth(async (request: NextRequest, context) => {
+  const { searchParams } = new URL(request.url)
+  
+  // Validate query parameters
+  const { data: params, error: validationError } = validateQueryParams(
+    searchParams,
+    getBookmarksSchema
+  )
+  
+  if (validationError) {
+    return validationError
+  }
+  
+  const { category, limit, offset } = params
+  const { userProfile, supabase } = context
+
+  let query = supabase
+    .from('bookmarks')
+    .select('*, count:id.count()', { count: 'exact', head: false })
+    .eq('user_id', userProfile.id)
+    .order('created_at', { ascending: false })
+
+  if (category) {
+    query = query.eq('article_category', category)
+  }
+
+  const { data: bookmarks, error, count } = await query
+    .range(offset, offset + limit - 1)
+
+  if (error) {
+    return mapDatabaseError(error)
+  }
+
+  return NextResponse.json({ 
+    bookmarks: bookmarks || [],
+    total: count || 0,
+    limit,
+    offset,
+    hasMore: (count || 0) > offset + limit
+  })
+})
+
+export const GET = getBookmarksHandler
+
+// Schema for deleting bookmark
+const deleteBookmarkSchema = z.object({
+  articleSlug: z.string().min(1),
+})
+
+const deleteBookmarkHandler = compose(
+  withRateLimit(60000, 50), // 50 deletions per minute
+  withAuth
+)(async (request: NextRequest, context) => {
+  const { searchParams } = new URL(request.url)
+  
+  // Validate query parameters
+  const { data: params, error: validationError } = validateQueryParams(
+    searchParams,
+    deleteBookmarkSchema
+  )
+  
+  if (validationError) {
+    return validationError
+  }
+  
+  const { articleSlug } = params
+  const { userProfile, supabase } = context
+
+  // Check if bookmark exists first
+  const { data: existing, error: checkError } = await supabase
+    .from('bookmarks')
+    .select('id')
+    .eq('user_id', userProfile.id)
+    .eq('article_slug', articleSlug)
+    .single()
+
+  if (checkError) {
+    if (checkError.code === 'PGRST116') {
+      return ApiErrors.notFound('Bookmark')
+    }
+    return mapDatabaseError(checkError)
+  }
+
+  // Delete bookmark
+  const { error } = await supabase
+    .from('bookmarks')
+    .delete()
+    .eq('user_id', userProfile.id)
+    .eq('article_slug', articleSlug)
+
+  if (error) {
+    return mapDatabaseError(error)
+  }
+
+  return NextResponse.json({ 
+    success: true,
+    message: 'Bookmark deleted successfully'
+  })
+})
+
+export const DELETE = deleteBookmarkHandler
