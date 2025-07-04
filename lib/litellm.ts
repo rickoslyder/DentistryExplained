@@ -1,6 +1,6 @@
 import { ChatMessage } from "@/types/database"
 import { liteLLMConfig, isLiteLLMConfigured, getModelConfig } from "@/lib/config/litellm"
-import { dentalKnowledgeBase, detectEmergency, categorizeQuery } from "@/lib/ai/dental-knowledge"
+import { dentalKnowledgeBase, detectEmergency, categorizeQuery, generateSystemPrompt } from "@/lib/ai/dental-knowledge"
 
 interface LiteLLMResponse {
   choices: Array<{
@@ -35,11 +35,22 @@ interface DentalContext {
   url?: string
 }
 
+export interface UserContext {
+  user_type: 'patient' | 'professional'
+  preferences?: {
+    responseStyle: 'concise' | 'detailed'
+    complexityLevel: 'basic' | 'advanced'
+    includeCosts: boolean
+    autoSuggestFollowUp: boolean
+  }
+}
+
 export async function generateAIResponse(
   message: string,
   chatHistory: ChatMessage[] = [],
   pageContext?: DentalContext,
-  stream: boolean = false
+  stream: boolean = false,
+  userContext?: UserContext
 ): Promise<string | ReadableStream> {
   // Check if LiteLLM is configured
   if (!isLiteLLMConfigured()) {
@@ -51,9 +62,10 @@ export async function generateAIResponse(
     const isEmergency = detectEmergency(message)
     const queryCategory = categorizeQuery(message)
     
-    // Build conversation history
+    // Build conversation history with dynamic system prompt
+    const systemPrompt = generateSystemPrompt(userContext)
     const messages = [
-      { role: "system", content: dentalKnowledgeBase.systemPrompt },
+      { role: "system", content: systemPrompt },
     ]
 
     // Add contextual prompts based on query type

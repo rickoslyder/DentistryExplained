@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateId } from '@/lib/utils'
-import { generateAIResponse } from '@/lib/litellm'
+import { generateAIResponse, UserContext } from '@/lib/litellm'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { withAuth, withRateLimit, withBodyLimit, compose } from '@/lib/api-middleware'
 import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
+import { currentUser } from '@clerk/nextjs/server'
 
 // Schema for chat message
 const chatMessageSchema = z.object({
@@ -111,13 +112,29 @@ const chatHandler = compose(
     // Add current message
     conversationHistory.push({ role: 'user', content: message })
 
+    // Get user preferences from Clerk
+    const clerkUser = await currentUser()
+    const userPreferences = clerkUser?.unsafeMetadata?.settings?.aiAssistant
+    
+    // Build user context for AI
+    const userContext: UserContext = {
+      user_type: userProfile.user_type,
+      preferences: userPreferences ? {
+        responseStyle: userPreferences.responseStyle || 'concise',
+        complexityLevel: userPreferences.complexityLevel || 'basic',
+        includeCosts: userPreferences.includeCosts || false,
+        autoSuggestFollowUp: userPreferences.autoSuggestFollowUp !== false
+      } : undefined
+    }
+
     // Generate AI response
     try {
       const aiResponse = await generateAIResponse(
         message,
         conversationHistory.slice(0, -1), // Exclude the current message we just added
         pageContext,
-        stream
+        stream,
+        userContext
       )
 
       // Handle streaming response

@@ -22,7 +22,8 @@ import {
   MapPin,
   Save,
   Phone,
-  AlertCircle
+  AlertCircle,
+  Bot
 } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -36,6 +37,12 @@ interface UserSettings {
   privacy: {
     profileVisibility: 'public' | 'professionals' | 'private'
     shareDataForResearch: boolean
+  }
+  aiAssistant: {
+    responseStyle: 'concise' | 'detailed'
+    complexityLevel: 'basic' | 'advanced'
+    includeCosts: boolean
+    autoSuggestFollowUp: boolean
   }
   professional?: {
     gdcNumber: string
@@ -67,6 +74,12 @@ export default function SettingsPage() {
     privacy: {
       profileVisibility: 'private',
       shareDataForResearch: false,
+    },
+    aiAssistant: {
+      responseStyle: 'concise',
+      complexityLevel: 'basic',
+      includeCosts: false,
+      autoSuggestFollowUp: true,
     },
     professional: {
       gdcNumber: '',
@@ -162,6 +175,10 @@ export default function SettingsPage() {
             <TabsTrigger value="privacy">
               <Lock className="w-4 h-4 mr-2" />
               Privacy
+            </TabsTrigger>
+            <TabsTrigger value="ai">
+              <Bot className="w-4 h-4 mr-2" />
+              AI Assistant
             </TabsTrigger>
             {isProfessional && (
               <TabsTrigger value="professional">
@@ -333,6 +350,101 @@ export default function SettingsPage() {
                     }
                   />
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="ai">
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Assistant Preferences</CardTitle>
+                <CardDescription>
+                  Customize how the AI dental assistant responds to your questions
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="response-style">Response Style</Label>
+                  <Select
+                    value={settings.aiAssistant.responseStyle}
+                    onValueChange={(value) => 
+                      updateSetting('aiAssistant', 'responseStyle', value)
+                    }
+                  >
+                    <SelectTrigger className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="concise">Concise (2-3 sentences)</SelectItem>
+                      <SelectItem value="detailed">Detailed (comprehensive answers)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Choose how much detail you want in responses
+                  </p>
+                </div>
+                
+                <div>
+                  <Label htmlFor="complexity">Language Complexity</Label>
+                  <Select
+                    value={settings.aiAssistant.complexityLevel}
+                    onValueChange={(value) => 
+                      updateSetting('aiAssistant', 'complexityLevel', value)
+                    }
+                  >
+                    <SelectTrigger className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="basic">Basic (simple language)</SelectItem>
+                      <SelectItem value="advanced">Advanced (medical terms explained)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-gray-500 mt-2">
+                    {isProfessional 
+                      ? "As a professional, you might prefer advanced terminology"
+                      : "We'll adjust the language complexity to match your preference"}
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="costs">Include Cost Information</Label>
+                    <p className="text-sm text-gray-500">
+                      Automatically mention NHS charges when relevant
+                    </p>
+                  </div>
+                  <Switch
+                    id="costs"
+                    checked={settings.aiAssistant.includeCosts}
+                    onCheckedChange={(checked) => 
+                      updateSetting('aiAssistant', 'includeCosts', checked)
+                    }
+                  />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="followup">Suggest Follow-up Questions</Label>
+                    <p className="text-sm text-gray-500">
+                      Show helpful related questions after each response
+                    </p>
+                  </div>
+                  <Switch
+                    id="followup"
+                    checked={settings.aiAssistant.autoSuggestFollowUp}
+                    onCheckedChange={(checked) => 
+                      updateSetting('aiAssistant', 'autoSuggestFollowUp', checked)
+                    }
+                  />
+                </div>
+                
+                <Alert>
+                  <Bot className="h-4 w-4" />
+                  <AlertDescription>
+                    These preferences help personalize your experience. You can always ask the AI to adjust its response style in any conversation.
+                  </AlertDescription>
+                </Alert>
               </CardContent>
             </Card>
           </TabsContent>

@@ -806,3 +806,92 @@ LiteLLM API error: Error: LiteLLM API error: 400 Bad Request
  GET /categories/dental-problems 200 in 2788ms
 (node:95316) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /treatments/dental-fillings 200 in 1739ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.2s (1413 modules)
+ GET /robots.txt?486570 404 in 2880ms
+ ○ Compiling /api/bookmarks ...
+ ✓ Compiled /api/chat in 962ms (1430 modules)
+ ✓ Compiled (1435 modules)
+ GET /treatments/dental-fillings 200 in 165ms
+ GET /categories/dental-problems 200 in 404ms
+ GET /api/bookmarks 200 in 4236ms
+Database error during fetch_messages: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "0qtnewyh8a8u5djx6hzro"'
+}
+[API Error] BAD_REQUEST: Invalid data format {
+  status: 400,
+  details: undefined,
+  requestId: 'req_1751654174603_4aul4b',
+  timestamp: '2025-07-04T18:36:14.703Z'
+}
+ GET /api/chat?sessionId=0qtnewyh8a8u5djx6hzro 400 in 3434ms
+ GET /api/bookmarks 200 in 1474ms
+ POST /api/chat 200 in 3610ms
+(node:98854) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1719ms (1412 modules)
+ ✓ Compiled in 1039ms (1412 modules)
+ ✓ Compiled in 884ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 177ms
+ GET /categories/dental-problems 200 in 514ms
+(node:24283) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 738ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 418ms
+ GET /categories/dental-problems 200 in 743ms
+(node:24928) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1740ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 682ms
+ GET /categories/dental-problems 200 in 1025ms
+(node:25710) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1313ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 647ms
+ GET /categories/dental-problems 200 in 954ms
+(node:26437) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 860ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 201ms
+ GET /categories/dental-problems 200 in 761ms
+(node:27850) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 2.2s (1432 modules)
+ GET /treatments/dental-fillings 200 in 893ms
+ GET /categories/dental-problems 200 in 1428ms
+(node:30966) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1524ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 1076ms
+ GET /categories/dental-problems 200 in 1435ms
+(node:32700) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 798ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 453ms
+ GET /categories/dental-problems 200 in 1042ms
+(node:33579) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 973ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 243ms
+ GET /categories/dental-problems 200 in 549ms
+(node:34408) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1602ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 1342ms
+ GET /categories/dental-problems 200 in 1641ms
+(node:35224) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1193ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 129ms
+ GET /categories/dental-problems 200 in 590ms
+(node:36663) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 931ms (1432 modules)
+ GET /treatments/dental-fillings 200 in 100ms
+ GET /categories/dental-problems 200 in 334ms
+(node:37388) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

@@ -1,21 +1,91 @@
+// Types for user preferences
+interface UserProfile {
+  user_type: 'patient' | 'professional'
+  preferences?: {
+    responseStyle: 'concise' | 'detailed'
+    complexityLevel: 'basic' | 'advanced'
+    includeCosts: boolean
+    autoSuggestFollowUp: boolean
+  }
+}
+
+// Function to generate dynamic system prompt based on user profile
+export function generateSystemPrompt(userProfile?: UserProfile): string {
+  const defaultProfile: UserProfile = {
+    user_type: 'patient',
+    preferences: {
+      responseStyle: 'concise',
+      complexityLevel: 'basic',
+      includeCosts: false,
+      autoSuggestFollowUp: true
+    }
+  }
+  
+  const profile = {
+    ...defaultProfile,
+    ...userProfile,
+    preferences: {
+      ...defaultProfile.preferences,
+      ...userProfile?.preferences
+    }
+  }
+  
+  const isProfessional = profile.user_type === 'professional'
+  const isDetailed = profile.preferences?.responseStyle === 'detailed'
+  const isAdvanced = profile.preferences?.complexityLevel === 'advanced'
+  const includeCosts = profile.preferences?.includeCosts
+  
+  // Professional prompts
+  if (isProfessional) {
+    return `You are a clinical dental assistant for dental professionals on DentistryExplained.co.uk.
+
+COMMUNICATION STYLE:
+- Use appropriate dental terminology and clinical language
+- Be concise and evidence-based (${isDetailed ? 'provide comprehensive clinical detail' : 'keep responses brief and focused'})
+- Reference current UK guidelines (NICE, SDCEP, FGDP)
+- Include relevant clinical considerations and contraindications
+
+IMPORTANT:
+- Focus on best practices and clinical relevance
+- Reference specific materials, techniques, and protocols
+- Assume clinical knowledge but clarify complex procedures
+- Cite evidence where applicable`
+  }
+  
+  // Patient prompts based on preferences
+  const complexityGuide = isAdvanced 
+    ? 'Use clear language but include medical terms with explanations. Provide more detailed information about mechanisms and processes.'
+    : 'Use simple, everyday language (6th grade reading level). Avoid medical jargon unless absolutely necessary.'
+  
+  const lengthGuide = isDetailed
+    ? 'Provide comprehensive answers with relevant context, examples, and additional helpful information.'
+    : 'Keep responses SHORT and focused - maximum 2-3 sentences for simple questions. Only elaborate if specifically asked.'
+  
+  const costGuide = includeCosts
+    ? 'Include relevant NHS charges when discussing treatments (2025 rates: Band 1: £27.40, Band 2: £75.30, Band 3: £326.70).'
+    : 'Only mention costs if specifically asked about prices or fees.'
+  
+  return `You are a friendly dental health assistant for patients on DentistryExplained.co.uk.
+
+COMMUNICATION STYLE:
+- ${complexityGuide}
+- ${lengthGuide}
+- ${costGuide}
+- Be warm, empathetic, and reassuring
+
+RESPONSE GUIDELINES:
+- Answer the specific question asked - don't add unnecessary information
+- For basic questions, stick to the essentials
+- Always encourage consulting a dentist for personal concerns
+- Never diagnose or prescribe treatments
+
+IMPORTANT: Prioritize being helpful over being comprehensive. Most users want quick, clear answers.`
+}
+
 // Dental Knowledge Base for AI Assistant
 export const dentalKnowledgeBase = {
-  systemPrompt: `You are a knowledgeable dental health AI assistant for DentistryExplained.co.uk. Your role is to:
-
-1. Provide accurate, evidence-based dental health information
-2. Explain dental conditions, treatments, and prevention in simple terms
-3. Encourage users to consult with dental professionals for specific medical advice
-4. Be friendly, empathetic, and professional in your responses
-5. Focus on UK/NHS dental care guidelines when applicable
-6. Reference 2025 NHS charges and current UK dental practices
-
-Important guidelines:
-- Never diagnose conditions or prescribe treatments
-- Always recommend consulting a dentist for specific concerns
-- Provide general educational information only
-- Be clear about the limitations of AI assistance
-- Promote good oral hygiene practices
-- When discussing costs, use 2025 NHS charges (Band 1: £27.40, Band 2: £75.30, Band 3: £326.70)`,
+  // Default system prompt (legacy support)
+  systemPrompt: generateSystemPrompt(),
 
   contextualPrompts: {
     emergency: `The user may be experiencing a dental emergency. Provide calm, clear first aid advice while strongly encouraging them to seek immediate professional help. Reference the emergency resources available on the site.`,
