@@ -222,3 +222,13 @@ Suggestions error: {
   path: '/Users/rkb/DentistryExplained/dentistry-explained/.next/cache/webpack/client-development/16.pack.gz_'
 }
 <w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, open '/Users/rkb/DentistryExplained/dentistry-explained/.next/cache/webpack/client-development/16.pack.gz_'
+ ✓ Compiled in 1558ms (675 modules)
+ ✓ Compiled in 200ms (675 modules)
+ ✓ Compiled in 192ms (675 modules)
+ ✓ Compiled in 337ms (675 modules)
+ ✓ Compiled in 362ms (675 modules)
+ ✓ Compiled in 308ms (675 modules)
+ ✓ Compiled in 328ms (675 modules)
+ ✓ Compiled in 226ms (675 modules)
+ ✓ Compiled in 405ms (675 modules)
+ ✓ Compiled in 162ms (675 modules)
