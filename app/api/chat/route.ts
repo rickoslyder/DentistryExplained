@@ -75,7 +75,7 @@ const chatHandler = compose(
     const { data: recentMessages, error: messagesError } = await supabase
       .from('chat_messages')
       .select('role, content')
-      .eq('session_id', chatSession.session_id)
+      .eq('session_id', chatSession.id)
       .order('created_at', { ascending: false })
       .limit(10)
 
@@ -87,7 +87,7 @@ const chatHandler = compose(
     const { error: insertError } = await supabase
       .from('chat_messages')
       .insert({
-        session_id: chatSession.session_id,
+        session_id: chatSession.id,
         role: 'user',
         content: message,
         metadata: { pageContext }
@@ -137,7 +137,7 @@ const chatHandler = compose(
       supabase
         .from('chat_messages')
         .insert({
-          session_id: chatSession.session_id,
+          session_id: chatSession.id,
           role: 'assistant',
           content: responseContent
         })
