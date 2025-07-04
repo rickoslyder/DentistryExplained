@@ -98,7 +98,7 @@ const getBookmarksHandler = withAuth(async (request: NextRequest, context) => {
 
   let query = supabase
     .from('bookmarks')
-    .select('*, count:id.count()', { count: 'exact', head: false })
+    .select('*', { count: 'exact' })
     .eq('user_id', userProfile.id)
     .order('created_at', { ascending: false })
 
