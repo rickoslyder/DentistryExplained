@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { sendVerificationApprovedEmail, sendVerificationRejectedEmail } from '@/lib/email/verification-emails'
 
@@ -20,7 +20,7 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
     
     // Check if user is admin
     const { data: profile } = await supabase

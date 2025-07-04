@@ -1,12 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Clock, BookOpen, FileText } from "lucide-react"
+import { Search, Clock, BookOpen, FileText, TrendingUp, Sparkles } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useRouter } from "next/navigation"
+import { useDebouncedCallback } from "use-debounce"
 
 interface SearchDialogProps {
   open: boolean
@@ -18,71 +20,103 @@ interface SearchResult {
   title: string
   description: string
   category: string
-  type: "article" | "procedure" | "glossary"
+  type: string
   url: string
+  relevance?: number
+}
+
+interface SearchSuggestion {
+  suggestion: string
+  source: string
+}
+
+interface TrendingSearch {
+  query: string
+  search_count: number
 }
 
 export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
+  const router = useRouter()
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<SearchResult[]>([])
+  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([])
+  const [trending, setTrending] = useState<TrendingSearch[]>([])
   const [isSearching, setIsSearching] = useState(false)
-  const [recentSearches] = useState(["tooth decay", "dental implants", "gum disease", "teeth whitening"])
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
-  // Mock search function
-  const performSearch = async (searchQuery: string) => {
+  // Fetch trending searches on mount
+  useEffect(() => {
+    const fetchTrending = async () => {
+      try {
+        const response = await fetch('/api/search/trending?window=7%20days&limit=5')
+        if (response.ok) {
+          const data = await response.json()
+          setTrending(data.trending || [])
+        }
+      } catch (error) {
+        console.error('Failed to fetch trending searches:', error)
+      }
+    }
+    
+    if (open) {
+      fetchTrending()
+    }
+  }, [open])
+
+  // Debounced search function
+  const performSearch = useDebouncedCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults([])
+      setSuggestions([])
+      setShowSuggestions(false)
       return
     }
 
     setIsSearching(true)
+    setShowSuggestions(false)
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 300))
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`)
+      if (response.ok) {
+        const data = await response.json()
+        setResults(data.results || [])
+        setSuggestions(data.suggestions || [])
+      } else {
+        console.error('Search failed')
+        setResults([])
+      }
+    } catch (error) {
+      console.error('Search error:', error)
+      setResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }, 300)
 
-    // Mock results
-    const mockResults: SearchResult[] = [
-      {
-        id: "1",
-        title: "Understanding Tooth Decay",
-        description: "Learn about the causes, symptoms, and prevention of tooth decay.",
-        category: "Dental Problems",
-        type: "article",
-        url: "/dental-problems/tooth-decay",
-      },
-      {
-        id: "2",
-        title: "Dental Filling Procedure",
-        description: "What to expect during a dental filling procedure.",
-        category: "Treatments",
-        type: "procedure",
-        url: "/treatments/dental-fillings",
-      },
-      {
-        id: "3",
-        title: "Cavity",
-        description: "A hole in the tooth caused by decay.",
-        category: "Glossary",
-        type: "glossary",
-        url: "/glossary/cavity",
-      },
-    ].filter(
-      (result) =>
-        result.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        result.description.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
+  // Fetch suggestions for autocomplete
+  const fetchSuggestions = useDebouncedCallback(async (searchQuery: string) => {
+    if (!searchQuery.trim() || searchQuery.length < 2) {
+      setSuggestions([])
+      setShowSuggestions(false)
+      return
+    }
 
-    setResults(mockResults)
-    setIsSearching(false)
-  }
+    try {
+      const response = await fetch(`/api/search/suggestions?q=${encodeURIComponent(searchQuery)}`)
+      if (response.ok) {
+        const data = await response.json()
+        setSuggestions(data.suggestions || [])
+        setShowSuggestions(true)
+      }
+    } catch (error) {
+      console.error('Suggestions error:', error)
+    }
+  }, 150)
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      performSearch(query)
-    }, 300)
-
-    return () => clearTimeout(timeoutId)
-  }, [query])
+    performSearch(query)
+    fetchSuggestions(query)
+  }, [query, performSearch, fetchSuggestions])
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -91,16 +125,35 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       case "procedure":
         return <FileText className="w-4 h-4" />
       case "glossary":
-        return <Search className="w-4 h-4" />
+        return <Sparkles className="w-4 h-4" />
       default:
         return <BookOpen className="w-4 h-4" />
     }
   }
 
-  const handleResultClick = (result: SearchResult) => {
+  const handleResultClick = async (result: SearchResult) => {
+    // Track clicked result
+    try {
+      await fetch('/api/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query,
+          clicked_result_id: result.id,
+          clicked_result: result.title
+        })
+      })
+    } catch (error) {
+      console.error('Failed to track click:', error)
+    }
+    
     onOpenChange(false)
-    // Navigate to result (would use router in real implementation)
-    console.log("Navigate to:", result.url)
+    router.push(result.url)
+  }
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion)
+    setShowSuggestions(false)
   }
 
   return (
@@ -122,20 +175,41 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
         <ScrollArea className="max-h-96 px-6 pb-6">
           {!query && (
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {trending.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                    <TrendingUp className="w-4 h-4 mr-1" />
+                    Trending searches
+                  </h3>
+                  <div className="space-y-2">
+                    {trending.map((item, index) => (
+                      <Button
+                        key={index}
+                        variant="ghost"
+                        className="w-full justify-between hover:bg-gray-50"
+                        onClick={() => setQuery(item.query)}
+                      >
+                        <span className="text-sm">{item.query}</span>
+                        <span className="text-xs text-gray-400">{item.search_count} searches</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">Recent searches</h3>
-                <div className="flex flex-wrap gap-2">
-                  {recentSearches.map((search, index) => (
+                <h3 className="text-sm font-medium text-gray-700 mb-3">Popular topics</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {['Tooth Decay', 'Gum Disease', 'Dental Implants', 'Teeth Whitening', 'Root Canal', 'Braces'].map((topic) => (
                     <Button
-                      key={index}
+                      key={topic}
                       variant="outline"
                       size="sm"
-                      onClick={() => setQuery(search)}
+                      onClick={() => setQuery(topic)}
                       className="text-xs"
                     >
-                      <Clock className="w-3 h-3 mr-1" />
-                      {search}
+                      {topic}
                     </Button>
                   ))}
                 </div>
@@ -145,6 +219,27 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
 
           {query && (
             <div className="space-y-2">
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="border-b pb-2 mb-2">
+                  <h4 className="text-xs font-medium text-gray-500 mb-1">Suggestions</h4>
+                  {suggestions.map((suggestion, index) => (
+                    <Button
+                      key={index}
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start text-sm hover:bg-gray-50"
+                      onClick={() => handleSuggestionClick(suggestion.suggestion)}
+                    >
+                      <Search className="w-3 h-3 mr-2 text-gray-400" />
+                      {suggestion.suggestion}
+                      <Badge variant="outline" className="ml-auto text-xs">
+                        {suggestion.source}
+                      </Badge>
+                    </Button>
+                  ))}
+                </div>
+              )}
+              
               {isSearching ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
@@ -179,6 +274,21 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                   <Search className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-500">No results found for "{query}"</p>
                   <p className="text-sm text-gray-400 mt-1">Try different keywords or browse our topics</p>
+                </div>
+              )}
+              
+              {results.length > 0 && (
+                <div className="mt-4 pt-4 border-t">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-primary hover:text-primary"
+                    onClick={() => {
+                      onOpenChange(false)
+                      router.push(`/search?q=${encodeURIComponent(query)}`)
+                    }}
+                  >
+                    View all {results.length}+ results →
+                  </Button>
                 </div>
               )}
             </div>

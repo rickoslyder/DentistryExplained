@@ -86,7 +86,7 @@ const materials = {
     {
       id: 5,
       title: '[PLACEHOLDER] Sugar and Your Teeth',
-      description: 'Visual guide showing sugar's impact on dental health',
+      description: 'Visual guide showing sugar\'s impact on dental health',
       category: 'Prevention',
       format: 'PDF',
       size: '4.2 MB',

@@ -32,7 +32,7 @@ CREATE POLICY "Admins can view all verification documents" ON storage.objects
   FOR SELECT USING (
     bucket_id = 'verification-documents' AND
     EXISTS (
-      SELECT 1 FROM user_profiles 
+      SELECT 1 FROM profiles 
       WHERE id = auth.uid()::uuid 
       AND role = 'admin'
     )

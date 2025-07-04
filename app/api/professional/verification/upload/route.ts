@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { randomUUID } from 'crypto'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid file extension' }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Get user's pending verification
     const { data: verification, error: verificationError } = await supabase

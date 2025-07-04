@@ -10,7 +10,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
  * This client will pass the Clerk JWT token to Supabase for RLS
  */
 export async function createServerSupabaseClient() {
-  const { getToken } = auth()
+  const { getToken } = await auth()
   
   // Get the Clerk session token
   const token = await getToken({ template: 'supabase' })
@@ -35,7 +35,7 @@ export async function createServerSupabaseClient() {
  * This function extracts the token from the request context
  */
 export async function createRouteSupabaseClient() {
-  const { getToken } = auth()
+  const { getToken } = await auth()
   
   // Get the Clerk session token
   const token = await getToken({ template: 'supabase' })
@@ -59,7 +59,7 @@ export async function createRouteSupabaseClient() {
  * Get the current user's profile from Supabase using Clerk ID
  */
 export async function getCurrentUserProfile() {
-  const { userId } = auth()
+  const { userId } = await auth()
   
   if (!userId) {
     return null

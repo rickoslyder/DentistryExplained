@@ -14,27 +14,27 @@ export const metadata = {
 async function getConditionsData() {
   const supabase = await createServerSupabaseClient()
   
-  // Get dental problems category and its articles
+  // First get the dental problems category
   const { data: category } = await supabase
     .from('categories')
-    .select(`
-      id,
-      articles:articles(
-        id,
-        slug,
-        title,
-        excerpt,
-        read_time,
-        tags,
-        views
-      )
-    `)
+    .select('id')
     .eq('slug', 'dental-problems')
-    .eq('articles.status', 'published')
     .single()
   
+  if (!category) {
+    return { articles: [] }
+  }
+  
+  // Then get articles for that category
+  const { data: articles } = await supabase
+    .from('articles')
+    .select('id, slug, title, excerpt, read_time, tags, views')
+    .eq('category_id', category.id)
+    .eq('status', 'published')
+    .order('views', { ascending: false })
+  
   return {
-    articles: category?.articles || [],
+    articles: articles || [],
   }
 }
 

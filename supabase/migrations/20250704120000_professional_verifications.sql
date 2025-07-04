@@ -1,30 +1,58 @@
--- Create enum for verification status
-CREATE TYPE verification_status AS ENUM ('pending', 'verified', 'rejected', 'expired');
+-- Enhanced professional verifications (additions to existing table)
 
--- Professional verifications table
-CREATE TABLE professional_verifications (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES user_profiles(id) ON DELETE CASCADE,
-  gdc_number VARCHAR(7) NOT NULL,
-  full_name VARCHAR(255) NOT NULL,
-  practice_name VARCHAR(255),
-  practice_address TEXT,
-  verification_status verification_status DEFAULT 'pending',
-  verification_date TIMESTAMP WITH TIME ZONE,
-  expiry_date TIMESTAMP WITH TIME ZONE,
-  verified_by UUID REFERENCES user_profiles(id),
-  rejection_reason TEXT,
-  additional_notes TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  
-  -- Ensure one active verification per user
-  CONSTRAINT unique_active_verification UNIQUE (user_id, verification_status) 
-    WHERE verification_status IN ('pending', 'verified')
-);
+-- Create enum for verification status if not exists
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'verification_status') THEN
+    CREATE TYPE verification_status AS ENUM ('pending', 'verified', 'rejected', 'expired');
+  END IF;
+END $$;
+
+-- Add missing columns to existing professional_verifications table
+ALTER TABLE professional_verifications 
+ADD COLUMN IF NOT EXISTS full_name VARCHAR(255),
+ADD COLUMN IF NOT EXISTS practice_name VARCHAR(255),
+ADD COLUMN IF NOT EXISTS practice_address TEXT,
+ADD COLUMN IF NOT EXISTS expiry_date TIMESTAMP WITH TIME ZONE,
+ADD COLUMN IF NOT EXISTS additional_notes TEXT;
+
+-- Update verification_status column if needed
+DO $$ 
+BEGIN
+  -- Check if column exists with wrong type
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'professional_verifications' 
+    AND column_name = 'verification_status'
+    AND data_type = 'text'
+  ) THEN
+    -- Drop the existing constraint
+    ALTER TABLE professional_verifications DROP CONSTRAINT IF EXISTS professional_verifications_verification_status_check;
+    
+    -- Create temporary column
+    ALTER TABLE professional_verifications ADD COLUMN temp_status verification_status;
+    
+    -- Copy data
+    UPDATE professional_verifications 
+    SET temp_status = verification_status::verification_status;
+    
+    -- Drop old column and rename new one
+    ALTER TABLE professional_verifications DROP COLUMN verification_status;
+    ALTER TABLE professional_verifications RENAME COLUMN temp_status TO verification_status;
+    
+    -- Set default
+    ALTER TABLE professional_verifications ALTER COLUMN verification_status SET DEFAULT 'pending';
+  ELSIF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'professional_verifications' 
+    AND column_name = 'verification_status'
+  ) THEN
+    ALTER TABLE professional_verifications ADD COLUMN verification_status verification_status DEFAULT 'pending';
+  END IF;
+END $$;
 
 -- Verification documents table
-CREATE TABLE verification_documents (
+CREATE TABLE IF NOT EXISTS verification_documents (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   verification_id UUID NOT NULL REFERENCES professional_verifications(id) ON DELETE CASCADE,
   document_type VARCHAR(50) NOT NULL,
@@ -36,172 +64,174 @@ CREATE TABLE verification_documents (
 );
 
 -- Verification activity log
-CREATE TABLE verification_activity_log (
+CREATE TABLE IF NOT EXISTS verification_activity_log (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   verification_id UUID NOT NULL REFERENCES professional_verifications(id) ON DELETE CASCADE,
-  action VARCHAR(50) NOT NULL, -- submitted, approved, rejected, document_uploaded, etc.
-  performed_by UUID NOT NULL REFERENCES user_profiles(id),
+  performed_by UUID NOT NULL REFERENCES profiles(id),
+  action VARCHAR(50) NOT NULL,
   details JSONB,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create indexes for performance
-CREATE INDEX idx_verifications_user_id ON professional_verifications(user_id);
-CREATE INDEX idx_verifications_status ON professional_verifications(verification_status);
-CREATE INDEX idx_verifications_gdc_number ON professional_verifications(gdc_number);
-CREATE INDEX idx_verification_docs_verification_id ON verification_documents(verification_id);
-CREATE INDEX idx_activity_log_verification_id ON verification_activity_log(verification_id);
+-- Create indexes
+CREATE INDEX IF NOT EXISTS idx_verifications_user_id ON professional_verifications(user_id);
+CREATE INDEX IF NOT EXISTS idx_verifications_status ON professional_verifications(verification_status);
+CREATE INDEX IF NOT EXISTS idx_verifications_gdc ON professional_verifications(gdc_number);
+CREATE INDEX IF NOT EXISTS idx_verification_docs_verification_id ON verification_documents(verification_id);
+CREATE INDEX IF NOT EXISTS idx_verification_log_verification_id ON verification_activity_log(verification_id);
 
--- RLS policies for professional_verifications
+-- Enable RLS
 ALTER TABLE professional_verifications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verification_documents ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verification_activity_log ENABLE ROW LEVEL SECURITY;
 
--- Users can view their own verifications
-CREATE POLICY "Users can view own verifications" ON professional_verifications
-  FOR SELECT USING (auth.uid()::text = user_id::text);
+-- RLS Policies for professional_verifications
+-- Drop existing policies if they exist
+DO $$ 
+BEGIN
+  DROP POLICY IF EXISTS "Users can view own verification" ON professional_verifications;
+  DROP POLICY IF EXISTS "Users can insert own verification" ON professional_verifications;
+  DROP POLICY IF EXISTS "Admins can view all verifications" ON professional_verifications;
+  DROP POLICY IF EXISTS "Admins can update verifications" ON professional_verifications;
+EXCEPTION
+  WHEN undefined_object THEN
+    NULL;
+END $$;
 
--- Users can create their own verifications
-CREATE POLICY "Users can create own verifications" ON professional_verifications
-  FOR INSERT WITH CHECK (auth.uid()::text = user_id::text);
+CREATE POLICY "Users can view own verification" ON professional_verifications
+  FOR SELECT USING (user_id IN (
+    SELECT id FROM profiles WHERE clerk_id = public.clerk_user_id()
+  ));
 
--- Users can update their own pending verifications
-CREATE POLICY "Users can update own pending verifications" ON professional_verifications
-  FOR UPDATE USING (
-    auth.uid()::text = user_id::text 
-    AND verification_status = 'pending'
+CREATE POLICY "Users can insert own verification" ON professional_verifications
+  FOR INSERT WITH CHECK (
+    user_id IN (
+      SELECT id FROM profiles 
+      WHERE clerk_id = public.clerk_user_id() 
+      AND user_type = 'professional'
+    )
   );
 
--- Admins can view all verifications
 CREATE POLICY "Admins can view all verifications" ON professional_verifications
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM user_profiles 
-      WHERE id = auth.uid()::uuid 
-      AND role = 'admin'
+      SELECT 1 FROM profiles 
+      WHERE clerk_id = public.clerk_user_id() 
+      AND user_type = 'professional'
+      AND role IN ('admin', 'editor')
     )
   );
 
--- Admins can update all verifications
-CREATE POLICY "Admins can update all verifications" ON professional_verifications
+CREATE POLICY "Admins can update verifications" ON professional_verifications
   FOR UPDATE USING (
     EXISTS (
-      SELECT 1 FROM user_profiles 
-      WHERE id = auth.uid()::uuid 
+      SELECT 1 FROM profiles 
+      WHERE clerk_id = public.clerk_user_id() 
+      AND user_type = 'professional'
       AND role = 'admin'
     )
   );
 
--- RLS policies for verification_documents
-ALTER TABLE verification_documents ENABLE ROW LEVEL SECURITY;
+-- RLS Policies for verification_documents
+-- Drop existing policies if they exist
+DO $$ 
+BEGIN
+  DROP POLICY IF EXISTS "Users can view own documents" ON verification_documents;
+  DROP POLICY IF EXISTS "Users can upload own documents" ON verification_documents;
+  DROP POLICY IF EXISTS "Admins can view all documents" ON verification_documents;
+EXCEPTION
+  WHEN undefined_object THEN
+    NULL;
+END $$;
 
--- Users can view documents for their verifications
-CREATE POLICY "Users can view own verification documents" ON verification_documents
+CREATE POLICY "Users can view own documents" ON verification_documents
   FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM professional_verifications 
-      WHERE id = verification_documents.verification_id 
-      AND user_id = auth.uid()::uuid
+    verification_id IN (
+      SELECT id FROM professional_verifications 
+      WHERE user_id IN (
+        SELECT id FROM profiles WHERE clerk_id = public.clerk_user_id()
+      )
     )
   );
 
--- Users can upload documents for their verifications
-CREATE POLICY "Users can upload verification documents" ON verification_documents
+CREATE POLICY "Users can upload own documents" ON verification_documents
   FOR INSERT WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM professional_verifications 
-      WHERE id = verification_documents.verification_id 
-      AND user_id = auth.uid()::uuid
-      AND verification_status = 'pending'
+    verification_id IN (
+      SELECT id FROM professional_verifications 
+      WHERE user_id IN (
+        SELECT id FROM profiles WHERE clerk_id = public.clerk_user_id()
+      )
     )
   );
 
--- Admins can view all documents
 CREATE POLICY "Admins can view all documents" ON verification_documents
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM user_profiles 
-      WHERE id = auth.uid()::uuid 
-      AND role = 'admin'
+      SELECT 1 FROM profiles 
+      WHERE clerk_id = public.clerk_user_id() 
+      AND user_type = 'professional'
+      AND role IN ('admin', 'editor')
     )
   );
 
--- RLS policies for verification_activity_log
-ALTER TABLE verification_activity_log ENABLE ROW LEVEL SECURITY;
+-- RLS Policies for verification_activity_log
+-- Drop existing policies if they exist
+DO $$ 
+BEGIN
+  DROP POLICY IF EXISTS "Admins can view all activity" ON verification_activity_log;
+  DROP POLICY IF EXISTS "System can insert activity" ON verification_activity_log;
+EXCEPTION
+  WHEN undefined_object THEN
+    NULL;
+END $$;
 
--- Users can view activity for their verifications
-CREATE POLICY "Users can view own verification activity" ON verification_activity_log
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM professional_verifications 
-      WHERE id = verification_activity_log.verification_id 
-      AND user_id = auth.uid()::uuid
-    )
-  );
-
--- Anyone can insert activity (but controlled by functions)
-CREATE POLICY "Insert verification activity" ON verification_activity_log
-  FOR INSERT WITH CHECK (true);
-
--- Admins can view all activity
 CREATE POLICY "Admins can view all activity" ON verification_activity_log
   FOR SELECT USING (
     EXISTS (
-      SELECT 1 FROM user_profiles 
-      WHERE id = auth.uid()::uuid 
-      AND role = 'admin'
+      SELECT 1 FROM profiles 
+      WHERE clerk_id = public.clerk_user_id() 
+      AND user_type = 'professional'
+      AND role IN ('admin', 'editor')
     )
   );
 
--- Function to update updated_at timestamp
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
-END;
-$$ language 'plpgsql';
-
--- Trigger for updated_at
-CREATE TRIGGER update_professional_verifications_updated_at 
-  BEFORE UPDATE ON professional_verifications 
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE POLICY "System can insert activity" ON verification_activity_log
+  FOR INSERT WITH CHECK (true);
 
 -- Function to log verification activity
 CREATE OR REPLACE FUNCTION log_verification_activity(
   p_verification_id UUID,
-  p_action VARCHAR,
-  p_details JSONB DEFAULT NULL
-)
-RETURNS VOID AS $$
+  p_action VARCHAR(50),
+  p_details JSONB DEFAULT '{}'::JSONB
+) RETURNS UUID AS $$
+DECLARE
+  v_user_id UUID;
+  v_log_id UUID;
 BEGIN
-  INSERT INTO verification_activity_log (
-    verification_id, 
-    action, 
-    performed_by, 
-    details
-  ) VALUES (
-    p_verification_id,
-    p_action,
-    auth.uid()::uuid,
-    p_details
-  );
+  -- Get current user
+  SELECT id INTO v_user_id
+  FROM profiles
+  WHERE clerk_id = public.clerk_user_id()
+  LIMIT 1;
+  
+  -- Insert activity log
+  INSERT INTO verification_activity_log (verification_id, performed_by, action, details)
+  VALUES (p_verification_id, v_user_id, p_action, p_details)
+  RETURNING id INTO v_log_id;
+  
+  RETURN v_log_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Function to check if user has verified status
-CREATE OR REPLACE FUNCTION is_user_verified(p_user_id UUID)
-RETURNS BOOLEAN AS $$
-BEGIN
-  RETURN EXISTS (
-    SELECT 1 FROM professional_verifications
-    WHERE user_id = p_user_id
-    AND verification_status = 'verified'
-    AND (expiry_date IS NULL OR expiry_date > NOW())
-  );
-END;
-$$ LANGUAGE plpgsql;
+-- Grant execute permission
+GRANT EXECUTE ON FUNCTION log_verification_activity TO authenticated;
 
--- Add professional fields to user_profiles if not exists
-ALTER TABLE user_profiles 
+-- Add professional fields to profiles if not exists
+ALTER TABLE profiles 
 ADD COLUMN IF NOT EXISTS is_professional BOOLEAN DEFAULT FALSE,
-ADD COLUMN IF NOT EXISTS professional_title VARCHAR(100),
-ADD COLUMN IF NOT EXISTS years_of_experience INTEGER;
+ADD COLUMN IF NOT EXISTS gdc_number VARCHAR(7),
+ADD COLUMN IF NOT EXISTS practice_name VARCHAR(255),
+ADD COLUMN IF NOT EXISTS practice_location VARCHAR(255),
+ADD COLUMN IF NOT EXISTS specialties TEXT[],
+ADD COLUMN IF NOT EXISTS bio TEXT,
+ADD COLUMN IF NOT EXISTS professional_since DATE;

@@ -1,0 +1,37 @@
+Connecting to remote database...
+Do you want to push these migrations to the remote database?
+ • 20250704120000_professional_verifications.sql
+ • 20250704121000_verification_storage.sql
+ • 20250704_add_full_text_search.sql
+ • 20250704_update_search_queries_table.sql
+
+ [Y/n] 
+NOTICE (42P06): schema "supabase_migrations" already exists, skipping
+NOTICE (42P07): relation "schema_migrations" already exists, skipping
+NOTICE (42701): column "statements" of relation "schema_migrations" already exists, skipping
+NOTICE (42701): column "name" of relation "schema_migrations" already exists, skipping
+Applying migration 20250704120000_professional_verifications.sql...
+NOTICE (00000): policy "Users can insert own verification" for relation "professional_verifications" does not exist, skipping
+NOTICE (00000): policy "Admins can view all verifications" for relation "professional_verifications" does not exist, skipping
+NOTICE (00000): policy "Admins can update verifications" for relation "professional_verifications" does not exist, skipping
+NOTICE (00000): policy "Users can view own documents" for relation "verification_documents" does not exist, skipping
+NOTICE (00000): policy "Users can upload own documents" for relation "verification_documents" does not exist, skipping
+NOTICE (00000): policy "Admins can view all documents" for relation "verification_documents" does not exist, skipping
+NOTICE (00000): policy "Admins can view all activity" for relation "verification_activity_log" does not exist, skipping
+NOTICE (00000): policy "System can insert activity" for relation "verification_activity_log" does not exist, skipping
+Applying migration 20250704121000_verification_storage.sql...
+Applying migration 20250704_add_full_text_search.sql...
+ERROR: generation expression is not immutable (SQLSTATE 42P17)                    
+At statement: 1                                                                   
+-- For fuzzy search                                                               
+                                                                                  
+-- Add tsvector column to articles table                                          
+ALTER TABLE articles                                                              
+ADD COLUMN IF NOT EXISTS search_vector tsvector                                   
+GENERATED ALWAYS AS (                                                             
+  setweight(to_tsvector('english', COALESCE(title, '')), 'A') ||                  
+  setweight(to_tsvector('english', COALESCE(excerpt, '')), 'B') ||                
+  setweight(to_tsvector('english', COALESCE(content, '')), 'C') ||                
+  setweight(to_tsvector('english', COALESCE(array_to_string(tags, ' '), '')), 'C')
+) STORED                                                                          
+Try rerunning the command with --debug to troubleshoot the error.

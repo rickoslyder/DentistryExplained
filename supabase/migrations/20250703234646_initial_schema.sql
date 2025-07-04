@@ -1,10 +1,6 @@
 -- Dentistry Explained Database Schema
 -- This file contains the complete database schema for the MVP
 
--- Enable necessary extensions
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS "postgis";
-
 -- User profiles table (synced with Clerk)
 CREATE TABLE profiles (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

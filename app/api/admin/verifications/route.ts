@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
     
     // Check if user is admin
     const { data: profile } = await supabase

@@ -233,12 +233,50 @@ export default function GlossaryPage() {
                 key={index}
                 className="border-b border-gray-200 pb-4 last:border-0"
               >
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {item.term}
-                </h3>
-                <p className="text-gray-600">
-                  {item.definition}
-                </p>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      {item.term}
+                      {item.pronunciation && (
+                        <span className="ml-2 text-sm font-normal text-gray-500">
+                          [{item.pronunciation}]
+                        </span>
+                      )}
+                    </h3>
+                    <p className="text-gray-600 mb-2">
+                      {item.definition}
+                    </p>
+                    {item.also_known_as && item.also_known_as.length > 0 && (
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm text-gray-500">Also known as:</span>
+                        <div className="flex flex-wrap gap-1">
+                          {item.also_known_as.map((aka, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs">
+                              {aka}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {item.related_terms && item.related_terms.length > 0 && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-500">Related:</span>
+                        <div className="flex flex-wrap gap-1">
+                          {item.related_terms.map((term, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {term}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {item.category && (
+                    <Badge className="ml-4 capitalize">
+                      {item.category.replace('-', ' ')}
+                    </Badge>
+                  )}
+                </div>
               </div>
             ))
           )}

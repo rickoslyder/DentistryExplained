@@ -6,94 +6,108 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const query = searchParams.get('q')
     const category = searchParams.get('category')
-    const sort = searchParams.get('sort') || 'relevance'
+    const limit = parseInt(searchParams.get('limit') || '20')
+    const offset = parseInt(searchParams.get('offset') || '0')
     
     if (!query || query.length < 2) {
-      return NextResponse.json({ results: [] })
+      return NextResponse.json({ results: [], suggestions: [] })
     }
     
     const supabase = await createServerSupabaseClient()
     
-    // Build the search query
-    let searchQuery = supabase
-      .from('articles')
-      .select(`
-        id,
-        title,
-        slug,
-        excerpt,
-        read_time,
-        views,
-        tags,
-        published_at,
-        category:categories!inner(name, slug)
-      `)
-      .eq('status', 'published')
-      .or(`title.ilike.%${query}%,excerpt.ilike.%${query}%,content.ilike.%${query}%`)
+    // Use our PostgreSQL full-text search function
+    const { data: searchResults, error: searchError } = await supabase
+      .rpc('search_content', {
+        search_query: query,
+        search_category: category && category !== 'all' ? category : null,
+        result_limit: limit,
+        result_offset: offset
+      })
     
-    // Apply category filter
-    if (category && category !== 'all') {
-      searchQuery = searchQuery.eq('categories.slug', category)
-    }
-    
-    // Apply sorting
-    switch (sort) {
-      case 'newest':
-        searchQuery = searchQuery.order('published_at', { ascending: false })
-        break
-      case 'popular':
-        searchQuery = searchQuery.order('views', { ascending: false })
-        break
-      case 'relevance':
-      default:
-        // For relevance, we'll sort by a combination of factors
-        // In a real implementation, you might use full-text search with relevance scoring
-        searchQuery = searchQuery.order('views', { ascending: false })
-        break
-    }
-    
-    // Limit results
-    searchQuery = searchQuery.limit(20)
-    
-    const { data: results, error } = await searchQuery
-    
-    if (error) {
-      console.error('Search error:', error)
+    if (searchError) {
+      console.error('Search error:', searchError)
       return NextResponse.json({ error: 'Search failed' }, { status: 500 })
     }
     
-    // Add basic relevance scoring (in production, use proper full-text search)
-    const scoredResults = results?.map(article => {
-      let relevance = 0
-      const lowerQuery = query.toLowerCase()
-      
-      // Title match (highest weight)
-      if (article.title.toLowerCase().includes(lowerQuery)) {
-        relevance += 10
-      }
-      
-      // Excerpt match (medium weight)
-      if (article.excerpt?.toLowerCase().includes(lowerQuery)) {
-        relevance += 5
-      }
-      
-      // Tag match (lower weight)
-      if (article.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))) {
-        relevance += 3
-      }
-      
-      return { ...article, relevance }
-    }) || []
+    // Get search suggestions for autocomplete
+    const { data: suggestions, error: suggestionsError } = await supabase
+      .rpc('get_search_suggestions', {
+        partial_query: query,
+        suggestion_limit: 5
+      })
     
-    // Sort by relevance if that's the selected sort
-    if (sort === 'relevance') {
-      scoredResults.sort((a, b) => b.relevance - a.relevance)
+    if (suggestionsError) {
+      console.error('Suggestions error:', suggestionsError)
     }
     
-    return NextResponse.json({ results: scoredResults })
+    // Track the search query for analytics
+    const { error: trackingError } = await supabase
+      .from('search_queries')
+      .insert({
+        query: query,
+        results_count: searchResults?.length || 0,
+        session_id: request.headers.get('x-session-id') || null
+      })
+    
+    if (trackingError) {
+      console.error('Search tracking error:', trackingError)
+    }
+    
+    // Transform results to match frontend expectations
+    const transformedResults = searchResults?.map(result => ({
+      id: result.id,
+      title: result.title,
+      description: result.excerpt,
+      type: result.content_type,
+      category: result.category,
+      url: result.url_path,
+      relevance: result.rank
+    })) || []
+    
+    return NextResponse.json({ 
+      results: transformedResults,
+      suggestions: suggestions || [],
+      totalResults: transformedResults.length,
+      hasMore: transformedResults.length === limit
+    })
     
   } catch (error) {
     console.error('Search error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { query, clicked_result_id, clicked_result } = body
+    
+    if (!query) {
+      return NextResponse.json({ error: 'Query is required' }, { status: 400 })
+    }
+    
+    const supabase = await createServerSupabaseClient()
+    
+    // Update the search query record with the clicked result
+    const { error } = await supabase
+      .from('search_queries')
+      .update({
+        clicked_result_id: clicked_result_id,
+        clicked_result: clicked_result
+      })
+      .eq('query', query)
+      .order('created_at', { ascending: false })
+      .limit(1)
+    
+    if (error) {
+      console.error('Failed to update search query:', error)
+      return NextResponse.json({ error: 'Failed to track click' }, { status: 500 })
+    }
+    
+    return NextResponse.json({ success: true })
+    
+  } catch (error) {
+    console.error('Search tracking error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

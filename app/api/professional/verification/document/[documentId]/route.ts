@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 
 export async function DELETE(
   req: NextRequest,
@@ -13,7 +13,7 @@ export async function DELETE(
     }
 
     const documentId = params.documentId
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Get document details
     const { data: document, error: docError } = await supabase

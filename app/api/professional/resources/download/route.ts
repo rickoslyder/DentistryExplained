@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 
 const downloadSchema = z.object({
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const validatedData = downloadSchema.parse(body)
     
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Verify user is professionally verified
     const { data: verification } = await supabase

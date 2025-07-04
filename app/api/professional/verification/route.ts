@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { validateGDCNumber } from '@/types/professional'
 
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
     
     // Get user's verification
     const { data: verification, error: verificationError } = await supabase
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: gdcValidation.error }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Check if user already has a pending or verified verification
     const { data: existing, error: existingError } = await supabase
@@ -154,7 +154,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: gdcValidation.error }, { status: 400 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Get user's pending verification
     const { data: existing, error: existingError } = await supabase

@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 interface VerificationApprovedEmailProps {
   to: string
@@ -16,6 +17,11 @@ export async function sendVerificationApprovedEmail({
   expiryDate
 }: VerificationApprovedEmailProps) {
   try {
+    if (!resend) {
+      console.warn('Email service not configured. Skipping email send.')
+      return { success: true, data: { id: 'mock-email-id' } }
+    }
+    
     const { data, error } = await resend.emails.send({
       from: 'Dentistry Explained <notifications@dentistryexplained.com>',
       to,
@@ -91,6 +97,11 @@ export async function sendVerificationRejectedEmail({
   rejectionReason
 }: VerificationRejectedEmailProps) {
   try {
+    if (!resend) {
+      console.warn('Email service not configured. Skipping email send.')
+      return { success: true, data: { id: 'mock-email-id' } }
+    }
+    
     const { data, error } = await resend.emails.send({
       from: 'Dentistry Explained <notifications@dentistryexplained.com>',
       to,

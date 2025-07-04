@@ -16,17 +16,21 @@ import { useDebounce } from 'use-debounce'
 interface SearchResult {
   id: string
   title: string
-  slug: string
-  excerpt: string
-  category: {
-    name: string
-    slug: string
-  }
-  read_time: number
-  views: number
-  tags: string[]
-  published_at: string
+  description: string
+  type: string
+  category: string
+  url: string
   relevance?: number
+}
+
+interface SearchResponse {
+  results: SearchResult[]
+  suggestions: Array<{
+    suggestion: string
+    source: string
+  }>
+  totalResults: number
+  hasMore: boolean
 }
 
 export default function SearchPage() {
@@ -36,18 +40,20 @@ export default function SearchPage() {
   const [query, setQuery] = useState(initialQuery)
   const [debouncedQuery] = useDebounce(query, 300)
   const [results, setResults] = useState<SearchResult[]>([])
+  const [suggestions, setSuggestions] = useState<Array<{suggestion: string; source: string}>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [categoryFilter, setCategoryFilter] = useState('all')
-  const [sortBy, setSortBy] = useState('relevance')
-  const [categories, setCategories] = useState<Array<{ id: string; name: string; slug: string }>>([])
+  const [totalResults, setTotalResults] = useState(0)
+  const [hasMore, setHasMore] = useState(false)
   
-  // Fetch categories for filter
-  useEffect(() => {
-    fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => setCategories(data))
-      .catch(console.error)
-  }, [])
+  // Define categories statically for now
+  const categories = [
+    { id: '1', name: 'Dental Problems', slug: 'dental-problems' },
+    { id: '2', name: 'Treatments', slug: 'treatments' },
+    { id: '3', name: 'Prevention', slug: 'prevention' },
+    { id: '4', name: 'Children', slug: 'children' },
+    { id: '5', name: 'Emergency', slug: 'emergency' }
+  ]
   
   // Perform search
   useEffect(() => {
@@ -62,14 +68,16 @@ export default function SearchPage() {
       try {
         const params = new URLSearchParams({
           q: debouncedQuery,
-          category: categoryFilter,
-          sort: sortBy,
+          ...(categoryFilter !== 'all' && { category: categoryFilter })
         })
         
         const response = await fetch(`/api/search?${params}`)
-        const data = await response.json()
+        const data: SearchResponse = await response.json()
         
         setResults(data.results || [])
+        setSuggestions(data.suggestions || [])
+        setTotalResults(data.totalResults || 0)
+        setHasMore(data.hasMore || false)
       } catch (error) {
         console.error('Search error:', error)
         setResults([])
@@ -79,7 +87,7 @@ export default function SearchPage() {
     }
     
     performSearch()
-  }, [debouncedQuery, categoryFilter, sortBy])
+  }, [debouncedQuery, categoryFilter])
   
   // Update URL when query changes
   useEffect(() => {
@@ -140,16 +148,6 @@ export default function SearchPage() {
               </SelectContent>
             </Select>
             
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="relevance">Most Relevant</SelectItem>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="popular">Most Popular</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
         
@@ -162,11 +160,31 @@ export default function SearchPage() {
             </div>
           ) : results.length > 0 ? (
             <>
-              <p className="text-sm text-gray-600 mb-4">
-                Found {results.length} result{results.length !== 1 ? 's' : ''} for "{debouncedQuery}"
-              </p>
+              <div className="mb-4">
+                <p className="text-sm text-gray-600">
+                  Found {totalResults} result{totalResults !== 1 ? 's' : ''} for "{debouncedQuery}"
+                </p>
+                {suggestions.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-xs text-gray-500 mb-1">Did you mean:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {suggestions.slice(0, 3).map((suggestion, idx) => (
+                        <Button
+                          key={idx}
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setQuery(suggestion.suggestion)}
+                          className="text-xs"
+                        >
+                          {suggestion.suggestion}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
               {results.map((result) => (
-                <Link key={result.id} href={`/${result.category.slug}/${result.slug}`}>
+                <Link key={result.id} href={result.url}>
                   <Card className="hover:shadow-lg transition-shadow cursor-pointer">
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between">
@@ -175,31 +193,32 @@ export default function SearchPage() {
                             {highlightMatch(result.title, debouncedQuery)}
                           </h3>
                           <p className="text-gray-600 mb-3 line-clamp-2">
-                            {highlightMatch(result.excerpt, debouncedQuery)}
+                            {highlightMatch(result.description, debouncedQuery)}
                           </p>
                           <div className="flex items-center gap-4 text-sm text-gray-500">
-                            <Badge variant="secondary">{result.category.name}</Badge>
-                            <span className="flex items-center">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {result.read_time} min read
-                            </span>
-                            <span>{result.views} views</span>
+                            <Badge variant="secondary">{result.category}</Badge>
+                            <Badge variant="outline" className="capitalize">
+                              {result.type}
+                            </Badge>
+                            {result.relevance && (
+                              <span className="text-xs text-gray-400">
+                                Relevance: {(result.relevance * 100).toFixed(0)}%
+                              </span>
+                            )}
                           </div>
-                          {result.tags && result.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-3">
-                              {result.tags.slice(0, 3).map((tag) => (
-                                <Badge key={tag} variant="outline" className="text-xs">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 </Link>
               ))}
+              {hasMore && (
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-500">
+                    Showing top {results.length} results. Refine your search for more specific results.
+                  </p>
+                </div>
+              )}
             </>
           ) : debouncedQuery ? (
             <Card className="text-center py-12">

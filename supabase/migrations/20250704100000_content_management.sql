@@ -169,7 +169,7 @@ CREATE POLICY "Public can view published articles" ON articles
 CREATE POLICY "Authors can view own articles" ON articles
   FOR SELECT USING (
     author_id IN (
-      SELECT id FROM profiles WHERE clerk_id = auth.clerk_user_id()
+      SELECT id FROM profiles WHERE clerk_id = public.clerk_user_id()
     )
   );
 
@@ -178,7 +178,7 @@ CREATE POLICY "Admins can manage articles" ON articles
   FOR ALL USING (
     EXISTS (
       SELECT 1 FROM profiles 
-      WHERE clerk_id = auth.clerk_user_id() 
+      WHERE clerk_id = public.clerk_user_id() 
       AND user_type = 'professional'
       AND role IN ('admin', 'editor')
     )
@@ -193,7 +193,7 @@ CREATE POLICY "Admins can manage categories" ON categories
   FOR ALL USING (
     EXISTS (
       SELECT 1 FROM profiles 
-      WHERE clerk_id = auth.clerk_user_id() 
+      WHERE clerk_id = public.clerk_user_id() 
       AND user_type = 'professional'
       AND role = 'admin'
     )
@@ -206,7 +206,7 @@ CREATE POLICY "Article image permissions follow articles" ON article_images
       SELECT id FROM articles
       WHERE status = 'published'
       OR author_id IN (
-        SELECT id FROM profiles WHERE clerk_id = auth.clerk_user_id()
+        SELECT id FROM profiles WHERE clerk_id = public.clerk_user_id()
       )
     )
   );

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
-import { createClient } from '@/lib/supabase/server'
+import { currentUser } from '@clerk/nextjs/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { generateEducationMaterialPDF } from '@/lib/pdf/education-materials'
 
 export async function GET(
@@ -13,7 +13,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
 
     // Verify user is professionally verified
     const { data: verification } = await supabase

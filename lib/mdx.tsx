@@ -33,8 +33,7 @@ export const mdxComponents = {
         {Array.from({ length: 32 }, (_, i) => (
           <div
             key={i + 1}
-            className={`tooth ${teeth.includes(i + 1) ? 'bg-red-500' : 'bg-gray-300'} 
-                      w-8 h-8 rounded text-center text-white text-xs flex items-center justify-center`}
+            className={`tooth ${teeth.includes(i + 1) ? 'bg-red-500' : 'bg-gray-300'} w-8 h-8 rounded text-center text-white text-xs flex items-center justify-center`}
           >
             {i + 1}
           </div>
