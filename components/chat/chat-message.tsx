@@ -3,6 +3,9 @@ import { cn } from "@/lib/utils"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import type { Components } from "react-markdown"
+import { QuickActions, type QuickAction } from "./quick-actions"
+import { FollowUpQuestions } from "./follow-up-questions"
+import { useState } from "react"
 
 interface Message {
   id: string
@@ -13,10 +16,30 @@ interface Message {
 
 interface ChatMessageProps {
   message: Message
+  onQuickAction?: (action: QuickAction, originalMessage: string) => void
+  onFollowUpQuestion?: (question: string) => void
+  isLoading?: boolean
+  showFollowUp?: boolean
+  lastUserMessage?: string
 }
 
-export function ChatMessage({ message }: ChatMessageProps) {
+export function ChatMessage({ 
+  message, 
+  onQuickAction, 
+  onFollowUpQuestion, 
+  isLoading = false,
+  showFollowUp = true,
+  lastUserMessage
+}: ChatMessageProps) {
   const isUser = message.role === "user"
+  const [hasUsedQuickAction, setHasUsedQuickAction] = useState(false)
+
+  const handleQuickAction = (action: QuickAction) => {
+    if (onQuickAction && lastUserMessage) {
+      setHasUsedQuickAction(true)
+      onQuickAction(action, lastUserMessage)
+    }
+  }
 
   // Custom components for Markdown rendering
   const markdownComponents: Components = {
@@ -114,6 +137,24 @@ export function ChatMessage({ message }: ChatMessageProps) {
             minute: "2-digit",
           })}
         </p>
+        
+        {/* Quick Actions for assistant messages */}
+        {!isUser && onQuickAction && !hasUsedQuickAction && (
+          <QuickActions
+            onAction={handleQuickAction}
+            isLoading={isLoading}
+            messageContent={message.content}
+          />
+        )}
+        
+        {/* Follow-up questions for assistant messages */}
+        {!isUser && showFollowUp && onFollowUpQuestion && lastUserMessage && (
+          <FollowUpQuestions
+            topic={lastUserMessage}
+            onQuestionClick={onFollowUpQuestion}
+            enabled={showFollowUp}
+          />
+        )}
       </div>
     </div>
   )

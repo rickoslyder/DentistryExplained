@@ -111,6 +111,12 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
     setInput(question)
   }
 
+  const handleQuickAction = (action: any, originalMessage: string) => {
+    // Construct the modified message based on the action
+    const modifiedMessage = `${action.prompt}${originalMessage}`
+    sendMessage(modifiedMessage)
+  }
+
   if (!isOpen) return null
 
   return (
@@ -204,9 +210,25 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
                 </p>
               </div>
             )}
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
-            ))}
+            {messages.map((message, index) => {
+              // Find the last user message before this message
+              const lastUserMsg = messages
+                .slice(0, index)
+                .reverse()
+                .find(m => m.role === 'user')
+              
+              return (
+                <ChatMessage 
+                  key={message.id} 
+                  message={message}
+                  onQuickAction={handleQuickAction}
+                  onFollowUpQuestion={handleSuggestedQuestion}
+                  isLoading={isLoading}
+                  showFollowUp={user?.unsafeMetadata?.settings?.aiAssistant?.autoSuggestFollowUp !== false}
+                  lastUserMessage={lastUserMsg?.content}
+                />
+              )
+            })}
             {isLoading && (
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div className="flex items-center space-x-2 text-gray-600">
