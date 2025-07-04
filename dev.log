@@ -639,3 +639,7 @@ Error creating user profile: {
  GET /treatments/dental-fillings 200 in 105ms
  ✓ Compiled in 469ms (1420 modules)
  GET /treatments/dental-fillings 200 in 74ms
+ ✓ Compiled in 2.5s (2447 modules)
+ GET /treatments/dental-fillings 200 in 372ms
+ ✓ Compiled in 1957ms (2450 modules)
+ GET /treatments/dental-fillings 200 in 189ms
