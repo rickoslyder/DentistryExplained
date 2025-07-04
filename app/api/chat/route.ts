@@ -162,9 +162,8 @@ const chatHandler = compose(
 
       // Handle streaming response
       if (stream && aiResponse instanceof ReadableStream) {
-        // For streaming, we need to store the message after the stream completes
-        // This would require a more complex implementation
-        // For now, return the stream with proper headers
+        // Assistant messages are saved after streaming completes via the /api/chat/messages endpoint
+        // This is handled in the use-chat-stream hook
         return new NextResponse(aiResponse, {
           headers: {
             'Content-Type': 'text/event-stream',

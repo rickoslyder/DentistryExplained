@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Phone, Globe, Clock, Star, Filter, Map } from "lucide-react"
+import { Search, MapPin, Phone, Globe, Clock, Star, Filter } from "lucide-react"
+import { PracticeMap } from "@/components/find-dentist/practice-map"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
@@ -44,6 +45,7 @@ export default function FindDentistPage() {
     wheelchairAccess: false,
     services: [] as string[],
   })
+  const [selectedPractice, setSelectedPractice] = useState<DentistPractice | null>(null)
 
   // Mock data for demonstration
   const practices: DentistPractice[] = [
@@ -260,12 +262,23 @@ export default function FindDentistPage() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardContent className="p-0">
-                <div className="h-96 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <Map className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">Interactive map would appear here</p>
-                    <p className="text-sm text-gray-400 mt-1">Showing {practices.length} practices</p>
-                  </div>
+                <div className="h-96">
+                  <PracticeMap 
+                    practices={practices.map(p => ({
+                      id: p.id,
+                      name: p.name,
+                      address: p.address,
+                      // Generate mock coordinates based on distance (for demo)
+                      latitude: 51.5074 + (Math.random() - 0.5) * 0.1,
+                      longitude: -0.1278 + (Math.random() - 0.5) * 0.1,
+                      acceptsNHS: p.nhsAccepted,
+                    }))}
+                    selectedPracticeId={selectedPractice?.id}
+                    onPracticeSelect={(id) => {
+                      const practice = practices.find(p => p.id === id)
+                      setSelectedPractice(practice || null)
+                    }}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -288,7 +301,13 @@ export default function FindDentistPage() {
             </div>
 
             {practices.map((practice) => (
-              <Card key={practice.id} className="hover-lift hover-glow">
+              <Card 
+                key={practice.id} 
+                className={`hover-lift hover-glow cursor-pointer transition-all ${
+                  selectedPractice?.id === practice.id ? 'ring-2 ring-primary' : ''
+                }`}
+                onClick={() => setSelectedPractice(practice)}
+              >
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div className="flex-1">

@@ -4,9 +4,12 @@ import { useState } from 'react'
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 import { Search } from "lucide-react"
+import { enhancedGlossaryTerms } from "@/data/glossary-enhanced"
 
-const glossaryTerms = [
+// Use enhanced glossary data if available, fallback to basic data
+const glossaryTerms = enhancedGlossaryTerms.length > 0 ? enhancedGlossaryTerms : [
   {
     term: "Abscess",
     definition: "A pocket of pus that forms around the root of an infected tooth or in the gums due to bacterial infection."

@@ -16,7 +16,14 @@ export async function createServerSupabaseClient() {
     const { getToken } = await auth()
     
     // Get the Clerk session token - this might fail if template isn't configured
-    const token = await getToken({ template: 'supabase' }).catch(() => null)
+    const token = await getToken({ template: 'supabase' }).catch((error) => {
+      console.warn(
+        'Failed to get Clerk JWT token. Make sure the "supabase" JWT template is configured in your Clerk dashboard.',
+        'Visit: https://dashboard.clerk.com/apps/[YOUR_APP_ID]/jwt-templates',
+        'Error:', error.message
+      )
+      return null
+    })
     
     if (!token) {
       // Return a client without custom auth if no token
@@ -47,7 +54,14 @@ export async function createRouteSupabaseClient() {
     const { getToken } = await auth()
     
     // Get the Clerk session token - this might fail if template isn't configured
-    const token = await getToken({ template: 'supabase' }).catch(() => null)
+    const token = await getToken({ template: 'supabase' }).catch((error) => {
+      console.warn(
+        'Failed to get Clerk JWT token. Make sure the "supabase" JWT template is configured in your Clerk dashboard.',
+        'Visit: https://dashboard.clerk.com/apps/[YOUR_APP_ID]/jwt-templates',
+        'Error:', error.message
+      )
+      return null
+    })
     
     if (!token) {
       // Return a client without custom auth if no token
@@ -121,9 +135,27 @@ export async function getCurrentUserProfile() {
           if (!fetchError && existingProfile) {
             return toUserProfile(existingProfile)
           }
+          
+          console.error('Failed to fetch existing profile after duplicate key error:', fetchError)
         }
         
-        console.error('Error creating user profile:', createError)
+        // Log specific error types for better debugging
+        if (createError.code === '42501') {
+          console.error(
+            'Row Level Security (RLS) policy violation when creating user profile.',
+            'Make sure the service role key is being used for profile creation.',
+            createError
+          )
+        } else if (createError.code === 'PGRST204') {
+          console.error(
+            'Database schema mismatch. The profiles table may be missing required columns.',
+            'Required columns: clerk_id, email, user_type, first_name, last_name, avatar_url',
+            createError
+          )
+        } else {
+          console.error('Error creating user profile:', createError)
+        }
+        
         return null
       }
       

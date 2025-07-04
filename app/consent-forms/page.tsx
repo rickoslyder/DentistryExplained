@@ -127,18 +127,18 @@ export default function ConsentFormsPage() {
       <Header />
       <main className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Dental Consent Forms
-        </h1>
-        <p className="text-lg text-gray-600">
-          Download professional consent forms for various dental procedures. 
-          All forms are regularly updated to meet current legal requirements.
-        </p>
-      </div>
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Dental Consent Forms
+            </h1>
+            <p className="text-lg text-gray-600">
+              Download professional consent forms for various dental procedures. 
+              All forms are regularly updated to meet current legal requirements.
+            </p>
+          </div>
 
-      {/* Info Banner */}
-      {!isProfessional && (
+          {/* Info Banner */}
+          {!isProfessional && (
         <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8">
           <div className="flex items-start">
             <Shield className="w-5 h-5 text-blue-400 mt-0.5 mr-3" />
@@ -152,9 +152,9 @@ export default function ConsentFormsPage() {
             </div>
           </div>
         </div>
-      )}
-      
-      {isProfessional && !isVerified && (
+          )}
+          
+          {isProfessional && !isVerified && (
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
           <div className="flex items-start">
             <Clock className="w-5 h-5 text-yellow-400 mt-0.5 mr-3" />
@@ -168,10 +168,10 @@ export default function ConsentFormsPage() {
             </div>
           </div>
         </div>
-      )}
+          )}
 
-      {/* Category Filter */}
-      <div className="mb-6">
+          {/* Category Filter */}
+          <div className="mb-6">
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => (
             <button
@@ -187,10 +187,10 @@ export default function ConsentFormsPage() {
             </button>
           ))}
         </div>
-      </div>
+          </div>
 
-      {/* Consent Forms Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Consent Forms Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredForms.map((form) => (
           <Card key={form.id} className="hover:shadow-lg transition-shadow">
             <CardHeader>
@@ -245,17 +245,17 @@ export default function ConsentFormsPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+          </div>
 
-      {/* Empty State */}
-      {filteredForms.length === 0 && (
+          {/* Empty State */}
+          {filteredForms.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">No consent forms found in this category.</p>
         </div>
-      )}
+          )}
 
-      {/* Additional Information */}
-      <div className="mt-12 grid md:grid-cols-2 gap-8">
+          {/* Additional Information */}
+          <div className="mt-12 grid md:grid-cols-2 gap-8">
         <div className="bg-gray-50 rounded-lg p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-3">
             Using These Forms
@@ -311,10 +311,10 @@ export default function ConsentFormsPage() {
             </a>
           </Button>
         </div>
-      </div>
-      
-      {/* Preview Dialog */}
-      <Dialog open={!!previewForm} onOpenChange={() => setPreviewForm(null)}>
+          </div>
+          
+          {/* Preview Dialog */}
+          <Dialog open={!!previewForm} onOpenChange={() => setPreviewForm(null)}>
         <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{previewForm?.title}</DialogTitle>
@@ -395,8 +395,8 @@ export default function ConsentFormsPage() {
             </div>
           )}
         </DialogContent>
-      </Dialog>
-    </div>
+          </Dialog>
+        </div>
       </main>
       <Footer />
     </>
