@@ -89,7 +89,7 @@ const questionPools: Record<string, string[]> = {
     "What's included in each NHS band?",
     "How do payment plans work?",
     "Can I get help with dental costs?",
-    "Why is NHS dental treatment so expensive?",
+    "How are NHS dental charges calculated?",
     "What if I can't afford emergency dental care?",
     "Is private dental insurance worth it?",
     "Can I mix NHS and private treatment?",
@@ -328,7 +328,7 @@ export function FollowUpQuestions({
               variant="ghost"
               size="sm"
               onClick={() => onQuestionClick(question)}
-              className="text-left justify-start h-auto py-2 px-3 text-sm font-normal hover:bg-gray-50 w-full transition-all duration-200 hover:translate-x-1"
+              className="text-left justify-start h-auto py-2 px-3 text-sm font-normal hover:bg-gray-50 w-full whitespace-normal text-wrap break-words transition-all duration-200 hover:translate-x-1"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {question}

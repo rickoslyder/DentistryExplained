@@ -18,8 +18,8 @@ export function AIAssistantButton() {
         <Bot className="w-5 h-5" />
         <span className="sr-only">Open AI Assistant</span>
 
-        {/* Pulse animation */}
-        <span className="absolute -inset-1 rounded-full bg-primary/20 pulse-ring"></span>
+        {/* Pulse animation - pointer-events-none so it doesn't block clicks */}
+        <span className="absolute -inset-1 rounded-full bg-primary/20 pulse-ring pointer-events-none"></span>
       </Button>
 
       <ChatPanel isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />

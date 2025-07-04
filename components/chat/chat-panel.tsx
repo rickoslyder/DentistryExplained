@@ -287,7 +287,7 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
             </Button>
           </div>
           <p className="text-xs text-gray-500 mt-2">
-            Press Enter to send • Esc to close • {typeof window !== 'undefined' && navigator.platform.includes('Mac') ? 'Cmd' : 'Ctrl'}+K to clear • {isConfigured ? "AI powered by LiteLLM" : "Using fallback responses"}
+            Press Enter to send • Esc to close • {typeof window !== 'undefined' && navigator.platform.includes('Mac') ? 'Cmd' : 'Ctrl'}+K to clear
           </p>
         </div>
       </div>

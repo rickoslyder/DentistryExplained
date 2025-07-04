@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
-    () =>
+    () => 
       new QueryClient({
         defaultOptions: {
           queries: {

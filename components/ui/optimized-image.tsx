@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 
 interface OptimizedImageProps {
@@ -38,6 +38,15 @@ export function OptimizedImage({
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
+  // Fallback to show image after 2 seconds if onLoad doesn't fire
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   // Default fallback image
   const fallbackSrc = '/placeholder.svg'
 
@@ -70,7 +79,6 @@ export function OptimizedImage({
 
   const containerClasses = cn(
     'relative overflow-hidden',
-    isLoading && 'animate-pulse bg-gray-200',
     className
   )
 
@@ -90,9 +98,7 @@ export function OptimizedImage({
           placeholder={placeholder}
           blurDataURL={blurDataURL}
           className={cn(
-            'object-cover',
-            isLoading && 'opacity-0',
-            !isLoading && 'opacity-100 transition-opacity duration-300'
+            'object-cover'
           )}
           onLoad={() => {
             setIsLoading(false)
@@ -119,8 +125,7 @@ export function OptimizedImage({
         placeholder={placeholder}
         blurDataURL={blurDataURL}
         className={cn(
-          isLoading && 'opacity-0',
-          !isLoading && 'opacity-100 transition-opacity duration-300'
+          'transition-opacity duration-300'
         )}
         onLoad={() => {
           setIsLoading(false)
