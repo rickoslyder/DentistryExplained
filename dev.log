@@ -189,3 +189,36 @@ Suggestions error: {
  ✓ Compiled in 1882ms (993 modules)
  GET /api/search?q=dental 200 in 472ms
  ✓ Compiled in 1136ms (675 modules)
+ ✓ Compiled in 498ms (675 modules)
+ ✓ Compiled in 307ms (675 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 1241ms (978 modules)
+ GET / 200 in 2072ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 912ms (1640 modules)
+ GET /robots.txt?486564 404 in 1258ms
+ GET /robots.txt?486564 404 in 95ms
+ GET /robots.txt?486564 404 in 89ms
+ GET / 200 in 346ms
+ GET /robots.txt?486564 404 in 95ms
+ ✓ Compiled in 2.1s (899 modules)
+ GET / 200 in 330ms
+ ✓ Compiled in 3.7s (1877 modules)
+ ✓ Compiled in 5s (1877 modules)
+ ✓ Compiled in 2.5s (1877 modules)
+ ✓ Compiled in 2.4s (1863 modules)
+ ✓ Compiled in 1085ms (675 modules)
+ ✓ Compiled in 3s (1863 modules)
+ ✓ Compiled in 2.4s (1653 modules)
+ ✓ Compiled in 1525ms (1653 modules)
+ ✓ Compiled in 2.1s (1653 modules)
+ ✓ Compiled in 1909ms (1653 modules)
+ ✓ Compiled in 720ms (675 modules)
+ ✓ Compiled in 715ms (675 modules)
+[Error: ENOSPC: no space left on device, open '/Users/rkb/DentistryExplained/dentistry-explained/.next/cache/webpack/client-development/16.pack.gz_'] {
+  errno: -28,
+  code: 'ENOSPC',
+  syscall: 'open',
+  path: '/Users/rkb/DentistryExplained/dentistry-explained/.next/cache/webpack/client-development/16.pack.gz_'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, open '/Users/rkb/DentistryExplained/dentistry-explained/.next/cache/webpack/client-development/16.pack.gz_'

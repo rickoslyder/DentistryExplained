@@ -124,7 +124,7 @@ export default function TopicsPage() {
                   {category.articles.map((article, index) => (
                     <Link
                       key={index}
-                      href={`/${category.id}/${article.slug}`}
+                      href={`/categories/${category.id}/${article.slug}`}
                       className="block p-3 rounded-lg hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center justify-between">
@@ -137,7 +137,7 @@ export default function TopicsPage() {
                     </Link>
                   ))}
                   <Link
-                    href={`/${category.id}`}
+                    href={`/categories/${category.id}`}
                     className="block text-center p-3 text-primary hover:text-primary/80 font-medium transition-colors"
                   >
                     View all {category.title.toLowerCase()} →

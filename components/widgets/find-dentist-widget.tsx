@@ -180,13 +180,20 @@ export function FindDentistWidget() {
                   Next: {practice.nextAvailable}
                 </div>
                 <div className="flex space-x-2">
-                  <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 bg-transparent"
+                    onClick={() => window.location.href = `tel:${practice.phone}`}
+                  >
                     <Phone className="w-4 h-4 mr-1" />
                     Call
                   </Button>
-                  <Button size="sm" className="flex-1">
-                    View Details
-                  </Button>
+                  <Link href={`/find-dentist/${practice.id}`}>
+                    <Button size="sm" className="flex-1">
+                      View Details
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>

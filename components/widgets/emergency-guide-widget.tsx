@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useRouter } from "next/navigation"
 
 interface EmergencyScenario {
   id: string
@@ -18,6 +19,7 @@ interface EmergencyScenario {
 
 export function EmergencyGuideWidget() {
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null)
+  const router = useRouter()
 
   const emergencyScenarios: EmergencyScenario[] = [
     {
@@ -145,7 +147,10 @@ export function EmergencyGuideWidget() {
                 <Button onClick={() => setSelectedScenario(null)} variant="outline" className="bg-white">
                   ← Back to Options
                 </Button>
-                <Button className="bg-red-600 hover:bg-red-700">
+                <Button 
+                  className="bg-red-600 hover:bg-red-700"
+                  onClick={() => router.push('/find-dentist?emergency=true')}
+                >
                   <MapPin className="w-4 h-4 mr-2" />
                   Find Emergency Dentist
                 </Button>
