@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Clock, ChevronRight, AlertTriangle, TrendingUp } from "lucide-react"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export default function DentalProblemsPage() {
   const featuredArticles = [
@@ -150,12 +151,14 @@ export default function DentalProblemsPage() {
             {featuredArticles.map((article, index) => (
               <Card key={index} className="hover-lift hover-glow overflow-hidden">
                 <div className="aspect-video bg-gray-100 relative">
-                  <img
+                  <OptimizedImage
                     src={article.image || "/placeholder.svg"}
                     alt={article.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-t-lg"
                   />
-                  {article.isPopular && <Badge className="absolute top-3 left-3 bg-red-600 text-white">Popular</Badge>}
+                  {article.isPopular && <Badge className="absolute top-3 left-3 bg-red-600 text-white z-10">Popular</Badge>}
                 </div>
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">

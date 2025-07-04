@@ -22,6 +22,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 interface TeamMember {
   name: string
@@ -72,6 +73,21 @@ interface PracticeProfile {
 export default function DentistProfilePage() {
   const params = useParams()
   const [selectedImage, setSelectedImage] = useState(0)
+  
+  // Add loading state
+  if (!params.id) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center py-12">
+            <p className="text-gray-600">Loading practice details...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
 
   // Mock data - in real app, this would be fetched based on params.id
   const practice: PracticeProfile = {
@@ -260,10 +276,13 @@ export default function DentistProfilePage() {
             {/* Images */}
             <div className="space-y-4">
               <div className="aspect-video rounded-lg overflow-hidden">
-                <img
+                <OptimizedImage
                   src={practice.images[selectedImage] || "/placeholder.svg"}
                   alt={`${practice.name} - Image ${selectedImage + 1}`}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                  priority
+                  className="rounded-lg"
                 />
               </div>
               <div className="grid grid-cols-4 gap-2">
@@ -275,10 +294,12 @@ export default function DentistProfilePage() {
                       selectedImage === index ? "border-primary" : "border-gray-200"
                     }`}
                   >
-                    <img
+                    <OptimizedImage
                       src={image || "/placeholder.svg"}
                       alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="25vw"
+                      className="rounded"
                     />
                   </button>
                 ))}
@@ -364,10 +385,12 @@ export default function DentistProfilePage() {
                   <Card key={index}>
                     <CardContent className="pt-6">
                       <div className="flex items-start space-x-4">
-                        <img
+                        <OptimizedImage
                           src={member.image || "/placeholder.svg"}
                           alt={member.name}
-                          className="w-20 h-20 rounded-full object-cover"
+                          width={80}
+                          height={80}
+                          className="rounded-full"
                         />
                         <div className="flex-1">
                           <h3 className="text-lg font-semibold">{member.name}</h3>

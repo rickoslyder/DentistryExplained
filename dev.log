@@ -259,3 +259,3506 @@ Suggestions error: {
  ✓ Compiled in 653ms (675 modules)
  GET / 200 in 287ms
  ✓ Compiled in 2.4s (1877 modules)
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.50.210:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 6s
+ ✓ Compiled /middleware in 495ms (224 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 6.2s (1653 modules)
+ ✓ Compiled in 1875ms (675 modules)
+ GET / 200 in 8431ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.1s (1640 modules)
+ GET /robots.txt?486565 404 in 2438ms
+ ✓ Compiled in 574ms (675 modules)
+ GET / 200 in 309ms
+ ✓ Compiled in 1038ms (1653 modules)
+ GET / 200 in 292ms
+ ✓ Compiled in 1181ms (1672 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 200 in 416ms
+ GET / 200 in 328ms
+ ✓ Compiled /_not-found in 441ms (996 modules)
+ GET /robots.txt?486565 404 in 718ms
+ ✓ Compiled in 292ms (691 modules)
+ GET / 200 in 112ms
+ ✓ Compiled in 672ms (1687 modules)
+ GET / 200 in 266ms
+ ✓ Compiled in 282ms (691 modules)
+ GET / 200 in 497ms
+ ✓ Compiled in 246ms (691 modules)
+ GET / 200 in 153ms
+ ✓ Compiled in 515ms (691 modules)
+ GET / 200 in 61ms
+ ✓ Compiled in 1169ms (691 modules)
+ GET / 200 in 200ms
+ ✓ Compiled in 341ms (691 modules)
+ GET / 200 in 180ms
+ ✓ Compiled in 486ms (691 modules)
+ GET / 200 in 128ms
+ ✓ Compiled in 416ms (691 modules)
+ GET / 200 in 100ms
+ ✓ Compiled in 661ms (691 modules)
+ GET / 200 in 67ms
+ ○ Compiling /sign-in/[[...sign-in]] ...
+ ✓ Compiled /sign-in/[[...sign-in]] in 1253ms (1677 modules)
+ GET /sign-in 200 in 2824ms
+ GET /sign-in/SignIn_clerk_catchall_check_1751637606435 200 in 195ms
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 229ms
+ ✓ Compiled /_not-found in 271ms (1000 modules)
+ GET /robots.txt?486566 404 in 642ms
+ GET /sign-in/sso-callback/SignIn_clerk_catchall_check_1751637618597 200 in 380ms
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 117ms
+ GET /robots.txt?486566 404 in 390ms
+ GET /sign-in/sso-callback/SignIn_clerk_catchall_check_1751637633792 200 in 46ms
+ ✓ Compiled in 430ms (692 modules)
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 263ms
+ ✓ Compiled in 606ms (692 modules)
+ GET /sign-in?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 39ms
+ GET /sign-in/SignIn_clerk_catchall_check_1751637653275 200 in 68ms
+ ✓ Compiled in 281ms (692 modules)
+ GET /sign-in?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 68ms
+ ✓ Compiled in 719ms (692 modules)
+ GET /sign-in?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 31ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 472ms
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 90ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 124ms
+ GET /robots.txt?486566 404 in 262ms
+ GET /sign-in/sso-callback/SignIn_clerk_catchall_check_1751638863186 200 in 114ms
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.5
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.50.210:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.5s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 611ms (224 modules)
+ ○ Compiling /sign-in/[[...sign-in]] ...
+ ✓ Compiled /sign-in/[[...sign-in]] in 7.1s (1562 modules)
+ ✓ Compiled in 1542ms (645 modules)
+ GET /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 11501ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.6s (1549 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6453ms
+ GET /robots.txt?486566 404 in 6445ms
+ GET /sign-in/sso-callback/SignIn_clerk_catchall_check_1751638992164 200 in 4735ms
+ POST /sign-in/sso-callback?after_sign_in_url=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 180ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.4s (1678 modules)
+ GET / 200 in 3261ms
+ GET / 200 in 322ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET / 200 in 1402ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 4521ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /dashboard 200 in 2301ms
+ GET /dashboard 200 in 79ms
+ GET /api/bookmarks 500 in 2074ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 686ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 273ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 278ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 257ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /dashboard/settings 200 in 2541ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 1809ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 445ms
+ GET / 200 in 373ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 367ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 363ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+ ⨯ TypeError: Cannot read properties of undefined (reading 'Title')
+    at Loading (app/find-dentist/loading.tsx:8:9)
+   6 |       {/* Header skeleton */}
+   7 |       <div className="mb-8">
+>  8 |         <DentistSkeleton.Title />
+     |         ^
+   9 |       </div>
+  10 |
+  11 |       {/* Search skeleton */} {
+  digest: '2241679808'
+}
+ GET /find-dentist/1 200 in 2614ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+ GET /apple-touch-icon.png 404 in 820ms
+ GET /apple-touch-icon-precomposed.png 404 in 819ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'Title')
+    at Loading (app/find-dentist/loading.tsx:8:9)
+   6 |       {/* Header skeleton */}
+   7 |       <div className="mb-8">
+>  8 |         <DentistSkeleton.Title />
+     |         ^
+   9 |       </div>
+  10 |
+  11 |       {/* Search skeleton */} {
+  digest: '1027683726'
+}
+ GET /find-dentist/1 200 in 194ms
+ ⚠ ./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+
+./app/find-dentist/loading.tsx
+Attempted import error: 'DentistSkeleton' is not exported from '@/components/loading/dentist-skeleton' (imported as 'DentistSkeleton').
+
+Import trace for requested module:
+./app/find-dentist/loading.tsx
+ ⨯ TypeError: Cannot read properties of undefined (reading 'Title')
+    at Loading (app/find-dentist/loading.tsx:8:9)
+   6 |       {/* Header skeleton */}
+   7 |       <div className="mb-8">
+>  8 |         <DentistSkeleton.Title />
+     |         ^
+   9 |       </div>
+  10 |
+  11 |       {/* Search skeleton */} {
+  digest: '1027683726'
+}
+ GET /find-dentist/1 200 in 249ms
+ ✓ Compiled /_not-found in 1312ms (2076 modules)
+ GET /find-dentist/1 200 in 154ms
+ ✓ Compiled in 1577ms (2063 modules)
+ GET /find-dentist/1 200 in 261ms
+ GET /find-dentist/1 200 in 578ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1262ms (1100 modules)
+ GET /robots.txt?486566 404 in 1785ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 3034ms
+ GET /dashboard 200 in 255ms
+ GET /robots.txt?486566 404 in 496ms
+ GET /robots.txt?486566 404 in 193ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 690ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 509ms
+ GET /dashboard 200 in 212ms
+ GET /robots.txt?486566 404 in 295ms
+ GET /robots.txt?486566 404 in 75ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 311ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 653ms
+ GET /dashboard/settings 200 in 126ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 325ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 328ms
+ ✓ Compiled /_error in 823ms (1099 modules)
+ ✓ Compiled in 1531ms (1202 modules)
+ GET /dashboard/settings 200 in 224ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.8s (2302 modules)
+ GET /dashboard/settings 404 in 2231ms
+ GET /dashboard/settings 404 in 22ms
+ GET /dashboard/settings 200 in 305ms
+ GET /robots.txt?486566 404 in 230ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 2378ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /dashboard/settings 200 in 2166ms
+ GET /dashboard/settings 200 in 102ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /dashboard/settings 200 in 275ms
+ ✓ Compiled /_error in 2.3s (2077 modules)
+ ✓ Compiled /_not-found in 239ms (1100 modules)
+ GET /dashboard/settings 404 in 442ms
+ GET /dashboard/settings 200 in 244ms
+ GET /robots.txt?486566 404 in 114ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ○ Compiling /api/bookmarks ...
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 2193ms
+ ✓ Compiled /_error in 1962ms (2077 modules)
+ GET /dashboard/settings 200 in 245ms
+ ✓ Compiled in 563ms (978 modules)
+ GET /dashboard/settings 200 in 57ms
+ ✓ Compiled in 576ms (978 modules)
+ GET /dashboard/settings 200 in 184ms
+ ✓ Compiled in 416ms (978 modules)
+ GET /dashboard/settings 200 in 48ms
+ ✓ Compiled in 485ms (978 modules)
+ GET /dashboard/settings 200 in 32ms
+ ✓ Compiled in 779ms (978 modules)
+ GET /dashboard/settings 200 in 371ms
+ ✓ Compiled in 716ms (978 modules)
+ GET /dashboard/settings 200 in 39ms
+ GET / 200 in 190ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 1727ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 404ms
+
+✘ next.js v15.3.5 is not yet supported in the Community edition of Console Ninja.
+We are working hard on it for you https://tinyurl.com/3h9mtwra.
+
+Estimated release dates:
+  - Community users: around 29th September, 2025 (subject to team availability)
+  - PRO users:       priority access is available now
+
+
+✘ next.js v15.3.5 is not yet supported in the Community edition of Console Ninja.
+We are working hard on it for you https://tinyurl.com/3h9mtwra.
+
+Estimated release dates:
+  - Community users: around 29th September, 2025 (subject to team availability)
+  - PRO users:       priority access is available now
+
+ ✓ Compiled /_error in 2.1s (1099 modules)
+ ✓ Compiled in 8.8s (2077 modules)
+ ⨯ Error: Invalid src prop (https://sa1s3optim.patientpop.com/filters:format(webp)/assets/images/provider/photos/2688440.jpg) on `next/image`, hostname "sa1s3optim.patientpop.com" is not configured under images in your `next.config.js`
+See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    at defaultLoader (../../../src/shared/lib/image-loader.ts:70:16)
+    at eval (../../../src/shared/lib/get-img-props.ts:239:13)
+    at Array.map (<anonymous>)
+    at generateImgAttrs (../../../src/shared/lib/get-img-props.ts:237:7)
+    at getImgProps (../../../src/shared/lib/get-img-props.ts:693:24)
+    at eval (../../src/client/image-component.tsx:394:64)
+  68 |         const { hasRemoteMatch } = require('./match-remote-pattern')
+  69 |         if (!hasRemoteMatch(config.domains, config.remotePatterns, parsedSrc)) {
+> 70 |           throw new Error(
+     |                ^
+  71 |             `Invalid src prop (${src}) on \`next/image\`, hostname "${parsedSrc.hostname}" is not configured under images in your \`next.config.js\`\n` +
+  72 |               `See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host`
+  73 |           ) {
+  digest: '2460651202'
+}
+ GET / 200 in 1049ms
+ GET / 200 in 2071ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1967ms (1100 modules)
+ GET /robots.txt?486567 404 in 3235ms
+ ✓ Compiled in 712ms (978 modules)
+ GET / 200 in 167ms
+ ✓ Compiled in 1627ms (978 modules)
+ GET / 200 in 589ms
+ ✓ Compiled in 3.2s (2077 modules)
+ GET / 200 in 504ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:237:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 12774ms
+ GET / 200 in 7191ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /robots.txt?486567 404 in 3011ms
+Error: Route "/[category]/[slug]" used `params.category`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlePage (app/[category]/[slug]/page.tsx:97:42)
+   95 |
+   96 | export default async function ArticlePage({ params }: PageProps) {
+>  97 |   const article = await getArticle(params.category, params.slug)
+      |                                          ^
+   98 |   
+   99 |   if (!article) {
+  100 |     notFound()
+Error: Route "/[category]/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlePage (app/[category]/[slug]/page.tsx:97:59)
+   95 |
+   96 | export default async function ArticlePage({ params }: PageProps) {
+>  97 |   const article = await getArticle(params.category, params.slug)
+      |                                                           ^
+   98 |   
+   99 |   if (!article) {
+  100 |     notFound()
+Error: Route "/[category]/[slug]" used `params.category`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at Module.generateMetadata (app/[category]/[slug]/page.tsx:66:42)
+  64 |
+  65 | export async function generateMetadata({ params }: PageProps) {
+> 66 |   const article = await getArticle(params.category, params.slug)
+     |                                          ^
+  67 |   
+  68 |   if (!article) {
+  69 |     return {
+Error: Route "/[category]/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at Module.generateMetadata (app/[category]/[slug]/page.tsx:66:59)
+  64 |
+  65 | export async function generateMetadata({ params }: PageProps) {
+> 66 |   const article = await getArticle(params.category, params.slug)
+     |                                                           ^
+  67 |   
+  68 |   if (!article) {
+  69 |     return {
+ ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your Middleware exists at ./middleware.(ts|js)
+- clerkMiddleware() is used in your Next.js Middleware.
+- Your Middleware matcher is configured to match this route or page.
+- If you are using the src directory, make sure the Middleware file is inside of it.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async createServerSupabaseClient (lib/supabase-auth.ts:13:23)
+    at async getArticle (app/[category]/[slug]/page.tsx:16:19)
+    at async ArticlePage (app/[category]/[slug]/page.tsx:97:18)
+  11 |  */
+  12 | export async function createServerSupabaseClient() {
+> 13 |   const { getToken } = await auth()
+     |                       ^
+  14 |   
+  15 |   // Get the Clerk session token
+  16 |   const token = await getToken({ template: 'supabase' }) {
+  digest: '3751902071'
+}
+ ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your Middleware exists at ./middleware.(ts|js)
+- clerkMiddleware() is used in your Next.js Middleware.
+- Your Middleware matcher is configured to match this route or page.
+- If you are using the src directory, make sure the Middleware file is inside of it.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async createServerSupabaseClient (lib/supabase-auth.ts:13:23)
+    at async getArticle (webpack-internal:///(rsc)/./app/%5Bcategory%5D/%5Bslug%5D/page.tsx:25:22)
+    at async Module.generateMetadata (webpack-internal:///(rsc)/./app/%5Bcategory%5D/%5Bslug%5D/page.tsx:58:21)
+    at JSON.parse (<anonymous>)
+  11 |  */
+  12 | export async function createServerSupabaseClient() {
+> 13 |   const { getToken } = await auth()
+     |                       ^
+  14 |   
+  15 |   // Get the Clerk session token
+  16 |   const token = await getToken({ template: 'supabase' }) {
+  environmentName: 'Server',
+  digest: '3616589292'
+}
+ GET /images/hero-image.jpg 200 in 18010ms
+ ⨯ The requested resource isn't a valid image for /images/hero-image.jpg received text/html; charset=utf-8
+ GET /robots.txt?486567 404 in 408ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET / 200 in 475ms
+ ✓ Compiled /_not-found in 3.4s (2790 modules)
+ GET / 200 in 573ms
+ GET / 200 in 703ms
+ GET /robots.txt?486567 404 in 335ms
+ ○ Compiling /[category]/[slug] ...
+ ✓ Compiled /[category]/[slug] in 1947ms (2026 modules)
+Error: Route "/[category]/[slug]" used `params.category`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlePage (app/[category]/[slug]/page.tsx:97:42)
+   95 |
+   96 | export default async function ArticlePage({ params }: PageProps) {
+>  97 |   const article = await getArticle(params.category, params.slug)
+      |                                          ^
+   98 |   
+   99 |   if (!article) {
+  100 |     notFound()
+Error: Route "/[category]/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlePage (app/[category]/[slug]/page.tsx:97:59)
+   95 |
+   96 | export default async function ArticlePage({ params }: PageProps) {
+>  97 |   const article = await getArticle(params.category, params.slug)
+      |                                                           ^
+   98 |   
+   99 |   if (!article) {
+  100 |     notFound()
+Error: Route "/[category]/[slug]" used `params.category`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at Module.generateMetadata (app/[category]/[slug]/page.tsx:66:42)
+  64 |
+  65 | export async function generateMetadata({ params }: PageProps) {
+> 66 |   const article = await getArticle(params.category, params.slug)
+     |                                          ^
+  67 |   
+  68 |   if (!article) {
+  69 |     return {
+Error: Route "/[category]/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at Module.generateMetadata (app/[category]/[slug]/page.tsx:66:59)
+  64 |
+  65 | export async function generateMetadata({ params }: PageProps) {
+> 66 |   const article = await getArticle(params.category, params.slug)
+     |                                                           ^
+  67 |   
+  68 |   if (!article) {
+  69 |     return {
+ ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your Middleware exists at ./middleware.(ts|js)
+- clerkMiddleware() is used in your Next.js Middleware.
+- Your Middleware matcher is configured to match this route or page.
+- If you are using the src directory, make sure the Middleware file is inside of it.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async createServerSupabaseClient (lib/supabase-auth.ts:13:23)
+    at async getArticle (app/[category]/[slug]/page.tsx:16:19)
+    at async ArticlePage (app/[category]/[slug]/page.tsx:97:18)
+  11 |  */
+  12 | export async function createServerSupabaseClient() {
+> 13 |   const { getToken } = await auth()
+     |                       ^
+  14 |   
+  15 |   // Get the Clerk session token
+  16 |   const token = await getToken({ template: 'supabase' }) {
+  digest: '3751902071'
+}
+ ⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your Middleware exists at ./middleware.(ts|js)
+- clerkMiddleware() is used in your Next.js Middleware.
+- Your Middleware matcher is configured to match this route or page.
+- If you are using the src directory, make sure the Middleware file is inside of it.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async createServerSupabaseClient (lib/supabase-auth.ts:13:23)
+    at async getArticle (webpack-internal:///(rsc)/./app/%5Bcategory%5D/%5Bslug%5D/page.tsx:25:22)
+    at async Module.generateMetadata (webpack-internal:///(rsc)/./app/%5Bcategory%5D/%5Bslug%5D/page.tsx:58:21)
+    at JSON.parse (<anonymous>)
+  11 |  */
+  12 | export async function createServerSupabaseClient() {
+> 13 |   const { getToken } = await auth()
+     |                       ^
+  14 |   
+  15 |   // Get the Clerk session token
+  16 |   const token = await getToken({ template: 'supabase' }) {
+  environmentName: 'Server',
+  digest: '3616589292'
+}
+ GET /images/hero-image.jpg?height=600&width=800 200 in 2877ms
+ ⨯ The requested resource isn't a valid image for /images/hero-image.jpg?height=600&width=800 received text/html; charset=utf-8
+ ○ Compiling /professional ...
+ ✓ Compiled /professional in 1410ms (3713 modules)
+ GET /professional 200 in 2254ms
+ ○ Compiling /topics ...
+ ✓ Compiled /topics in 1842ms (3713 modules)
+ GET /topics 200 in 2816ms
+ GET /categories/treatments/dental-fillings 404 in 50ms
+ GET /categories/treatments/dental-fillings 404 in 163ms
+ GET /robots.txt?486567 404 in 315ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:237:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 5450ms
+ GET /topics 200 in 1891ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /topics 200 in 5524ms
+ GET /robots.txt?486567 404 in 395ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:237:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /categories/dental-problems/tooth-decay 404 in 1901ms
+ GET /robots.txt?486567 404 in 213ms
+ GET /api/bookmarks 500 in 5856ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:237:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 535ms
+Error: Route "/categories/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at CategoryPage (app/categories/[slug]/page.tsx:98:56)
+   96 |
+   97 | export default async function CategoryPage({ params }: PageProps) {
+>  98 |   const category = await getCategoryWithArticles(params.slug)
+      |                                                        ^
+   99 |   
+  100 |   if (!category) {
+  101 |     notFound()
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getCategoryWithArticles (app/categories/[slug]/page.tsx:21:19)
+    at async CategoryPage (app/categories/[slug]/page.tsx:98:19)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: 'e4999d9f4119abcaff4b61d71bfa8c05',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '2938171893'
+}
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async Module.generateMetadata (webpack-internal:///(rsc)/./app/categories/%5Bslug%5D/page.tsx:66:22)
+    at JSON.parse (<anonymous>)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  environmentName: 'Server',
+  digest: '2608972362'
+}
+ GET /categories/dental-problems 200 in 9115ms
+ GET /robots.txt?486567 404 in 110ms
+ GET /categories/dental-problems/tooth-decay 404 in 190ms
+ GET /robots.txt?486567 404 in 1103ms
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:237:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ GET /api/bookmarks 500 in 435ms
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ✓ Compiled /categories/[slug] in 1280ms (1194 modules)
+ ✓ Compiled in 1224ms (1194 modules)
+ ✓ Compiled in 2.7s (2890 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 708ms (1195 modules)
+ GET /categories/dental-problems/tooth-decay 404 in 2304ms
+Error: Route "/categories/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at CategoryPage (app/categories/[slug]/page.tsx:98:56)
+   96 |
+   97 | export default async function CategoryPage({ params }: PageProps) {
+>  98 |   const category = await getCategoryWithArticles(params.slug)
+      |                                                        ^
+   99 |   
+  100 |   if (!category) {
+  101 |     notFound()
+ ⨯ Error: Not Found
+    at async createServerSupabaseClient (lib/supabase-auth.ts:16:16)
+    at async getCategoryWithArticles (app/categories/[slug]/page.tsx:21:19)
+    at async CategoryPage (app/categories/[slug]/page.tsx:98:19)
+  14 |   
+  15 |   // Get the Clerk session token
+> 16 |   const token = await getToken({ template: 'supabase' })
+     |                ^
+  17 |   
+  18 |   if (!token) {
+  19 |     // Return a client without custom auth if no token {
+  toString: [Function (anonymous)],
+  status: 404,
+  clerkTraceId: '9ae048fc27b65e11ce5d1af1134f41a2',
+  retryAfter: undefined,
+  clerkError: true,
+  errors: [Array],
+  digest: '2938171893'
+}
+ GET /categories/dental-problems 200 in 2694ms
+ GET /categories/dental-problems/tooth-decay 404 in 601ms
+ GET /robots.txt?486567 404 in 153ms
+ ○ Compiling /api/bookmarks ...
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⨯ TypeError: Cannot read properties of undefined (reading 'shape')
+    at eval (app/api/bookmarks/route.ts:78:5)
+    at <unknown> (rsc)/./app/api/bookmarks/route.ts (/Users/rkb/DentistryExplained/dentistry-explained/.next/server/app/api/bookmarks/route.js:22:1)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_require__ (.next/server/webpack-runtime.js:33:43)
+    at __webpack_exec__ (.next/server/app/api/bookmarks/route.js:336:39)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:479)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:168:21)
+    at <unknown> (.next/server/app/api/bookmarks/route.js:337:47)
+    at Object.<anonymous> (.next/server/app/api/bookmarks/route.js:340:3)
+  76 | const getBookmarksSchema = z.object({
+  77 |   category: z.string().optional(),
+> 78 |   ...paginationSchema.shape,
+     |     ^
+  79 | })
+  80 |
+  81 | const getBookmarksHandler = withAuth(async (request: NextRequest, context) => { {
+  page: '/api/bookmarks'
+}
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ ⚠ ./app/api/bookmarks/route.ts
+Attempted import error: 'validateRequestBody' is not exported from '@/lib/api-errors' (imported as 'validateRequestBody').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'paginationSchema' is not exported from '@/lib/api-errors' (imported as 'paginationSchema').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'validateQueryParams' is not exported from '@/lib/api-errors' (imported as 'validateQueryParams').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+
+./app/api/bookmarks/route.ts
+Attempted import error: 'mapDatabaseError' is not exported from '@/lib/api-errors' (imported as 'mapDatabaseError').
+
+Import trace for requested module:
+./app/api/bookmarks/route.ts
+ GET /api/bookmarks 500 in 3638ms

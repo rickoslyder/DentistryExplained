@@ -8,6 +8,7 @@ import { FindDentistWidget } from "@/components/widgets/find-dentist-widget"
 import { HealthAssessmentWidget } from "@/components/widgets/health-assessment-widget"
 import { EmergencyGuideWidget } from "@/components/widgets/emergency-guide-widget"
 import { NewsletterWidget } from "@/components/widgets/newsletter-widget"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export default function HomePage() {
   return (
@@ -46,10 +47,14 @@ export default function HomePage() {
             {/* Hero Image */}
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/placeholder.svg?height=600&width=800"
+                <OptimizedImage
+                  // src="/placeholder.svg?height=600&width=800"
+                  src="/images/hero-image.jpg?height=600&width=800"
                   alt="Happy family smiling showing healthy teeth - dental health concept"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                  className="rounded-2xl"
                 />
               </div>
               {/* Floating elements for visual interest */}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import { BookOpen, Clock, Bookmark, TrendingUp, Calendar, MapPin, Bell, Settings } from "lucide-react"
+import { BookOpen, Clock, Bookmark, TrendingUp, Calendar, MapPin, Bell, Settings, Stethoscope, CheckCircle, ArrowRight } from "lucide-react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
@@ -339,6 +339,54 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Professional Features Preview for Patients */}
+            {!isProfessional && (
+              <Card className="border-primary/20 bg-primary/5">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="flex items-center">
+                        <Stethoscope className="w-5 h-5 mr-2 text-primary" />
+                        Professional Features Available
+                      </CardTitle>
+                      <CardDescription>
+                        Upgrade to access exclusive resources for dental professionals
+                      </CardDescription>
+                    </div>
+                    <Badge className="bg-primary/10 text-primary border-primary/20">
+                      Professional Only
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 mb-6">
+                    <li className="flex items-center text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary mr-2" />
+                      Download consent forms and patient materials
+                    </li>
+                    <li className="flex items-center text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary mr-2" />
+                      Manage your practice listing
+                    </li>
+                    <li className="flex items-center text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary mr-2" />
+                      Get verified professional badge
+                    </li>
+                    <li className="flex items-center text-sm">
+                      <CheckCircle className="w-4 h-4 text-primary mr-2" />
+                      Access clinical guidelines and resources
+                    </li>
+                  </ul>
+                  <Link href="/professional/upgrade">
+                    <Button className="w-full">
+                      Learn More About Professional Access
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {isProfessional && (

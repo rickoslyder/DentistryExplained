@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Clock, ChevronRight, Shield, CheckCircle, Calendar } from "lucide-react"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export default function PreventionPage() {
   const preventionPillars = [
@@ -216,13 +217,15 @@ export default function PreventionPage() {
             {featuredArticles.map((article, index) => (
               <Card key={index} className="hover-lift hover-glow overflow-hidden">
                 <div className="aspect-video bg-gray-100 relative">
-                  <img
+                  <OptimizedImage
                     src={article.image || "/placeholder.svg"}
                     alt={article.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-t-lg"
                   />
                   {article.isEssential && (
-                    <Badge className="absolute top-3 left-3 bg-green-600 text-white">Essential</Badge>
+                    <Badge className="absolute top-3 left-3 bg-green-600 text-white z-10">Essential</Badge>
                   )}
                 </div>
                 <CardHeader>

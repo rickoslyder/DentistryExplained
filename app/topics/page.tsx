@@ -124,7 +124,7 @@ export default function TopicsPage() {
                   {category.articles.map((article, index) => (
                     <Link
                       key={index}
-                      href={`/categories/${category.id}/${article.slug}`}
+                      href={`/${category.id}/${article.slug}`}
                       className="block p-3 rounded-lg hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center justify-between">

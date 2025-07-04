@@ -129,7 +129,7 @@ export default function ProfessionalPage() {
               specifically for UK dental professionals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/sign-up">
+              <Link href="/sign-up?userType=professional">
                 <Button size="lg" className="w-full sm:w-auto">
                   Start Free Trial
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -287,7 +287,7 @@ export default function ProfessionalPage() {
             Join over 2,000 dental professionals who trust Dentistry Explained for their practice needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/sign-up">
+            <Link href="/sign-up?userType=professional">
               <Button size="lg" variant="secondary" className="w-full sm:w-auto">
                 Start Free Trial
               </Button>

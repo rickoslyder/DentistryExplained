@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { BookOpen, Users, Shield, Award, Heart, Target, CheckCircle, Mail } from "lucide-react"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export default function AboutPage() {
   const teamMembers = [
@@ -173,10 +174,12 @@ export default function AboutPage() {
               <Card key={index} className="text-center hover-lift">
                 <CardHeader>
                   <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={member.image || "/placeholder.svg"}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      width={96}
+                      height={96}
+                      className="rounded-full"
                     />
                   </div>
                   <CardTitle className="text-lg">{member.name}</CardTitle>

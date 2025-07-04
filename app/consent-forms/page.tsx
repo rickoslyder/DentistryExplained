@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Download, FileText, Shield, Clock } from 'lucide-react'
+import { useUser } from '@clerk/nextjs'
+import { Download, FileText, Shield, Clock, Lock, Eye } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { useRouter } from 'next/navigation'
 
 const consentForms = [
   {
@@ -80,16 +82,35 @@ const categories = ['All', 'General', 'Oral Surgery', 'Endodontics', 'Implants',
 
 export default function ConsentFormsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const { user, isSignedIn } = useUser()
+  const router = useRouter()
+  
+  const isProfessional = user?.unsafeMetadata?.userType === 'professional'
+  const isVerified = user?.unsafeMetadata?.verificationStatus === 'approved'
 
   const filteredForms = selectedCategory === 'All' 
     ? consentForms 
     : consentForms.filter(form => form.category === selectedCategory)
 
   const handleDownload = (form: typeof consentForms[0]) => {
+    if (!isSignedIn) {
+      router.push('/sign-in?redirect_url=' + encodeURIComponent(window.location.pathname))
+      return
+    }
+    
+    if (!isProfessional || !isVerified) {
+      router.push('/professional/upgrade?from=' + encodeURIComponent(window.location.pathname))
+      return
+    }
+    
     // In production, this would track the download and serve the actual PDF
     console.log(`Downloading: ${form.title}`)
-    // For now, just open in new tab (would be actual PDF URLs in production)
     window.open(form.downloadUrl, '_blank')
+  }
+  
+  const handlePreview = (form: typeof consentForms[0]) => {
+    // Show preview modal or redirect to preview page
+    console.log(`Previewing: ${form.title}`)
   }
 
   return (
@@ -105,19 +126,37 @@ export default function ConsentFormsPage() {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8">
-        <div className="flex items-start">
-          <Shield className="w-5 h-5 text-blue-400 mt-0.5 mr-3" />
-          <div>
-            <p className="text-sm text-blue-700">
-              <strong>For Dental Professionals:</strong> Create customized consent forms with our professional tools. 
-              <a href="/professional/consent-forms" className="underline ml-1">
-                Sign up for professional access
-              </a>
-            </p>
+      {!isProfessional && (
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8">
+          <div className="flex items-start">
+            <Shield className="w-5 h-5 text-blue-400 mt-0.5 mr-3" />
+            <div>
+              <p className="text-sm text-blue-700">
+                <strong>For Dental Professionals:</strong> Download and customize consent forms with your practice details. 
+                <a href="/professional/upgrade" className="underline ml-1">
+                  Get professional access
+                </a>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      
+      {isProfessional && !isVerified && (
+        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
+          <div className="flex items-start">
+            <Clock className="w-5 h-5 text-yellow-400 mt-0.5 mr-3" />
+            <div>
+              <p className="text-sm text-yellow-700">
+                <strong>Verification Pending:</strong> Complete your professional verification to download consent forms. 
+                <a href="/professional/verify" className="underline ml-1">
+                  Complete verification
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Category Filter */}
       <div className="mb-6">
@@ -159,14 +198,37 @@ export default function ConsentFormsPage() {
               </div>
               <div className="flex items-center justify-between">
                 <Badge variant="outline">{form.category}</Badge>
-                <Button
-                  size="sm"
-                  onClick={() => handleDownload(form)}
-                  className="gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  Download
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handlePreview(form)}
+                    className="gap-2 bg-transparent"
+                  >
+                    <Eye className="w-4 h-4" />
+                    Preview
+                  </Button>
+                  {isProfessional && isVerified ? (
+                    <Button
+                      size="sm"
+                      onClick={() => handleDownload(form)}
+                      className="gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => handleDownload(form)}
+                      className="gap-2"
+                    >
+                      <Lock className="w-4 h-4" />
+                      Pro
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>

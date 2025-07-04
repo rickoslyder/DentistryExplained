@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Clock, ChevronRight, Wrench, Star, Filter } from "lucide-react"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export default function TreatmentsPage() {
   const treatmentCategories = [
@@ -193,10 +194,12 @@ export default function TreatmentsPage() {
             {featuredTreatments.map((treatment, index) => (
               <Card key={index} className="hover-lift hover-glow overflow-hidden">
                 <div className="aspect-video bg-gray-100 relative">
-                  <img
+                  <OptimizedImage
                     src={treatment.image || "/placeholder.svg"}
                     alt={treatment.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-t-lg"
                   />
                   {treatment.isPopular && (
                     <Badge className="absolute top-3 left-3 bg-blue-600 text-white">Popular</Badge>

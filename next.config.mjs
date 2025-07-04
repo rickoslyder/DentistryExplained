@@ -7,7 +7,18 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    domains: [
+      'supabase.co',
+      '*.supabase.co',
+      'dentistryexplained.supabase.co',
+      'clerk.com',
+      '*.clerk.com',
+      'img.clerk.com',
+      'images.unsplash.com', // For demo/placeholder images
+    ],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   async headers() {
     return [
@@ -46,16 +57,16 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.accounts.dev https://*.clerk.accounts.dev;
-              style-src 'self' 'unsafe-inline';
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com;
+              style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev;
               img-src 'self' data: https: blob:;
-              font-src 'self' data:;
-              connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com;
+              font-src 'self' data: https://*.clerk.accounts.dev;
+              connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com https://challenges.cloudflare.com;
               media-src 'self';
               object-src 'none';
-              frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev;
+              frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com;
               base-uri 'self';
-              form-action 'self';
+              form-action 'self' https://*.clerk.accounts.dev;
               frame-ancestors 'none';
               upgrade-insecure-requests;
             `.replace(/\s+/g, ' ').trim()
