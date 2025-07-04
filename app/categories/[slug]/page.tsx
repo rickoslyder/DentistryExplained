@@ -100,7 +100,31 @@ export default async function CategoryPage({ params }: PageProps) {
   const category = await getCategoryWithArticles(slug)
   
   if (!category) {
-    notFound()
+    // Show a helpful message instead of 404
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Category Coming Soon</h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Our dental experts are currently organizing content for this category.
+            </p>
+            <p className="text-gray-500 mb-8">
+              Category: <span className="font-medium">{slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+            </p>
+            <Link href="/topics">
+              <Button>
+                Browse All Topics
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        <Footer />
+      </div>
+    )
   }
   
   const featuredArticles = category.articles.filter(a => a.is_featured)

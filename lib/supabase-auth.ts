@@ -10,24 +10,30 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
  * This client will pass the Clerk JWT token to Supabase for RLS
  */
 export async function createServerSupabaseClient() {
-  const { getToken } = await auth()
-  
-  // Get the Clerk session token
-  const token = await getToken({ template: 'supabase' })
-  
-  if (!token) {
-    // Return a client without custom auth if no token
+  try {
+    const { getToken } = await auth()
+    
+    // Get the Clerk session token - this might fail if template isn't configured
+    const token = await getToken({ template: 'supabase' }).catch(() => null)
+    
+    if (!token) {
+      // Return a client without custom auth if no token
+      return createClient<Database>(supabaseUrl, supabaseAnonKey)
+    }
+    
+    // Create a client with the Clerk token
+    return createClient<Database>(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    })
+  } catch (error) {
+    // If auth fails entirely, return anonymous client
+    console.warn('Auth failed in createServerSupabaseClient:', error)
     return createClient<Database>(supabaseUrl, supabaseAnonKey)
   }
-  
-  // Create a client with the Clerk token
-  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
-    global: {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  })
 }
 
 /**
@@ -35,24 +41,30 @@ export async function createServerSupabaseClient() {
  * This function extracts the token from the request context
  */
 export async function createRouteSupabaseClient() {
-  const { getToken } = await auth()
-  
-  // Get the Clerk session token
-  const token = await getToken({ template: 'supabase' })
-  
-  if (!token) {
-    // Return a client without custom auth if no token
+  try {
+    const { getToken } = await auth()
+    
+    // Get the Clerk session token - this might fail if template isn't configured
+    const token = await getToken({ template: 'supabase' }).catch(() => null)
+    
+    if (!token) {
+      // Return a client without custom auth if no token
+      return createClient<Database>(supabaseUrl, supabaseAnonKey)
+    }
+    
+    // Create a client with the Clerk token
+    return createClient<Database>(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    })
+  } catch (error) {
+    // If auth fails entirely, return anonymous client
+    console.warn('Auth failed in createRouteSupabaseClient:', error)
     return createClient<Database>(supabaseUrl, supabaseAnonKey)
   }
-  
-  // Create a client with the Clerk token
-  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
-    global: {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  })
 }
 
 /**

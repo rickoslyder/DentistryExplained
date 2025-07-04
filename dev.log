@@ -1037,3 +1037,17 @@ Estimated release dates:
   timestamp: '2025-07-04T15:53:26.599Z'
 }
  GET /api/bookmarks 401 in 650ms
+ ✓ Compiled in 1265ms (1945 modules)
+ ✓ Compiled in 755ms (1945 modules)
+ ✓ Compiled in 2.5s (3364 modules)
+ GET /dental-problems/tooth-decay 200 in 194ms
+ ✓ Compiled in 1469ms (3364 modules)
+ GET /dental-problems/tooth-decay 200 in 91ms
+ ✓ Compiled in 2.3s (3364 modules)
+ GET /dental-problems/tooth-decay 200 in 240ms
+ ✓ Compiled in 2.2s (3350 modules)
+ GET /dental-problems/tooth-decay 200 in 892ms
+ GET /dental-problems/tooth-decay 200 in 51ms
+ ✓ Compiled in 3.8s (3588 modules)
+ ✓ Compiled in 1387ms (3574 modules)
+ ✓ Compiled in 698ms (1419 modules)

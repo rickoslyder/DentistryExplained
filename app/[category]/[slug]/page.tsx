@@ -4,6 +4,8 @@ import { MDXRenderer } from '@/components/mdx/mdx-renderer'
 import { processMDX, generateTOC } from '@/lib/mdx'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface PageProps {
   params: {
@@ -96,10 +98,52 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ArticlePage({ params }: PageProps) {
   const { category, slug } = await params
+  
+  // Check if this is one of our hardcoded example pages
+  const hardcodedPages = [
+    'dental-problems/tooth-decay',
+    'dental-problems/gum-disease',
+    'prevention/daily-oral-hygiene',
+    'treatments/dental-fillings',
+  ]
+  
+  const fullSlug = `${category}/${slug}`
+  if (hardcodedPages.includes(fullSlug)) {
+    // Redirect to the hardcoded page if it exists
+    const { redirect } = await import('next/navigation')
+    redirect(`/${fullSlug}`)
+  }
+  
   const article = await getArticle(category, slug)
   
   if (!article) {
-    notFound()
+    // For now, show a placeholder page for missing articles
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        
+        <div className="max-w-4xl mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Coming Soon</h1>
+            <p className="text-xl text-gray-600 mb-8">
+              This article is currently being written by our dental experts.
+            </p>
+            <p className="text-gray-500 mb-8">
+              Article: <span className="font-medium">{slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+              <br />
+              Category: <span className="font-medium">{category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+            </p>
+            <Link href="/topics">
+              <Button>
+                Browse Available Articles
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        <Footer />
+      </div>
+    )
   }
   
   // Process MDX content
@@ -124,7 +168,7 @@ export default async function ArticlePage({ params }: PageProps) {
           tags: article.tags,
           featuredImage: article.featured_image,
         }}
-        slug={`${params.category}/${params.slug}`}
+        slug={`${category}/${slug}`}
         readTime={article.read_time || readTime}
         toc={toc}
         relatedArticles={article.relatedArticles}
