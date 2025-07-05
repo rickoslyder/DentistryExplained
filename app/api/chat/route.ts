@@ -17,6 +17,18 @@ const chatMessageSchema = z.object({
     category: z.string().optional(),
     content: z.string().optional()
   }).optional(),
+  glossaryContext: z.object({
+    term: z.string(),
+    definition: z.string(),
+    pronunciation: z.string().nullable().optional(),
+    alsoKnownAs: z.array(z.string()).nullable().optional(),
+    relatedTerms: z.array(z.string()).nullable().optional(),
+    category: z.string().nullable().optional(),
+    difficulty: z.string().nullable().optional(),
+    example: z.string().nullable().optional()
+  }).optional(),
+  webSearchEnabled: z.boolean().optional().default(false),
+  webSearchType: z.enum(['smart', 'news', 'research', 'nhs']).optional().default('smart'),
   stream: z.boolean().optional().default(false)
 })
 
@@ -32,7 +44,7 @@ const chatHandler = compose(
     
     // Validate request body
     const params = chatMessageSchema.parse(body)
-    const { message, sessionId, pageContext, stream } = params
+    const { message, sessionId, pageContext, glossaryContext, webSearchEnabled, webSearchType, stream } = params
     const { userProfile } = context
     // Use admin client to bypass RLS for chat operations
     const supabase = supabaseAdmin
@@ -147,7 +159,10 @@ const chatHandler = compose(
         complexityLevel: userPreferences.complexityLevel || 'basic',
         includeCosts: userPreferences.includeCosts || false,
         autoSuggestFollowUp: userPreferences.autoSuggestFollowUp !== false
-      } : undefined
+      } : undefined,
+      glossaryContext,
+      webSearchEnabled,
+      webSearchType
     }
 
     // Generate AI response

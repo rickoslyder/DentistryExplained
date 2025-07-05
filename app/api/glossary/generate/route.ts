@@ -56,9 +56,17 @@ export async function POST(request: NextRequest) {
     const categoryFilter = category && category !== 'any' ? `in the "${category}" category` : ''
     const difficultyFilter = difficulty && difficulty !== 'mixed' ? `at the "${difficulty}" level` : ''
     
-    const systemPrompt = `You are a UK dental terminology expert. Generate unique dental glossary terms that don't exist in the provided list.
-Focus on terms used in the UK dental system, including NHS-specific terminology where relevant.
-Each term should be practical and commonly used in UK dental practices.`
+    const systemPrompt = `You are a UK dental terminology expert with deep knowledge of NHS dentistry and British dental practices. 
+Your task is to generate unique, high-quality dental glossary terms that don't exist in the provided list.
+
+Think carefully about:
+1. Terms commonly used in UK dental practices but often misunderstood by patients
+2. NHS-specific terminology and band classifications
+3. British English spelling and terminology (e.g., "anaesthetic" not "anesthetic")
+4. Terms that bridge the gap between professional jargon and patient understanding
+5. Contemporary dental technologies and treatments available in the UK
+
+Each term should be practical, educational, and help patients better understand their dental care.`
 
     const userPrompt = `Generate ${count} unique dental glossary terms ${categoryFilter} ${difficultyFilter}.
       
@@ -84,7 +92,7 @@ Important:
 - Only include pronunciation for complex terms
 - Related terms should reference other glossary terms when possible`
 
-    // Call OpenAI API
+    // Call OpenAI API with o4-mini reasoning model
     const openAIResponse = await fetch('https://openai-proxy-0l7e.onrender.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -92,12 +100,14 @@ Important:
         'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: process.env.LITELLM_REASONING_MODEL || 'o4-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
         temperature: 0.7,
+        reasoning_effort: 'medium', // Reasoning models support this parameter
+        max_completion_tokens: 4000, // Higher limit for reasoning tokens
         response_format: { type: 'json_object' }
       })
     })

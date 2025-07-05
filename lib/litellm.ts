@@ -43,6 +43,18 @@ export interface UserContext {
     includeCosts: boolean
     autoSuggestFollowUp: boolean
   }
+  glossaryContext?: {
+    term: string
+    definition: string
+    pronunciation?: string | null
+    alsoKnownAs?: string[] | null
+    relatedTerms?: string[] | null
+    category?: string | null
+    difficulty?: string | null
+    example?: string | null
+  }
+  webSearchEnabled?: boolean
+  webSearchType?: 'smart' | 'news' | 'research' | 'nhs'
 }
 
 export async function generateAIResponse(
@@ -96,6 +108,36 @@ export async function generateAIResponse(
       messages.push({
         role: "system",
         content: `The user is currently reading: "${pageContext.title}" in the "${pageContext.category}" category. URL: ${pageContext.url}. Consider this context when answering.`
+      })
+    }
+    
+    // Add glossary context if available
+    if (userContext.glossaryContext) {
+      const { term, definition, pronunciation, example, relatedTerms, category } = userContext.glossaryContext
+      messages.push({
+        role: "system",
+        content: `The user is asking about the glossary term "${term}". 
+Definition: ${definition}
+${pronunciation ? `Pronunciation: ${pronunciation}` : ''}
+${category ? `Category: ${category}` : ''}
+${example ? `Example: ${example}` : ''}
+${relatedTerms?.length ? `Related terms: ${relatedTerms.join(', ')}` : ''}
+
+Provide additional context, examples, and explanations to help the user understand this term better. Suggest exploring related terms if relevant.`
+      })
+    }
+    
+    // Add web search context if enabled
+    if (userContext.webSearchEnabled) {
+      messages.push({
+        role: "system",
+        content: `Web search is enabled (${userContext.webSearchType} mode). You may search for current information when needed:
+- 'news' mode: Search for latest dental news and updates
+- 'research' mode: Search for academic papers and studies
+- 'nhs' mode: Search NHS and UK government sites
+- 'smart' mode: Automatically determine the best search type
+
+When you need current information (prices, news, research), indicate that you're searching and provide results with citations.`
       })
     }
 

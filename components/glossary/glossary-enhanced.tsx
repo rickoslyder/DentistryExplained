@@ -9,6 +9,12 @@ const GlossaryQuiz = dynamic(() => import('./glossary-quiz').then(mod => mod.Glo
   ssr: false,
   loading: () => <div>Loading quiz...</div>
 })
+
+// Lazy load AI chat component
+const GlossaryAIChat = dynamic(() => import('./glossary-ai-chat').then(mod => mod.GlossaryAIChat), {
+  ssr: false,
+  loading: () => null
+})
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -878,6 +884,17 @@ function GlossaryTermCard({
             </Button>
           </div>
         </div>
+        
+        {isExpanded && (
+          <div className="mt-4 pt-4 border-t flex justify-end">
+            <GlossaryAIChat 
+              term={term} 
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto"
+            />
+          </div>
+        )}
       </CardContent>
     </Card>
   )
