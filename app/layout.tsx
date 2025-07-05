@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { Providers } from "@/components/providers"
 import { Toaster } from "@/components/ui/toaster"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/analytics/google-tag-manager"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -24,7 +25,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <GoogleTagManager />
+        </head>
         <body className={inter.className} suppressHydrationWarning>
+          <GoogleTagManagerNoscript />
           <Providers>
             {children}
             <Toaster />

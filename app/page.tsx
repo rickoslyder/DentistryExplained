@@ -53,6 +53,7 @@ export default function HomePage() {
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
+                  className="object-cover"
                 />
               </div>
               {/* Floating elements for visual interest */}
@@ -220,15 +221,68 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Find a Dentist Widget */}
+      {/* Quick Access Resources */}
       <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Essential Resources</h2>
+            <p className="text-xl text-gray-600">Quick access to important dental health information</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link href="/emergency">
+              <Card className="hover-lift cursor-pointer border-red-200 hover:border-red-300">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-red-700">Emergency Guide</h3>
+                    <ArrowRight className="w-5 h-5 text-red-700" />
+                  </div>
+                  <p className="text-gray-600 mt-2">Immediate help for dental emergencies</p>
+                </CardHeader>
+              </Card>
+            </Link>
+            <Link href="/glossary">
+              <Card className="hover-lift cursor-pointer">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">Dental Glossary</h3>
+                    <ArrowRight className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-gray-600 mt-2">A-Z guide of dental terms explained</p>
+                </CardHeader>
+              </Card>
+            </Link>
+            <Link href="/faq">
+              <Card className="hover-lift cursor-pointer">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">FAQ</h3>
+                    <ArrowRight className="w-5 h-5 text-primary" />
+                  </div>
+                  <p className="text-gray-600 mt-2">Answers to common dental questions</p>
+                </CardHeader>
+              </Card>
+            </Link>
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/resources">
+              <Button variant="outline" size="lg">
+                View All Resources
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Find a Dentist Widget */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FindDentistWidget />
         </div>
       </section>
 
       {/* Interactive Tools Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Interactive Health Tools</h2>

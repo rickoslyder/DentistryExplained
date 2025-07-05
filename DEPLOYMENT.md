@@ -1,5 +1,7 @@
 # Deployment Guide for Dentistry Explained
 
+**Current Status**: Live at https://dentistry-explained.vercel.app/ (as of July 4, 2025)
+
 ## Vercel Deployment
 
 ### Environment Variables
@@ -24,14 +26,14 @@ Copy all variables from `.env.local` to Vercel's environment variables:
 
 ### Clerk Webhook Setup
 
-After deployment, you need to update the Clerk webhook to sync users with Supabase:
+The Clerk webhook should already be configured to sync users with Supabase:
 
-1. **Get your Vercel deployment URL** (e.g., `https://dentistryexplained.vercel.app`)
+1. **Production URL**: `https://dentistry-explained.vercel.app`
 
-2. **Update webhook in Clerk Dashboard**:
+2. **Verify webhook in Clerk Dashboard**:
    - Go to [Clerk Dashboard](https://dashboard.clerk.com)
    - Navigate to Webhooks
-   - Update the endpoint URL to: `https://your-vercel-url.vercel.app/api/webhooks/clerk`
+   - Ensure endpoint URL is: `https://dentistry-explained.vercel.app/api/webhooks/clerk`
    - Ensure these events are selected:
      - `user.created`
      - `user.updated`
@@ -47,12 +49,14 @@ After deployment, you need to update the Clerk webhook to sync users with Supaba
 
 ### Post-Deployment Checklist
 
+- [x] Site is live at https://dentistry-explained.vercel.app/
 - [ ] All environment variables set in Vercel
-- [ ] Clerk webhook URL updated to production URL
+- [ ] Clerk webhook URL confirmed for production
 - [ ] Webhook secret added to Vercel environment
 - [ ] Test user registration creates Supabase profile
-- [ ] Test AI chat functionality
+- [ ] Test AI chat functionality (currently using fallback)
 - [ ] Verify Supabase RLS policies are working
+- [ ] Monitor Vercel analytics for errors
 
 ### Troubleshooting
 

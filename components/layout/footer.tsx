@@ -52,6 +52,11 @@ export function Footer() {
             <h3 className="font-semibold text-gray-900 mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
+                <Link href="/emergency" className="text-red-600 hover:text-red-700 font-medium transition-colors">
+                  Emergency Guide
+                </Link>
+              </li>
+              <li>
                 <Link href="/glossary" className="text-gray-600 hover:text-primary transition-colors">
                   Dental Glossary
                 </Link>
@@ -62,8 +67,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/consent-forms" className="text-gray-600 hover:text-primary transition-colors">
-                  Consent Forms
+                <Link href="/resources" className="text-gray-600 hover:text-primary transition-colors">
+                  All Resources
                 </Link>
               </li>
               <li>
@@ -95,7 +100,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">© 2024 Dentistry Explained. All rights reserved.</p>
+          <p className="text-gray-600 text-sm">© {new Date().getFullYear()} Dentistry Explained. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
             <Link href="/privacy" className="text-gray-600 hover:text-primary text-sm transition-colors">
               Privacy Policy

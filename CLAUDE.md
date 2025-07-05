@@ -15,16 +15,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Dentistry Explained** is a comprehensive dental education platform designed to be the UK's premier online dental resource. It provides evidence-based dental information to patients, professionals, and the general public through an intuitive, accessible interface with AI-powered assistance.
 
-## Architecture & Tech Stack (Planned)
+## Architecture & Tech Stack (Current - July 2025)
 
-- **Frontend**: Next.js 14+ with App Router, TypeScript, Tailwind CSS + Shadcn/ui
-- **CMS**: Payload CMS (self-hosted) for content management
-- **Authentication**: Clerk for user management and auth flows
-- **Database**: Supabase (PostgreSQL) with Row Level Security
-- **AI Integration**: LiteLLM proxy (https://openai-proxy-0l7e.onrender.com)
-- **Payments**: Stripe (test mode for MVP)
-- **Analytics**: PostHog for user analytics
-- **Hosting**: Vercel for deployment
+- **Frontend**: Next.js 15.3.5 with App Router, TypeScript, Tailwind CSS + Shadcn/ui ✅
+- **CMS**: Payload CMS 3.45.0 (installed but not integrated, using custom solution) ⚠️
+- **Authentication**: Clerk (latest) for user management and auth flows ✅
+- **Database**: Supabase (PostgreSQL) with Row Level Security ✅
+- **AI Integration**: LiteLLM proxy (https://openai-proxy-0l7e.onrender.com) - connected and active ✅
+- **Payments**: Stripe (not yet implemented) ❌
+- **Analytics**: PostHog (not yet implemented) ❌
+- **Hosting**: Deployed on Vercel at https://dentistry-explained.vercel.app/ ✅
 
 ## Key Features to Implement
 
@@ -77,15 +77,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Commands
 
-*Note: Project is in planning phase - these will be implemented once development begins*
+Working commands:
+- `npm run dev` - Start development server ✅
+- `npm run build` - Build for production ✅
+- `npm run lint` - Run ESLint ✅
+- `npm start` - Start production server ✅
 
-Expected commands:
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm run type-check` - TypeScript validation
-- `npm test` - Run Jest unit tests
-- `npm run test:e2e` - Run Playwright E2E tests
+Not yet implemented:
+- `npm run type-check` - TypeScript validation (use build for now)
+- `npm test` - Jest unit tests (not configured)
+- `npm run test:e2e` - Playwright E2E tests (not configured)
 
 ## Content Management
 
@@ -98,17 +99,18 @@ Content will be managed through Payload CMS with:
 
 ## Business Context
 
-This is a startup project with tight MVP deadline (July 1st, 2025). The platform aims to:
+This is a startup project that passed its MVP deadline (July 1st, 2025). The platform aims to:
 - Democratize dental education for UK patients
 - Support dental professionals with patient education tools
 - Generate revenue through advertising, SaaS subscriptions, and affiliate marketing
 - Establish market dominance before competitors enter the space
 
-## Development Priorities
+## Development Priorities (Updated July 4th, 2025)
 
-1. **MVP by July 1st**: Basic content hierarchy, user auth, AI chat
-2. **CVP by August 1st**: Professional features, payment system, directory
-3. **Full Product by September 1st**: Complete content coverage, mobile apps
+1. **Current Status**: Core infrastructure complete, awaiting content and API integrations
+2. **Immediate Priority**: Get real medical content from Curran and Vimal
+3. **Next Phase**: Implement real API integrations (GDC verification, NHS data)
+4. **Future**: Payment system, analytics, mobile apps
 
 ## Key Considerations
 
@@ -134,7 +136,7 @@ This is a startup project with tight MVP deadline (July 1st, 2025). The platform
 - Visual regression tests for component library
 - Performance testing for search and AI features
 
-## Current Project Status (Updated Jan 4, 2025)
+## Current Project Status (Updated July 4, 2025)
 
 ### Completed Features
 1. **Core Infrastructure**
@@ -144,11 +146,15 @@ This is a startup project with tight MVP deadline (July 1st, 2025). The platform
    - TypeScript setup with strict mode
 
 2. **AI Chat System**
-   - LiteLLM proxy integration (https://openai-proxy-0l7e.onrender.com)
-   - Streaming responses implemented
-   - Chat history with 180-day retention
-   - Context-aware responses based on current page
-   - Export to PDF functionality
+   - LiteLLM proxy integration (https://openai-proxy-0l7e.onrender.com) ✅
+   - Streaming responses implemented ✅
+   - Chat history with 180-day retention ✅
+   - Context-aware responses based on current page ✅
+   - Export to text functionality ✅
+   - Emergency detection system ✅
+   - User preference personalization ✅
+   - Fallback responses when LLM unavailable ✅
+   - Using Gemini 2.5 Flash Lite model by default ✅
 
 3. **Professional Verification System**
    - GDC number validation via official API

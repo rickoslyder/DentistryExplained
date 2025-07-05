@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, Search, BookOpen, MapPin, Users } from "lucide-react"
+import { Menu, Search, BookOpen, MapPin, Users, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { UserButton, useUser } from "@clerk/nextjs"
@@ -33,6 +33,9 @@ export function Header() {
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/topics" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Topics
+            </Link>
+            <Link href="/resources" className="text-gray-700 hover:text-primary transition-colors font-medium">
+              Resources
             </Link>
             <Link href="/find-dentist" className="text-gray-700 hover:text-primary transition-colors font-medium">
               Find a Dentist
@@ -104,6 +107,13 @@ export function Header() {
                   >
                     <BookOpen className="w-5 h-5 text-primary" />
                     <span className="font-medium">Topics</span>
+                  </Link>
+                  <Link
+                    href="/resources"
+                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <FileText className="w-5 h-5 text-primary" />
+                    <span className="font-medium">Resources</span>
                   </Link>
                   <Link
                     href="/find-dentist"

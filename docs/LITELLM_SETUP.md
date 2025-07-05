@@ -1,5 +1,7 @@
 # LiteLLM Setup Guide
 
+**Current Status (July 2025)**: LiteLLM is connected and active on the live site using Gemini 2.5 Flash Lite model.
+
 This guide explains how to set up LiteLLM for the AI chat assistant functionality in Dentistry Explained.
 
 ## What is LiteLLM?

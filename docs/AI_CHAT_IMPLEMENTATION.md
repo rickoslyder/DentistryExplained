@@ -63,9 +63,9 @@ litellm --config litellm_config.yaml --port 8000
 ### 2. Configure Environment Variables
 Add to `.env.local`:
 ```env
-LITELLM_PROXY_URL=http://localhost:8000
+LITELLM_PROXY_URL=https://openai-proxy-0l7e.onrender.com
 LITELLM_API_KEY=your_master_key
-LITELLM_MODEL=o4-mini  # Updated to use latest OpenAI model (July 2025)
+LITELLM_MODEL=o4-mini  # Latest OpenAI model (July 2025) - best cost/performance ratio
 ```
 
 ### 3. Test the Implementation
@@ -130,8 +130,9 @@ function MyComponent() {
 
 ### Slow Responses
 1. Enable streaming (default)
-2. Use faster model (gpt-3.5-turbo)
+2. Use faster model (o4-mini or gemini-2.5-flash)
 3. Check proxy server resources
+4. Consider using Groq for ultra-fast responses
 
 ### Emergency Detection Not Working
 - Keywords must match exactly

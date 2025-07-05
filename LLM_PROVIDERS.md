@@ -1,8 +1,8 @@
-# LLM Provider Reference Guide
+# LLM Provider Reference Guide for Dentistry Explained
 
-*Last Updated: July 2025*
+*Last Updated: July 4, 2025*
 
-This guide provides comprehensive information about the latest LLM providers and models supported by the Home Assistant Config Optimizer. Consult this guide when implementing LLM features or updating provider configurations.
+This guide provides comprehensive information about the latest LLM providers and models that can be used with the Dentistry Explained AI dental assistant. These models are configured through LiteLLM for the chat functionality.
 
 ## Table of Contents
 - [Provider Overview](#provider-overview)
@@ -131,27 +131,31 @@ This guide provides comprehensive information about the latest LLM providers and
 
 ## Model Selection Guide
 
-### For Home Assistant Config Optimization:
+### For Dentistry Explained AI Assistant:
 
-1. **General Use** → `o4-mini`
-   - Best balance of cost, performance, and capabilities
-   - Handles most optimization tasks effectively
+1. **General Patient Queries** → `o4-mini`
+   - Best balance of cost, performance, and medical accuracy
+   - Handles most dental questions effectively
+   - Excellent for patient-friendly explanations
 
-2. **Large Configurations** → `Gemini 2.5 Pro`
-   - 1M token context handles entire HA setups
-   - Excellent for comprehensive analysis
+2. **Long Conversations** → `Gemini 2.5 Pro`
+   - 1M token context for extended chat sessions
+   - Maintains context across complex dental discussions
+   - Good for treatment planning conversations
 
 3. **Privacy-Sensitive** → `Ollama` with Llama models
-   - Run locally, no data leaves your network
-   - Good performance with modern hardware
+   - Run locally for GDPR compliance
+   - Patient data never leaves your infrastructure
+   - Good for practices with strict data policies
 
 4. **Budget-Conscious** → `o4-mini` or `Groq`
-   - o4-mini: $0.60/1M tokens input
-   - Groq: Fast and affordable
+   - o4-mini: $0.60/1M tokens input - best value
+   - Groq: Fast responses for real-time chat
 
-5. **Complex Refactoring** → `Claude 4 Opus`
-   - Best for understanding complex YAML structures
-   - Superior at maintaining code style
+5. **Professional/Clinical Use** → `Claude 4 Opus`
+   - Best for complex medical terminology
+   - Superior at understanding clinical context
+   - Ideal for professional-level queries
 
 ## Pricing Considerations
 
@@ -171,50 +175,60 @@ This guide provides comprehensive information about the latest LLM providers and
 - **Claude 4 Opus**: Best-in-class capabilities
 - **Gemini 2.5 Pro**: Massive context
 
-## Configuration Examples
+## Configuration Examples for Dentistry Explained
 
-### OpenAI o4-mini (Recommended)
-```json
-{
-  "name": "OpenAI Config Optimizer",
-  "provider": "openai",
-  "endpoint": "https://api.openai.com/v1",
-  "model_name": "o4-mini",
-  "context_tokens": 128000,
-  "api_key": "your-api-key"
-}
+### LiteLLM Configuration (litellm_config.yaml)
+```yaml
+model_list:
+  # Recommended for patient queries
+  - model_name: dental-assistant
+    litellm_params:
+      model: o4-mini
+      api_key: ${OPENAI_API_KEY}
+      temperature: 0.7
+      system_message: "You are a helpful dental health assistant..."
+      
+  # For professional users
+  - model_name: clinical-assistant
+    litellm_params:
+      model: claude-opus-4
+      api_key: ${ANTHROPIC_API_KEY}
+      temperature: 0.5
+      
+  # Budget option
+  - model_name: quick-assistant
+    litellm_params:
+      model: gpt-3.5-turbo
+      api_key: ${OPENAI_API_KEY}
+      
+general_settings:
+  master_key: ${LITELLM_MASTER_KEY}
+  database_url: ${DATABASE_URL}
+  budget_duration: 30d
+  max_budget: 500  # Higher budget for healthcare
 ```
 
-### Gemini 2.5 Pro (Large Configs)
-```json
-{
-  "name": "Gemini Large Context",
-  "provider": "google",
-  "endpoint": "https://generativelanguage.googleapis.com/v1",
-  "model_name": "gemini-2.5-pro",
-  "context_tokens": 1048576,
-  "api_key": "your-api-key"
-}
+### Environment Variables (.env.local)
+```env
+# LiteLLM Configuration
+LITELLM_PROXY_URL=https://openai-proxy-0l7e.onrender.com
+LITELLM_API_KEY=your_master_key
+LITELLM_MODEL=o4-mini
+
+# Model-specific keys
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=...
 ```
 
-### Local Ollama
-```json
-{
-  "name": "Local Llama",
-  "provider": "ollama",
-  "endpoint": "http://localhost:11434",
-  "model_name": "llama3.3:70b",
-  "context_tokens": 128000
-}
-```
+## Notes for Dental AI Implementation
 
-## Notes for Implementation
-
-1. **Context Budgeting**: Reserve 20% of context for system prompts and responses
-2. **Streaming**: All providers except some local ones support streaming
-3. **Rate Limits**: Implement exponential backoff for all providers
-4. **Fallbacks**: Consider implementing fallback chains (e.g., o3 → o4-mini → Groq)
-5. **Caching**: Cache responses for identical configurations to reduce costs
+1. **Medical Accuracy**: Use temperature 0.5-0.7 for medical queries to balance accuracy with helpfulness
+2. **Context Management**: Include patient's conversation history for continuity of care discussions
+3. **Emergency Detection**: Implement keyword detection for dental emergencies before LLM processing
+4. **GDPR Compliance**: Consider local models for EU users or implement data retention policies
+5. **Response Caching**: Cache common dental questions to reduce costs and improve response time
+6. **Professional Mode**: Use different models/prompts for verified dental professionals vs patients
 
 ## Future Models to Watch
 
@@ -223,6 +237,31 @@ This guide provides comprehensive information about the latest LLM providers and
 - **Gemini 3.0**: Rumored 10M+ context
 - **Llama 5**: Open source alternative
 
+## Dentistry Explained Specific Considerations
+
+### System Prompts
+The platform uses specialized system prompts that include:
+- UK/NHS specific information and pricing
+- Current dental best practices
+- Emergency symptom recognition
+- Age-appropriate responses
+- Professional vs patient language adaptation
+
+### Cost Optimization
+For a dental platform expecting 10,000+ queries/day:
+- Use `o4-mini` as primary model (~$20-50/day)
+- Implement caching for common questions
+- Use cheaper models for simple queries
+- Reserve premium models for complex cases
+
+### Integration with Platform
+The AI assistant integrates with:
+- Current page context (article being read)
+- User type (patient/professional)
+- Chat history (180-day retention)
+- Emergency detection system
+- Export functionality (PDF/text)
+
 ---
 
-*This guide should be updated quarterly or when major model releases occur.*
+*This guide is specific to Dentistry Explained and should be updated when new models are released or dental-specific requirements change.*
