@@ -361,14 +361,172 @@ The implementation successfully transforms the glossary from a static reference 
 
 5. **Privacy Focused** - RLS policies ensure users only see their own data while admins get aggregated insights.
 
+### Completed Features ✅
+
+#### 1. Fixed Category Tab UX
+- **Problem**: Terms clicked in Categories tab populated search but users couldn't see this
+- **Solution**: 
+  - Added visual feedback with toast notifications
+  - Auto-switch to Browse tab when term selected
+  - Smooth scroll to top
+  - Temporary highlight animation on search input
+  - Consistent behavior across all term selections
+
+#### 2. Unified Tab Behaviors
+- **Trending Tab**: Now uses same selection behavior as Categories
+- **Common Questions**: Also switches to Browse tab with notification
+- **View All**: Shows category filter with info toast
+- All interactions now have consistent, predictable behavior
+
+#### 3. AI Term Generation System
+- **API Endpoint**: `/api/glossary/generate`
+  - Uses OpenAI gpt-4o-mini model
+  - Structured JSON output matching DB schema exactly
+  - Validates against existing terms to prevent duplicates
+  - UK-focused terminology with NHS references
+  - Admin-only access with role checking
+
+#### 4. Term Generator UI
+- **Component**: `GlossaryTermGenerator`
+  - Modal dialog with generation options
+  - Configure count (3/5/10), category, difficulty
+  - Table view with multi-select checkboxes
+  - Batch save operations
+  - Real-time duplicate checking
+  - Shows pronunciation, examples, related terms
+
+#### 5. Admin Integration
+- Created `/admin/glossary` page with:
+  - Overview statistics (views, copies, YouTube clicks)
+  - Popular terms table with engagement metrics
+  - Complete terms list with metadata
+  - Integrated AI generator button
+- Added glossary link to admin dashboard
+
+### Technical Details
+
+**AI Generation Schema:**
+```typescript
+{
+  term: string
+  definition: string
+  pronunciation: string | null
+  also_known_as: string[] | null
+  related_terms: string[] | null
+  category: CategoryEnum
+  difficulty: 'basic' | 'advanced'
+  example: string | null
+}
+```
+
+**Key Features:**
+- Analyzes existing terms to suggest complementary additions
+- Generates UK-specific dental terminology
+- Includes NHS band information for costs
+- Auto-categorizes based on term type
+- Provides phonetic pronunciations for complex terms
+
+### Review
+
+These improvements significantly enhance the glossary's usability and management:
+
+1. **Better UX** - Users now clearly understand what happens when they click terms
+2. **Consistent Behavior** - All term selections work the same way across tabs
+3. **Efficient Content Creation** - AI generates high-quality, unique terms on demand
+4. **Admin Empowerment** - Easy term management with analytics insights
+5. **Quality Control** - Structured output ensures consistent, valid data
+
+The AI generation feature is particularly powerful, allowing rapid expansion of the glossary while maintaining quality and avoiding duplicates. The UK focus ensures relevance for the target audience.
+
 ### Remaining Opportunities
 
 1. **Analytics Dashboard** - Visual charts for search trends and usage patterns
 2. **Learning Paths** - Guided progression through related terms
 3. **Export Features** - Allow users to export their learning progress
 4. **Spaced Repetition** - Smart quiz scheduling based on performance
+5. **Term Editing** - In-place editing of existing terms
+6. **Bulk Import/Export** - CSV/JSON import and export functionality
 
 ## Term Tooltips Implementation (July 5, 2025)
+
+### Completed Features ✅
+
+#### 1. Glossary Tooltip Component
+- Created Radix UI-based tooltip component
+- Shows term, pronunciation, and definition on hover
+- Includes "View in glossary" link
+- Tracks tooltip views automatically
+- Respects user highlight preferences
+
+#### 2. Content Processing System
+- Built processor to detect glossary terms in text
+- Handles word boundaries and case-insensitive matching
+- Limits tooltips per paragraph to avoid overwhelming
+- Skips headings and code blocks
+- Processes React children recursively
+
+#### 3. MDX Integration
+- Created MDXWithGlossary wrapper component
+- Automatically processes p, li, td, dd, blockquote, Alert, FAQ elements
+- Integrates with existing MDX component system
+- Respects user preferences for enabling/disabling tooltips
+
+#### 4. User Preferences
+- Enable/disable tooltips globally
+- Show/hide term highlighting
+- Filter basic vs advanced terms
+- Preferences saved to localStorage
+- Settings accessible via popover UI
+
+#### 5. Context Integration
+- Added GlossaryProvider to app-wide providers
+- Loads all terms on app initialization
+- Includes term aliases (also_known_as) in matching
+- Filters by difficulty based on preferences
+
+### Technical Implementation
+
+**Components:**
+- `/components/glossary/glossary-tooltip.tsx` - Tooltip UI component
+- `/components/glossary/glossary-preferences.tsx` - Settings UI
+- `/components/mdx/mdx-with-glossary.tsx` - MDX wrapper
+- `/contexts/glossary-provider.tsx` - Global glossary context
+- `/lib/glossary-processor.tsx` - Text processing logic
+- `/hooks/use-glossary-preferences.ts` - Preferences hook
+
+**Features:**
+- Automatic term detection in article content
+- Performance optimized with React.memo and useMemo
+- Debounced tracking to avoid spam
+- Graceful degradation when terms not loaded
+- Responsive design with mobile support
+
+### Testing
+- Created `/test-tooltips` page for verification
+- Tests multiple dental terms in various contexts
+- Includes preference toggle for real-time testing
+- Shows status messages based on settings
+
+### Review
+
+The term tooltips feature successfully transforms static article content into an interactive learning experience. Key achievements:
+
+1. **Seamless Integration** - Tooltips appear automatically in all MDX content without manual markup
+2. **User Control** - Full control over tooltip behavior through preferences
+3. **Performance** - Optimized processing ensures no impact on page load
+4. **Accessibility** - Keyboard navigable tooltips with ARIA support
+5. **Analytics Ready** - Every tooltip view is tracked for insights
+
+The implementation follows best practices:
+- Uses established UI libraries (Radix UI)
+- Respects user preferences and privacy
+- Maintains performance with large term sets
+- Provides fallbacks for edge cases
+- Integrates cleanly with existing architecture
+
+This feature significantly enhances content discoverability and learning by making dental terminology accessible in context, reducing the barrier to understanding complex medical content.
+
+## Glossary UX Improvements & AI Term Generation (July 5, 2025)
 
 ### Completed Features ✅
 

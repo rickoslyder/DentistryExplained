@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
-import { FileText, Eye, Users, TrendingUp, Calendar, Edit, Clock, CheckCircle } from 'lucide-react'
+import { FileText, Eye, Users, TrendingUp, Calendar, Edit, Clock, CheckCircle, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
@@ -134,6 +134,12 @@ export default async function AdminDashboard() {
               <Button variant="outline" className="w-full justify-start bg-transparent">
                 <Edit className="w-4 h-4 mr-2" />
                 Create New Article
+              </Button>
+            </Link>
+            <Link href="/admin/glossary" className="block">
+              <Button variant="outline" className="w-full justify-start bg-transparent">
+                <BookOpen className="w-4 h-4 mr-2" />
+                Manage Glossary Terms
               </Button>
             </Link>
             <Link href="/admin/categories" className="block">

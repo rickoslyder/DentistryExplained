@@ -21,6 +21,7 @@ import {
   HelpCircle, ChevronLeft, Copy, Youtube, Trophy
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 interface GlossaryTerm {
   term: string
@@ -138,6 +139,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
   const [pronouncing, setPronouncing] = useState<string | null>(null)
   const [termOfTheDay, setTermOfTheDay] = useState<GlossaryTerm | null>(null)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [activeTab, setActiveTab] = useState('browse')
 
   // Handle term expansion with tracking
   const handleTermToggle = (term: string) => {
@@ -147,6 +149,39 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     if (newExpanded) {
       trackGlossaryInteraction({ term, interaction_type: 'view' })
     }
+  }
+
+  // Handle term selection from categories/trending with visual feedback
+  const handleTermSelection = (term: string, fromTab: string) => {
+    // Set the search term
+    setSearchTerm(term)
+    
+    // Clear other filters
+    setSelectedCategory(null)
+    setSelectedLetter(null)
+    
+    // Switch to browse tab
+    setActiveTab('browse')
+    
+    // Show toast notification
+    toast.success(`Searching for: ${term}`, {
+      description: 'Switched to Browse tab',
+      duration: 3000,
+    })
+    
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    
+    // Add a subtle animation to the search input
+    setTimeout(() => {
+      const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement
+      if (searchInput) {
+        searchInput.classList.add('ring-2', 'ring-primary', 'ring-offset-2')
+        setTimeout(() => {
+          searchInput.classList.remove('ring-2', 'ring-primary', 'ring-offset-2')
+        }, 2000)
+      }
+    }, 500)
   }
 
   // Fetch term of the day from API
@@ -361,11 +396,8 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
             <Button
               key={index}
               variant="outline"
-              className="justify-start text-left h-auto py-3 hover:bg-blue-50 hover:border-blue-300"
-              onClick={() => {
-                setSearchTerm(q.term)
-                setExpandedTerm(q.term)
-              }}
+              className="justify-start text-left h-auto py-3 hover:bg-blue-50 hover:border-blue-300 transition-all"
+              onClick={() => handleTermSelection(q.term, 'questions')}
             >
               <HelpCircle className="h-4 w-4 mr-2 flex-shrink-0 text-blue-600" />
               <span className="text-sm">{q.question}</span>
@@ -441,7 +473,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="browse" className="space-y-4">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="browse">Browse</TabsTrigger>
           <TabsTrigger value="categories">Categories</TabsTrigger>
@@ -551,12 +583,8 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                       <Button
                         key={term.term}
                         variant="outline"
-                        className="justify-start text-left h-auto py-2"
-                        onClick={() => {
-                          setSelectedCategory(category)
-                          setSearchTerm(term.term)
-                          setExpandedTerm(term.term)
-                        }}
+                        className="justify-start text-left h-auto py-2 transition-all"
+                        onClick={() => handleTermSelection(term.term, 'categories')}
                       >
                         <span className="truncate">{term.term}</span>
                       </Button>
@@ -569,6 +597,9 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                       onClick={() => {
                         setSelectedCategory(category)
                         setSelectedLetter(null)
+                        setSearchTerm('')
+                        setActiveTab('browse')
+                        toast.info(`Showing all ${config.label.toLowerCase()} terms`)
                       }}
                     >
                       View all {categoryTerms.length} {config.label.toLowerCase()} terms
@@ -603,10 +634,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                     <div
                       key={termName}
                       className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                      onClick={() => {
-                        setSearchTerm(termName)
-                        setExpandedTerm(termName)
-                      }}
+                      onClick={() => handleTermSelection(termName, 'trending')}
                     >
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-700 font-semibold text-sm">
                         {index + 1}
