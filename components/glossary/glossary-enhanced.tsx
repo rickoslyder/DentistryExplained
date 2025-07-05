@@ -1,6 +1,14 @@
 'use client'
 
 import { useState, useMemo, useEffect } from 'react'
+import { trackGlossaryInteraction } from '@/lib/glossary-tracking'
+import dynamic from 'next/dynamic'
+
+// Lazy load quiz component
+const GlossaryQuiz = dynamic(() => import('./glossary-quiz').then(mod => mod.GlossaryQuiz), {
+  ssr: false,
+  loading: () => <div>Loading quiz...</div>
+})
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -10,7 +18,7 @@ import {
   Search, Volume2, BookOpen, Heart, AlertCircle, 
   Sparkles, TrendingUp, ChevronRight, X, Info,
   Stethoscope, Pill, Wrench, Brain, DollarSign, Baby,
-  HelpCircle, ChevronLeft, Copy, Youtube
+  HelpCircle, ChevronLeft, Copy, Youtube, Trophy
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -129,6 +137,17 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
   const [bookmarkedTerms, setBookmarkedTerms] = useState<Set<string>>(new Set())
   const [pronouncing, setPronouncing] = useState<string | null>(null)
   const [termOfTheDay, setTermOfTheDay] = useState<GlossaryTerm | null>(null)
+  const [showQuiz, setShowQuiz] = useState(false)
+
+  // Handle term expansion with tracking
+  const handleTermToggle = (term: string) => {
+    const newExpanded = expandedTerm === term ? null : term
+    setExpandedTerm(newExpanded)
+    
+    if (newExpanded) {
+      trackGlossaryInteraction({ term, interaction_type: 'view' })
+    }
+  }
 
   // Fetch term of the day from API
   useEffect(() => {
@@ -166,6 +185,17 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     })
   }, [terms, searchTerm, selectedCategory, selectedLetter, difficulty])
 
+  // Track searches
+  useEffect(() => {
+    if (searchTerm.length > 2) {
+      trackGlossaryInteraction({ 
+        term: searchTerm, 
+        interaction_type: 'search',
+        metadata: { found: filteredTerms.length > 0 }
+      })
+    }
+  }, [searchTerm, filteredTerms.length])
+
   // Get available letters
   const availableLetters = useMemo(() => {
     return [...new Set(terms.map(item => item.term.charAt(0).toUpperCase()))].sort()
@@ -201,6 +231,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
       newBookmarks.delete(term)
     } else {
       newBookmarks.add(term)
+      trackGlossaryInteraction({ term, interaction_type: 'bookmark' })
     }
     setBookmarkedTerms(newBookmarks)
     // In real app, save to localStorage or user profile
@@ -208,11 +239,13 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
+    trackGlossaryInteraction({ term: text, interaction_type: 'copy' })
     // Could add toast notification here
   }
 
   const searchYouTube = (term: string) => {
     window.open(`https://www.youtube.com/results?search_query=dental+${encodeURIComponent(term)}`, '_blank')
+    trackGlossaryInteraction({ term, interaction_type: 'youtube' })
   }
 
   // Calculate statistics
@@ -223,6 +256,26 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     category: cat,
     count: terms.length
   })).sort((a, b) => b.count - a.count)
+
+  // Show quiz if active
+  if (showQuiz) {
+    return (
+      <div className="space-y-4">
+        <Button 
+          onClick={() => setShowQuiz(false)} 
+          variant="ghost" 
+          className="mb-4"
+        >
+          <ChevronLeft className="h-4 w-4 mr-2" />
+          Back to Glossary
+        </Button>
+        <GlossaryQuiz 
+          terms={terms.map(t => ({ ...t, id: t.term }))} 
+          onClose={() => setShowQuiz(false)} 
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-8">
@@ -323,26 +376,36 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
 
       {/* Search and Filters */}
       <div className="space-y-4">
-        {/* Search Bar */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <Input
-            type="search"
-            placeholder="Search terms, definitions, or ask a question..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 h-12 text-base"
-          />
-          {searchTerm && (
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => setSearchTerm('')}
+        {/* Search Bar and Quiz Button */}
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Input
+              type="search"
+              placeholder="Search terms, definitions, or ask a question..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 h-12 text-base"
+            />
+            {searchTerm && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setSearchTerm('')}
               className="absolute right-2 top-1/2 -translate-y-1/2"
             >
               <X className="h-4 w-4" />
             </Button>
-          )}
+            )}
+          </div>
+          <Button
+            onClick={() => setShowQuiz(true)}
+            variant="default"
+            className="h-12"
+          >
+            <Trophy className="h-4 w-4 mr-2" />
+            Quiz Mode
+          </Button>
         </div>
 
         {/* Difficulty Toggle */}
@@ -439,7 +502,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                   key={item.term}
                   term={item}
                   isExpanded={expandedTerm === item.term}
-                  onToggle={() => setExpandedTerm(expandedTerm === item.term ? null : item.term)}
+                  onToggle={() => handleTermToggle(item.term)}
                   onPronounce={pronounceTerm}
                   isPronouncing={pronouncing === item.term}
                   isBookmarked={bookmarkedTerms.has(item.term)}
@@ -584,7 +647,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                     key={term.term}
                     term={term}
                     isExpanded={expandedTerm === term.term}
-                    onToggle={() => setExpandedTerm(expandedTerm === term.term ? null : term.term)}
+                    onToggle={() => handleTermToggle(term.term)}
                     onPronounce={pronounceTerm}
                     isPronouncing={pronouncing === term.term}
                     isBookmarked={true}
