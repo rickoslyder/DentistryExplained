@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Clock, AlertCircle, CheckCircle, Phone, FileText } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Clock, AlertCircle, CheckCircle, Phone, FileText, Timer } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
+import { EmergencyCountdownTimer } from './emergency-countdown-timer'
 
 interface TimelineStep {
   time: string
@@ -20,9 +22,10 @@ interface TimelineStep {
 
 interface EmergencyTimelineProps {
   emergencyType: 'knocked-out-tooth' | 'severe-pain' | 'bleeding' | 'general'
+  showTimer?: boolean
 }
 
-export function EmergencyTimeline({ emergencyType }: EmergencyTimelineProps) {
+export function EmergencyTimeline({ emergencyType, showTimer = true }: EmergencyTimelineProps) {
   const [startTime] = useState(new Date())
   const [currentTime, setCurrentTime] = useState(new Date())
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set())
@@ -214,24 +217,37 @@ export function EmergencyTimeline({ emergencyType }: EmergencyTimelineProps) {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>Emergency Timeline</CardTitle>
-            <CardDescription>
-              Follow these time-critical steps
-            </CardDescription>
-          </div>
-          <div className="text-right">
-            <div className="text-sm text-gray-500">Time elapsed</div>
-            <div className={`text-lg font-semibold ${getUrgencyColor()}`}>
-              {elapsedTime}
+    <div className="space-y-6">
+      {/* Show countdown timer for time-critical emergencies */}
+      {showTimer && (emergencyType === 'knocked-out-tooth' || emergencyType === 'bleeding') && (
+        <EmergencyCountdownTimer
+          emergencyType={emergencyType === 'knocked-out-tooth' ? 'knocked-out-tooth' : 'severe-bleeding'}
+          initialMinutes={emergencyType === 'knocked-out-tooth' ? 30 : 60}
+          criticalMinutes={emergencyType === 'knocked-out-tooth' ? 15 : 20}
+        />
+      )}
+      
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Timer className="h-5 w-5" />
+                Emergency Timeline
+              </CardTitle>
+              <CardDescription>
+                Follow these time-critical steps
+              </CardDescription>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-gray-500">Time elapsed</div>
+              <div className={`text-lg font-semibold ${getUrgencyColor()}`}>
+                {elapsedTime}
+              </div>
             </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardContent>
+        </CardHeader>
+        <CardContent>
         <div className="space-y-4">
           {timeline.map((step, index) => {
             const StepIcon = step.icon
@@ -291,5 +307,6 @@ export function EmergencyTimeline({ emergencyType }: EmergencyTimelineProps) {
         )}
       </CardContent>
     </Card>
+    </div>
   )
 }

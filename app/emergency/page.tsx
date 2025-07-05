@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,10 +9,19 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Phone, AlertCircle, Clock, MapPin, ExternalLink, Stethoscope, Navigation } from "lucide-react"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { SymptomChecker } from "@/components/emergency/symptom-checker"
 import { EmergencyTimeline } from "@/components/emergency/emergency-timeline"
 import { NearestServices } from "@/components/emergency/nearest-services"
 import { NHS111Widget } from "@/components/emergency/nhs-111-widget"
+import { EmergencyDisclaimer } from "@/components/emergency/emergency-disclaimer"
+import { EmergencyLogger } from "@/lib/emergency-audit"
+import { EmergencyActionToolbar } from "@/components/emergency/emergency-action-toolbar"
+import { SeverityBadge } from "@/components/emergency/severity-badge"
+import { EmergencyDecisionTree } from "@/components/emergency/emergency-decision-tree"
+import { AccessibilityControls } from "@/components/emergency/accessibility-controls"
+import { OfflineIndicator } from "@/components/emergency/offline-indicator"
+import { VisualInstructions } from "@/components/emergency/visual-instructions"
 
 const emergencyConditions = [
   {
@@ -120,20 +129,30 @@ const emergencyConditions = [
 export default function EmergencyPage() {
   const [selectedEmergency, setSelectedEmergency] = useState<'knocked-out-tooth' | 'severe-pain' | 'bleeding' | 'general'>('general')
 
+  useEffect(() => {
+    // Log emergency page view
+    EmergencyLogger.pageView('emergency-guide')
+  }, [])
+
+  const handleEmergencyCall = (type: '999' | '111' | 'dentist', reason?: string) => {
+    EmergencyLogger.emergencyContact(type, reason)
+  }
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Offline Indicator */}
+      <OfflineIndicator />
+      
+      {/* Skip to main content link for screen readers */}
+      <a href="#main-content" className="skip-link">
+        Skip to main emergency content
+      </a>
+      
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Emergency Banner */}
-        <Alert className="mb-8 border-red-200 bg-red-50">
-          <AlertCircle className="h-4 w-4 text-red-600" />
-          <AlertTitle className="text-red-800">Emergency Dental Care</AlertTitle>
-          <AlertDescription className="text-red-700">
-            If you're experiencing severe pain, facial swelling, or have suffered dental trauma, 
-            seek immediate professional help.
-          </AlertDescription>
-        </Alert>
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Prominent Emergency Disclaimer */}
+        <EmergencyDisclaimer variant="prominent" showEmergencyNumber={true} />
 
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Dental Emergency Guide</h1>
@@ -142,60 +161,80 @@ export default function EmergencyPage() {
           </p>
         </div>
 
-        {/* Emergency Contact Options */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="border-primary">
-            <CardHeader>
-              <CardTitle className="flex items-center text-primary">
-                <Phone className="w-5 h-5 mr-2" />
+        {/* Emergency Decision Tree - Prominent Position */}
+        <div className="mb-12">
+          <EmergencyDecisionTree />
+        </div>
+
+        {/* Emergency Contact Options - Mobile Optimized */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+          <Card className="border-2 border-primary shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="pb-3 md:pb-6">
+              <CardTitle className="flex items-center text-primary text-lg md:text-xl">
+                <Phone className="w-6 h-6 md:w-5 md:h-5 mr-2" />
                 NHS 111
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 For urgent dental advice when your dentist is closed
               </p>
-              <Button className="w-full" asChild>
+              <Button 
+                className="w-full h-12 md:h-10 text-base md:text-sm font-semibold" 
+                onClick={() => handleEmergencyCall('111', 'urgent-dental-advice')}
+                asChild
+              >
                 <a href="tel:111">
+                  <Phone className="w-5 h-5 mr-2" />
                   Call NHS 111
                 </a>
               </Button>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <MapPin className="w-5 h-5 mr-2" />
+          <Card className="border-2 border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="pb-3 md:pb-6">
+              <CardTitle className="flex items-center text-lg md:text-xl">
+                <MapPin className="w-6 h-6 md:w-5 md:h-5 mr-2" />
                 Find Emergency Dentist
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 Locate nearest emergency dental services
               </p>
-              <Button variant="outline" className="w-full" asChild>
+              <Button 
+                variant="outline" 
+                className="w-full h-12 md:h-10 text-base md:text-sm font-semibold border-2" 
+                asChild
+              >
                 <Link href="/find-dentist?emergency=true">
+                  <MapPin className="w-5 h-5 mr-2" />
                   Find Dentist
                 </Link>
               </Button>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Clock className="w-5 h-5 mr-2" />
+          <Card className="border-2 border-red-200 shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="pb-3 md:pb-6">
+              <CardTitle className="flex items-center text-lg md:text-xl text-red-700">
+                <AlertCircle className="w-6 h-6 md:w-5 md:h-5 mr-2" />
                 A&E Department
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 text-sm md:text-base">
                 For severe facial swelling or uncontrolled bleeding
               </p>
-              <Button variant="outline" className="w-full" asChild>
+              <Button 
+                variant="outline" 
+                className="w-full h-12 md:h-10 text-base md:text-sm font-semibold border-2 border-red-200 text-red-700 hover:bg-red-50" 
+                asChild
+              >
                 <a href="https://www.nhs.uk/service-search/accident-and-emergency-services/locationsearch/428" target="_blank" rel="noopener noreferrer">
-                  Find A&E <ExternalLink className="w-4 h-4 ml-2" />
+                  Find A&E 
+                  <ExternalLink className="w-4 h-4 ml-2" />
                 </a>
               </Button>
             </CardContent>
@@ -207,18 +246,21 @@ export default function EmergencyPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Emergency Assessment Tools</h2>
           
           <Tabs defaultValue="checker" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="checker">
-                <Stethoscope className="w-4 h-4 mr-2" />
-                Symptom Checker
+            <TabsList className="grid w-full grid-cols-3 h-auto p-1">
+              <TabsTrigger value="checker" className="flex flex-col md:flex-row gap-1 py-3 px-2 text-xs md:text-sm">
+                <Stethoscope className="w-5 h-5 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Symptom Checker</span>
+                <span className="md:hidden">Symptoms</span>
               </TabsTrigger>
-              <TabsTrigger value="timeline">
-                <Clock className="w-4 h-4 mr-2" />
-                Emergency Timeline
+              <TabsTrigger value="timeline" className="flex flex-col md:flex-row gap-1 py-3 px-2 text-xs md:text-sm">
+                <Clock className="w-5 h-5 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Emergency Timeline</span>
+                <span className="md:hidden">Timeline</span>
               </TabsTrigger>
-              <TabsTrigger value="services">
-                <Navigation className="w-4 h-4 mr-2" />
-                Find Services
+              <TabsTrigger value="services" className="flex flex-col md:flex-row gap-1 py-3 px-2 text-xs md:text-sm">
+                <Navigation className="w-5 h-5 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Find Services</span>
+                <span className="md:hidden">Services</span>
               </TabsTrigger>
             </TabsList>
             
@@ -268,6 +310,16 @@ export default function EmergencyPage() {
           </Tabs>
         </div>
 
+        {/* Visual First Aid Instructions */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Visual First Aid Instructions</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            <VisualInstructions emergencyType="knocked-out-tooth" />
+            <VisualInstructions emergencyType="bleeding-control" />
+            <VisualInstructions emergencyType="cold-compress" />
+          </div>
+        </div>
+
         {/* Emergency Conditions */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Common Dental Emergencies</h2>
@@ -276,28 +328,22 @@ export default function EmergencyPage() {
             {emergencyConditions.map((condition, index) => (
               <Card 
                 key={index}
-                className={
+                className={cn(
+                  "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
                   condition.urgency === 'critical' 
-                    ? 'border-red-200' 
+                    ? 'border-red-300 bg-red-50/30' 
                     : condition.urgency === 'high'
-                    ? 'border-orange-200'
+                    ? 'border-orange-300 bg-orange-50/30'
                     : 'border-gray-200'
-                }
+                )}
               >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-xl">{condition.title}</CardTitle>
-                    <span className={`
-                      px-3 py-1 rounded-full text-sm font-medium
-                      ${condition.urgency === 'critical' 
-                        ? 'bg-red-100 text-red-800' 
-                        : condition.urgency === 'high'
-                        ? 'bg-orange-100 text-orange-800'
-                        : 'bg-yellow-100 text-yellow-800'}
-                    `}>
-                      {condition.urgency === 'critical' ? 'Seek Immediate Care' : 
-                       condition.urgency === 'high' ? 'Urgent' : 'Soon'}
-                    </span>
+                    <SeverityBadge 
+                      severity={condition.urgency as 'critical' | 'high' | 'medium'} 
+                      showPulse={condition.urgency === 'critical'}
+                    />
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -369,9 +415,15 @@ export default function EmergencyPage() {
             <p>• Keep your regular dentist's emergency contact information handy</p>
           </AlertDescription>
         </Alert>
-      </div>
+      </main>
       
       <Footer />
+      
+      {/* Floating Emergency Action Toolbar */}
+      <EmergencyActionToolbar />
+      
+      {/* Accessibility Controls */}
+      <AccessibilityControls />
     </div>
   )
 }

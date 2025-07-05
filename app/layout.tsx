@@ -28,6 +28,13 @@ export default function RootLayout({
         <head>
           <GoogleTagManager />
           <GoogleAnalytics />
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content="Dental Emergency" />
+          <link rel="apple-touch-icon" href="/icon-192x192.png" />
+          <meta name="theme-color" content="#0066CC" />
         </head>
         <body className={inter.className} suppressHydrationWarning>
           <GoogleTagManagerNoscript />

@@ -4,19 +4,27 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { MapPin, Navigation, Phone, Clock, ExternalLink, Loader2 } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { MapPin, Navigation, Phone, Clock, ExternalLink, Loader2, AlertCircle } from 'lucide-react'
+import { LocationConsent, hasLocationConsent } from '@/components/emergency/location-consent'
+import { EmergencyDisclaimer } from '@/components/emergency/emergency-disclaimer'
+import { EmergencyLogger } from '@/lib/emergency-audit'
 
 interface EmergencyService {
   id: string
   name: string
-  type: 'dental' | 'hospital' | 'pharmacy'
-  distance: number
+  type: 'dental' | 'hospital' | 'pharmacy' | 'urgent-care'
+  distance?: number
   address: string
+  postcode: string
   phone?: string
   openNow?: boolean
   openingHours?: string
   latitude: number
   longitude: number
+  nhsService?: boolean
+  acceptsEmergencyDental?: boolean
+  waitTime?: string
 }
 
 export function NearestServices() {
@@ -24,85 +32,134 @@ export function NearestServices() {
   const [services, setServices] = useState<EmergencyService[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [manualPostcode, setManualPostcode] = useState('')
+  const [showManualEntry, setShowManualEntry] = useState(false)
+  const [dataSource, setDataSource] = useState<'location' | 'fallback' | 'manual'>('location')
+  const [showConsent, setShowConsent] = useState(false)
+  const [hasConsent, setHasConsent] = useState(false)
 
-  // Mock data for demonstration - in production, this would call a real API
-  const mockServices: EmergencyService[] = [
-    {
-      id: '1',
-      name: 'City Emergency Dental Clinic',
-      type: 'dental',
-      distance: 0.8,
-      address: '123 High Street, London, SW1A 1AA',
-      phone: '020 7123 4567',
-      openNow: true,
-      openingHours: '24/7 Emergency Service',
-      latitude: 51.5074,
-      longitude: -0.1278,
-    },
-    {
-      id: '2',
-      name: 'St Thomas\' Hospital A&E',
-      type: 'hospital',
-      distance: 1.2,
-      address: 'Westminster Bridge Rd, London SE1 7EH',
-      phone: '020 7188 7188',
-      openNow: true,
-      openingHours: '24/7',
-      latitude: 51.4982,
-      longitude: -0.1177,
-    },
-    {
-      id: '3',
-      name: 'Boots Pharmacy',
-      type: 'pharmacy',
-      distance: 0.3,
-      address: '456 Oxford Street, London W1C 1AP',
-      phone: '020 7629 6811',
-      openNow: true,
-      openingHours: 'Mon-Sat: 8am-10pm, Sun: 12pm-6pm',
-      latitude: 51.5145,
-      longitude: -0.1527,
-    },
-    {
-      id: '4',
-      name: 'Dental Emergency Hotline',
-      type: 'dental',
-      distance: 2.5,
-      address: '789 Baker Street, London NW1 6XE',
-      phone: '020 7935 5555',
-      openNow: false,
-      openingHours: 'Mon-Fri: 8am-8pm, Weekends: 10am-4pm',
-      latitude: 51.5238,
-      longitude: -0.1586,
-    },
-  ]
+  // Default coordinates for major UK cities
+  const DEFAULT_LOCATIONS = {
+    london: { lat: 51.5074, lng: -0.1278 },
+    manchester: { lat: 53.4808, lng: -2.2426 },
+    birmingham: { lat: 52.4862, lng: -1.8904 },
+  }
+
+  const fetchEmergencyServices = async (lat: number, lng: number, isManualPostcode = false) => {
+    try {
+      const response = await fetch(`/api/emergency/services?lat=${lat}&lng=${lng}&type=all&radius=20&emergency=true`)
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch emergency services')
+      }
+      
+      const data = await response.json()
+      const services = data.data.services
+      
+      // Log the search
+      EmergencyLogger.serviceSearch(
+        isManualPostcode ? { postcode: manualPostcode } : { lat, lng },
+        services.length
+      )
+      
+      return services
+    } catch (error) {
+      console.error('Error fetching emergency services:', error)
+      throw error
+    }
+  }
 
   const getLocation = () => {
+    // Check if we have consent
+    if (!hasLocationConsent()) {
+      setShowConsent(true)
+      return
+    }
+
     setIsLoading(true)
     setError(null)
 
     if (!navigator.geolocation) {
       setError('Geolocation is not supported by your browser')
+      setShowManualEntry(true)
       setIsLoading(false)
       return
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         setLocation(position)
-        // Simulate API call with mock data
-        setTimeout(() => {
-          setServices(mockServices)
-          setIsLoading(false)
-        }, 1000)
-      },
-      (error) => {
-        setError('Unable to retrieve your location. Please enable location services.')
+        setDataSource('location')
+        try {
+          const services = await fetchEmergencyServices(
+            position.coords.latitude,
+            position.coords.longitude
+          )
+          setServices(services)
+        } catch (err) {
+          setError('Unable to fetch emergency services. Showing nearest known services.')
+          // Fallback to London services
+          const services = await fetchEmergencyServices(
+            DEFAULT_LOCATIONS.london.lat,
+            DEFAULT_LOCATIONS.london.lng
+          )
+          setServices(services)
+          setDataSource('fallback')
+        }
         setIsLoading(false)
-        // Still show services without distance calculation
-        setServices(mockServices)
+      },
+      async (error) => {
+        console.error('Geolocation error:', error)
+        setError('Unable to retrieve your location. Showing services for London.')
+        setShowManualEntry(true)
+        setDataSource('fallback')
+        
+        // Use London as default
+        try {
+          const services = await fetchEmergencyServices(
+            DEFAULT_LOCATIONS.london.lat,
+            DEFAULT_LOCATIONS.london.lng
+          )
+          setServices(services)
+        } catch (err) {
+          setError('Unable to load emergency services. Please try again later.')
+        }
+        setIsLoading(false)
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
       }
     )
+  }
+
+  const handleManualPostcode = async () => {
+    if (!manualPostcode.trim()) return
+    
+    setIsLoading(true)
+    setError(null)
+    
+    // In production, this would geocode the postcode
+    // For now, we'll use a simple mapping
+    const postcodePrefix = manualPostcode.toUpperCase().slice(0, 2)
+    let coords = DEFAULT_LOCATIONS.london
+    
+    if (postcodePrefix.startsWith('M')) {
+      coords = DEFAULT_LOCATIONS.manchester
+    } else if (postcodePrefix.startsWith('B')) {
+      coords = DEFAULT_LOCATIONS.birmingham
+    }
+    
+    try {
+      const services = await fetchEmergencyServices(coords.lat, coords.lng, true)
+      setServices(services)
+      setDataSource('manual')
+      setShowManualEntry(false)
+    } catch (err) {
+      setError('Unable to find services for this postcode')
+    }
+    setIsLoading(false)
   }
 
   const openDirections = (service: EmergencyService) => {
@@ -118,15 +175,62 @@ export function NearestServices() {
         return '🏥'
       case 'pharmacy':
         return '💊'
+      case 'urgent-care':
+        return '🚑'
       default:
         return '📍'
     }
   }
 
-  useEffect(() => {
-    // Auto-detect location on component mount
+  const getServiceTypeLabel = (type: string) => {
+    switch (type) {
+      case 'dental':
+        return 'Emergency Dental'
+      case 'hospital':
+        return 'A&E Department'
+      case 'pharmacy':
+        return 'Pharmacy'
+      case 'urgent-care':
+        return 'Urgent Care'
+      default:
+        return 'Healthcare'
+    }
+  }
+
+  const handleConsentGranted = () => {
+    setShowConsent(false)
+    setHasConsent(true)
     getLocation()
+  }
+
+  const handleConsentDeclined = () => {
+    setShowConsent(false)
+    setShowManualEntry(true)
+    setError('Please enter your postcode to find nearby services')
+  }
+
+  useEffect(() => {
+    // Check consent status on mount
+    const consentGranted = hasLocationConsent()
+    setHasConsent(consentGranted)
+    
+    // Auto-detect location on component mount if consent exists
+    if (consentGranted) {
+      getLocation()
+    } else {
+      setShowManualEntry(true)
+    }
   }, [])
+
+  // Show consent dialog if needed
+  if (showConsent) {
+    return (
+      <LocationConsent 
+        onConsent={handleConsentGranted}
+        onDecline={handleConsentDeclined}
+      />
+    )
+  }
 
   return (
     <Card>
@@ -138,12 +242,35 @@ export function NearestServices() {
       </CardHeader>
       <CardContent>
         {error && (
-          <Alert className="mb-4">
-            <AlertDescription>{error}</AlertDescription>
+          <Alert className="mb-4 border-orange-200 bg-orange-50">
+            <AlertCircle className="h-4 w-4 text-orange-600" />
+            <AlertDescription className="text-orange-700">{error}</AlertDescription>
           </Alert>
         )}
 
-        {!location && !isLoading && !error && (
+        {/* Manual postcode entry */}
+        {showManualEntry && (
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <p className="text-sm text-gray-600 mb-3">
+              Or enter your postcode to find nearby services:
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="text"
+                placeholder="Enter postcode (e.g., SW1A 1AA)"
+                value={manualPostcode}
+                onChange={(e) => setManualPostcode(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleManualPostcode()}
+                className="flex-1"
+              />
+              <Button onClick={handleManualPostcode} disabled={isLoading}>
+                Search
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {!location && !isLoading && !error && !services.length && hasConsent && (
           <div className="text-center py-8">
             <MapPin className="w-12 h-12 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-600 mb-4">
@@ -165,6 +292,15 @@ export function NearestServices() {
 
         {services.length > 0 && (
           <div className="space-y-4">
+            {/* Data source notification */}
+            {dataSource === 'fallback' && (
+              <Alert className="mb-4">
+                <AlertDescription className="text-sm">
+                  Showing services for London. Enable location or enter your postcode for more accurate results.
+                </AlertDescription>
+              </Alert>
+            )}
+            
             {services.map((service) => (
               <div
                 key={service.id}
@@ -176,13 +312,28 @@ export function NearestServices() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-2xl">{getServiceIcon(service.type)}</span>
-                      <h3 className="font-semibold text-lg">{service.name}</h3>
+                      <div>
+                        <h3 className="font-semibold text-lg">{service.name}</h3>
+                        <div className="flex items-center gap-2 text-xs">
+                          <span className="text-gray-500">{getServiceTypeLabel(service.type)}</span>
+                          {service.nhsService && (
+                            <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                              NHS Service
+                            </span>
+                          )}
+                          {service.acceptsEmergencyDental && (
+                            <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                              Emergency Dental
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                     
-                    <div className="space-y-2 text-sm text-gray-600">
+                    <div className="space-y-2 text-sm text-gray-600 mt-2">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span>{service.address}</span>
+                        <span>{service.address}, {service.postcode}</span>
                       </div>
                       
                       {service.phone && (
@@ -190,7 +341,7 @@ export function NearestServices() {
                           <Phone className="w-4 h-4" />
                           <a 
                             href={`tel:${service.phone}`}
-                            className="text-primary hover:underline"
+                            className="text-primary hover:underline font-medium"
                           >
                             {service.phone}
                           </a>
@@ -199,17 +350,24 @@ export function NearestServices() {
                       
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        <span className={service.openNow ? 'text-green-600 font-medium' : ''}>
+                        <span className={service.openNow ? 'text-green-600 font-medium' : 'text-red-600'}>
                           {service.openNow ? 'Open Now' : 'Closed'} • {service.openingHours}
                         </span>
                       </div>
+                      
+                      {service.waitTime && (
+                        <div className="flex items-center gap-2 text-orange-600">
+                          <Clock className="w-4 h-4" />
+                          <span>Estimated wait: {service.waitTime}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
                   <div className="text-right ml-4">
-                    {location && (
+                    {service.distance !== undefined && (
                       <div className="text-lg font-semibold text-primary mb-2">
-                        {service.distance} mi
+                        {service.distance.toFixed(1)} mi
                       </div>
                     )}
                     <Button
@@ -257,6 +415,11 @@ export function NearestServices() {
               </a>
             </Button>
           </div>
+        </div>
+
+        {/* Medical Disclaimer */}
+        <div className="mt-6">
+          <EmergencyDisclaimer variant="compact" showEmergencyNumber={false} />
         </div>
       </CardContent>
     </Card>

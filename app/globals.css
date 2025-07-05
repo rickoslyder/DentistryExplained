@@ -113,3 +113,140 @@
     opacity: 0;
   }
 }
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 95%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 0%;
+  --accent: 0 0% 95%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 100% 40%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 0%;
+  --input: 0 0% 0%;
+  --ring: 0 0% 0%;
+}
+
+.high-contrast * {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.high-contrast .border,
+.high-contrast .border-2 {
+  border-color: #000 !important;
+  border-width: 2px !important;
+}
+
+.high-contrast button,
+.high-contrast a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.high-contrast button:focus,
+.high-contrast a:focus {
+  outline: 3px solid #000 !important;
+  outline-offset: 2px !important;
+}
+
+/* Text Size Classes */
+.text-normal {
+  font-size: 1rem;
+}
+
+.text-large {
+  font-size: 1.5rem;
+}
+
+.text-large h1 { font-size: 3rem; }
+.text-large h2 { font-size: 2.25rem; }
+.text-large h3 { font-size: 1.875rem; }
+.text-large h4 { font-size: 1.5rem; }
+.text-large .text-sm { font-size: 1.125rem; }
+.text-large .text-xs { font-size: 1rem; }
+.text-large button { font-size: 1.25rem; padding: 0.75rem 1.5rem; }
+
+.text-extra-large {
+  font-size: 2rem;
+}
+
+.text-extra-large h1 { font-size: 4rem; }
+.text-extra-large h2 { font-size: 3rem; }
+.text-extra-large h3 { font-size: 2.5rem; }
+.text-extra-large h4 { font-size: 2rem; }
+.text-extra-large .text-sm { font-size: 1.5rem; }
+.text-extra-large .text-xs { font-size: 1.25rem; }
+.text-extra-large button { font-size: 1.5rem; padding: 1rem 2rem; }
+
+/* Reduced Motion */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Focus Visible for Keyboard Navigation */
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Emergency pulse animations for severity badge */
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse-orange {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-red {
+  animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-orange {
+  animation: pulse-orange 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}

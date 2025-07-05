@@ -1,3 +1,69 @@
+import withPWAInit from "@ducanh2912/next-pwa"
+
+const withPWA = withPWAInit({
+  dest: "public",
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  disable: false,
+  workboxOptions: {
+    disableDevLogs: true,
+    // Cache strategies for different route patterns
+    runtimeCaching: [
+      // Emergency pages - cache first for offline access
+      {
+        urlPattern: /^\/emergency/,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "emergency-pages",
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+          },
+        },
+      },
+      // Emergency API routes - network first with cache fallback
+      {
+        urlPattern: /^\/api\/emergency/,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "emergency-api",
+          networkTimeoutSeconds: 10,
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 24 * 60 * 60, // 24 hours
+          },
+        },
+      },
+      // Static assets - cache first
+      {
+        urlPattern: /\.(js|css|png|jpg|jpeg|svg|gif|ico|woff|woff2)$/,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "static-assets",
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+          },
+        },
+      },
+      // Other pages - stale while revalidate
+      {
+        urlPattern: /^(?!\/api).*/,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "pages",
+          expiration: {
+            maxEntries: 50,
+            maxAgeSeconds: 24 * 60 * 60, // 24 hours
+          },
+        },
+      },
+    ],
+  },
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -99,4 +165,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withPWA(nextConfig)
