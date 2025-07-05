@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { MDXRenderer } from '@/components/mdx/mdx-renderer'
 import { processMDX, generateTOC } from '@/lib/mdx'
@@ -99,21 +99,6 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ArticlePage({ params }: PageProps) {
   const { category, slug } = await params
-  
-  // Check if this is one of our hardcoded example pages
-  const hardcodedPages = [
-    'dental-problems/tooth-decay',
-    'dental-problems/gum-disease',
-    'prevention/daily-oral-hygiene',
-    'treatments/dental-fillings',
-  ]
-  
-  const fullSlug = `${category}/${slug}`
-  if (hardcodedPages.includes(fullSlug)) {
-    // Redirect to the hardcoded page if it exists
-    const { redirect } = await import('next/navigation')
-    redirect(`/${fullSlug}`)
-  }
   
   const article = await getArticle(category, slug)
   

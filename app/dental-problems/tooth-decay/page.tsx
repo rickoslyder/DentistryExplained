@@ -1,5 +1,4 @@
-"use client"
-import { Calendar, Clock, User, BookOpen, Share2, Bookmark, ChevronRight } from "lucide-react"
+import { Calendar, Clock, User, ChevronRight } from "lucide-react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
@@ -7,27 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
-import { useBookmarks } from "@/hooks/use-bookmarks"
-import { ViewCounter } from "@/components/article/view-counter"
-import { RealtimePresence } from "@/components/article/realtime-presence"
-import { BookmarkButton } from "@/components/article/bookmark-button"
-import { useArticleReadingTracker } from "@/hooks/use-reading-history"
+import { ArticleClientWrapper } from "@/components/article/article-client-wrapper"
 
 export default function ToothDecayPage() {
-  const { isBookmarked, toggleBookmark, isLoading } = useBookmarks()
   const articleData = {
     slug: "dental-problems/tooth-decay",
     title: "Understanding Tooth Decay",
     category: "Dental Problems",
     readTime: "5 min",
   }
-
-  // Track reading progress
-  useArticleReadingTracker({
-    slug: articleData.slug,
-    title: articleData.title,
-    category: articleData.category,
-  })
 
   const tableOfContents = [
     { id: "what-is-tooth-decay", title: "What is Tooth Decay?" },
@@ -114,25 +101,10 @@ export default function ToothDecayPage() {
                   <User className="w-4 h-4 mr-2" />
                   Medically reviewed by Dr. Sarah Johnson, BDS
                 </div>
-                <ViewCounter articleSlug={articleData.slug} showCurrentReaders={false} />
-                <RealtimePresence articleSlug={articleData.slug} />
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex items-center space-x-4 mb-8">
-                <Button variant="outline" size="sm" onClick={() => toggleBookmark(articleData)} disabled={isLoading}>
-                  <Bookmark className={`w-4 h-4 mr-2 ${isBookmarked(articleData.slug) ? "fill-current" : ""}`} />
-                  {isBookmarked(articleData.slug) ? "Saved" : "Save Article"}
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </Button>
-                <Button variant="outline" size="sm">
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  Reading Level: Basic
-                </Button>
-              </div>
+              {/* Client-side interactive components */}
+              <ArticleClientWrapper articleData={articleData} />
             </div>
 
             {/* Article Content */}
