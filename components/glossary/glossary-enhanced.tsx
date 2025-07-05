@@ -31,66 +31,79 @@ const categoryConfig = {
     icon: Stethoscope, 
     label: 'Anatomy', 
     color: 'bg-blue-100 text-blue-700 hover:bg-blue-200',
-    bgGradient: 'from-blue-50 to-blue-100'
+    bgGradient: 'from-blue-50 to-blue-100',
+    description: 'Tooth and mouth structures'
   },
   conditions: { 
     icon: AlertCircle, 
     label: 'Conditions', 
     color: 'bg-red-100 text-red-700 hover:bg-red-200',
-    bgGradient: 'from-red-50 to-red-100'
+    bgGradient: 'from-red-50 to-red-100',
+    description: 'Dental problems and diseases'
   },
   procedures: { 
     icon: Wrench, 
     label: 'Procedures', 
     color: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
-    bgGradient: 'from-purple-50 to-purple-100'
+    bgGradient: 'from-purple-50 to-purple-100',
+    description: 'Treatments and techniques'
   },
   materials: { 
     icon: Pill, 
     label: 'Materials', 
     color: 'bg-green-100 text-green-700 hover:bg-green-200',
-    bgGradient: 'from-green-50 to-green-100'
+    bgGradient: 'from-green-50 to-green-100',
+    description: 'Dental materials and substances'
   },
   orthodontics: { 
     icon: Brain, 
     label: 'Orthodontics', 
     color: 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200',
-    bgGradient: 'from-yellow-50 to-yellow-100'
+    bgGradient: 'from-yellow-50 to-yellow-100',
+    description: 'Teeth alignment and braces'
   },
   pediatric: { 
     icon: Baby, 
     label: 'Pediatric', 
     color: 'bg-pink-100 text-pink-700 hover:bg-pink-200',
-    bgGradient: 'from-pink-50 to-pink-100'
+    bgGradient: 'from-pink-50 to-pink-100',
+    description: 'Children\'s dental care'
   },
   costs: { 
     icon: DollarSign, 
     label: 'Costs & Insurance', 
     color: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
-    bgGradient: 'from-gray-50 to-gray-100'
+    bgGradient: 'from-gray-50 to-gray-100',
+    description: 'NHS bands and pricing'
   },
   prosthetics: { 
     icon: Wrench, 
     label: 'Prosthetics', 
     color: 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200',
-    bgGradient: 'from-indigo-50 to-indigo-100'
+    bgGradient: 'from-indigo-50 to-indigo-100',
+    description: 'Replacement teeth and appliances'
   },
   specialties: { 
     icon: BookOpen, 
     label: 'Specialties', 
     color: 'bg-orange-100 text-orange-700 hover:bg-orange-200',
-    bgGradient: 'from-orange-50 to-orange-100'
+    bgGradient: 'from-orange-50 to-orange-100',
+    description: 'Dental specializations'
   }
 }
 
 // Featured terms for "Term of the Day"
 const featuredTerms = [
-  'Abscess',
+  'Implant',
   'Root Canal',
   'Wisdom Teeth',
-  'Gingivitis',
+  'Cavity',
   'Fluoride',
-  'Bruxism'
+  'Bruxism',
+  'Crown',
+  'Veneer',
+  'Gum Disease',
+  'Clear Aligners'
 ]
 
 // Common questions for quick access
@@ -157,7 +170,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
   }, [terms])
 
   // Get trending/popular terms (mock data - in real app would be from analytics)
-  const trendingTerms = ['Dry Socket', 'Abscess', 'Crown', 'Veneer', 'Root Canal']
+  const trendingTerms = ['Implant', 'Wisdom Teeth', 'Crown', 'Root Canal', 'Clear Aligners', 'Cavity', 'Gum Disease', 'Veneer']
 
   const pronounceTerm = (term: string, pronunciation?: string) => {
     if (!pronunciation) return
@@ -180,8 +193,45 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     // In real app, save to localStorage or user profile
   }
 
+  // Calculate statistics
+  const totalTerms = terms.length
+  const basicTerms = terms.filter(t => t.difficulty === 'basic').length
+  const advancedTerms = terms.filter(t => t.difficulty === 'advanced').length
+  const categoryCounts = Object.entries(termsByCategory).map(([cat, terms]) => ({
+    category: cat,
+    count: terms.length
+  })).sort((a, b) => b.count - a.count)
+
   return (
     <div className="space-y-8">
+      {/* Statistics Bar */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-blue-600">{totalTerms}</div>
+            <p className="text-sm text-gray-600">Total Terms</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-green-600">{basicTerms}</div>
+            <p className="text-sm text-gray-600">Basic Level</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-purple-600">{advancedTerms}</div>
+            <p className="text-sm text-gray-600">Advanced Level</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-orange-600">{Object.keys(termsByCategory).length}</div>
+            <p className="text-sm text-gray-600">Categories</p>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Hero Section with Term of the Day */}
       <Card className="overflow-hidden bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50">
         <CardContent className="p-8">
@@ -405,7 +455,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                     {config.label}
                   </CardTitle>
                   <CardDescription>
-                    {categoryTerms.length} terms
+                    {config.description} • {categoryTerms.length} terms
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
