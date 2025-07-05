@@ -22,6 +22,7 @@ import { EmergencyDecisionTree } from "@/components/emergency/emergency-decision
 import { AccessibilityControls } from "@/components/emergency/accessibility-controls"
 import { OfflineIndicator } from "@/components/emergency/offline-indicator"
 import { VisualInstructions } from "@/components/emergency/visual-instructions"
+import { EmergencyVisualIdentification } from "@/components/emergency/emergency-visual-identification"
 
 const emergencyConditions = [
   {
@@ -164,6 +165,11 @@ export default function EmergencyPage() {
         {/* Emergency Decision Tree - Prominent Position */}
         <div className="mb-12">
           <EmergencyDecisionTree />
+        </div>
+
+        {/* Visual Identification Guide */}
+        <div className="mb-12">
+          <EmergencyVisualIdentification />
         </div>
 
         {/* Emergency Contact Options - Mobile Optimized */}
