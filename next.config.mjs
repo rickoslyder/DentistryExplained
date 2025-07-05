@@ -56,18 +56,18 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://tagmanager.google.com https://*.google-analytics.com https://*.googletagmanager.com;
-              style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://tagmanager.google.com https://fonts.googleapis.com;
-              img-src 'self' data: https: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://*.doubleclick.net;
-              font-src 'self' data: https://*.clerk.accounts.dev https://fonts.gstatic.com;
-              connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com https://*.doubleclick.net https://region1.google-analytics.com;
-              media-src 'self';
+              default-src 'self' https: data: blob:;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:;
+              style-src 'self' 'unsafe-inline' https:;
+              img-src 'self' data: https: blob:;
+              font-src 'self' data: https:;
+              connect-src 'self' https: wss: blob:;
+              media-src 'self' https: blob:;
               object-src 'none';
               worker-src 'self' blob:;
-              frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com https://www.googletagmanager.com;
+              frame-src 'self' https:;
               base-uri 'self';
-              form-action 'self' https://*.clerk.accounts.dev;
+              form-action 'self' https:;
               frame-ancestors 'none';
               upgrade-insecure-requests;
             `.replace(/\s+/g, ' ').trim()
