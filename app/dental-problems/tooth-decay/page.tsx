@@ -8,6 +8,10 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { useBookmarks } from "@/hooks/use-bookmarks"
+import { ViewCounter } from "@/components/article/view-counter"
+import { RealtimePresence } from "@/components/article/realtime-presence"
+import { BookmarkButton } from "@/components/article/bookmark-button"
+import { useArticleReadingTracker } from "@/hooks/use-reading-history"
 
 export default function ToothDecayPage() {
   const { isBookmarked, toggleBookmark, isLoading } = useBookmarks()
@@ -17,6 +21,13 @@ export default function ToothDecayPage() {
     category: "Dental Problems",
     readTime: "5 min",
   }
+
+  // Track reading progress
+  useArticleReadingTracker({
+    slug: articleData.slug,
+    title: articleData.title,
+    category: articleData.category,
+  })
 
   const tableOfContents = [
     { id: "what-is-tooth-decay", title: "What is Tooth Decay?" },
@@ -103,6 +114,8 @@ export default function ToothDecayPage() {
                   <User className="w-4 h-4 mr-2" />
                   Medically reviewed by Dr. Sarah Johnson, BDS
                 </div>
+                <ViewCounter articleSlug={articleData.slug} showCurrentReaders={false} />
+                <RealtimePresence articleSlug={articleData.slug} />
               </div>
 
               {/* Action Buttons */}

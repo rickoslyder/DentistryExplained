@@ -158,16 +158,52 @@ export default function ConsentFormsPage() {
     }
   })
 
-  const handleDownload = (formId: string, title: string) => {
-    // Simulate download
-    console.log(`Downloading: ${title}`)
-    // In real app, this would trigger actual file download
+  const handleDownload = async (formId: string, title: string) => {
+    try {
+      // Get user's practice details from profile
+      const response = await fetch(`/api/professional/consent-forms/download?formId=${formId}`)
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF')
+      }
+
+      // Create blob from response
+      const blob = await response.blob()
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${title.replace(/\s+/g, '_')}_Consent_Form.pdf`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Download error:', error)
+      // In production, show toast notification
+    }
   }
 
-  const handlePreview = (formId: string, title: string) => {
-    // Simulate preview
-    console.log(`Previewing: ${title}`)
-    // In real app, this would open preview modal or new tab
+  const handlePreview = async (formId: string, title: string) => {
+    try {
+      // Generate PDF and open in new tab
+      const response = await fetch(`/api/professional/consent-forms/download?formId=${formId}&preview=true`)
+      
+      if (!response.ok) {
+        throw new Error('Failed to generate preview')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      window.open(url, '_blank')
+      
+      // Clean up after a delay
+      setTimeout(() => window.URL.revokeObjectURL(url), 60000)
+    } catch (error) {
+      console.error('Preview error:', error)
+      // In production, show toast notification
+    }
   }
 
   return (

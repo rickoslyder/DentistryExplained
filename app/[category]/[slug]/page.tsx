@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { ArticleTrackingWrapper } from '@/components/article/article-tracking-wrapper'
 
 interface PageProps {
   params: {
@@ -156,23 +157,35 @@ export default async function ArticlePage({ params }: PageProps) {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <MDXRenderer
-        content={content}
-        frontmatter={{
-          ...frontmatter,
+      <ArticleTrackingWrapper
+        article={{
+          slug: slug,
           title: article.title,
-          excerpt: article.excerpt,
           category: article.category.name,
-          author: article.author?.full_name,
-          date: article.published_at,
-          tags: article.tags,
-          featuredImage: article.featured_image,
+          readTime: article.read_time || readTime,
+          publishedAt: article.published_at,
+          excerpt: article.excerpt,
         }}
-        slug={`${category}/${slug}`}
-        readTime={article.read_time || readTime}
-        toc={toc}
-        relatedArticles={article.relatedArticles}
-      />
+        fullSlug={`${category}/${slug}`}
+      >
+        <MDXRenderer
+          content={content}
+          frontmatter={{
+            ...frontmatter,
+            title: article.title,
+            excerpt: article.excerpt,
+            category: article.category.name,
+            author: article.author?.full_name,
+            date: article.published_at,
+            tags: article.tags,
+            featuredImage: article.featured_image,
+          }}
+          slug={`${category}/${slug}`}
+          readTime={article.read_time || readTime}
+          toc={toc}
+          relatedArticles={article.relatedArticles}
+        />
+      </ArticleTrackingWrapper>
       
       <Footer />
     </div>

@@ -291,8 +291,18 @@ export default function DashboardPage() {
           <TabsContent value="reading" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Recent Reading</CardTitle>
-                <CardDescription>Articles you've read recently</CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Recent Reading</CardTitle>
+                    <CardDescription>Articles you've read recently</CardDescription>
+                  </div>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/dashboard/reading-history">
+                      View Full History
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -323,8 +333,18 @@ export default function DashboardPage() {
           <TabsContent value="bookmarks" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Saved Articles</CardTitle>
-                <CardDescription>Articles you've bookmarked for later</CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Saved Articles</CardTitle>
+                    <CardDescription>Articles you've bookmarked for later</CardDescription>
+                  </div>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/dashboard/bookmarks">
+                      Manage Bookmarks
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">

@@ -8,6 +8,10 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { useBookmarks } from "@/hooks/use-bookmarks"
+import { ViewCounter } from "@/components/article/view-counter"
+import { RealtimePresence } from "@/components/article/realtime-presence"
+import { BookmarkButton } from "@/components/article/bookmark-button"
+import { useArticleReadingTracker } from "@/hooks/use-reading-history"
 
 export default function DailyOralHygienePage() {
   const { isBookmarked, toggleBookmark, isLoading } = useBookmarks()
@@ -17,6 +21,13 @@ export default function DailyOralHygienePage() {
     category: "Prevention",
     readTime: "5 min",
   }
+
+  // Track reading progress
+  useArticleReadingTracker({
+    slug: articleData.slug,
+    title: articleData.title,
+    category: articleData.category,
+  })
 
   const tableOfContents = [
     { id: "importance", title: "Why Daily Oral Hygiene Matters" },
@@ -83,7 +94,7 @@ export default function DailyOralHygienePage() {
               </p>
 
               {/* Article Meta */}
-              <div className="flex items-center space-x-6 text-sm text-gray-500 mb-6">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-6">
                 <div className="flex items-center">
                   <User className="w-4 h-4 mr-2" />
                   <span>Dr. Sarah Johnson</span>
@@ -96,6 +107,8 @@ export default function DailyOralHygienePage() {
                   <Clock className="w-4 h-4 mr-2" />
                   <span>{articleData.readTime} read</span>
                 </div>
+                <ViewCounter articleSlug={articleData.slug} showCurrentReaders={false} />
+                <RealtimePresence articleSlug={articleData.slug} />
               </div>
 
               {/* Actions */}
