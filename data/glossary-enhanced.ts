@@ -5,9 +5,120 @@ interface GlossaryTerm {
   also_known_as?: string[]
   related_terms?: string[]
   category?: string
+  difficulty?: 'basic' | 'advanced'
+  example?: string
 }
 
 export const enhancedGlossaryTerms: GlossaryTerm[] = [
+  // Emergency-related terms
+  {
+    term: "Dental Emergency",
+    definition: "Any dental problem requiring immediate treatment to stop ongoing tissue bleeding, alleviate severe pain, or save a tooth.",
+    pronunciation: "DEN-tal ee-MER-jen-see",
+    also_known_as: ["Urgent dental care", "Emergency dentistry"],
+    related_terms: ["Trauma", "Abscess", "Severe pain"],
+    category: "conditions",
+    difficulty: "basic",
+    example: "A knocked-out tooth is a dental emergency requiring treatment within 30 minutes."
+  },
+  {
+    term: "Avulsion",
+    definition: "Complete displacement of a tooth from its socket due to trauma. Adult teeth can often be reimplanted if handled correctly.",
+    pronunciation: "ah-VUL-shun",
+    also_known_as: ["Knocked-out tooth", "Tooth avulsion"],
+    related_terms: ["Dental trauma", "Reimplantation", "Emergency"],
+    category: "conditions",
+    difficulty: "advanced"
+  },
+  {
+    term: "Dry Socket",
+    definition: "A painful condition occurring after tooth extraction when the blood clot is dislodged, exposing bone and nerves.",
+    pronunciation: "dry SOK-et",
+    also_known_as: ["Alveolar osteitis"],
+    related_terms: ["Extraction", "Post-operative complication"],
+    category: "conditions",
+    difficulty: "basic",
+    example: "Dry socket typically develops 2-3 days after tooth extraction and causes severe pain."
+  },
+  {
+    term: "Cellulitis",
+    definition: "A serious bacterial infection of the soft tissues that can spread from a dental infection, causing facial swelling.",
+    pronunciation: "sel-yoo-LIE-tis",
+    related_terms: ["Infection", "Abscess", "Medical emergency"],
+    category: "conditions",
+    difficulty: "advanced"
+  },
+  {
+    term: "Ludwig's Angina",
+    definition: "A life-threatening infection of the floor of the mouth that can cause airway obstruction. Requires immediate medical attention.",
+    pronunciation: "LOOD-vigs an-JIE-nah",
+    related_terms: ["Cellulitis", "Dental infection", "Medical emergency"],
+    category: "conditions",
+    difficulty: "advanced"
+  },
+  {
+    term: "Pericoronitis",
+    definition: "Inflammation of the gum tissue around a partially erupted tooth, commonly affecting wisdom teeth.",
+    pronunciation: "pair-ih-kor-oh-NIE-tis",
+    also_known_as: ["Wisdom tooth infection"],
+    related_terms: ["Wisdom teeth", "Infection", "Impaction"],
+    category: "conditions",
+    difficulty: "basic"
+  },
+  // NHS and UK-specific terms
+  {
+    term: "NHS Band",
+    definition: "The pricing structure for NHS dental treatments in England, ranging from Band 1 (basic) to Band 3 (complex).",
+    also_known_as: ["NHS dental charges", "Treatment bands"],
+    related_terms: ["NHS dentistry", "Dental charges"],
+    category: "costs",
+    difficulty: "basic",
+    example: "A filling falls under NHS Band 2, which costs £65.20 in 2024."
+  },
+  {
+    term: "111 Service",
+    definition: "The NHS non-emergency medical helpline that can provide urgent dental advice and arrange emergency appointments.",
+    pronunciation: "one-one-one service",
+    also_known_as: ["NHS 111"],
+    related_terms: ["Emergency dentist", "Out-of-hours care"],
+    category: "procedures",
+    difficulty: "basic"
+  },
+  {
+    term: "GDC",
+    definition: "General Dental Council - the UK regulator for dental professionals. All dentists must be registered with the GDC.",
+    pronunciation: "G-D-C",
+    also_known_as: ["General Dental Council"],
+    related_terms: ["Dental registration", "Professional regulation"],
+    category: "costs",
+    difficulty: "basic"
+  },
+  // Additional emergency procedures
+  {
+    term: "Reimplantation",
+    definition: "The process of placing a knocked-out tooth back into its socket. Best results occur within 30 minutes of injury.",
+    pronunciation: "ree-im-plan-TAY-shun",
+    related_terms: ["Avulsion", "Dental trauma", "Emergency treatment"],
+    category: "procedures",
+    difficulty: "advanced"
+  },
+  {
+    term: "Pulp Capping",
+    definition: "An emergency procedure to protect exposed tooth pulp using a medicated covering to preserve tooth vitality.",
+    pronunciation: "pulp KAP-ing",
+    related_terms: ["Pulp exposure", "Dental trauma", "Root canal"],
+    category: "procedures",
+    difficulty: "advanced"
+  },
+  {
+    term: "Incision and Drainage",
+    definition: "A surgical procedure to drain pus from a dental abscess, providing immediate pain relief.",
+    pronunciation: "in-SIZH-un and DRAY-nij",
+    also_known_as: ["I&D", "Abscess drainage"],
+    related_terms: ["Abscess", "Infection", "Emergency treatment"],
+    category: "procedures",
+    difficulty: "basic"
+  },
   {
     term: "Abscess",
     definition: "A pocket of pus that forms around the root of an infected tooth or in the gums due to bacterial infection.",

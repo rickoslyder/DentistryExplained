@@ -1,12 +1,7 @@
-'use client'
-
-import { useState } from 'react'
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { Search } from "lucide-react"
 import { enhancedGlossaryTerms } from "@/data/glossary-enhanced"
+import { GlossaryEnhanced } from "@/components/glossary/glossary-enhanced"
 
 // Use enhanced glossary data if available, fallback to basic data
 const glossaryTerms = enhancedGlossaryTerms.length > 0 ? enhancedGlossaryTerms : [
@@ -469,140 +464,19 @@ const glossaryTerms = enhancedGlossaryTerms.length > 0 ? enhancedGlossaryTerms :
 ].sort((a, b) => a.term.localeCompare(b.term))
 
 export default function GlossaryPage() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
-
-  // Filter terms based on search and selected letter
-  const filteredTerms = glossaryTerms.filter(item => {
-    const matchesSearch = item.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.definition.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesLetter = !selectedLetter || item.term.charAt(0).toUpperCase() === selectedLetter
-    return matchesSearch && matchesLetter
-  })
-
-  // Get unique first letters
-  const availableLetters = [...new Set(glossaryTerms.map(item => item.term.charAt(0).toUpperCase()))].sort()
-
   return (
     <div className="min-h-screen bg-white">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Dental Glossary</h1>
           <p className="text-xl text-gray-600">
-            Common dental terms and their definitions to help you better understand your oral health.
+            Your comprehensive guide to dental terminology. Learn what your dentist is talking about.
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <Input
-              type="search"
-              placeholder="Search terms..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </div>
-
-        {/* Alphabet Navigation */}
-        <div className="mb-8 flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedLetter(null)}
-            className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-              !selectedLetter 
-                ? 'bg-primary text-white' 
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            All
-          </button>
-          {availableLetters.map(letter => (
-            <button
-              key={letter}
-              onClick={() => setSelectedLetter(letter)}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                selectedLetter === letter 
-                  ? 'bg-primary text-white' 
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {letter}
-            </button>
-          ))}
-        </div>
-
-        {/* Glossary Terms */}
-        <div className="space-y-4">
-          {filteredTerms.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              No terms found matching your search.
-            </div>
-          ) : (
-            filteredTerms.map((item, index) => (
-              <div
-                key={index}
-                className="border-b border-gray-200 pb-4 last:border-0"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                      {item.term}
-                      {item.pronunciation && (
-                        <span className="ml-2 text-sm font-normal text-gray-500">
-                          [{item.pronunciation}]
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-gray-600 mb-2">
-                      {item.definition}
-                    </p>
-                    {item.also_known_as && item.also_known_as.length > 0 && (
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm text-gray-500">Also known as:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {item.also_known_as.map((aka, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {aka}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {item.related_terms && item.related_terms.length > 0 && (
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-500">Related:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {item.related_terms.map((term, idx) => (
-                            <Badge key={idx} variant="outline" className="text-xs">
-                              {term}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  {item.category && (
-                    <Badge className="ml-4 capitalize">
-                      {item.category.replace('-', ' ')}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Results Count */}
-        {searchTerm && (
-          <div className="mt-8 text-center text-sm text-gray-500">
-            Showing {filteredTerms.length} of {glossaryTerms.length} terms
-          </div>
-        )}
+        <GlossaryEnhanced terms={glossaryTerms} />
       </div>
       
       <Footer />
