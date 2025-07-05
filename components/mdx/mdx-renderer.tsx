@@ -1,6 +1,7 @@
 'use client'
 
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { MDXWithGlossary } from '@/components/mdx/mdx-with-glossary'
 import { mdxComponents } from '@/lib/mdx'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -217,7 +218,7 @@ export function MDXRenderer({
           
           {/* MDX Content */}
           <div className="prose prose-lg max-w-none">
-            <MDXRemote {...content} components={mdxComponents} />
+            <MDXWithGlossary content={content} components={mdxComponents} />
           </div>
           
           {/* Related Articles */}

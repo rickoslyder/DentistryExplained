@@ -52,6 +52,24 @@
   }
 }
 
+/* Glossary term tooltips */
+@layer components {
+  .glossary-term {
+    @apply relative inline-flex items-center;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: hsl(var(--primary) / 0.5);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    cursor: help;
+    transition: text-decoration-color 0.2s;
+  }
+  
+  .glossary-term:hover {
+    text-decoration-color: hsl(var(--primary));
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
