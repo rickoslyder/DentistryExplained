@@ -7,14 +7,24 @@ import { Footer } from '@/components/layout/footer'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { MessageSquare, Send, Loader2 } from 'lucide-react'
+import { MessageSquare, Send, Loader2, Globe, FileText, Newspaper, Search } from 'lucide-react'
 import { ChatSearchToggle } from '@/components/chat/chat-search-toggle'
+import { SearchResults } from '@/components/chat/search-results'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
   timestamp: Date
+  searchResults?: {
+    results: any[]
+    provider: 'perplexity' | 'exa'
+    searchType: 'smart' | 'news' | 'research' | 'nhs'
+    isCached: boolean
+    searchTime?: number
+    query: string
+  }
 }
 
 export default function ChatPage() {
@@ -91,8 +101,9 @@ export default function ChatPage() {
 
       const assistantMessage: Message = {
         role: 'assistant',
-        content: data.content,
-        timestamp: new Date()
+        content: data.response || data.content,
+        timestamp: new Date(),
+        searchResults: data.searchResults
       }
 
       setMessages(prev => [...prev, assistantMessage])
@@ -124,25 +135,68 @@ export default function ChatPage() {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg p-4 ${
-                    message.role === 'user'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 text-gray-900'
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap">{message.content}</p>
-                  <p className="text-xs mt-2 opacity-70">
-                    {message.timestamp.toLocaleTimeString()}
-                  </p>
+            {messages.map((message, index) => {
+              // Check if this is an assistant message that might have web search results
+              const hasCitations = message.content.includes('[http') || message.content.includes('Source:')
+              
+              return (
+                <div key={index} className="space-y-2">
+                  {/* Show search results if available (before the message) */}
+                  {message.searchResults && (
+                    <SearchResults
+                      results={message.searchResults.results}
+                      provider={message.searchResults.provider}
+                      searchType={message.searchResults.searchType}
+                      isCached={message.searchResults.isCached}
+                      searchTime={message.searchResults.searchTime}
+                      query={message.searchResults.query}
+                    />
+                  )}
+                  
+                  {/* Message bubble */}
+                  <div className={cn('flex', message.role === 'user' ? 'justify-end' : 'justify-start')}>
+                    <div
+                      className={cn(
+                        'max-w-[80%] rounded-lg p-4',
+                        message.role === 'user'
+                          ? 'bg-primary text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      )}
+                    >
+                      {/* Message content with proper formatting */}
+                      <div className="whitespace-pre-wrap">
+                        {message.content.split('\n').map((line, i) => {
+                          // Format citations as links
+                          if (line.includes('Source:') && line.includes('http')) {
+                            const urlMatch = line.match(/https?:\/\/[^\s]+/)
+                            if (urlMatch) {
+                              return (
+                                <div key={i} className="text-xs mt-1">
+                                  <a 
+                                    href={urlMatch[0]} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:underline"
+                                  >
+                                    {line}
+                                  </a>
+                                </div>
+                              )
+                            }
+                          }
+                          return <div key={i}>{line}</div>
+                        })}
+                      </div>
+                      
+                      <p className="text-xs mt-2 opacity-70">
+                        {message.timestamp.toLocaleTimeString()}
+                        {hasCitations && ' • Includes web sources'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-gray-100 rounded-lg p-4">

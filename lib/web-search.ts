@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { supabaseAdmin } from '@/lib/supabase'
+import { getCachedSearch, setCachedSearch, cleanExpiredCache as cleanDbCache } from './web-search-cache'
 
 // Search result schemas
 export const searchResultSchema = z.object({
@@ -18,7 +20,8 @@ export const webSearchResponseSchema = z.object({
   results: z.array(searchResultSchema),
   totalResults: z.number(),
   searchType: z.enum(['general', 'medical', 'news', 'academic']),
-  processingTime: z.number()
+  processingTime: z.number(),
+  isCached: z.boolean().optional()
 })
 
 export type WebSearchResponse = z.infer<typeof webSearchResponseSchema>
@@ -33,11 +36,22 @@ export interface SearchOptions {
   }
   domains?: string[]
   excludeDomains?: string[]
+  userId?: string
+  sessionId?: string
 }
 
 // Cache configuration
-const CACHE_TTL = 24 * 60 * 60 * 1000 // 24 hours
-const searchCache = new Map<string, { data: WebSearchResponse; timestamp: number }>()
+const CACHE_TTL_HOURS = 24 // 24 hours
+
+// Set up automatic database cache cleanup every hour
+if (typeof global !== 'undefined' && !global.webSearchCacheCleanupInterval) {
+  global.webSearchCacheCleanupInterval = setInterval(async () => {
+    const deletedCount = await cleanDbCache()
+    if (deletedCount > 0) {
+      console.log(`Cleaned ${deletedCount} expired cache entries`)
+    }
+  }, 60 * 60 * 1000) // Run every hour
+}
 
 // Determine which API to use based on query intent
 function determineSearchProvider(query: string, searchType?: string): 'perplexity' | 'exa' {
@@ -81,46 +95,77 @@ async function searchWithPerplexity(
 ): Promise<SearchResult[]> {
   const apiKey = process.env.PERPLEXITY_API_KEY
   if (!apiKey) {
-    throw new Error('Perplexity API key not configured')
+    console.warn('Perplexity API key not configured')
+    return []
   }
 
   try {
+    // Determine the appropriate model based on search type
+    let model = 'sonar-small-online'
+    if (options.searchType === 'academic' || options.searchType === 'medical') {
+      model = 'sonar-pro'
+    } else if (options.searchType === 'news') {
+      model = 'sonar-medium-online'
+    }
+
+    const requestBody: any = {
+      model,
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a dental health information assistant focused on UK dentistry. Provide accurate, evidence-based information.'
+        },
+        {
+          role: 'user',
+          content: `Search for: ${query}`
+        }
+      ],
+      temperature: 0.2,
+      max_tokens: 2000,
+      return_search_results: true  // New field to get search results
+    }
+
+    // Add search filters if specified
+    if (options.domains && options.domains.length > 0) {
+      requestBody.search_domain_filter = options.domains
+    }
+    
+    // Add recency filter for news
+    if (options.searchType === 'news') {
+      requestBody.search_recency_filter = 'week'
+    }
+
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: 'pplx-api',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a dental health information assistant focused on UK dentistry. Return search results with citations.'
-          },
-          {
-            role: 'user',
-            content: query
-          }
-        ],
-        temperature: 0.2,
-        max_tokens: 1000,
-        return_citations: true
-      })
+      body: JSON.stringify(requestBody)
     })
 
     if (!response.ok) {
-      throw new Error(`Perplexity API error: ${response.statusText}`)
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(`Perplexity API error: ${response.status} ${response.statusText} ${JSON.stringify(errorData)}`)
     }
 
     const data = await response.json()
-    
-    // Parse Perplexity response and extract results
-    // Note: Actual implementation depends on Perplexity's response format
     const results: SearchResult[] = []
     
-    // Extract citations and format as search results
-    if (data.citations) {
+    // Extract search results from the new search_results field
+    if (data.search_results && Array.isArray(data.search_results)) {
+      data.search_results.forEach((result: any, index: number) => {
+        results.push({
+          title: result.title || `Result ${index + 1}`,
+          url: result.url || '',
+          snippet: result.snippet || result.text || '',
+          source: 'perplexity',
+          relevanceScore: result.score || (1 - index * 0.1), // Approximate score based on order
+          publishedDate: result.date || result.publishedDate
+        })
+      })
+    } else if (data.citations && Array.isArray(data.citations)) {
+      // Fallback to legacy citations field
       data.citations.forEach((citation: any, index: number) => {
         results.push({
           title: citation.title || `Result ${index + 1}`,
@@ -129,6 +174,23 @@ async function searchWithPerplexity(
           source: 'perplexity',
           relevanceScore: citation.score,
           publishedDate: citation.published_date
+        })
+      })
+    }
+
+    // If no structured results, try to extract URLs from the response content
+    if (results.length === 0 && data.choices?.[0]?.message?.content) {
+      const content = data.choices[0].message.content
+      const urlRegex = /https?:\/\/[^\s\)]+/g
+      const urls = content.match(urlRegex) || []
+      
+      urls.forEach((url: string, index: number) => {
+        results.push({
+          title: `Reference ${index + 1}`,
+          url: url.replace(/[.,;]$/, ''), // Clean trailing punctuation
+          snippet: 'Content from Perplexity search',
+          source: 'perplexity',
+          relevanceScore: 1 - index * 0.1
         })
       })
     }
@@ -147,7 +209,8 @@ async function searchWithExa(
 ): Promise<SearchResult[]> {
   const apiKey = process.env.EXA_API_KEY
   if (!apiKey) {
-    throw new Error('Exa API key not configured')
+    console.warn('Exa API key not configured')
+    return []
   }
 
   try {
@@ -155,7 +218,12 @@ async function searchWithExa(
       query,
       num_results: options.maxResults || 10,
       use_autoprompt: true,
-      type: 'neural' // Use neural search for semantic understanding
+      type: 'neural', // Use neural search for semantic understanding
+      contents: {
+        text: true,
+        highlights: true,
+        highlight_scores: true
+      }
     }
 
     // Add filters
@@ -172,6 +240,20 @@ async function searchWithExa(
       searchParams.end_published_date = options.dateRange.to.toISOString().split('T')[0]
     }
 
+    // For academic/medical searches, use specific domains
+    if (options.searchType === 'academic' || options.searchType === 'medical') {
+      searchParams.include_domains = [
+        'pubmed.ncbi.nlm.nih.gov',
+        'cochrane.org',
+        'bmj.com',
+        'thelancet.com',
+        'nature.com',
+        'sciencedirect.com',
+        'nejm.org',
+        ...(options.domains || [])
+      ]
+    }
+
     const response = await fetch('https://api.exa.ai/search', {
       method: 'POST',
       headers: {
@@ -182,20 +264,43 @@ async function searchWithExa(
     })
 
     if (!response.ok) {
-      throw new Error(`Exa API error: ${response.statusText}`)
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(`Exa API error: ${response.status} ${response.statusText} ${JSON.stringify(errorData)}`)
     }
 
     const data = await response.json()
     
+    // Validate response structure
+    if (!data.results || !Array.isArray(data.results)) {
+      throw new Error('Invalid Exa API response structure')
+    }
+    
     // Format Exa results
-    const results: SearchResult[] = data.results.map((result: any) => ({
-      title: result.title,
-      url: result.url,
-      snippet: result.text || result.highlight || '',
-      source: 'exa',
-      relevanceScore: result.score,
-      publishedDate: result.published_date
-    }))
+    const results: SearchResult[] = data.results.map((result: any) => {
+      // Extract the best highlight or use text summary
+      let snippet = ''
+      if (result.highlights && result.highlights.length > 0) {
+        // Use the highlight with the highest score
+        const bestHighlight = result.highlights.reduce((best: any, current: any, index: number) => {
+          const currentScore = result.highlight_scores?.[index] || 0
+          const bestScore = result.highlight_scores?.[result.highlights.indexOf(best)] || 0
+          return currentScore > bestScore ? current : best
+        }, result.highlights[0])
+        snippet = bestHighlight
+      } else if (result.text) {
+        // Truncate text to reasonable snippet length
+        snippet = result.text.substring(0, 300) + (result.text.length > 300 ? '...' : '')
+      }
+
+      return {
+        title: result.title || 'Untitled',
+        url: result.url || '',
+        snippet,
+        source: 'exa',
+        relevanceScore: result.score || 0,
+        publishedDate: result.published_date || result.publishedDate
+      }
+    })
 
     return results
   } catch (error) {
@@ -204,18 +309,36 @@ async function searchWithExa(
   }
 }
 
-// Main search function with caching and routing
+// Main search function with database caching and routing
 export async function webSearch(
   query: string,
   options: SearchOptions = {}
 ): Promise<WebSearchResponse> {
-  // Generate cache key
-  const cacheKey = JSON.stringify({ query, options })
+  // Generate cache key (exclude user/session info from cache key)
+  const { userId, sessionId, ...cacheOptions } = options
+  const cacheKey = JSON.stringify({ query, options: cacheOptions })
   
-  // Check cache
-  const cached = searchCache.get(cacheKey)
-  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-    return cached.data
+  // Check database cache
+  const cached = await getCachedSearch(cacheKey)
+  
+  if (cached) {
+    // Track cached search if user/session provided
+    if (userId || sessionId) {
+      trackWebSearch({
+        query,
+        searchType: options.searchType || 'general',
+        provider: determineSearchProvider(query, options.searchType),
+        resultsCount: cached.results.length,
+        cached: true,
+        userId,
+        sessionId
+      }).catch(err => console.error('Failed to track cached search:', err))
+    }
+    // Mark as cached
+    return {
+      ...cached,
+      isCached: true
+    }
   }
 
   const startTime = Date.now()
@@ -238,19 +361,61 @@ export async function webSearch(
       results,
       totalResults: results.length,
       searchType: options.searchType || 'general',
-      processingTime: Date.now() - startTime
+      processingTime: Date.now() - startTime,
+      isCached: false
     }
 
-    // Cache the results
-    searchCache.set(cacheKey, {
-      data: response,
-      timestamp: Date.now()
-    })
+    // Cache the results in database
+    await setCachedSearch(cacheKey, response, provider, CACHE_TTL_HOURS)
+
+    // Track the search if user/session provided
+    if (userId || sessionId) {
+      trackWebSearch({
+        query,
+        searchType: options.searchType || 'general',
+        provider,
+        resultsCount: results.length,
+        cached: false,
+        userId,
+        sessionId
+      }).catch(err => console.error('Failed to track web search:', err))
+    }
 
     return response
   } catch (error) {
     console.error('Web search error:', error)
     throw error
+  }
+}
+
+// Helper function to track web searches
+async function trackWebSearch(params: {
+  query: string
+  searchType: string
+  provider: 'perplexity' | 'exa'
+  resultsCount: number
+  cached: boolean
+  userId?: string
+  sessionId?: string
+}) {
+  try {
+    const { error } = await supabaseAdmin
+      .from('web_searches')
+      .insert({
+        user_id: params.userId,
+        session_id: params.sessionId,
+        query: params.query,
+        search_type: params.searchType,
+        provider: params.provider,
+        results_count: params.resultsCount,
+        cached: params.cached
+      })
+    
+    if (error) {
+      console.error('Error tracking web search:', error)
+    }
+  } catch (err) {
+    console.error('Failed to track web search:', err)
   }
 }
 
@@ -281,17 +446,5 @@ export async function searchDentalNews(query: string): Promise<WebSearchResponse
   })
 }
 
-// Clear expired cache entries
-export function clearExpiredCache() {
-  const now = Date.now()
-  for (const [key, value] of searchCache.entries()) {
-    if (now - value.timestamp > CACHE_TTL) {
-      searchCache.delete(key)
-    }
-  }
-}
-
-// Clear all cache
-export function clearSearchCache() {
-  searchCache.clear()
-}
+// Export cache management functions from web-search-cache
+export { clearAllCache as clearSearchCache, getCacheStats } from './web-search-cache'

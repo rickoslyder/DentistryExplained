@@ -165,14 +165,15 @@ const chatHandler = compose(
       webSearchType
     }
 
-    // Generate AI response
+    // Generate AI response with web search
     try {
       const aiResponse = await generateAIResponse(
         message,
         conversationHistory, // Pass the conversation history without the current message
         pageContext,
         stream,
-        userContext
+        userContext,
+        { userId: userProfile.id, sessionId: chatSession.id }
       )
 
       // Handle streaming response
@@ -189,29 +190,60 @@ const chatHandler = compose(
         })
       }
 
-      // Store assistant message (non-blocking) for non-streaming responses
-      const responseContent = aiResponse as string
-      supabase
-        .from('chat_messages')
-        .insert({
-          session_id: chatSession.id,
-          role: 'assistant',
-          content: responseContent
-        })
-        .then(({ error }) => {
-          if (error) {
-            console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
+      // Handle non-streaming response
+      if (typeof aiResponse === 'string') {
+        // Legacy string response
+        const responseContent = aiResponse
+        supabase
+          .from('chat_messages')
+          .insert({
+            session_id: chatSession.id,
+            role: 'assistant',
+            content: responseContent
+          })
+          .then(({ error }) => {
+            if (error) {
+              console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
+            }
+          })
+
+        return NextResponse.json({
+          response: responseContent,
+          sessionId: chatSession.session_id
+        }, {
+          headers: {
+            'X-Session-Id': chatSession.session_id
           }
         })
+      } else if ('content' in aiResponse) {
+        // Response with search metadata
+        const { content, searchResults } = aiResponse
+        
+        // Store assistant message with metadata
+        supabase
+          .from('chat_messages')
+          .insert({
+            session_id: chatSession.id,
+            role: 'assistant',
+            content,
+            metadata: { searchResults }
+          })
+          .then(({ error }) => {
+            if (error) {
+              console.error(`[Chat ${requestId}] Failed to store assistant message:`, error)
+            }
+          })
 
-      return NextResponse.json({
-        response: responseContent,
-        sessionId: chatSession.session_id
-      }, {
-        headers: {
-          'X-Session-Id': chatSession.session_id
-        }
-      })
+        return NextResponse.json({
+          response: content,
+          sessionId: chatSession.session_id,
+          searchResults
+        }, {
+          headers: {
+            'X-Session-Id': chatSession.session_id
+          }
+        })
+      }
     } catch (error: any) {
       // Handle LiteLLM specific errors
       if (error.status === 429) {

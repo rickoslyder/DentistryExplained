@@ -1,6 +1,7 @@
 import { ChatMessage } from "@/types/database"
 import { liteLLMConfig, isLiteLLMConfigured, getModelConfig } from "@/lib/config/litellm"
 import { dentalKnowledgeBase, detectEmergency, categorizeQuery, generateSystemPrompt } from "@/lib/ai/dental-knowledge"
+import { webSearch, searchDentalResearch, searchNHSInfo, searchDentalNews, type SearchResult } from "@/lib/web-search"
 
 interface LiteLLMResponse {
   choices: Array<{
@@ -57,13 +58,86 @@ export interface UserContext {
   webSearchType?: 'smart' | 'news' | 'research' | 'nhs'
 }
 
+// Helper function to determine if a query needs web search
+function shouldPerformWebSearch(message: string, webSearchEnabled?: boolean): boolean {
+  if (!webSearchEnabled) return false
+  
+  const lowerMessage = message.toLowerCase()
+  const webSearchTriggers = [
+    'price', 'cost', 'how much',
+    'latest', 'recent', 'news', 'update',
+    'near me', 'nearby', 'local',
+    'nhs', 'band', 'charges',
+    'research', 'study', 'evidence',
+    'current', '2025', '2024',
+    'compare', 'versus', 'vs',
+    'dentist in', 'dental practice'
+  ]
+  
+  return webSearchTriggers.some(trigger => lowerMessage.includes(trigger))
+}
+
+// Helper function to perform contextual web search
+async function performContextualWebSearch(
+  query: string, 
+  searchType: 'smart' | 'news' | 'research' | 'nhs' = 'smart',
+  sessionInfo?: { userId?: string; sessionId?: string }
+): Promise<{ results: SearchResult[], isCached?: boolean }> {
+  try {
+    const searchOptions = { 
+      maxResults: 5,
+      userId: sessionInfo?.userId,
+      sessionId: sessionInfo?.sessionId
+    }
+    
+    let response
+    switch (searchType) {
+      case 'news':
+        response = await searchDentalNews(query)
+        break
+      case 'research':
+        response = await searchDentalResearch(query)
+        break
+      case 'nhs':
+        response = await searchNHSInfo(query)
+        break
+      case 'smart':
+      default:
+        // Let the web search service determine the best approach
+        response = await webSearch(query, searchOptions)
+        break
+    }
+    
+    return {
+      results: response.results,
+      isCached: response.isCached
+    }
+  } catch (error) {
+    console.error('Web search failed:', error)
+    return { results: [] }
+  }
+}
+
+export interface AIResponseWithSearch {
+  content: string
+  searchResults?: {
+    results: SearchResult[]
+    provider: 'perplexity' | 'exa'
+    searchType: 'smart' | 'news' | 'research' | 'nhs'
+    isCached: boolean
+    searchTime?: number
+    query: string
+  }
+}
+
 export async function generateAIResponse(
   message: string,
   chatHistory: ChatMessage[] = [],
   pageContext?: DentalContext,
   stream: boolean = false,
-  userContext?: UserContext
-): Promise<string | ReadableStream> {
+  userContext?: UserContext,
+  sessionInfo?: { userId?: string; sessionId?: string }
+): Promise<string | ReadableStream | AIResponseWithSearch> {
   // Check if LiteLLM is configured
   if (!isLiteLLMConfigured()) {
     return generateFallbackResponse(message, pageContext)
@@ -127,17 +201,53 @@ Provide additional context, examples, and explanations to help the user understa
       })
     }
     
-    // Add web search context if enabled
-    if (userContext.webSearchEnabled) {
+    // Perform web search if enabled and needed
+    let searchResults: SearchResult[] = []
+    let searchError: string | null = null
+    let searchMetadata: AIResponseWithSearch['searchResults'] | undefined
+    
+    if (shouldPerformWebSearch(message, userContext?.webSearchEnabled)) {
+      const searchStartTime = Date.now()
+      try {
+        const searchResponse = await performContextualWebSearch(message, userContext?.webSearchType, sessionInfo)
+        searchResults = searchResponse.results
+        
+        if (searchResults.length > 0) {
+          // Store search metadata for response
+          searchMetadata = {
+            results: searchResults,
+            provider: determineSearchProvider(message, userContext?.webSearchType),
+            searchType: userContext?.webSearchType || 'smart',
+            isCached: searchResponse.isCached || false,
+            searchTime: Date.now() - searchStartTime,
+            query: message
+          }
+          
+          // Add search results to context
+          const searchContext = searchResults.map((result, index) => 
+            `[${index + 1}] ${result.title}\n${result.snippet}\nSource: ${result.url}`
+          ).join('\n\n')
+          
+          messages.push({
+            role: "system",
+            content: `Web search results for the user's query:\n\n${searchContext}\n\nUse these search results to provide accurate, up-to-date information. Always cite sources when using information from these results.`
+          })
+        } else {
+          // No results found
+          searchError = 'No relevant web search results found'
+        }
+      } catch (error) {
+        console.error('Web search error in AI response:', error)
+        searchError = 'Web search temporarily unavailable'
+        // Continue without search results rather than failing entirely
+      }
+    }
+    
+    // Add search error context if applicable
+    if (searchError && userContext?.webSearchEnabled) {
       messages.push({
         role: "system",
-        content: `Web search is enabled (${userContext.webSearchType} mode). You may search for current information when needed:
-- 'news' mode: Search for latest dental news and updates
-- 'research' mode: Search for academic papers and studies
-- 'nhs' mode: Search NHS and UK government sites
-- 'smart' mode: Automatically determine the best search type
-
-When you need current information (prices, news, research), indicate that you're searching and provide results with citations.`
+        content: `Note: ${searchError}. Please provide the best answer based on your knowledge, and mention that current web information is temporarily unavailable.`
       })
     }
 
@@ -184,7 +294,17 @@ When you need current information (prices, news, research), indicate that you're
 
     // Handle regular response
     const data: LiteLLMResponse = await response.json()
-    return data.choices[0]?.message?.content || generateFallbackResponse(message, pageContext)
+    const responseContent = data.choices[0]?.message?.content || generateFallbackResponse(message, pageContext)
+    
+    // Return response with search metadata for non-streaming
+    if (searchMetadata) {
+      return {
+        content: responseContent,
+        searchResults: searchMetadata
+      }
+    }
+    
+    return responseContent
   } catch (error) {
     console.error('LiteLLM API error:', error)
     

@@ -523,8 +523,203 @@ The implementation avoids command-based interfaces in favor of visual controls, 
 4. **Spaced Repetition** - Smart quiz scheduling based on performance
 5. **Term Editing** - In-place editing of existing terms
 6. **Bulk Import/Export** - CSV/JSON import and export functionality
-7. **Web Search Results Display** - Show search results inline in chat
-8. **Search Result Caching UI** - Let users see cached vs fresh results
+7. **Search Result Caching UI** - Let users see cached vs fresh results
+
+## Web Search Integration Enhancement (July 5, 2025)
+
+### Completed Features ✅
+
+#### 1. Integrated Web Search into AI Responses
+- **Web Search Detection**: Added smart detection for queries needing current information
+- **Contextual Search**: Performs appropriate search based on query type and user selection
+- **Search Results Integration**: Web search results are now passed to LLM as context
+- **Citation Support**: AI responses include proper citations with source URLs
+
+#### 2. Enhanced Chat UI for Web Search
+- **Visual Indicators**: Shows which search type was used (news, research, NHS, smart)
+- **Citation Formatting**: URLs in responses are clickable links
+- **Search Status**: Shows when web sources were included in response
+- **Search Type Icons**: Different icons for each search mode
+
+### Technical Implementation
+
+**Key Changes:**
+- `/lib/litellm.ts`:
+  - Added `shouldPerformWebSearch()` function to detect search-worthy queries
+  - Created `performContextualWebSearch()` to execute searches
+  - Integrated search results into system context for LLM
+  
+- `/app/chat/page.tsx`:
+  - Enhanced message display with search indicators
+  - Added citation link formatting
+  - Shows search type used for transparency
+
+**Search Triggers:**
+- Price/cost queries
+- Latest news and updates
+- Local dentist searches
+- NHS information
+- Research and studies
+- Current year references
+- Comparison queries
+
+### Review
+
+The web search integration successfully enhances the AI assistant's capabilities:
+
+1. **Real-Time Information**: Users can now get current prices, news, and research
+2. **Transparent Sources**: All web-sourced information includes citations
+3. **Smart Routing**: Automatically chooses the best search API based on query
+4. **User Control**: Toggle and search type selection gives users full control
+5. **Visual Feedback**: Clear indicators show when and how web search was used
+
+The implementation maintains simplicity while adding powerful functionality. The AI now has access to current information beyond its training cutoff, making it significantly more useful for practical dental queries.
+
+## Web Search Implementation Fixes (July 5, 2025)
+
+### Completed Features ✅
+
+#### 1. Fixed API Implementations
+- **Perplexity API**: 
+  - Updated to use correct response format with `search_results` field
+  - Added support for different models (sonar-small, sonar-medium, sonar-pro)
+  - Added domain filtering and recency filters
+  - Fallback to extract URLs from response if no structured results
+  
+- **Exa API**:
+  - Enhanced with content retrieval (text, highlights, scores)
+  - Added academic domain filtering for research queries
+  - Improved snippet extraction from highlights
+  - Better error handling with validation
+
+#### 2. Added Environment Variable Documentation
+- Updated `.env.example` with:
+  - `PERPLEXITY_API_KEY` - For real-time web search
+  - `EXA_API_KEY` - For semantic/neural search
+  - Clear comments explaining each API's purpose
+
+#### 3. Implemented Web Search Tracking
+- Added tracking to `web_searches` table
+- Tracks: user_id, session_id, query, provider, results_count, cached status
+- Non-blocking async tracking to avoid slowing down searches
+- Passes session info through the entire call chain
+
+#### 4. Improved Error Handling
+- Changed API key errors from throwing to returning empty results
+- Added try-catch around web search in AI response generation
+- AI continues without search results if search fails
+- Added error context to AI system prompt when search unavailable
+- Better error messages with response details
+
+#### 5. Enhanced Cache Management
+- Added MAX_CACHE_SIZE limit (100 searches)
+- Automatic removal of oldest 20% when limit reached
+- Set up hourly automatic cleanup of expired entries
+- Prevents memory leaks from unbounded cache growth
+
+### Technical Details
+
+**Error Handling Flow**:
+1. If API key missing → Log warning, return empty results
+2. If API call fails → Log error, return empty results
+3. If search fails in AI → Add context about unavailability
+4. User still gets AI response even if search fails
+
+**Cache Strategy**:
+- 24-hour TTL for search results
+- Maximum 100 cached searches
+- LRU-style eviction when full
+- Automatic hourly cleanup
+- Cache key excludes user/session info
+
+### Review
+
+The web search implementation is now production-ready with:
+
+1. **Robust API Integration** - Both Perplexity and Exa properly parse responses
+2. **Graceful Degradation** - System continues working even without API keys
+3. **Usage Analytics** - All searches tracked for insights
+4. **Memory Safety** - Cache won't grow unbounded
+5. **Better UX** - Users get responses even when search fails
+
+The implementation follows the principle of simplicity while adding essential robustness. Web search enhances the AI assistant without being a critical dependency.
+
+## Database Cache & Search Results UI (July 5, 2025)
+
+### Completed Features ✅
+
+#### 1. Database-Based Cache System
+- **Created Cache Table**: `web_search_cache` with JSONB storage for results
+- **Indexes**: Added for cache_key, expires_at for performance
+- **RLS Policies**: Public read access, system write/delete
+- **Automatic Cleanup**: Function to delete expired entries
+- **Cache Module**: Created `web-search-cache.ts` with full CRUD operations
+
+#### 2. Enhanced Web Search with Database Cache
+- **Replaced In-Memory Cache**: Now uses persistent database storage
+- **Cache Benefits**:
+  - Survives server restarts
+  - Shared across server instances
+  - No memory limits
+  - Easy monitoring and management
+- **Cache Stats**: Function to get cache statistics
+- **Automatic Cleanup**: Hourly job to remove expired entries
+
+#### 3. Search Results UI Component
+- **SearchResults Component**: 
+  - Collapsible card showing web search results
+  - Provider badges (Perplexity/Exa)
+  - Search type indicators
+  - Cache status indicator
+  - Search time display
+  
+- **SearchResultCard**:
+  - Favicon display for each source
+  - Expandable snippets
+  - Publication dates
+  - Relevance scores
+  - External link indicators
+  
+#### 4. Chat Integration
+- **Enhanced Message Type**: Added searchResults metadata to messages
+- **AI Response Updates**: Modified to return search metadata with responses
+- **Chat UI Updates**: Shows search results above AI responses
+- **Visual Separation**: Search results in distinct cards from chat messages
+
+### Technical Implementation
+
+**Database Schema**:
+```sql
+web_search_cache (
+  cache_key TEXT UNIQUE,
+  query TEXT,
+  results JSONB,
+  expires_at TIMESTAMPTZ
+)
+```
+
+**Component Architecture**:
+```
+SearchResults (main container)
+  └── SearchResultCard (individual results)
+       ├── Favicon
+       ├── Title with link
+       ├── Domain & date
+       ├── Expandable snippet
+       └── Relevance score
+```
+
+### Review
+
+The implementation successfully replaces the in-memory cache with a robust database solution and adds a professional UI for search results:
+
+1. **Persistent Cache** - No more lost cache on restarts
+2. **Better UX** - Users can clearly see web sources used
+3. **Transparency** - Shows whether results are cached or fresh
+4. **Professional UI** - Clean, organized display of search results
+5. **Performance** - Database indexes ensure fast lookups
+
+The search results are now visually distinct from AI responses, making it clear when information comes from web sources vs the AI's knowledge.
 
 ## Term Tooltips Implementation (July 5, 2025)
 
