@@ -57,15 +57,15 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com;
-              style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev;
-              img-src 'self' data: https: blob:;
-              font-src 'self' data: https://*.clerk.accounts.dev;
-              connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com https://challenges.cloudflare.com;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://tagmanager.google.com https://*.google-analytics.com https://*.googletagmanager.com;
+              style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://tagmanager.google.com https://fonts.googleapis.com;
+              img-src 'self' data: https: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://*.doubleclick.net;
+              font-src 'self' data: https://*.clerk.accounts.dev https://fonts.gstatic.com;
+              connect-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://openai-proxy-0l7e.onrender.com wss://*.clerk.accounts.dev https://*.supabase.co wss://*.supabase.co https://api.resend.com https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.googletagmanager.com https://*.doubleclick.net https://region1.google-analytics.com;
               media-src 'self';
               object-src 'none';
               worker-src 'self' blob:;
-              frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com;
+              frame-src 'self' https://clerk.accounts.dev https://*.clerk.accounts.dev https://challenges.cloudflare.com https://www.googletagmanager.com;
               base-uri 'self';
               form-action 'self' https://*.clerk.accounts.dev;
               frame-ancestors 'none';
