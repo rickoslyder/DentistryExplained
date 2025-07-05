@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabasePublic } from '@/lib/supabase-client'
 import { Users } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 
@@ -22,13 +22,13 @@ export function RealtimePresence({ articleSlug, className = '' }: RealtimePresen
   const [channel, setChannel] = useState<any>(null)
 
   useEffect(() => {
-    if (!articleSlug) return
+    if (!articleSlug || !supabasePublic) return
 
     // Create a unique presence key
     const presenceKey = user?.id || `anon-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
     
     // Subscribe to presence channel for this article
-    const articleChannel = supabase.channel(`article:${articleSlug}`)
+    const articleChannel = supabasePublic.channel(`article:${articleSlug}`)
     
     articleChannel
       .on('presence', { event: 'sync' }, () => {
