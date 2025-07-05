@@ -42,13 +42,13 @@ export function useArticleViews(articleSlug: string) {
 
     const trackView = async () => {
       try {
-        await fetch(`/api/articles/${debouncedSlug}/views`, {
+        await fetch('/api/article-views', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'x-session-id': sessionId,
           },
-          body: JSON.stringify({ sessionId }),
+          body: JSON.stringify({ slug: debouncedSlug, sessionId }),
         })
       } catch (err) {
         console.error('Failed to track article view:', err)
@@ -65,7 +65,7 @@ export function useArticleViews(articleSlug: string) {
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`/api/articles/${debouncedSlug}/views`)
+        const response = await fetch(`/api/article-views?slug=${encodeURIComponent(debouncedSlug)}`)
         
         if (!response.ok) {
           throw new Error('Failed to fetch view statistics')

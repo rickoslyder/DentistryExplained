@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createRouteSupabaseClient, getCurrentUserProfile } from '@/lib/supabase-auth'
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function POST(request: NextRequest) {
   try {
-    const { userId } = auth()
-    const { slug } = params
+    const { userId } = await auth()
+    
+    // Get slug from request body or query params
+    const body = await request.json().catch(() => ({}))
+    const slug = body.slug || request.nextUrl.searchParams.get('slug')
     
     if (!slug) {
       return NextResponse.json({ error: 'Article slug is required' }, { status: 400 })
@@ -26,8 +26,7 @@ export async function POST(
     const forwarded = request.headers.get('x-forwarded-for')
     const ip = forwarded ? forwarded.split(',')[0] : request.ip || undefined
 
-    // Get session ID from request body or generate one
-    const body = await request.json().catch(() => ({}))
+    // Get session ID from request body or headers
     const sessionId = body.sessionId || request.headers.get('x-session-id')
 
     // Create authenticated Supabase client
@@ -59,12 +58,9 @@ export async function POST(
 }
 
 // Get article view statistics
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const { slug } = params
+    const slug = request.nextUrl.searchParams.get('slug')
     
     if (!slug) {
       return NextResponse.json({ error: 'Article slug is required' }, { status: 400 })
