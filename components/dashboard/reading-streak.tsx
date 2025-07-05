@@ -12,17 +12,34 @@ export function ReadingStreak({ userId }: ReadingStreakProps) {
   const [streak, setStreak] = useState(0)
   const [todayRead, setTodayRead] = useState(false)
   const [weekActivity, setWeekActivity] = useState<boolean[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // In a real implementation, this would fetch from the database
-    // For now, we'll use mock data
-    const mockStreak = 7
-    const mockTodayRead = true
-    const mockWeekActivity = [true, true, false, true, true, true, true] // Last 7 days
+    const fetchStreakData = async () => {
+      if (!userId) return
+      
+      try {
+        const response = await fetch('/api/reading-streak')
+        if (!response.ok) {
+          throw new Error('Failed to fetch reading streak')
+        }
+        
+        const data = await response.json()
+        setStreak(data.currentStreak)
+        setTodayRead(data.todayRead)
+        setWeekActivity(data.weekActivity)
+      } catch (error) {
+        console.error('Error fetching reading streak:', error)
+        // Use default values on error
+        setStreak(0)
+        setTodayRead(false)
+        setWeekActivity([false, false, false, false, false, false, false])
+      } finally {
+        setIsLoading(false)
+      }
+    }
     
-    setStreak(mockStreak)
-    setTodayRead(mockTodayRead)
-    setWeekActivity(mockWeekActivity)
+    fetchStreakData()
   }, [userId])
 
   const getDayName = (daysAgo: number) => {
@@ -30,6 +47,20 @@ export function ReadingStreak({ userId }: ReadingStreakProps) {
     const date = new Date()
     date.setDate(date.getDate() - daysAgo)
     return days[date.getDay()]
+  }
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Reading Streak</CardTitle>
+          <CardDescription>Loading streak data...</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-20 animate-pulse bg-gray-100 rounded"></div>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (

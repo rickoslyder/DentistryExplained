@@ -25,19 +25,6 @@ interface UserMetadata {
   onboardingCompleted?: boolean
 }
 
-// Map article slugs to metadata
-const articleMetadata: Record<string, { title: string; category: string; readTime: string }> = {
-  "dental-problems/tooth-decay": {
-    title: "Understanding Tooth Decay",
-    category: "Dental Problems",
-    readTime: "5 min"
-  },
-  "prevention/daily-oral-hygiene": {
-    title: "Daily Oral Hygiene Routine",
-    category: "Prevention",
-    readTime: "4 min"
-  }
-}
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser()
@@ -65,18 +52,13 @@ export default function DashboardPage() {
   const isProfessional = userMetadata.userType === "professional"
 
   // Format recent reading data
-  const recentArticles = recentReading.map(article => {
-    const metadata = articleMetadata[article.slug] || {
-      title: article.slug.split('/').pop()?.replace(/-/g, ' ') || 'Unknown Article',
-      category: article.slug.split('/')[0]?.replace(/-/g, ' ') || 'General',
-      readTime: "5 min"
-    }
-    return {
-      ...metadata,
-      href: `/${article.slug}`,
-      readAt: article.timeAgo
-    }
-  })
+  const recentArticles = recentReading.map(article => ({
+    title: article.title || article.slug.split('/').pop()?.replace(/-/g, ' ') || 'Unknown Article',
+    category: article.category || article.slug.split('/')[0]?.replace(/-/g, ' ') || 'General',
+    readTime: "5 min", // We don't track this yet, so use default
+    href: `/${article.slug}`,
+    readAt: article.timeAgo
+  }))
 
   const bookmarkedArticles = bookmarks.map((bookmark) => ({
     title: bookmark.title,
@@ -85,22 +67,56 @@ export default function DashboardPage() {
     href: `/${bookmark.articleSlug}`,
   }))
 
-  const recommendedArticles = [
-    {
-      title: "Gum Disease Prevention",
-      category: "Prevention",
-      readTime: "6 min",
-      href: "/prevention/gum-disease-prevention",
-      reason: "Based on your interest in General Oral Health",
-    },
-    {
-      title: "Teeth Whitening Options",
-      category: "Cosmetic Dentistry",
-      readTime: "7 min",
-      href: "/cosmetic-dentistry/teeth-whitening",
-      reason: "Popular in your area",
-    },
-  ]
+  // Generate recommendations based on reading history
+  const getRecommendedArticles = () => {
+    const recommendations = []
+    
+    // If user has read about tooth decay, recommend prevention
+    if (recentReading.some(r => r.slug.includes('tooth-decay'))) {
+      recommendations.push({
+        title: "Preventing Tooth Decay",
+        category: "Prevention",
+        readTime: "5 min",
+        href: "/prevention/preventing-tooth-decay",
+        reason: "Related to your recent reading on tooth decay",
+      })
+    }
+    
+    // If user has read prevention articles, recommend treatments
+    if (recentReading.some(r => r.category === 'prevention')) {
+      recommendations.push({
+        title: "Common Dental Treatments",
+        category: "Treatments",
+        readTime: "6 min",
+        href: "/treatments/common-procedures",
+        reason: "Expand your knowledge on dental treatments",
+      })
+    }
+    
+    // Default recommendations if no history
+    if (recommendations.length === 0) {
+      recommendations.push(
+        {
+          title: "Daily Oral Hygiene Guide",
+          category: "Prevention",
+          readTime: "4 min",
+          href: "/prevention/daily-oral-hygiene",
+          reason: "Essential for everyone",
+        },
+        {
+          title: "Understanding Dental Problems",
+          category: "Dental Problems",
+          readTime: "5 min",
+          href: "/dental-problems",
+          reason: "Popular starting point",
+        }
+      )
+    }
+    
+    return recommendations.slice(0, 2) // Return max 2 recommendations
+  }
+  
+  const recommendedArticles = getRecommendedArticles()
 
   // Format reading time
   const formatReadingTime = (minutes: number) => {
@@ -233,8 +249,8 @@ export default function DashboardPage() {
                   <div className="flex items-center">
                     <TrendingUp className="w-8 h-8 text-purple-600" />
                     <div className="ml-4">
-                      <p className="text-2xl font-bold">{stats.progress}%</p>
-                      <p className="text-sm text-gray-600">Progress</p>
+                      <p className="text-2xl font-bold">{stats.currentStreak || 0}</p>
+                      <p className="text-sm text-gray-600">Day Streak</p>
                     </div>
                   </div>
                 </CardContent>

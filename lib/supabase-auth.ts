@@ -17,18 +17,22 @@ export async function createServerSupabaseClient() {
     
     // Get the Clerk session token - this might fail if template isn't configured
     const token = await getToken({ template: 'supabase' }).catch((error) => {
-      console.warn(
-        'Failed to get Clerk JWT token. Make sure the "supabase" JWT template is configured in your Clerk dashboard.',
-        'Visit: https://dashboard.clerk.com/apps/[YOUR_APP_ID]/jwt-templates',
-        'Error:', error.message
+      console.error(
+        '[createServerSupabaseClient] Failed to get Clerk JWT token.',
+        '\nMake sure the "supabase" JWT template is configured in your Clerk dashboard.',
+        '\nVisit: https://dashboard.clerk.com/apps/[YOUR_APP_ID]/jwt-templates',
+        '\nError:', error.message
       )
       return null
     })
     
     if (!token) {
+      console.warn('[createServerSupabaseClient] No JWT token available, returning anonymous client')
       // Return a client without custom auth if no token
       return createClient<Database>(supabaseUrl, supabaseAnonKey)
     }
+    
+    console.log('[createServerSupabaseClient] Successfully got JWT token')
     
     // Create a client with the Clerk token
     return createClient<Database>(supabaseUrl, supabaseAnonKey, {
@@ -54,14 +58,7 @@ export async function createRouteSupabaseClient() {
     const { getToken } = await auth()
     
     // Get the Clerk session token - this might fail if template isn't configured
-    const token = await getToken({ template: 'supabase' }).catch((error) => {
-      console.warn(
-        'Failed to get Clerk JWT token. Make sure the "supabase" JWT template is configured in your Clerk dashboard.',
-        'Visit: https://dashboard.clerk.com/apps/[YOUR_APP_ID]/jwt-templates',
-        'Error:', error.message
-      )
-      return null
-    })
+    const token = await getToken({ template: 'supabase' }).catch(() => null)
     
     if (!token) {
       // Return a client without custom auth if no token
@@ -78,7 +75,6 @@ export async function createRouteSupabaseClient() {
     })
   } catch (error) {
     // If auth fails entirely, return anonymous client
-    console.warn('Auth failed in createRouteSupabaseClient:', error)
     return createClient<Database>(supabaseUrl, supabaseAnonKey)
   }
 }
@@ -87,23 +83,30 @@ export async function createRouteSupabaseClient() {
  * Get the current user's profile from Supabase using Clerk ID
  */
 export async function getCurrentUserProfile() {
-  const { userId } = await auth()
-  
-  if (!userId) {
-    return null
-  }
-  
-  const supabase = await createServerSupabaseClient()
-  
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('clerk_id', userId)
-    .single()
-  
-  if (error) {
-    // If profile doesn't exist, create it
-    if (error.code === 'PGRST116') {
+  try {
+    const { userId } = await auth()
+    
+    if (!userId) {
+      console.log('[getCurrentUserProfile] No userId from Clerk auth')
+      return null
+    }
+    
+    console.log('[getCurrentUserProfile] Clerk userId:', userId)
+    
+    const supabase = await createServerSupabaseClient()
+    
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('clerk_id', userId)
+      .single()
+    
+    if (error) {
+      console.error('[getCurrentUserProfile] Error fetching profile:', error.code, error.message)
+      // Error fetching profile
+      
+      // If profile doesn't exist, create it
+      if (error.code === 'PGRST116') {
       const user = await currentUser()
       if (!user) {
         return null
@@ -136,24 +139,14 @@ export async function getCurrentUserProfile() {
             return toUserProfile(existingProfile)
           }
           
-          console.error('Failed to fetch existing profile after duplicate key error:', fetchError)
+          // Failed to fetch existing profile after duplicate key error
         }
         
-        // Log specific error types for better debugging
+        // Handle specific error types
         if (createError.code === '42501') {
-          console.error(
-            'Row Level Security (RLS) policy violation when creating user profile.',
-            'Make sure the service role key is being used for profile creation.',
-            createError
-          )
+          // RLS policy violation
         } else if (createError.code === 'PGRST204') {
-          console.error(
-            'Database schema mismatch. The profiles table may be missing required columns.',
-            'Required columns: clerk_id, email, user_type, first_name, last_name, avatar_url',
-            createError
-          )
-        } else {
-          console.error('Error creating user profile:', createError)
+          // Database schema mismatch
         }
         
         return null
@@ -162,9 +155,14 @@ export async function getCurrentUserProfile() {
       return toUserProfile(newProfile)
     }
     
-    console.error('Error fetching user profile:', error)
+    // Error fetching user profile
     return null
   }
   
+  console.log('[getCurrentUserProfile] Successfully fetched profile:', data.id)
   return toUserProfile(data)
+  } catch (error) {
+    console.error('[getCurrentUserProfile] Unexpected error:', error)
+    return null
+  }
 }

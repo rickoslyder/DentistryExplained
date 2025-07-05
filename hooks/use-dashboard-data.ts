@@ -7,12 +7,16 @@ interface DashboardStats {
   articlesRead: number
   readingTimeMinutes: number
   bookmarksCount: number
+  articlesCompleted: number
+  currentStreak: number
   progress: number
 }
 
 interface RecentArticle {
   slug: string
-  viewedAt: Date
+  title: string | null
+  category: string | null
+  lastReadAt: string
   timeAgo: string
 }
 
@@ -29,6 +33,8 @@ export function useDashboardData() {
     articlesRead: 0,
     readingTimeMinutes: 0,
     bookmarksCount: 0,
+    articlesCompleted: 0,
+    currentStreak: 0,
     progress: 0
   })
   const [recentReading, setRecentReading] = useState<RecentArticle[]>([])
@@ -46,43 +52,41 @@ export function useDashboardData() {
 
     setIsLoading(true)
     try {
-      // For now, we'll use mock data since we don't have server-side API endpoints for these
-      // In a real implementation, you'd create API routes that call the dashboard-data functions
+      // Fetch real dashboard stats from API
+      const response = await fetch('/api/dashboard/stats')
       
-      // Mock stats
-      setStats({
-        articlesRead: 12,
-        readingTimeMinutes: 135, // 2h 15m
-        bookmarksCount: 5,
-        progress: 85
-      })
+      if (!response.ok) {
+        throw new Error('Failed to fetch dashboard stats')
+      }
 
-      // Mock recent reading
-      setRecentReading([
-        {
-          slug: "dental-problems/tooth-decay",
-          viewedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-          timeAgo: "2 days ago"
-        },
-        {
-          slug: "prevention/daily-oral-hygiene",
-          viewedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-          timeAgo: "1 week ago"
-        }
-      ])
-
-      // Mock professional stats if user is professional
-      const userMetadata = user.unsafeMetadata as any
-      if (userMetadata?.userType === 'professional') {
-        setProfessionalStats({
-          verificationStatus: userMetadata.verificationStatus || 'pending',
-          patientsEducated: 156,
-          materialsDownloaded: 23,
-          practiceViews: 89
-        })
+      const data = await response.json()
+      
+      // Set stats from API response
+      setStats(data.stats)
+      
+      // Format recent reading with time ago
+      const formattedReading = data.recentReading.map((article: any) => ({
+        ...article,
+        timeAgo: getTimeAgo(new Date(article.lastReadAt))
+      }))
+      setRecentReading(formattedReading)
+      
+      // Set professional stats if available
+      if (data.professionalStats) {
+        setProfessionalStats(data.professionalStats)
       }
     } catch (error) {
       console.error("Error fetching dashboard data:", error)
+      // Fallback to empty data on error
+      setStats({
+        articlesRead: 0,
+        readingTimeMinutes: 0,
+        bookmarksCount: 0,
+        articlesCompleted: 0,
+        currentStreak: 0,
+        progress: 0
+      })
+      setRecentReading([])
     } finally {
       setIsLoading(false)
     }
@@ -95,4 +99,25 @@ export function useDashboardData() {
     isLoading,
     refetch: fetchDashboardData
   }
+}
+
+function getTimeAgo(date: Date): string {
+  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000)
+  
+  let interval = seconds / 31536000
+  if (interval > 1) return Math.floor(interval) + " years ago"
+  
+  interval = seconds / 2592000
+  if (interval > 1) return Math.floor(interval) + " months ago"
+  
+  interval = seconds / 86400
+  if (interval > 1) return Math.floor(interval) + " days ago"
+  
+  interval = seconds / 3600
+  if (interval > 1) return Math.floor(interval) + " hours ago"
+  
+  interval = seconds / 60
+  if (interval > 1) return Math.floor(interval) + " minutes ago"
+  
+  return "just now"
 }

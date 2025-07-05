@@ -34,6 +34,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/chat",
   "/api/chat/(.*)",
   "/api/articles/(.*)/views",
+  "/api/article-views",
   "/api/webhooks/(.*)",
   "/sign-in(.*)",
   "/sign-up(.*)",
@@ -61,6 +62,11 @@ export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth()
   const userType = sessionClaims?.metadata?.userType
   const userRole = sessionClaims?.metadata?.role
+
+  // API routes handle their own authentication
+  if (req.nextUrl.pathname.startsWith('/api/')) {
+    return
+  }
 
   // Protect non-public routes - require authentication
   if (!isPublicRoute(req)) {

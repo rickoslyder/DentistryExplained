@@ -19,8 +19,17 @@ interface ProfessionalStats {
   downloadsThisMonth: number
   totalDownloads: number
   verificationStatus: string
-  verifiedSince: string
-  expiryDate?: string
+  verifiedSince: string | null
+  expiryDate?: string | null
+  practiceViews: number
+  recentDownloads: Array<{
+    name: string
+    type: string
+    downloadedAt: string
+    timeAgo: string
+  }>
+  hasPracticeListing: boolean
+  practiceName?: string | null
 }
 
 export default function ProfessionalDashboard() {
@@ -41,18 +50,32 @@ export default function ProfessionalDashboard() {
     }
 
     try {
-      const response = await fetch('/api/professional/verification')
-      const data = await response.json()
+      // First check verification status
+      const verifyResponse = await fetch('/api/professional/verification')
+      const verifyData = await verifyResponse.json()
 
-      if (data.verification?.verification_status === 'verified') {
+      if (verifyData.verification?.verification_status === 'verified') {
         setIsVerified(true)
-        setStats({
-          downloadsThisMonth: 0, // TODO: Implement download tracking
-          totalDownloads: 0,
-          verificationStatus: data.verification.verification_status,
-          verifiedSince: data.verification.verification_date,
-          expiryDate: data.verification.expiry_date,
-        })
+        
+        // Fetch professional stats
+        const statsResponse = await fetch('/api/professional/stats')
+        if (statsResponse.ok) {
+          const statsData = await statsResponse.json()
+          setStats(statsData)
+        } else {
+          // Use basic stats if stats API fails
+          setStats({
+            downloadsThisMonth: 0,
+            totalDownloads: 0,
+            verificationStatus: verifyData.verification.verification_status,
+            verifiedSince: verifyData.verification.verification_date,
+            expiryDate: verifyData.verification.expiry_date,
+            practiceViews: 0,
+            recentDownloads: [],
+            hasPracticeListing: false,
+            practiceName: null
+          })
+        }
       } else {
         router.push('/professional/verify')
       }

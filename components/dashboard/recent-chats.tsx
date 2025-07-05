@@ -25,36 +25,37 @@ export function RecentChats({ userId }: RecentChatsProps) {
 
   useEffect(() => {
     const fetchRecentChats = async () => {
+      if (!userId) return
+      
       try {
-        // In production, this would fetch from the API
-        // For now, we'll use mock data
-        const mockChats: Chat[] = [
-          {
-            id: "1",
-            preview: "How often should I visit the dentist?",
-            lastMessage: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-            messageCount: 5,
-            topic: "Dental Visits"
-          },
-          {
-            id: "2",
-            preview: "What causes tooth sensitivity?",
-            lastMessage: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-            messageCount: 8,
-            topic: "Tooth Sensitivity"
-          },
-          {
-            id: "3",
-            preview: "Tell me about teeth whitening options",
-            lastMessage: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-            messageCount: 12,
-            topic: "Cosmetic Dentistry"
-          }
-        ]
+        const response = await fetch('/api/chat/sessions?limit=3')
+        if (!response.ok) {
+          throw new Error('Failed to fetch chat sessions')
+        }
         
-        setRecentChats(mockChats)
+        const data = await response.json()
+        
+        // Transform the API data to match our component structure
+        const formattedChats: Chat[] = data.sessions.map((session: any) => {
+          // Get first message as preview or use default
+          const firstMessage = session.messages?.[0]?.content || 'New conversation'
+          const preview = firstMessage.length > 60 
+            ? firstMessage.substring(0, 60) + '...' 
+            : firstMessage
+          
+          return {
+            id: session.id,
+            preview,
+            lastMessage: new Date(session.updated_at),
+            messageCount: session.message_count || 0,
+            topic: session.topic || undefined
+          }
+        })
+        
+        setRecentChats(formattedChats)
       } catch (error) {
         console.error("Failed to fetch recent chats:", error)
+        setRecentChats([])
       } finally {
         setLoading(false)
       }

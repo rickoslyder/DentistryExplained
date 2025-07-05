@@ -31,16 +31,22 @@ export function withAuth<T = any>(
       // Check authentication
       const { userId } = await auth()
       if (!userId) {
+        console.error('[withAuth] No userId from Clerk auth')
         return ApiErrors.unauthorized()
       }
+      
+      console.log('[withAuth] Authenticated userId:', userId)
 
       // Get user profile if needed
       let userProfile: UserProfile | null = null
       if (options?.requireProfile !== false) {
         userProfile = await getCurrentUserProfile()
         if (!userProfile) {
+          console.error('[withAuth] Failed to get user profile for userId:', userId)
           return ApiErrors.notFound('User profile')
         }
+        
+        console.log('[withAuth] Got user profile:', userProfile.id)
 
         // Check role if specified
         if (options?.requireRole) {

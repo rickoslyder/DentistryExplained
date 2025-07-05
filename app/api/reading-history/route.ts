@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ApiErrors, validateRequestBody, validateQueryParams, paginationSchema, mapDatabaseError } from '@/lib/api-errors'
 import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
 import { z } from 'zod'
+import { supabaseAdmin } from '@/lib/supabase'
 
 // Schema for updating reading history
 const updateReadingHistorySchema = z.object({
@@ -30,10 +31,20 @@ const updateReadingHistoryHandler = compose(
     return validationError
   }
   
-  const { userProfile, supabase } = context
+  const { userProfile } = context
 
-  // Update reading history using the database function
-  const { error } = await supabase.rpc('update_reading_history', {
+  if (!userProfile || !userProfile.id) {
+    console.error('[reading-history POST] No user profile found')
+    return NextResponse.json(
+      { error: 'User profile not found. Please ensure you are logged in.' },
+      { status: 401 }
+    )
+  }
+
+  console.log('[reading-history POST] Updating reading history for user:', userProfile.id)
+
+  // Update reading history using the database function with admin client to bypass RLS
+  const { error } = await supabaseAdmin.rpc('update_reading_history', {
     p_user_id: userProfile.id,
     p_article_slug: params.articleSlug,
     p_article_title: params.articleTitle,
@@ -78,9 +89,9 @@ const getReadingHistoryHandler = withAuth(async (request: NextRequest, context) 
   }
   
   const { category, completed, limit, offset } = params
-  const { userProfile, supabase } = context
+  const { userProfile } = context
 
-  let query = supabase
+  let query = supabaseAdmin
     .from('reading_history')
     .select('*', { count: 'exact' })
     .eq('user_id', userProfile.id)
@@ -102,12 +113,12 @@ const getReadingHistoryHandler = withAuth(async (request: NextRequest, context) 
   }
 
   // Get reading stats
-  const { data: stats, error: statsError } = await supabase.rpc('get_reading_stats', {
+  const { data: stats, error: statsError } = await supabaseAdmin.rpc('get_reading_stats', {
     p_user_id: userProfile.id
   })
 
   if (statsError) {
-    console.error('Failed to fetch reading stats:', statsError)
+    // Failed to fetch reading stats
   }
 
   return NextResponse.json({ 
@@ -150,9 +161,9 @@ const deleteReadingHistoryHandler = compose(
   }
   
   const { articleSlug } = params
-  const { userProfile, supabase } = context
+  const { userProfile } = context
 
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('reading_history')
     .delete()
     .eq('user_id', userProfile.id)
