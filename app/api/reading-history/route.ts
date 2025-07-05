@@ -44,14 +44,6 @@ const updateReadingHistoryHandler = compose(
   })
 
   if (error) {
-    // Check if the error is because the function doesn't exist
-    if (error.code === '42883' || error.message?.includes('function') || error.message?.includes('does not exist')) {
-      console.warn('Reading history function not found. Migration may not have been run.')
-      return NextResponse.json({ 
-        success: true,
-        message: 'Reading history feature not yet available'
-      })
-    }
     return mapDatabaseError(error, 'update_reading_history', context.requestId)
   }
 
@@ -106,23 +98,6 @@ const getReadingHistoryHandler = withAuth(async (request: NextRequest, context) 
     .range(offset, offset + limit - 1)
 
   if (error) {
-    // Check if the error is because the table doesn't exist
-    if (error.code === '42P01' || error.message?.includes('relation') || error.message?.includes('does not exist')) {
-      console.warn('Reading history table not found. Migration may not have been run.')
-      return NextResponse.json({ 
-        history: [],
-        stats: {
-          total_articles_read: 0,
-          total_reading_time_minutes: 0,
-          articles_completed: 0,
-          current_streak_days: 0,
-        },
-        total: 0,
-        limit,
-        offset,
-        hasMore: false
-      })
-    }
     return mapDatabaseError(error, 'fetch_reading_history', context.requestId)
   }
 

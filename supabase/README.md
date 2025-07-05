@@ -42,7 +42,7 @@ Migrations need to be run manually in the Supabase dashboard:
 - `20250704121000_verification_storage.sql` - Storage for verification documents
 - `20250704130000_add_full_text_search.sql` - Full-text search functionality
 - `20250704140000_fix_search_function.sql` - Fixes for search function
-- `20250705000000_reading_history.sql` - Reading history tracking (NEW - NOT YET RUN IN PRODUCTION)
+- `20250705000000_reading_history.sql` - Reading history tracking
 
 ## Important Notes
 
