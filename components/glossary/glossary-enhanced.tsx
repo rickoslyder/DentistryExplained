@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,7 @@ import {
   Search, Volume2, BookOpen, Heart, AlertCircle, 
   Sparkles, TrendingUp, ChevronRight, X, Info,
   Stethoscope, Pill, Wrench, Brain, DollarSign, Baby,
-  HelpCircle, ChevronLeft
+  HelpCircle, ChevronLeft, Copy, Youtube
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -128,13 +128,26 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
   const [expandedTerm, setExpandedTerm] = useState<string | null>(null)
   const [bookmarkedTerms, setBookmarkedTerms] = useState<Set<string>>(new Set())
   const [pronouncing, setPronouncing] = useState<string | null>(null)
+  const [termOfTheDay, setTermOfTheDay] = useState<GlossaryTerm | null>(null)
 
-  // Get term of the day (changes daily)
-  const termOfTheDay = useMemo(() => {
-    const today = new Date().toDateString()
-    const index = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % featuredTerms.length
-    const termName = featuredTerms[index]
-    return terms.find(t => t.term === termName) || terms[0]
+  // Fetch term of the day from API
+  useEffect(() => {
+    fetch('/api/glossary/term-of-day')
+      .then(res => res.json())
+      .then(data => {
+        if (data.term) {
+          setTermOfTheDay(data.term)
+        }
+      })
+      .catch(err => {
+        console.error('Failed to fetch term of the day:', err)
+        // Fallback to local calculation
+        const today = new Date().toDateString()
+        const index = today.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % featuredTerms.length
+        const termName = featuredTerms[index]
+        const fallbackTerm = terms.find(t => t.term === termName) || terms[0]
+        setTermOfTheDay(fallbackTerm)
+      })
   }, [terms])
 
   // Filter terms
@@ -193,6 +206,15 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     // In real app, save to localStorage or user profile
   }
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+    // Could add toast notification here
+  }
+
+  const searchYouTube = (term: string) => {
+    window.open(`https://www.youtube.com/results?search_query=dental+${encodeURIComponent(term)}`, '_blank')
+  }
+
   // Calculate statistics
   const totalTerms = terms.length
   const basicTerms = terms.filter(t => t.difficulty === 'basic').length
@@ -241,26 +263,26 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                 <Sparkles className="h-5 w-5 text-indigo-600" />
                 <span className="text-sm font-medium text-indigo-600">Term of the Day</span>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">{termOfTheDay.term}</h2>
-              {termOfTheDay.pronunciation && (
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">{termOfTheDay?.term || 'Loading...'}</h2>
+              {termOfTheDay?.pronunciation && (
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => pronounceTerm(termOfTheDay.term, termOfTheDay.pronunciation)}
+                  onClick={() => termOfTheDay && pronounceTerm(termOfTheDay.term, termOfTheDay.pronunciation)}
                   className="mb-3 -ml-2"
                 >
                   <Volume2 className={cn(
                     "h-4 w-4 mr-1",
-                    pronouncing === termOfTheDay.term && "animate-pulse"
+                    pronouncing === termOfTheDay?.term && "animate-pulse"
                   )} />
-                  {termOfTheDay.pronunciation}
+                  {termOfTheDay?.pronunciation}
                 </Button>
               )}
-              <p className="text-gray-700 mb-4">{termOfTheDay.definition}</p>
-              {termOfTheDay.example && (
+              <p className="text-gray-700 mb-4">{termOfTheDay?.definition || 'Loading term definition...'}</p>
+              {termOfTheDay?.example && (
                 <div className="p-3 bg-white/50 rounded-lg">
                   <p className="text-sm text-gray-600">
-                    <span className="font-medium">Example:</span> {termOfTheDay.example}
+                    <span className="font-medium">Example:</span> {termOfTheDay?.example}
                   </p>
                 </div>
               )}
@@ -423,6 +445,8 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                   isBookmarked={bookmarkedTerms.has(item.term)}
                   onToggleBookmark={() => toggleBookmark(item.term)}
                   categoryConfig={categoryConfig}
+                  onCopy={copyToClipboard}
+                  onYouTube={searchYouTube}
                 />
               ))
             )}
@@ -566,6 +590,8 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                     isBookmarked={true}
                     onToggleBookmark={() => toggleBookmark(term.term)}
                     categoryConfig={categoryConfig}
+                    onCopy={copyToClipboard}
+                    onYouTube={searchYouTube}
                   />
                 )
               })}
@@ -586,7 +612,9 @@ function GlossaryTermCard({
   isPronouncing,
   isBookmarked,
   onToggleBookmark,
-  categoryConfig
+  categoryConfig,
+  onCopy,
+  onYouTube
 }: {
   term: GlossaryTerm
   isExpanded: boolean
@@ -596,6 +624,8 @@ function GlossaryTermCard({
   isBookmarked: boolean
   onToggleBookmark: () => void
   categoryConfig: typeof categoryConfig
+  onCopy: (text: string) => void
+  onYouTube: (term: string) => void
 }) {
   const config = term.category ? categoryConfig[term.category as keyof typeof categoryConfig] || {
     icon: BookOpen,
@@ -706,9 +736,36 @@ function GlossaryTermCard({
               variant="ghost"
               onClick={(e) => {
                 e.stopPropagation()
+                onCopy(term.term)
+              }}
+              className="h-8 w-8 p-0"
+              title="Copy term"
+            >
+              <Copy className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+            </Button>
+
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={(e) => {
+                e.stopPropagation()
+                onYouTube(term.term)
+              }}
+              className="h-8 w-8 p-0"
+              title="Search on YouTube"
+            >
+              <Youtube className="h-4 w-4 text-gray-400 hover:text-red-600" />
+            </Button>
+            
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={(e) => {
+                e.stopPropagation()
                 onToggleBookmark()
               }}
               className="h-8 w-8 p-0"
+              title="Bookmark term"
             >
               <Heart className={cn(
                 "h-4 w-4",
@@ -721,6 +778,7 @@ function GlossaryTermCard({
               variant="ghost"
               onClick={onToggle}
               className="h-8 w-8 p-0"
+              title="Expand/collapse"
             >
               <ChevronRight className={cn(
                 "h-4 w-4 transition-transform",

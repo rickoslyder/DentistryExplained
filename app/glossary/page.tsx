@@ -1,10 +1,26 @@
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
-import { enhancedGlossaryTerms } from "@/data/glossary-enhanced"
 import { GlossaryEnhanced } from "@/components/glossary/glossary-enhanced"
+import { createServerSupabaseClient } from "@/lib/supabase-auth"
 
-// Use enhanced glossary data if available, fallback to basic data
-const glossaryTerms = enhancedGlossaryTerms.length > 0 ? enhancedGlossaryTerms : [
+async function getGlossaryTerms() {
+  const supabase = await createServerSupabaseClient()
+  
+  const { data: terms, error } = await supabase
+    .from('glossary_terms')
+    .select('*')
+    .order('term', { ascending: true })
+  
+  if (error) {
+    console.error('Error fetching glossary terms:', error)
+    return []
+  }
+  
+  return terms || []
+}
+
+// Fallback terms if database is empty
+const fallbackTerms = [
   {
     term: "Abscess",
     definition: "A pocket of pus that forms around the root of an infected tooth or in the gums due to bacterial infection."
@@ -463,7 +479,10 @@ const glossaryTerms = enhancedGlossaryTerms.length > 0 ? enhancedGlossaryTerms :
   }
 ].sort((a, b) => a.term.localeCompare(b.term))
 
-export default function GlossaryPage() {
+export default async function GlossaryPage() {
+  const glossaryTerms = await getGlossaryTerms()
+  const terms = glossaryTerms.length > 0 ? glossaryTerms : fallbackTerms
+  
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -476,7 +495,7 @@ export default function GlossaryPage() {
           </p>
         </div>
 
-        <GlossaryEnhanced terms={glossaryTerms} />
+        <GlossaryEnhanced terms={terms} />
       </div>
       
       <Footer />

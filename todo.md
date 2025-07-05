@@ -196,3 +196,84 @@ Key improvements:
 5. **UK Focus**: Includes NHS-specific terms and UK dental practices
 
 The glossary now provides a solid foundation for patient education and can be further enhanced with visual diagrams, quiz modes, and API integration for site-wide term tooltips.
+
+## Glossary Database Migration (July 5, 2025)
+
+### Completed Tasks ✅
+
+#### 1. Database Schema Enhancement
+- Added new fields to glossary_terms table:
+  - `also_known_as` (text array) for alternative names
+  - `difficulty` (varchar) with 'basic'/'advanced' constraint
+  - `example` (text) for usage examples
+- Updated search vector function to include new fields with appropriate weights
+
+#### 2. Data Migration
+- Successfully migrated all 96 enhanced glossary terms from code to database
+- Deleted old basic terms and replaced with comprehensive dataset
+- All terms now stored with proper categories, pronunciations, and related terms
+
+#### 3. UI Enhancements
+- Added **Copy button** - allows users to copy term names to clipboard
+- Added **YouTube search button** - opens dental-specific YouTube searches
+- Both buttons have hover states and tooltips for better UX
+
+#### 4. Dynamic Term of the Day
+- Created `/api/glossary/term-of-day` endpoint
+- Uses date-based seed for consistent daily term selection
+- Glossary component fetches term dynamically on load
+- Fallback to local calculation if API fails
+
+#### 5. Database Integration
+- Updated glossary page to fetch terms from database
+- Removed dependency on hardcoded data file
+- Maintained fallback terms for empty database scenario
+- All 96 terms now served from PostgreSQL
+
+### Key Opportunities Unlocked by DB Storage
+
+1. **User Interaction Tracking** (Next Priority)
+   - Track term views, searches, and bookmarks
+   - Generate "Most Searched Terms" analytics
+   - Personalized term recommendations
+
+2. **Admin Management Interface**
+   - Add/edit/delete terms through UI
+   - No code changes needed for content updates
+   - Version history for medical accuracy
+
+3. **Cross-Content Integration**
+   - Auto-link glossary terms in articles
+   - Tooltip definitions throughout site
+   - Context-aware term suggestions
+
+4. **Learning Features**
+   - Quiz mode with random term selection
+   - Progress tracking per user
+   - Difficulty-based learning paths
+
+5. **Professional Features**
+   - Advanced terms visible only to verified professionals
+   - Clinical notes and references
+   - CPD points for term learning
+
+### Technical Implementation Details
+
+- **Migration Script**: Created `scripts/migrate-glossary-terms.ts` for data import
+- **API Routes**: 
+  - `/api/glossary` - returns all terms
+  - `/api/glossary/term-of-day` - returns daily featured term
+- **Component Updates**: Enhanced `GlossaryEnhanced` with copy/YouTube features
+- **Database**: 96 terms across 9 categories with full metadata
+
+### Review
+
+The glossary has been successfully migrated from static code to a dynamic database-driven system. This transformation enables:
+
+1. **Better User Experience**: Copy terms for sharing, search YouTube for visual learning
+2. **Dynamic Content**: Term of the Day changes automatically without code updates
+3. **Scalability**: Easy to add/modify terms through database without deployments
+4. **Analytics Ready**: Foundation laid for tracking user interactions with terms
+5. **Integration Ready**: API endpoints available for site-wide term tooltips
+
+The migration preserves all existing functionality while adding new features and setting up the infrastructure for future enhancements like user tracking, admin management, and learning paths.
