@@ -313,11 +313,62 @@ export default function EmergencyPage() {
         {/* Visual First Aid Instructions */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Visual First Aid Instructions</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            <VisualInstructions emergencyType="knocked-out-tooth" />
-            <VisualInstructions emergencyType="bleeding-control" />
-            <VisualInstructions emergencyType="cold-compress" />
-          </div>
+          
+          <Tabs defaultValue="knocked-out-tooth" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 h-auto">
+              <TabsTrigger value="knocked-out-tooth" className="flex flex-col gap-1 py-3">
+                <span className="font-semibold">Knocked-Out Tooth</span>
+                <span className="text-xs text-muted-foreground">Tooth preservation guide</span>
+              </TabsTrigger>
+              <TabsTrigger value="bleeding-control" className="flex flex-col gap-1 py-3">
+                <span className="font-semibold">Bleeding Control</span>
+                <span className="text-xs text-muted-foreground">Stop dental bleeding</span>
+              </TabsTrigger>
+              <TabsTrigger value="cold-compress" className="flex flex-col gap-1 py-3">
+                <span className="font-semibold">Cold Compress</span>
+                <span className="text-xs text-muted-foreground">Reduce swelling & pain</span>
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="knocked-out-tooth" className="mt-6">
+              <div className="space-y-4">
+                <Alert className="border-orange-200 bg-orange-50">
+                  <Clock className="h-4 w-4 text-orange-600" />
+                  <AlertTitle className="text-orange-900">Time is Critical!</AlertTitle>
+                  <AlertDescription className="text-orange-700">
+                    A knocked-out tooth can often be saved if you act within 30 minutes. Follow these steps immediately.
+                  </AlertDescription>
+                </Alert>
+                <VisualInstructions emergencyType="knocked-out-tooth" />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="bleeding-control" className="mt-6">
+              <div className="space-y-4">
+                <Alert className="border-blue-200 bg-blue-50">
+                  <AlertCircle className="h-4 w-4 text-blue-600" />
+                  <AlertTitle className="text-blue-900">Bleeding Control</AlertTitle>
+                  <AlertDescription className="text-blue-700">
+                    Follow these steps to control dental bleeding. If bleeding persists for more than 20 minutes, seek immediate medical attention.
+                  </AlertDescription>
+                </Alert>
+                <VisualInstructions emergencyType="bleeding-control" />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="cold-compress" className="mt-6">
+              <div className="space-y-4">
+                <Alert className="border-green-200 bg-green-50">
+                  <AlertCircle className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-900">Pain & Swelling Relief</AlertTitle>
+                  <AlertDescription className="text-green-700">
+                    Use a cold compress to reduce pain and swelling. Never apply ice directly to skin or teeth.
+                  </AlertDescription>
+                </Alert>
+                <VisualInstructions emergencyType="cold-compress" />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
 
         {/* Emergency Conditions */}

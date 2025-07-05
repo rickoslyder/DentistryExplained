@@ -252,6 +252,18 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
   const steps = instructionSets[emergencyType] || []
   const currentInstruction = steps[currentStep]
 
+  const titleMap: Record<string, string> = {
+    'knocked-out-tooth': 'Knocked-Out Tooth First Aid',
+    'bleeding-control': 'Dental Bleeding Control',
+    'cold-compress': 'Cold Compress Application'
+  }
+
+  const descriptionMap: Record<string, string> = {
+    'knocked-out-tooth': 'How to preserve and handle a knocked-out tooth',
+    'bleeding-control': 'Steps to control bleeding from dental injuries',
+    'cold-compress': 'Proper technique for reducing pain and swelling'
+  }
+
   const handlePrint = () => {
     window.print()
   }
@@ -265,9 +277,9 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle>Visual First Aid Guide</CardTitle>
+            <CardTitle>{titleMap[emergencyType] || 'Visual First Aid Guide'}</CardTitle>
             <CardDescription>
-              Step-by-step illustrated instructions
+              {descriptionMap[emergencyType] || 'Step-by-step illustrated instructions'}
             </CardDescription>
           </div>
           <Button variant="outline" size="sm" onClick={handlePrint}>
