@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase-auth'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { currentUser } from '@clerk/nextjs/server'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { z } from 'zod'
@@ -44,15 +44,17 @@ export async function POST(request: NextRequest) {
     
     // Store in database if enabled
     if (process.env.ENABLE_EMERGENCY_AUDIT === 'true') {
-      const supabase = createClient()
+      const supabase = await createServerSupabaseClient()
       
-      const { error } = await supabase
-        .from('emergency_audit_logs')
-        .insert(auditLog)
-      
-      if (error) {
-        console.error('Failed to store audit log:', error)
-        // Don't return error - audit logging should not fail emergency services
+      if (supabase) {
+        const { error } = await supabase
+          .from('emergency_audit_logs')
+          .insert(auditLog)
+        
+        if (error) {
+          console.error('Failed to store audit log:', error)
+          // Don't return error - audit logging should not fail emergency services
+        }
       }
     }
     
@@ -93,7 +95,11 @@ export async function GET(request: NextRequest) {
     const startDate = searchParams.get('start_date')
     const endDate = searchParams.get('end_date')
     
-    const supabase = createClient()
+    const supabase = await createServerSupabaseClient()
+    
+    if (!supabase) {
+      return ApiErrors.internal(new Error('Database connection failed'), 'Failed to connect to database', requestId)
+    }
     
     let query = supabase
       .from('emergency_audit_logs')

@@ -525,6 +525,62 @@ The implementation avoids command-based interfaces in favor of visual controls, 
 6. **Bulk Import/Export** - CSV/JSON import and export functionality
 7. **Search Result Caching UI** - Let users see cached vs fresh results
 
+## Perplexity-Style Citations Implementation (July 5, 2025)
+
+### Completed Features ✅
+
+#### 1. Citation Processing System
+- Created `citation-processor.ts` to analyze AI responses and match with search results
+- Detects source usage through:
+  - Direct URL mentions
+  - Domain references
+  - Title matches
+  - Semantic content overlap (30% keyword threshold)
+- Automatically adds numbered citations [1], [2], etc.
+
+#### 2. Citation UI Components
+- **CitationTooltip**: Radix UI tooltip showing source preview on hover
+  - Displays title, domain, date, and snippet
+  - Shows relevance score with visual progress bar
+  - Direct link to source with external icon
+- **MessageWithCitations**: Renders AI responses with inline citations
+  - Replaces citation numbers with interactive tooltips
+  - Shows source list at message bottom
+  - Handles legacy URL-style citations as fallback
+
+#### 3. Integration with Chat System
+- Updated `litellm.ts` to process citations after AI response
+- Modified chat API to include citations in response
+- Enhanced chat UI to use citation components
+- Preserved backward compatibility with old citation format
+
+### Technical Implementation
+
+**Citation Detection Algorithm:**
+1. Pattern matching for URLs, domains, and titles
+2. Keyword extraction and overlap calculation
+3. Semantic relevance scoring
+4. Automatic citation insertion at relevant points
+
+**UI Features:**
+- Hover tooltips with source previews
+- Numbered inline citations [1], [2], etc.
+- Source list with clickable links
+- Visual relevance indicators
+- Responsive design
+
+### Review
+
+The citation system successfully brings Perplexity-style inline citations to the dental AI assistant:
+
+1. **Better Attribution** - Clear indication of information sources
+2. **Enhanced Trust** - Users can verify AI claims with original sources
+3. **Improved UX** - Hover previews provide context without leaving chat
+4. **Clean Integration** - Works seamlessly with existing search system
+5. **Professional Appearance** - Matches industry-leading citation standards
+
+The implementation prioritizes user experience with intuitive hover interactions and clear visual design while maintaining technical robustness through semantic matching and fallback handling.
+
 ## Web Search Integration Enhancement (July 5, 2025)
 
 ### Completed Features ✅

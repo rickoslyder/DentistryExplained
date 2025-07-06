@@ -10,8 +10,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { MessageSquare, Send, Loader2, Globe, FileText, Newspaper, Search } from 'lucide-react'
 import { ChatSearchToggle } from '@/components/chat/chat-search-toggle'
 import { SearchResults } from '@/components/chat/search-results'
+import { MessageWithCitations } from '@/components/chat/message-with-citations'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import type { Citation } from '@/lib/citation-processor'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -25,6 +27,7 @@ interface Message {
     searchTime?: number
     query: string
   }
+  citations?: Citation[]
 }
 
 export default function ChatPage() {
@@ -103,7 +106,8 @@ export default function ChatPage() {
         role: 'assistant',
         content: data.response || data.content,
         timestamp: new Date(),
-        searchResults: data.searchResults
+        searchResults: data.searchResults,
+        citations: data.citations
       }
 
       setMessages(prev => [...prev, assistantMessage])
@@ -163,30 +167,37 @@ export default function ChatPage() {
                           : 'bg-gray-100 text-gray-900'
                       )}
                     >
-                      {/* Message content with proper formatting */}
-                      <div className="whitespace-pre-wrap">
-                        {message.content.split('\n').map((line, i) => {
-                          // Format citations as links
-                          if (line.includes('Source:') && line.includes('http')) {
-                            const urlMatch = line.match(/https?:\/\/[^\s]+/)
-                            if (urlMatch) {
-                              return (
-                                <div key={i} className="text-xs mt-1">
-                                  <a 
-                                    href={urlMatch[0]} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 hover:underline"
-                                  >
-                                    {line}
-                                  </a>
-                                </div>
-                              )
+                      {/* Message content with citations */}
+                      {message.role === 'assistant' && message.citations && message.citations.length > 0 ? (
+                        <MessageWithCitations 
+                          content={message.content} 
+                          citations={message.citations}
+                        />
+                      ) : (
+                        <div className="whitespace-pre-wrap">
+                          {message.content.split('\n').map((line, i) => {
+                            // Format old-style citations as links (fallback)
+                            if (line.includes('Source:') && line.includes('http')) {
+                              const urlMatch = line.match(/https?:\/\/[^\s]+/)
+                              if (urlMatch) {
+                                return (
+                                  <div key={i} className="text-xs mt-1">
+                                    <a 
+                                      href={urlMatch[0]} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="text-blue-600 hover:underline"
+                                    >
+                                      {line}
+                                    </a>
+                                  </div>
+                                )
+                              }
                             }
-                          }
-                          return <div key={i}>{line}</div>
-                        })}
-                      </div>
+                            return <div key={i}>{line}</div>
+                          })}
+                        </div>
+                      )}
                       
                       <p className="text-xs mt-2 opacity-70">
                         {message.timestamp.toLocaleTimeString()}

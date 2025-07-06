@@ -2,6 +2,8 @@ import { ChatMessage } from "@/types/database"
 import { liteLLMConfig, isLiteLLMConfigured, getModelConfig } from "@/lib/config/litellm"
 import { dentalKnowledgeBase, detectEmergency, categorizeQuery, generateSystemPrompt } from "@/lib/ai/dental-knowledge"
 import { webSearch, searchDentalResearch, searchNHSInfo, searchDentalNews, type SearchResult } from "@/lib/web-search"
+import { processCitations } from "@/lib/citation-processor"
+import type { Citation } from "@/lib/citation-processor"
 
 interface LiteLLMResponse {
   choices: Array<{
@@ -118,6 +120,30 @@ async function performContextualWebSearch(
   }
 }
 
+// Helper function to determine search provider
+function determineSearchProvider(query: string, searchType?: string): 'perplexity' | 'exa' {
+  const lowerQuery = query.toLowerCase()
+  
+  // If search type is specified, use appropriate provider
+  if (searchType === 'research') {
+    return 'exa'
+  }
+  if (searchType === 'news' || searchType === 'nhs') {
+    return 'perplexity'
+  }
+  
+  // Smart routing based on query content
+  if (lowerQuery.includes('price') || lowerQuery.includes('nhs') || lowerQuery.includes('news') || lowerQuery.includes('near me')) {
+    return 'perplexity'
+  }
+  if (lowerQuery.includes('research') || lowerQuery.includes('study') || lowerQuery.includes('evidence')) {
+    return 'exa'
+  }
+  
+  // Default to perplexity for general queries
+  return 'perplexity'
+}
+
 export interface AIResponseWithSearch {
   content: string
   searchResults?: {
@@ -128,6 +154,7 @@ export interface AIResponseWithSearch {
     searchTime?: number
     query: string
   }
+  citations?: Citation[]
 }
 
 export async function generateAIResponse(
@@ -230,7 +257,7 @@ Provide additional context, examples, and explanations to help the user understa
           
           messages.push({
             role: "system",
-            content: `Web search results for the user's query:\n\n${searchContext}\n\nUse these search results to provide accurate, up-to-date information. Always cite sources when using information from these results.`
+            content: `Web search results for the user's query:\n\n${searchContext}\n\nIMPORTANT: When using information from these search results, you MUST cite your sources. Reference specific sources by mentioning the domain name, article title, or direct URL when you use information from them. This allows proper citation tracking.`
           })
         } else {
           // No results found
@@ -296,15 +323,26 @@ Provide additional context, examples, and explanations to help the user understa
     const data: LiteLLMResponse = await response.json()
     const responseContent = data.choices[0]?.message?.content || generateFallbackResponse(message, pageContext)
     
+    // Process citations if we have search results
+    let processedContent = responseContent
+    let citations: Citation[] = []
+    
+    if (searchMetadata && searchResults.length > 0) {
+      const processed = processCitations(responseContent, searchResults)
+      processedContent = processed.content
+      citations = processed.citations
+    }
+    
     // Return response with search metadata for non-streaming
     if (searchMetadata) {
       return {
-        content: responseContent,
-        searchResults: searchMetadata
+        content: processedContent,
+        searchResults: searchMetadata,
+        citations
       }
     }
     
-    return responseContent
+    return processedContent
   } catch (error) {
     console.error('LiteLLM API error:', error)
     

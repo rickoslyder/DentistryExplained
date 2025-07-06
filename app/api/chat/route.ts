@@ -217,7 +217,7 @@ const chatHandler = compose(
         })
       } else if ('content' in aiResponse) {
         // Response with search metadata
-        const { content, searchResults } = aiResponse
+        const { content, searchResults, citations } = aiResponse
         
         // Store assistant message with metadata
         supabase
@@ -226,7 +226,7 @@ const chatHandler = compose(
             session_id: chatSession.id,
             role: 'assistant',
             content,
-            metadata: { searchResults }
+            metadata: { searchResults, citations }
           })
           .then(({ error }) => {
             if (error) {
@@ -237,7 +237,8 @@ const chatHandler = compose(
         return NextResponse.json({
           response: content,
           sessionId: chatSession.session_id,
-          searchResults
+          searchResults,
+          citations
         }, {
           headers: {
             'X-Session-Id': chatSession.session_id

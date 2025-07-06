@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/footer"
 import { GlossaryEnhanced } from "@/components/glossary/glossary-enhanced"
 import { createServerSupabaseClient } from "@/lib/supabase-auth"
 
+export const dynamic = 'force-dynamic'
+
 async function getGlossaryTerms() {
   const supabase = await createServerSupabaseClient()
   
