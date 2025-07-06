@@ -1,0 +1,133 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
+import { ApiErrors, getRequestId } from '@/lib/api-errors'
+import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { z } from 'zod'
+
+// Schema for creating/updating email templates
+const emailTemplateSchema = z.object({
+  name: z.string().min(1).max(255),
+  description: z.string().optional(),
+  template_type: z.enum([
+    'welcome',
+    'email_verification',
+    'password_reset',
+    'professional_approved',
+    'professional_rejected',
+    'article_published',
+    'appointment_reminder',
+    'newsletter',
+    'custom'
+  ]),
+  subject: z.string().min(1).max(500),
+  body_html: z.string().min(1),
+  body_text: z.string().optional(),
+  variables: z.array(z.object({
+    name: z.string(),
+    description: z.string(),
+    required: z.boolean()
+  })).optional(),
+  is_active: z.boolean().optional()
+})
+
+// GET - List all email templates
+const getTemplatesHandler = compose(
+  withRateLimit(60000, 100),
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
+  try {
+    const supabase = context.supabase!
+    const user = context.user!
+    
+    // Check admin role
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+    
+    if (profile?.role !== 'admin') {
+      return ApiErrors.forbidden('Admin access required', requestId)
+    }
+    
+    const { searchParams } = new URL(request.url)
+    const type = searchParams.get('type')
+    const active = searchParams.get('active')
+    
+    let query = supabase
+      .from('email_templates')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (type) {
+      query = query.eq('template_type', type)
+    }
+    
+    if (active !== null) {
+      query = query.eq('is_active', active === 'true')
+    }
+    
+    const { data, error } = await query
+    
+    if (error) {
+      return ApiErrors.fromDatabaseError(error, 'get_templates', requestId)
+    }
+    
+    return NextResponse.json({ templates: data })
+  } catch (error) {
+    return ApiErrors.internal(error, 'get_templates', requestId)
+  }
+})
+
+// POST - Create new email template
+const createTemplateHandler = compose(
+  withRateLimit(60000, 20),
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
+  try {
+    const supabase = context.supabase!
+    const user = context.user!
+    
+    // Check admin role
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+    
+    if (profile?.role !== 'admin') {
+      return ApiErrors.forbidden('Admin access required', requestId)
+    }
+    
+    const body = await request.json()
+    const validatedData = emailTemplateSchema.parse(body)
+    
+    const { data, error } = await supabase
+      .from('email_templates')
+      .insert({
+        ...validatedData,
+        created_by: user.id,
+        updated_by: user.id
+      })
+      .select()
+      .single()
+    
+    if (error) {
+      return ApiErrors.fromDatabaseError(error, 'create_template', requestId)
+    }
+    
+    return NextResponse.json({ template: data }, { status: 201 })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return ApiErrors.validation(error, 'create_template', requestId)
+    }
+    return ApiErrors.internal(error, 'create_template', requestId)
+  }
+})
+
+export const GET = getTemplatesHandler
+export const POST = createTemplateHandler
