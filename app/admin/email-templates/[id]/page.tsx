@@ -37,6 +37,7 @@ import { EmailTemplateEditor } from '@/components/admin/email-template-editor'
 import { EmailTemplatePreview } from '@/components/admin/email-template-preview'
 import { EmailTemplateVariables } from '@/components/admin/email-template-variables'
 import { EmailTemplateHistory } from '@/components/admin/email-template-history'
+import { sanitizeEmailTemplate, sanitizePlainText } from '@/lib/sanitization'
 
 interface EmailTemplate {
   id: string
@@ -138,12 +139,22 @@ export default function EmailTemplateEditPage({ params }: { params: { id: string
         ? '/api/admin/email-templates'
         : `/api/admin/email-templates/${params.id}`
       
+      // Sanitize template content before saving
+      const sanitizedTemplate = {
+        ...template,
+        name: sanitizePlainText(template.name),
+        description: template.description ? sanitizePlainText(template.description) : undefined,
+        subject: sanitizePlainText(template.subject),
+        body_html: sanitizeEmailTemplate(template.body_html),
+        body_text: template.body_text ? sanitizePlainText(template.body_text) : undefined,
+      }
+      
       const response = await fetch(url, {
         method: isNew ? 'POST' : 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...template,
-          change_notes: changeNotes || undefined
+          ...sanitizedTemplate,
+          change_notes: changeNotes ? sanitizePlainText(changeNotes) : undefined
         })
       })
 

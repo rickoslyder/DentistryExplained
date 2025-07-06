@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { createServerSupabaseClient, getCurrentUserProfile } from '@/lib/supabase-auth'
-import { ApiErrors } from './api-errors'
+import { ApiErrors, getRequestId } from './api-errors'
 import { UserProfile } from '@/types/user'
+import { validateCSRF } from '@/lib/csrf'
+export { withAudit } from './api-middleware/audit'
 
 // Type for API handler with context
 export type ApiHandler<T = any> = (
@@ -107,55 +109,8 @@ export function withOptionalAuth<T = any>(
   }
 }
 
-// Rate limiting helper (basic in-memory implementation)
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
-
-export function withRateLimit(
-  windowMs: number = 60000, // 1 minute
-  maxRequests: number = 60
-) {
-  return <T extends (...args: any[]) => any>(handler: T): T => {
-    return (async (...args: Parameters<T>) => {
-      const request = args[0] as NextRequest
-      const identifier = request.headers.get('x-forwarded-for') || 
-                        request.headers.get('x-real-ip') || 
-                        'anonymous'
-
-      const now = Date.now()
-      const userLimit = rateLimitStore.get(identifier)
-
-      if (userLimit) {
-        if (userLimit.resetAt > now) {
-          if (userLimit.count >= maxRequests) {
-            const retryAfter = Math.ceil((userLimit.resetAt - now) / 1000)
-            return ApiErrors.rateLimit(retryAfter)
-          }
-          userLimit.count++
-        } else {
-          // Reset window
-          userLimit.count = 1
-          userLimit.resetAt = now + windowMs
-        }
-      } else {
-        rateLimitStore.set(identifier, {
-          count: 1,
-          resetAt: now + windowMs
-        })
-      }
-
-      // Clean up old entries periodically
-      if (rateLimitStore.size > 1000) {
-        for (const [key, value] of rateLimitStore.entries()) {
-          if (value.resetAt < now) {
-            rateLimitStore.delete(key)
-          }
-        }
-      }
-
-      return handler(...args)
-    }) as T
-  }
-}
+// Re-export rate limiting from dedicated module
+export { withRateLimit, rateLimiters, getRateLimitStats } from './rate-limiter'
 
 // Request body size limit
 export function withBodyLimit(maxSizeBytes: number = 1048576) { // 1MB default
@@ -212,6 +167,30 @@ export function withCORS(
       return response
     }) as T
   }
+}
+
+// CSRF protection middleware
+export function withCSRF<T extends (...args: any[]) => any>(handler: T): T {
+  return (async (...args: Parameters<T>) => {
+    const request = args[0] as NextRequest
+    
+    // Skip CSRF check for safe methods
+    if (['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
+      return handler(...args)
+    }
+
+    const requestId = getRequestId(request)
+    const validation = await validateCSRF(request)
+
+    if (!validation.valid) {
+      return ApiErrors.forbidden(
+        validation.error || 'CSRF validation failed',
+        requestId
+      )
+    }
+
+    return handler(...args)
+  }) as T
 }
 
 // Compose multiple middleware

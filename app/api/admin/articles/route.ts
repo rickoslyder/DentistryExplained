@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
-import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { withAuth, withCSRF, withRateLimit, withAudit, compose } from '@/lib/api-middleware'
+import { ApiErrors, getRequestId } from '@/lib/api-errors'
+import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
 
 // Article validation schema
 const articleSchema = z.object({
@@ -19,52 +20,73 @@ const articleSchema = z.object({
   allow_comments: z.boolean().optional().default(true),
 })
 
-export async function POST(request: NextRequest) {
+// POST handler with CSRF protection
+const createArticleHandler = compose(
+  withAudit({ 
+    action: 'create_article',
+    entityType: 'articles',
+    includeRequestBody: true,
+    includeResponseData: true
+  }),
+  withRateLimit(60000, 30), // 30 requests per minute
+  withCSRF,
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-    
-    const supabase = await createServerSupabaseClient()
+    const supabase = context.supabase!
+    const user = context.userProfile!
     
     // Check if user is admin/editor
     const { data: profile } = await supabase
       .from('profiles')
-      .select('id, user_type, role')
-      .eq('clerk_id', userId)
+      .select('id, role')
+      .eq('id', user.id)
       .single()
     
-    if (!profile || profile.user_type !== 'professional' || !['admin', 'editor'].includes(profile.role || '')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    if (!profile || !['admin', 'editor'].includes(profile.role || '')) {
+      return ApiErrors.forbidden('Admin or editor access required', requestId)
     }
     
     // Parse and validate request body
     const body = await request.json()
     const validatedData = articleSchema.parse(body)
     
+    // Sanitize all input data
+    const sanitizedData = {
+      ...validatedData,
+      title: sanitizePlainText(validatedData.title),
+      slug: sanitizePlainText(validatedData.slug),
+      content: sanitizeArticleContent(validatedData.content),
+      excerpt: validatedData.excerpt ? sanitizePlainText(validatedData.excerpt) : undefined,
+      tags: validatedData.tags?.map(tag => sanitizePlainText(tag)) || [],
+      meta_title: validatedData.meta_title ? sanitizePlainText(validatedData.meta_title) : undefined,
+      meta_description: validatedData.meta_description ? sanitizePlainText(validatedData.meta_description) : undefined,
+      meta_keywords: validatedData.meta_keywords?.map(kw => sanitizePlainText(kw)) || [],
+    }
+    
     // Calculate read time (rough estimate: 225 words per minute)
-    const wordCount = validatedData.content.split(/\s+/g).length
+    const wordCount = sanitizedData.content.split(/\s+/g).length
     const readTime = Math.ceil(wordCount / 225)
     
     // Insert article
     const { data: article, error } = await supabase
       .from('articles')
       .insert({
-        ...validatedData,
+        ...sanitizedData,
         author_id: profile.id,
         read_time: readTime,
-        published_at: validatedData.status === 'published' ? new Date().toISOString() : null,
+        published_at: sanitizedData.status === 'published' ? new Date().toISOString() : null,
       })
       .select()
       .single()
     
     if (error) {
-      console.error('Error creating article:', error)
-      return NextResponse.json({ error: 'Failed to create article' }, { status: 500 })
+      return ApiErrors.fromDatabaseError(error, 'create_article', requestId)
     }
     
-    // Create initial revision using the function
+    // Create initial revision
     const { error: revisionError } = await supabase.rpc('save_article_revision', {
       p_article_id: article.id,
       p_author_id: profile.id,
@@ -79,32 +101,36 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation error', details: error.errors }, { status: 400 })
+      return ApiErrors.validation(error, 'create_article', requestId)
     }
-    
-    console.error('Error in POST /api/admin/articles:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return ApiErrors.internal(error, 'create_article', requestId)
   }
-}
+})
 
-export async function GET(request: NextRequest) {
+// GET handler (no CSRF needed for GET requests)
+const getArticlesHandler = compose(
+  withAudit({ 
+    action: 'list_articles',
+    entityType: 'articles'
+  }),
+  withRateLimit(60000, 100),
+  withAuth
+)(async (request: NextRequest, context) => {
+  const requestId = getRequestId(request)
+  
   try {
-    const { userId } = await auth()
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-    
-    const supabase = await createServerSupabaseClient()
+    const supabase = context.supabase!
+    const user = context.userProfile!
     
     // Check if user has access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('user_type, role')
-      .eq('clerk_id', userId)
+      .select('role')
+      .eq('id', user.id)
       .single()
     
-    if (!profile || profile.user_type !== 'professional') {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    if (!profile || !['admin', 'editor'].includes(profile.role || '')) {
+      return ApiErrors.forbidden('Admin or editor access required', requestId)
     }
     
     // Parse query parameters
@@ -120,17 +146,19 @@ export async function GET(request: NextRequest) {
       .from('articles')
       .select(`
         *,
-        category:categories(name),
-        author:profiles!articles_author_id_fkey(full_name)
-      `)
+        category:categories(id, name, slug),
+        author:profiles(id, name, display_name)
+      `, { count: 'exact' })
     
     // Apply filters
     if (status) {
       query = query.eq('status', status)
     }
+    
     if (category) {
       query = query.eq('category_id', category)
     }
+    
     if (search) {
       query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`)
     }
@@ -140,17 +168,23 @@ export async function GET(request: NextRequest) {
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1)
     
-    const { data: articles, error } = await query
+    const { data: articles, error, count } = await query
     
     if (error) {
-      console.error('Error fetching articles:', error)
-      return NextResponse.json({ error: 'Failed to fetch articles' }, { status: 500 })
+      return ApiErrors.fromDatabaseError(error, 'get_articles', requestId)
     }
     
-    return NextResponse.json(articles)
+    return NextResponse.json({
+      articles: articles || [],
+      total: count || 0,
+      limit,
+      offset
+    })
     
   } catch (error) {
-    console.error('Error in GET /api/admin/articles:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return ApiErrors.internal(error, 'get_articles', requestId)
   }
-}
+})
+
+export const POST = createArticleHandler
+export const GET = getArticlesHandler

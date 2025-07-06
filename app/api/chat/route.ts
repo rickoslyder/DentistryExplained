@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateId } from '@/lib/utils'
 import { generateAIResponse, UserContext } from '@/lib/litellm'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { withAuth, withRateLimit, withBodyLimit, compose } from '@/lib/api-middleware'
+import { withAuth, withBodyLimit, compose } from '@/lib/api-middleware'
+import { rateLimiters } from '@/lib/rate-limiter'
 import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 import { currentUser } from '@clerk/nextjs/server'
@@ -34,13 +35,14 @@ const chatMessageSchema = z.object({
 })
 
 const chatHandler = compose(
-  withRateLimit(60000, 30), // 30 messages per minute
   withBodyLimit(1024 * 50), // 50KB limit
   withAuth
 )(async (request: NextRequest, context) => {
-  const requestId = getRequestId(request)
-  
-  try {
+  // Apply chat-specific rate limiting
+  return await rateLimiters.chat(request, async () => {
+    const requestId = getRequestId(request)
+    
+    try {
     const body = await request.json()
     
     // Validate request body
@@ -269,6 +271,7 @@ const chatHandler = compose(
     }
     return ApiErrors.internal(error, 'chat', requestId)
   }
+  })
 })
 
 export const POST = chatHandler

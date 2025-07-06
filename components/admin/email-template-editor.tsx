@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Code, FileText, Eye } from 'lucide-react'
+import { sanitizeEmailTemplate, sanitizePlainText } from '@/lib/sanitization'
 
 interface EmailTemplate {
   subject: string

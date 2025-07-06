@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { logActivity, formatResourceName, ActivityMetadata } from '@/lib/activity-logger'
+import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
 
 // Schema for article updates
 const updateArticleSchema = z.object({
@@ -92,12 +93,25 @@ export async function PUT(
     // Parse and validate request body
     const body = await request.json()
     const validatedData = updateArticleSchema.parse(body)
+    
+    // Sanitize all input data
+    const sanitizedData = {
+      ...validatedData,
+      title: sanitizePlainText(validatedData.title),
+      slug: sanitizePlainText(validatedData.slug),
+      content: sanitizeArticleContent(validatedData.content),
+      excerpt: validatedData.excerpt ? sanitizePlainText(validatedData.excerpt) : undefined,
+      tags: validatedData.tags?.map(tag => sanitizePlainText(tag)) || [],
+      meta_title: validatedData.meta_title ? sanitizePlainText(validatedData.meta_title) : undefined,
+      meta_description: validatedData.meta_description ? sanitizePlainText(validatedData.meta_description) : undefined,
+      meta_keywords: validatedData.meta_keywords?.map(kw => sanitizePlainText(kw)) || [],
+    }
 
     // Check if slug is unique (excluding current article)
     const { data: existingArticle } = await supabase
       .from('articles')
       .select('id')
-      .eq('slug', validatedData.slug)
+      .eq('slug', sanitizedData.slug)
       .neq('id', params.id)
       .single()
     
@@ -133,9 +147,9 @@ export async function PUT(
     const { data: article, error } = await supabase
       .from('articles')
       .update({
-        ...validatedData,
+        ...sanitizedData,
         updated_at: new Date().toISOString(),
-        published_at: validatedData.status === 'published' ? new Date().toISOString() : null,
+        published_at: sanitizedData.status === 'published' ? new Date().toISOString() : null,
       })
       .eq('id', params.id)
       .select()

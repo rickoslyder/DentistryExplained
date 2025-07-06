@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { withOptionalAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { withOptionalAuth, compose } from '@/lib/api-middleware'
+import { rateLimiters } from '@/lib/rate-limiter'
 import { z } from 'zod'
 import { serverAnalytics } from '@/lib/analytics-server'
 
@@ -14,12 +15,13 @@ const searchParamsSchema = z.object({
 })
 
 const searchHandler = compose(
-  withRateLimit(60000, 100), // 100 requests per minute
   withOptionalAuth
 )(async (request: NextRequest, context) => {
-  const requestId = getRequestId(request)
-  
-  try {
+  // Apply search-specific rate limiting
+  return await rateLimiters.search(request, async () => {
+    const requestId = getRequestId(request)
+    
+    try {
     const { searchParams } = new URL(request.url)
     
     // Validate query parameters
@@ -126,6 +128,7 @@ const searchHandler = compose(
     }
     return ApiErrors.internal(error, 'search', requestId)
   }
+  })
 })
 
 export const GET = searchHandler

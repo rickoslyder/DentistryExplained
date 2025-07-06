@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+import { useCSRFContext } from '@/components/providers/csrf-provider'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -36,6 +37,7 @@ import {
 import { toast } from 'sonner'
 import { validateMDX } from '@/lib/mdx'
 import { processMDXPreview } from '@/lib/mdx-utils'
+import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
 import dynamic from 'next/dynamic'
 
 // Dynamically import MDX editor to avoid SSR issues
@@ -85,6 +87,7 @@ interface ArticleEditorProps {
 export function ArticleEditor({ categories, article }: ArticleEditorProps) {
   const router = useRouter()
   const { user } = useUser()
+  const { secureRequest } = useCSRFContext()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
   
@@ -222,12 +225,24 @@ Start writing your article content here...`,
         ? `/api/admin/articles/${article.id}`
         : '/api/admin/articles'
       
-      const payload = {
+      // Sanitize content before saving
+      const sanitizedData = {
         ...formData,
-        ...(article && changeNotes ? { changeNotes } : {})
+        content: sanitizeArticleContent(formData.content),
+        title: sanitizePlainText(formData.title),
+        excerpt: formData.excerpt ? sanitizePlainText(formData.excerpt) : '',
+        meta_title: formData.meta_title ? sanitizePlainText(formData.meta_title) : '',
+        meta_description: formData.meta_description ? sanitizePlainText(formData.meta_description) : '',
+        tags: formData.tags.map(tag => sanitizePlainText(tag)),
+        meta_keywords: formData.meta_keywords.map(keyword => sanitizePlainText(keyword)),
       }
       
-      const response = await fetch(endpoint, {
+      const payload = {
+        ...sanitizedData,
+        ...(article && changeNotes ? { changeNotes: sanitizePlainText(changeNotes) } : {})
+      }
+      
+      const response = await secureRequest(endpoint, {
         method: article ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',

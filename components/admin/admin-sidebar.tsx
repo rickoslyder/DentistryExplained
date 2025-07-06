@@ -15,7 +15,9 @@ import {
   Shield,
   ArrowLeft,
   ScrollText,
-  Search
+  Search,
+  Activity,
+  Mail
 } from 'lucide-react'
 
 const navigation = [
@@ -26,8 +28,10 @@ const navigation = [
   { name: 'Media', href: '/admin/media', icon: Image },
   { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
   { name: 'Users', href: '/admin/users', icon: Users },
+  { name: 'Email Templates', href: '/admin/email-templates', icon: Mail },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart },
   { name: 'Activity Logs', href: '/admin/activity', icon: ScrollText },
+  { name: 'Monitoring', href: '/admin/monitoring', icon: Activity },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
