@@ -3,14 +3,14 @@
 ## 1. Core System Architecture and Key Workflows
 
 **Architecture Overview:**
-- Next.js 14+ App Router for frontend/backend
-- Payload CMS self-hosted for content management
+- Next.js 15.3.5 App Router for frontend/backend
+- Custom CMS built with MDX support for content management
 - Clerk for authentication and user management
 - Supabase for database, realtime features, and file storage
 - Vercel for hosting and edge functions
 
 **Key Workflows to Detail:**
-1. Content Publishing: Payload CMS → Next.js dynamic pages
+1. Content Publishing: Custom CMS → MDX processing → Next.js dynamic pages
 2. User Registration: Patient vs Professional flows with Clerk
 3. Professional Verification: GDC validation → manual approval → access unlock
 4. AI Chat: User query → context enrichment → LiteLLM proxy → response with memory
@@ -18,18 +18,18 @@
 6. Subscription: Mock Stripe flow → Clerk metadata update → feature access
 
 **Potential Challenges:**
-- Payload CMS self-hosting on Vercel (may need separate deployment)
+- MDX content rendering performance at scale
 - Syncing Clerk users with Supabase profiles
 - Realtime presence management at scale
 - Chat memory optimization for 180-day retention
 
 ## 2. Project Structure and Organization
 
-**Monorepo Considerations:**
+**Project Structure:**
 - Main app in `/app`
-- Payload CMS in `/cms` (if separate)
-- Shared types in `/packages/types`
-- UI components in `/packages/ui`
+- Admin panel in `/app/admin`
+- Shared types in `/types`
+- UI components in `/components`
 
 **Key Directories:**
 - `/app` - Next.js application
@@ -191,8 +191,8 @@ Dentistry Explained is a comprehensive dental education platform designed to be 
 ### System Architecture
 ```
 ┌─────────────────┐     ┌──────────────┐     ┌─────────────┐
-│   Next.js App   │────▶│ Payload CMS  │     │    Clerk    │
-│  (App Router)   │     │ (Self-hosted)│     │    Auth     │
+│   Next.js App   │────▶│  Custom CMS  │     │    Clerk    │
+│  (App Router)   │     │ (Admin Panel)│     │    Auth     │
 └────────┬────────┘     └──────────────┘     └──────┬──────┘
          │                                            │
          │              ┌──────────────┐              │
@@ -245,7 +245,7 @@ dentistry-explained/
 │   ├── ui/                # Shared UI components
 │   ├── types/            # Shared TypeScript types
 │   └── utils/            # Shared utilities
-├── cms/                   # Payload CMS (if separate)
+├── app/admin/            # Custom CMS admin panel
 ├── supabase/             # Supabase migrations
 └── tests/                # Test suites
 ```
@@ -256,22 +256,20 @@ dentistry-explained/
 **User Story**: As a content editor, I need to create and manage dental articles with rich media support.
 
 **Implementation Steps**:
-1. Configure Payload collections:
-   ```typescript
-   // collections/Articles.ts
-   {
-     slug: 'articles',
-     fields: [
-       { name: 'title', type: 'text', required: true },
-       { name: 'slug', type: 'text', unique: true },
-       { name: 'category', type: 'relationship', relationTo: 'categories' },
-       { name: 'content', type: 'richText' },
-       { name: 'readingLevel', type: 'select', options: ['basic', 'advanced'] },
-       { name: 'references', type: 'array', fields: [...] },
-       { name: 'lastMedicallyReviewed', type: 'date' },
-       { name: 'sensitiveContent', type: 'checkbox' }
-     ]
-   }
+1. Configure database schema:
+   ```sql
+   -- articles table
+   CREATE TABLE articles (
+     id UUID PRIMARY KEY,
+     title TEXT NOT NULL,
+     content TEXT,
+     category_id UUID REFERENCES categories(id),
+     reading_level TEXT CHECK (reading_level IN ('basic', 'advanced')),
+     status TEXT CHECK (status IN ('draft', 'published', 'archived')),
+     last_medically_reviewed TIMESTAMP,
+     sensitive_content BOOLEAN DEFAULT false,
+     created_at TIMESTAMP DEFAULT NOW()
+   );
    ```
 
 2. Implement content hierarchy with parent-child relationships
@@ -1272,7 +1270,7 @@ interface ArticlePageProps {
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  // Fetch article from Payload CMS
+  // Fetch article from database
   const article = await getArticleBySlug(params.slug);
   
   if (!article) {
