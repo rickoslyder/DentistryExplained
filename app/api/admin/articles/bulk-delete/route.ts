@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { logActivity, ActivityMetadata } from '@/lib/activity-logger'
 
 // Schema for bulk delete
 const bulkDeleteSchema = z.object({
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -33,6 +34,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { ids } = bulkDeleteSchema.parse(body)
 
+    // Get article titles before deletion for logging
+    const { data: articles } = await supabase
+      .from('articles')
+      .select('id, title')
+      .in('id', ids)
+
     // Delete articles
     const { error } = await supabase
       .from('articles')
@@ -40,6 +47,16 @@ export async function POST(request: NextRequest) {
       .in('id', ids)
     
     if (error) throw error
+
+    // Log the bulk deletion
+    await logActivity({
+      userId: profile.id,
+      action: 'bulk_delete',
+      resourceType: 'article',
+      resourceId: ids.join(','),
+      resourceName: `${ids.length} articles`,
+      metadata: ActivityMetadata.bulkDelete(ids.length, 'article') 
+    })
 
     return NextResponse.json({ 
       success: true, 

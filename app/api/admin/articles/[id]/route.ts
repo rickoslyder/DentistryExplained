@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { logActivity, formatResourceName, ActivityMetadata } from '@/lib/activity-logger'
 
 // Schema for article updates
 const updateArticleSchema = z.object({
@@ -35,7 +36,7 @@ export async function GET(
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -107,6 +108,13 @@ export async function PUT(
       )
     }
 
+    // Get original article for comparison
+    const { data: originalArticle } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('id', params.id)
+      .single()
+
     // Update article
     const { data: article, error } = await supabase
       .from('articles')
@@ -123,6 +131,19 @@ export async function PUT(
       console.error('Update error:', error)
       throw error
     }
+
+    // Log the update activity
+    await logActivity({
+      userId: profile.id,
+      action: 'update',
+      resourceType: 'article',
+      resourceId: article.id,
+      resourceName: formatResourceName('article', article),
+      metadata: ActivityMetadata.articleUpdate({
+        before: originalArticle,
+        after: article
+      })
+    })
 
     return NextResponse.json({ article })
   } catch (error) {
@@ -157,13 +178,20 @@ export async function DELETE(
     // Check admin access (only admins can delete)
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
     if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Only admins can delete articles' }, { status: 403 })
     }
+
+    // Get article details before deletion for logging
+    const { data: article } = await supabase
+      .from('articles')
+      .select('*')
+      .eq('id', params.id)
+      .single()
 
     // Delete article
     const { error } = await supabase
@@ -174,6 +202,21 @@ export async function DELETE(
     if (error) {
       console.error('Delete error:', error)
       throw error
+    }
+
+    // Log the deletion
+    if (article) {
+      await logActivity({
+        userId: profile.id,
+        action: 'delete',
+        resourceType: 'article',
+        resourceId: params.id,
+        resourceName: formatResourceName('article', article),
+        metadata: {
+          title: article.title,
+          status: article.status
+        }
+      })
     }
 
     return NextResponse.json({ success: true })

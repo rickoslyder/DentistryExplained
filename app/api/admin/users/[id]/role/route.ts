@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { logActivity, formatResourceName, ActivityMetadata } from '@/lib/activity-logger'
 
 // Schema for role updates
 const updateRoleSchema = z.object({
@@ -24,7 +25,7 @@ export async function PUT(
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -36,19 +37,22 @@ export async function PUT(
     const body = await request.json()
     const { role } = updateRoleSchema.parse(body)
 
-    // Prevent self-demotion
+    // Get current user info
     const { data: targetUser } = await supabase
       .from('profiles')
-      .select('clerk_id')
+      .select('clerk_id, role')
       .eq('id', params.id)
       .single()
     
+    // Prevent self-demotion
     if (targetUser?.clerk_id === userId && role !== 'admin') {
       return NextResponse.json(
         { error: 'You cannot demote yourself' },
         { status: 400 }
       )
     }
+
+    const originalRole = targetUser?.role || 'user'
 
     // Update user role
     const { data: updatedUser, error } = await supabase
@@ -59,6 +63,16 @@ export async function PUT(
       .single()
     
     if (error) throw error
+
+    // Log the role change
+    await logActivity({
+      userId: profile.id,
+      action: 'role_change',
+      resourceType: 'user',
+      resourceId: params.id,
+      resourceName: formatResourceName('user', updatedUser),
+      metadata: ActivityMetadata.roleChange(originalRole, role)
+    })
 
     return NextResponse.json({ user: updatedUser })
   } catch (error) {

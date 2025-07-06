@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { logActivity, formatResourceName, ActivityMetadata } from '@/lib/activity-logger'
 
 // Schema for category updates
 const updateCategorySchema = z.object({
@@ -26,7 +27,7 @@ export async function PUT(
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -53,6 +54,13 @@ export async function PUT(
       )
     }
 
+    // Get original category for comparison
+    const { data: originalCategory } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('id', params.id)
+      .single()
+
     // Update category
     const { data: category, error } = await supabase
       .from('categories')
@@ -65,6 +73,25 @@ export async function PUT(
       .single()
     
     if (error) throw error
+
+    // Log the update
+    await logActivity({
+      userId: profile.id,
+      action: 'update',
+      resourceType: 'category',
+      resourceId: category.id,
+      resourceName: formatResourceName('category', category),
+      metadata: {
+        changes: {
+          name: originalCategory?.name !== category.name 
+            ? { from: originalCategory?.name, to: category.name }
+            : undefined,
+          slug: originalCategory?.slug !== category.slug
+            ? { from: originalCategory?.slug, to: category.slug }
+            : undefined,
+        }
+      }
+    })
 
     return NextResponse.json({ category })
   } catch (error) {
@@ -99,7 +126,7 @@ export async function DELETE(
     // Check admin access (only admins can delete)
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -120,6 +147,13 @@ export async function DELETE(
       )
     }
 
+    // Get category details before deletion
+    const { data: category } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('id', params.id)
+      .single()
+
     // Delete category
     const { error } = await supabase
       .from('categories')
@@ -127,6 +161,21 @@ export async function DELETE(
       .eq('id', params.id)
     
     if (error) throw error
+
+    // Log the deletion
+    if (category) {
+      await logActivity({
+        userId: profile.id,
+        action: 'delete',
+        resourceType: 'category',
+        resourceId: params.id,
+        resourceName: formatResourceName('category', category),
+        metadata: {
+          name: category.name,
+          slug: category.slug
+        }
+      })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

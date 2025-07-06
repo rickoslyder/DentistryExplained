@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
+import { logActivity, formatResourceName } from '@/lib/activity-logger'
 
 // Schema for category creation
 const createCategorySchema = z.object({
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest) {
     // Check admin access
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('role, id')
       .eq('clerk_id', userId)
       .single()
     
@@ -125,6 +126,20 @@ export async function POST(request: NextRequest) {
       .single()
     
     if (error) throw error
+
+    // Log the creation
+    await logActivity({
+      userId: profile.id,
+      action: 'create',
+      resourceType: 'category',
+      resourceId: category.id,
+      resourceName: formatResourceName('category', category),
+      metadata: {
+        name: category.name,
+        slug: category.slug,
+        display_order: category.display_order
+      }
+    })
 
     return NextResponse.json({ category })
   } catch (error) {

@@ -13,7 +13,8 @@ import {
   Image,
   MessageSquare,
   Shield,
-  ArrowLeft
+  ArrowLeft,
+  ScrollText
 } from 'lucide-react'
 
 const navigation = [
@@ -24,6 +25,7 @@ const navigation = [
   { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
   { name: 'Users', href: '/admin/users', icon: Users },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart },
+  { name: 'Activity Logs', href: '/admin/activity', icon: ScrollText },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
