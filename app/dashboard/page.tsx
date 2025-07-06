@@ -29,12 +29,23 @@ interface UserMetadata {
 export default function DashboardPage() {
   const { user, isLoaded } = useUser()
   const [userMetadata, setUserMetadata] = useState<UserMetadata>({})
+  const [debugData, setDebugData] = useState<any>(null)
   const { bookmarks } = useBookmarks()
   const { stats, recentReading, professionalStats, isLoading: statsLoading } = useDashboardData()
 
   useEffect(() => {
     if (user?.publicMetadata) {
       setUserMetadata(user.publicMetadata as UserMetadata)
+    }
+  }, [user])
+  
+  // Fetch debug data
+  useEffect(() => {
+    if (user) {
+      fetch('/api/auth/debug')
+        .then(res => res.json())
+        .then(data => setDebugData(data))
+        .catch(err => console.error('Failed to fetch debug data:', err))
     }
   }, [user])
 
@@ -133,6 +144,31 @@ export default function DashboardPage() {
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* TEMPORARY DEBUG SECTION */}
+        {debugData && (
+          <Card className="mb-8 border-orange-200 bg-orange-50">
+            <CardHeader>
+              <CardTitle className="text-orange-800">🔍 Auth Debug Info (Temporary)</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4 font-mono text-xs">
+                <div>
+                  <strong>Middleware Check Would Pass:</strong> {debugData.checks.middlewareWouldAllow ? '✅ YES' : '❌ NO'}
+                </div>
+                <div>
+                  <strong>Layout Check Would Pass:</strong> {debugData.checks.layoutWouldAllow ? '✅ YES' : '❌ NO'}
+                </div>
+                <details>
+                  <summary className="cursor-pointer text-orange-700 hover:text-orange-900">View Full Debug Data</summary>
+                  <pre className="mt-2 p-2 bg-white rounded text-xs overflow-auto max-h-96">
+                    {JSON.stringify(debugData, null, 2)}
+                  </pre>
+                </details>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Welcome Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
