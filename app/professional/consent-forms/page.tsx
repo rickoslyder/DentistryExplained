@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { analytics } from "@/lib/analytics-enhanced"
+import { useEffect } from "react"
 
 interface ConsentForm {
   id: string
@@ -31,6 +33,13 @@ export default function ConsentFormsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [sortBy, setSortBy] = useState("popular")
+  
+  // Track page view
+  useEffect(() => {
+    analytics.track('professional_consent_forms_viewed', {
+      source: 'consent_forms_page',
+    })
+  }, [])
 
   const categories = [
     { id: "all", name: "All Categories", count: 24 },
@@ -160,6 +169,13 @@ export default function ConsentFormsPage() {
 
   const handleDownload = async (formId: string, title: string) => {
     try {
+      // Track download attempt
+      analytics.track('consent_form_download_started', {
+        form_id: formId,
+        form_title: title,
+        category: consentForms.find(f => f.id === formId)?.category,
+      })
+      
       // Get user's practice details from profile
       const response = await fetch(`/api/professional/consent-forms/download?formId=${formId}`)
       
@@ -179,14 +195,35 @@ export default function ConsentFormsPage() {
       a.click()
       document.body.removeChild(a)
       window.URL.revokeObjectURL(url)
+      
+      // Track successful download
+      analytics.track('consent_form_downloaded', {
+        form_id: formId,
+        form_title: title,
+        category: consentForms.find(f => f.id === formId)?.category,
+        file_size: blob.size,
+      })
     } catch (error) {
       console.error('Download error:', error)
+      // Track download error
+      analytics.track('consent_form_download_error', {
+        form_id: formId,
+        form_title: title,
+        error_message: error.message,
+      })
       // In production, show toast notification
     }
   }
 
   const handlePreview = async (formId: string, title: string) => {
     try {
+      // Track preview attempt
+      analytics.track('consent_form_preview_opened', {
+        form_id: formId,
+        form_title: title,
+        category: consentForms.find(f => f.id === formId)?.category,
+      })
+      
       // Generate PDF and open in new tab
       const response = await fetch(`/api/professional/consent-forms/download?formId=${formId}&preview=true`)
       
@@ -202,6 +239,12 @@ export default function ConsentFormsPage() {
       setTimeout(() => window.URL.revokeObjectURL(url), 60000)
     } catch (error) {
       console.error('Preview error:', error)
+      // Track preview error
+      analytics.track('consent_form_preview_error', {
+        form_id: formId,
+        form_title: title,
+        error_message: error.message,
+      })
       // In production, show toast notification
     }
   }
@@ -229,13 +272,31 @@ export default function ConsentFormsPage() {
                 <Input
                   placeholder="Search consent forms..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    // Track search after debounce
+                    if (e.target.value) {
+                      setTimeout(() => {
+                        analytics.track('consent_form_search', {
+                          search_query: e.target.value,
+                          results_count: filteredForms.length,
+                        })
+                      }, 500)
+                    }
+                  }}
                   className="pl-10"
                 />
               </div>
             </div>
             <div className="flex gap-4">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <Select value={selectedCategory} onValueChange={(value) => {
+                setSelectedCategory(value)
+                analytics.track('consent_form_filter_changed', {
+                  filter_type: 'category',
+                  filter_value: value,
+                  results_count: filteredForms.length,
+                })
+              }}>
                 <SelectTrigger className="w-48">
                   <SelectValue />
                 </SelectTrigger>

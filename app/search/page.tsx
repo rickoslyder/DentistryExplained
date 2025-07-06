@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { useDebounce } from 'use-debounce'
 import { usePagination } from '@/hooks/use-pagination'
 import { PaginationWrapper, PaginationInfo } from '@/components/ui/pagination-wrapper'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface SearchResult {
   id: string
@@ -90,6 +91,11 @@ export default function SearchPage() {
         setSuggestions(data.suggestions || [])
         setTotalResults(data.totalResults || 0)
         setHasMore(data.hasMore || false)
+        
+        // Track search on results page
+        if (data.results && debouncedQuery) {
+          analytics.trackSearch(debouncedQuery, data.results.length)
+        }
       } catch (error) {
         console.error('Search error:', error)
         setResults([])
@@ -186,7 +192,14 @@ export default function SearchPage() {
                           key={idx}
                           variant="ghost"
                           size="sm"
-                          onClick={() => setQuery(suggestion.suggestion)}
+                          onClick={() => {
+                            setQuery(suggestion.suggestion)
+                            analytics.track('search_suggestion_click', {
+                              original_query: debouncedQuery,
+                              suggestion: suggestion.suggestion,
+                              source: suggestion.source,
+                            })
+                          }}
                           className="text-xs"
                         >
                           {suggestion.suggestion}
@@ -196,8 +209,23 @@ export default function SearchPage() {
                   </div>
                 )}
               </div>
-              {results.map((result) => (
-                <Link key={result.id} href={result.url}>
+              {results.map((result, index) => (
+                <Link 
+                  key={result.id} 
+                  href={result.url}
+                  onClick={() => {
+                    // Track search result click
+                    analytics.track('search_result_click', {
+                      search_query: debouncedQuery,
+                      result_id: result.id,
+                      result_title: result.title,
+                      result_type: result.type,
+                      result_category: result.category,
+                      result_position: index + 1,
+                      search_page: pagination.currentPage,
+                    })
+                  }}
+                >
                   <Card className="hover:shadow-lg transition-shadow cursor-pointer">
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between">
@@ -287,7 +315,13 @@ export default function SearchPage() {
                   key={term}
                   variant="outline"
                   size="sm"
-                  onClick={() => setQuery(term)}
+                  onClick={() => {
+                    setQuery(term)
+                    analytics.track('popular_search_click', {
+                      search_term: term,
+                      source: 'search_page',
+                    })
+                  }}
                   className="bg-transparent"
                 >
                   {term}

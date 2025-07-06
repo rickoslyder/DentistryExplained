@@ -23,6 +23,7 @@ import { AccessibilityControls } from "@/components/emergency/accessibility-cont
 import { OfflineIndicator } from "@/components/emergency/offline-indicator"
 import { VisualInstructions } from "@/components/emergency/visual-instructions"
 import { EmergencyVisualIdentification } from "@/components/emergency/emergency-visual-identification"
+import { analytics } from "@/lib/analytics-enhanced"
 
 const emergencyConditions = [
   {
@@ -133,10 +134,22 @@ export default function EmergencyPage() {
   useEffect(() => {
     // Log emergency page view
     EmergencyLogger.pageView('emergency-guide')
+    
+    // Track analytics
+    analytics.track('emergency_guide_viewed', {
+      initial_tab: selectedEmergency,
+    })
   }, [])
 
   const handleEmergencyCall = (type: '999' | '111' | 'dentist', reason?: string) => {
     EmergencyLogger.emergencyContact(type, reason)
+    
+    // Track emergency contact
+    analytics.track('emergency_contact_initiated', {
+      contact_type: type,
+      reason: reason || 'unknown',
+      current_tab: selectedEmergency,
+    })
   }
 
   return (

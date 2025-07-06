@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { GlossaryProvider } from "@/contexts/glossary-provider"
+import { ConsentProvider } from "@/components/consent/consent-provider"
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -31,9 +33,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
         storageKey="dentistry-theme"
       >
-        <GlossaryProvider>
-          {children}
-        </GlossaryProvider>
+        <ConsentProvider>
+          <AnalyticsProvider>
+            <GlossaryProvider>
+              {children}
+            </GlossaryProvider>
+          </AnalyticsProvider>
+        </ConsentProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )

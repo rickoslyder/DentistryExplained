@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+import { analytics } from "@/lib/analytics-enhanced"
 
 export default function SignUpPage() {
   const [selectedUserType, setSelectedUserType] = useState<"patient" | "professional" | null>(null)
@@ -52,6 +53,12 @@ export default function SignUpPage() {
   const handleUserTypeSelect = (type: "patient" | "professional") => {
     setSelectedUserType(type)
     setShowClerkForm(true)
+    
+    // Track user type selection
+    analytics.track('signup_user_type_selected', {
+      user_type: type,
+      source: 'signup_page',
+    })
   }
 
   if (showClerkForm) {

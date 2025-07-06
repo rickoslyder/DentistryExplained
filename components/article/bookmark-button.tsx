@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface BookmarkButtonProps {
   article: {
@@ -44,9 +45,25 @@ export function BookmarkButton({
     e.stopPropagation()
 
     if (!user) {
+      // Track bookmark attempt without auth
+      analytics.track('bookmark_auth_required', {
+        article_slug: article.slug,
+        article_title: article.title,
+        article_category: article.category,
+      })
       router.push(`/sign-in?redirect_url=${window.location.pathname}`)
       return
     }
+
+    // Track bookmark action
+    const action = bookmarked ? 'remove' : 'add'
+    analytics.track('bookmark_action', {
+      action,
+      article_slug: article.slug,
+      article_title: article.title,
+      article_category: article.category,
+      article_read_time: article.readTime,
+    })
 
     await toggleBookmark(article)
   }

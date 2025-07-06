@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useRouter } from "next/navigation"
 import { useDebouncedCallback } from "use-debounce"
+import { analytics } from "@/lib/analytics-enhanced"
 
 interface SearchDialogProps {
   open: boolean
@@ -81,6 +82,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         const data = await response.json()
         setResults(data.results || [])
         setSuggestions(data.suggestions || [])
+        
+        // Track search with analytics
+        analytics.trackSearch(searchQuery, data.results?.length || 0)
       } else {
         console.error('Search failed')
         setResults([])
@@ -143,6 +147,16 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           clicked_result: result.title
         })
       })
+      
+      // Track with analytics
+      analytics.track('search_result_click', {
+        search_query: query,
+        result_id: result.id,
+        result_title: result.title,
+        result_type: result.type,
+        result_category: result.category,
+        result_position: results.findIndex(r => r.id === result.id) + 1,
+      })
     } catch (error) {
       console.error('Failed to track click:', error)
     }
@@ -188,7 +202,14 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         key={index}
                         variant="ghost"
                         className="w-full justify-between hover:bg-gray-50"
-                        onClick={() => setQuery(item.query)}
+                        onClick={() => {
+                          setQuery(item.query)
+                          analytics.track('trending_search_click', {
+                            search_query: item.query,
+                            search_count: item.search_count,
+                            position: index + 1,
+                          })
+                        }}
                       >
                         <span className="text-sm">{item.query}</span>
                         <span className="text-xs text-gray-400">{item.search_count} searches</span>
@@ -206,7 +227,13 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                       key={topic}
                       variant="outline"
                       size="sm"
-                      onClick={() => setQuery(topic)}
+                      onClick={() => {
+                        setQuery(topic)
+                        analytics.track('popular_topic_click', {
+                          topic,
+                          source: 'search_dialog',
+                        })
+                      }}
                       className="text-xs"
                     >
                       {topic}

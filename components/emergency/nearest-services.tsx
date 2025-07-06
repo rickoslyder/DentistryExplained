@@ -9,6 +9,7 @@ import { MapPin, Navigation, Phone, Clock, ExternalLink, Loader2, AlertCircle } 
 import { LocationConsent, hasLocationConsent } from '@/components/emergency/location-consent'
 import { EmergencyDisclaimer } from '@/components/emergency/emergency-disclaimer'
 import { EmergencyLogger } from '@/lib/emergency-audit'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface EmergencyService {
   id: string
@@ -61,6 +62,14 @@ export function NearestServices() {
         isManualPostcode ? { postcode: manualPostcode } : { lat, lng },
         services.length
       )
+      
+      // Track service search
+      analytics.track('emergency_services_searched', {
+        search_method: isManualPostcode ? 'manual_postcode' : 'geolocation',
+        results_count: services.length,
+        search_radius: 20,
+        postcode: isManualPostcode ? manualPostcode : undefined,
+      })
       
       return services
     } catch (error) {
@@ -140,6 +149,12 @@ export function NearestServices() {
     setIsLoading(true)
     setError(null)
     
+    // Track manual postcode search
+    analytics.track('emergency_manual_postcode_search', {
+      postcode: manualPostcode,
+      postcode_prefix: manualPostcode.toUpperCase().slice(0, 2),
+    })
+    
     // In production, this would geocode the postcode
     // For now, we'll use a simple mapping
     const postcodePrefix = manualPostcode.toUpperCase().slice(0, 2)
@@ -158,11 +173,28 @@ export function NearestServices() {
       setShowManualEntry(false)
     } catch (err) {
       setError('Unable to find services for this postcode')
+      
+      // Track postcode search error
+      analytics.track('emergency_postcode_search_error', {
+        postcode: manualPostcode,
+        error: 'Unable to find services',
+      })
     }
     setIsLoading(false)
   }
 
   const openDirections = (service: EmergencyService) => {
+    // Track directions click
+    analytics.track('emergency_service_directions_clicked', {
+      service_id: service.id,
+      service_name: service.name,
+      service_type: service.type,
+      service_distance: service.distance,
+      is_nhs: service.nhsService,
+      is_open: service.openNow,
+      data_source: dataSource,
+    })
+    
     const url = `https://www.google.com/maps/dir/?api=1&destination=${service.latitude},${service.longitude}`
     window.open(url, '_blank')
   }
@@ -200,6 +232,13 @@ export function NearestServices() {
   const handleConsentGranted = () => {
     setShowConsent(false)
     setHasConsent(true)
+    
+    // Track location consent granted
+    analytics.track('emergency_location_consent', {
+      action: 'granted',
+      purpose: 'nearest_services',
+    })
+    
     getLocation()
   }
 
@@ -207,6 +246,12 @@ export function NearestServices() {
     setShowConsent(false)
     setShowManualEntry(true)
     setError('Please enter your postcode to find nearby services')
+    
+    // Track location consent declined
+    analytics.track('emergency_location_consent', {
+      action: 'declined',
+      purpose: 'nearest_services',
+    })
   }
 
   useEffect(() => {
@@ -342,6 +387,18 @@ export function NearestServices() {
                           <a 
                             href={`tel:${service.phone}`}
                             className="text-primary hover:underline font-medium"
+                            onClick={() => {
+                              analytics.track('emergency_service_phone_clicked', {
+                                service_id: service.id,
+                                service_name: service.name,
+                                service_type: service.type,
+                                service_distance: service.distance,
+                                is_nhs: service.nhsService,
+                                is_open: service.openNow,
+                                phone_number: service.phone,
+                                data_source: dataSource,
+                              })
+                            }}
                           >
                             {service.phone}
                           </a>

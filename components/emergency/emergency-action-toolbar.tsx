@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Phone, AlertTriangle, MapPin, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EmergencyLogger } from '@/lib/emergency-audit'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface EmergencyActionToolbarProps {
   className?: string
@@ -31,10 +32,25 @@ export function EmergencyActionToolbar({ className }: EmergencyActionToolbarProp
 
   const handleEmergencyCall = (type: '999' | '111', reason: string) => {
     EmergencyLogger.emergencyContact(type, reason)
+    
+    // Track emergency contact action
+    analytics.track('emergency_contact_initiated', {
+      contact_type: type,
+      source: reason,
+      device_type: reason.includes('desktop') ? 'desktop' : 'mobile',
+      toolbar_state: isMinimized ? 'minimized' : 'expanded',
+    })
   }
 
   const handleFindAE = () => {
     EmergencyLogger.emergencyContact('999', 'finding-ae-department')
+    
+    // Track Find A&E action
+    analytics.track('emergency_find_ae_clicked', {
+      source: window.innerWidth >= 768 ? 'desktop_toolbar' : 'mobile_toolbar',
+      toolbar_state: isMinimized ? 'minimized' : 'expanded',
+    })
+    
     window.open('https://www.nhs.uk/service-search/accident-and-emergency-services/locationsearch/428', '_blank')
   }
 
@@ -93,7 +109,12 @@ export function EmergencyActionToolbar({ className }: EmergencyActionToolbarProp
           <Button
             size="lg"
             className="bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 p-0"
-            onClick={() => setIsMinimized(false)}
+            onClick={() => {
+              setIsMinimized(false)
+              analytics.track('emergency_toolbar_expanded', {
+                source: 'minimized_button_click',
+              })
+            }}
           >
             <Phone className="h-6 w-6" />
           </Button>
@@ -105,7 +126,12 @@ export function EmergencyActionToolbar({ className }: EmergencyActionToolbarProp
                 variant="ghost"
                 size="sm"
                 className="h-6 w-6 p-0"
-                onClick={() => setIsMinimized(true)}
+                onClick={() => {
+                  setIsMinimized(true)
+                  analytics.track('emergency_toolbar_minimized', {
+                    source: 'close_button_click',
+                  })
+                }}
               >
                 <X className="h-4 w-4" />
               </Button>

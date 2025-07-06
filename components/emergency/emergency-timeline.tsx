@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Clock, AlertCircle, CheckCircle, Phone, FileText, Timer } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { EmergencyCountdownTimer } from './emergency-countdown-timer'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface TimelineStep {
   time: string
@@ -78,7 +79,15 @@ export function EmergencyTimeline({ emergencyType, showTimer = true }: Emergency
             icon: Phone,
             action: {
               label: 'Find Emergency Dentist',
-              onClick: () => window.location.href = '/find-dentist?emergency=true',
+              onClick: () => {
+                analytics.track('emergency_timeline_action_clicked', {
+                  emergency_type: emergencyType,
+                  action_type: 'find_emergency_dentist',
+                  elapsed_minutes: Math.floor((currentTime.getTime() - startTime.getTime()) / 60000),
+                  urgency_level: 'critical',
+                })
+                window.location.href = '/find-dentist?emergency=true'
+              },
             },
           },
         ]
@@ -107,7 +116,15 @@ export function EmergencyTimeline({ emergencyType, showTimer = true }: Emergency
             icon: Phone,
             action: {
               label: 'Call NHS 111',
-              onClick: () => window.location.href = 'tel:111',
+              onClick: () => {
+                analytics.track('emergency_timeline_action_clicked', {
+                  emergency_type: emergencyType,
+                  action_type: 'call_nhs_111',
+                  elapsed_minutes: Math.floor((currentTime.getTime() - startTime.getTime()) / 60000),
+                  urgency_level: 'moderate',
+                })
+                window.location.href = 'tel:111'
+              },
             },
           },
           {
@@ -150,7 +167,15 @@ export function EmergencyTimeline({ emergencyType, showTimer = true }: Emergency
             icon: Phone,
             action: {
               label: 'Call 999',
-              onClick: () => window.location.href = 'tel:999',
+              onClick: () => {
+                analytics.track('emergency_timeline_action_clicked', {
+                  emergency_type: emergencyType,
+                  action_type: 'call_999',
+                  elapsed_minutes: Math.floor((currentTime.getTime() - startTime.getTime()) / 60000),
+                  urgency_level: 'critical',
+                })
+                window.location.href = 'tel:999'
+              },
             },
           },
         ]
@@ -194,12 +219,26 @@ export function EmergencyTimeline({ emergencyType, showTimer = true }: Emergency
 
   const toggleStep = (index: number) => {
     const newCompleted = new Set(completedSteps)
+    const step = timeline[index]
+    const isCompleting = !newCompleted.has(index)
+    
     if (newCompleted.has(index)) {
       newCompleted.delete(index)
     } else {
       newCompleted.add(index)
     }
     setCompletedSteps(newCompleted)
+    
+    // Track timeline step interaction
+    analytics.track('emergency_timeline_step_toggled', {
+      emergency_type: emergencyType,
+      step_index: index,
+      step_title: step.title,
+      step_time: step.time,
+      action: isCompleting ? 'completed' : 'uncompleted',
+      elapsed_minutes: Math.floor((currentTime.getTime() - startTime.getTime()) / 60000),
+      total_steps_completed: newCompleted.size,
+    })
   }
 
   const getUrgencyColor = () => {

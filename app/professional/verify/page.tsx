@@ -24,6 +24,7 @@ import {
   DOCUMENT_TYPES,
   PROFESSIONAL_TITLES
 } from "@/types/professional"
+import { analytics } from "@/lib/analytics-enhanced"
 
 export default function ProfessionalVerifyPage() {
   const { user } = useUser()
@@ -51,6 +52,10 @@ export default function ProfessionalVerifyPage() {
   useEffect(() => {
     if (user) {
       loadVerificationData()
+      // Track verification page view
+      analytics.track('professional_verification_viewed', {
+        user_id: user.id,
+      })
     }
   }, [user])
 
@@ -123,11 +128,26 @@ export default function ProfessionalVerifyPage() {
         setVerification(data.verification)
         toast.success('Verification submitted successfully')
         
+        // Track verification submission
+        analytics.track('professional_verification_submitted', {
+          has_gdc_number: !!formData.gdc_number,
+          has_practice_name: !!formData.practice_name,
+          has_practice_address: !!formData.practice_address,
+          document_count: documents.length,
+          professional_title: formData.professional_title,
+        })
+        
         // Refresh the page to show updated status
         loadVerificationData()
       } else {
         const error = await response.json()
         toast.error(error.message || 'Failed to submit verification')
+        
+        // Track verification error
+        analytics.track('professional_verification_error', {
+          error_message: error.message,
+          error_type: 'submission_failed',
+        })
       }
     } catch (error) {
       console.error('Verification submission error:', error)
@@ -172,9 +192,24 @@ export default function ProfessionalVerifyPage() {
         const data = await response.json()
         setDocuments(prev => [...prev, data.document])
         toast.success('Document uploaded successfully')
+        
+        // Track document upload
+        analytics.track('professional_document_uploaded', {
+          document_type: selectedDocumentType,
+          file_type: file.type,
+          file_size: file.size,
+        })
       } else {
         const error = await response.json()
         toast.error(error.message || 'Failed to upload document')
+        
+        // Track upload error
+        analytics.track('professional_document_upload_error', {
+          error_message: error.message,
+          document_type: selectedDocumentType,
+          file_type: file.type,
+          file_size: file.size,
+        })
       }
     } catch (error) {
       console.error('Upload error:', error)

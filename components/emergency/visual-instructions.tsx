@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Eye, Printer } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface InstructionStep {
   title: string
@@ -648,6 +649,14 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
   }
 
   const handlePrint = () => {
+    // Track print action
+    analytics.track('emergency_visual_instructions_printed', {
+      emergency_type: emergencyType,
+      current_step: currentStep + 1,
+      step_title: currentInstruction.title,
+      total_steps: steps.length,
+    })
+    
     window.print()
   }
 
@@ -697,7 +706,16 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
             {/* Illustration */}
             <div 
               className="relative bg-gray-50 rounded-lg p-4 cursor-pointer hover:bg-gray-100 transition-colors"
-              onClick={() => setShowEnlarged(true)}
+              onClick={() => {
+                setShowEnlarged(true)
+                
+                // Track image enlargement
+                analytics.track('emergency_visual_instructions_enlarged', {
+                  emergency_type: emergencyType,
+                  current_step: currentStep + 1,
+                  step_title: currentInstruction.title,
+                })
+              }}
             >
               <div className="max-w-sm mx-auto">
                 {currentInstruction.illustration}
@@ -729,7 +747,20 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
           <div className="flex items-center justify-between pt-4">
             <Button
               variant="outline"
-              onClick={() => setCurrentStep(currentStep - 1)}
+              onClick={() => {
+                const newStep = currentStep - 1
+                setCurrentStep(newStep)
+                
+                // Track navigation
+                analytics.track('emergency_visual_instructions_navigated', {
+                  emergency_type: emergencyType,
+                  direction: 'previous',
+                  from_step: currentStep + 1,
+                  to_step: newStep + 1,
+                  step_title: steps[newStep].title,
+                  total_steps: steps.length,
+                })
+              }}
               disabled={currentStep === 0}
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
@@ -742,7 +773,20 @@ export function VisualInstructions({ emergencyType, className }: VisualInstructi
             
             <Button
               variant="outline"
-              onClick={() => setCurrentStep(currentStep + 1)}
+              onClick={() => {
+                const newStep = currentStep + 1
+                setCurrentStep(newStep)
+                
+                // Track navigation
+                analytics.track('emergency_visual_instructions_navigated', {
+                  emergency_type: emergencyType,
+                  direction: 'next',
+                  from_step: currentStep + 1,
+                  to_step: newStep + 1,
+                  step_title: steps[newStep].title,
+                  total_steps: steps.length,
+                })
+              }}
               disabled={currentStep === steps.length - 1}
             >
               Next

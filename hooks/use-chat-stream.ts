@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { toast } from 'sonner'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface ChatMessage {
   id: string
@@ -57,6 +58,16 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
     
     setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
+    
+    // Track chat message sent
+    analytics.track('chat_message_sent', {
+      message_length: content.length,
+      has_page_context: !!options.pageContext,
+      page_context_title: options.pageContext?.title,
+      page_context_category: options.pageContext?.category,
+      is_new_session: !sessionId,
+      message_number: messages.filter(m => m.role === 'user').length + 1,
+    })
 
     // Prepare assistant message placeholder
     const assistantMessageId = crypto.randomUUID()
@@ -100,6 +111,8 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
           setSessionId(newSessionId)
         }
 
+        const startTime = Date.now()
+        
         while (true) {
           const { done, value } = await reader.read()
           
@@ -117,6 +130,14 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
             )
           )
         }
+        
+        // Track successful response
+        analytics.track('chat_response_received', {
+          response_time_ms: Date.now() - startTime,
+          response_length: accumulatedContent.length,
+          session_id: sessionId || newSessionId,
+          streaming: true,
+        })
         
         // Save the assistant message to the database after streaming completes
         if (sessionId && accumulatedContent) {
@@ -177,10 +198,20 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
       
       if (error.name === 'AbortError') {
         console.log('Chat request was cancelled')
+        analytics.track('chat_request_cancelled', {
+          session_id: sessionId,
+        })
       } else {
         console.error('Chat error:', error)
         toast.error('Failed to send message. Please try again.')
         options.onError?.(error as Error)
+        
+        // Track chat error
+        analytics.track('chat_error', {
+          error_message: error.message || 'Unknown error',
+          error_type: error.name || 'UnknownError',
+          session_id: sessionId,
+        })
       }
     } finally {
       setIsLoading(false)
@@ -189,9 +220,18 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
   }, [user, sessionId, isLoading, options])
 
   const clearMessages = useCallback(() => {
+    const messageCount = messages.length
     setMessages([])
     setSessionId(null)
-  }, [])
+    
+    // Track chat cleared
+    if (messageCount > 0) {
+      analytics.track('chat_cleared', {
+        message_count: messageCount,
+        session_id: sessionId,
+      })
+    }
+  }, [messages.length, sessionId])
 
   const cancelStream = useCallback(() => {
     if (abortControllerRef.current) {
@@ -214,8 +254,15 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
     
+    // Track chat export
+    analytics.track('chat_exported', {
+      message_count: messages.length,
+      session_id: sessionId,
+      export_size: blob.size,
+    })
+    
     toast.success('Chat exported successfully')
-  }, [messages])
+  }, [messages, sessionId])
 
   const loadChatHistory = useCallback(async (sessionIdToLoad: string) => {
     try {

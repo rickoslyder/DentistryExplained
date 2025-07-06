@@ -13,6 +13,7 @@ import { SuggestedQuestions } from "./suggested-questions"
 import { useChatStream } from "@/hooks/use-chat-stream"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { isLiteLLMConfigured } from "@/lib/config/litellm"
+import { analytics } from "@/lib/analytics-enhanced"
 
 interface ChatPanelProps {
   isOpen: boolean
@@ -55,13 +56,21 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
     if (isOpen && user && !hasInitialized.current) {
       hasInitialized.current = true
       
+      // Track chat panel opened
+      analytics.track('chat_panel_opened', {
+        has_page_context: !!pageContext,
+        page_context_title: pageContext?.title,
+        page_context_category: pageContext?.category,
+        ai_configured: isConfigured,
+      })
+      
       // Check localStorage for existing session
       const storedSessionId = localStorage.getItem(`chat_session_${user.id}`)
       if (storedSessionId) {
         loadChatHistory(storedSessionId)
       }
     }
-  }, [isOpen, user, loadChatHistory])
+  }, [isOpen, user, loadChatHistory, pageContext, isConfigured])
 
   // Store session ID when it changes
   useEffect(() => {
@@ -114,6 +123,13 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
     setTimeout(() => {
       inputRef.current?.focus()
     }, 0)
+    
+    // Track suggested question click
+    analytics.track('chat_suggested_question_clicked', {
+      question,
+      has_page_context: !!pageContext,
+      page_context_title: pageContext?.title,
+    })
   }
 
   const handleQuickAction = (action: any, originalMessage: string) => {

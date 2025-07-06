@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle, ChevronRight, RotateCcw, Phone, MapPin } from 'lucide-react'
 import Link from 'next/link'
+import { analytics } from '@/lib/analytics-enhanced'
 
 interface SymptomQuestion {
   id: string
@@ -173,10 +174,27 @@ export function SymptomChecker() {
 
     // Store answer
     setAnswers(prev => ({ ...prev, [currentQuestion]: selectedValue }))
+    
+    // Track symptom checker progress
+    analytics.track('emergency_symptom_checked', {
+      question_id: currentQuestion,
+      answer: selectedValue,
+      answer_label: selectedOption.label,
+      has_severity: !!selectedOption.severity,
+      severity: selectedOption.severity,
+      step_number: Object.keys(answers).length + 1,
+    })
 
     // Check if we have a severity result
     if (selectedOption.severity) {
       setSeverity(selectedOption.severity)
+      
+      // Track completion
+      analytics.track('emergency_symptom_checker_completed', {
+        severity: selectedOption.severity,
+        total_steps: Object.keys(answers).length + 1,
+        path: Object.entries(answers).map(([q, a]) => `${q}:${a}`).join(' > ') + ` > ${currentQuestion}:${selectedValue}`,
+      })
     } else if (selectedOption.nextQuestion) {
       setCurrentQuestion(selectedOption.nextQuestion)
       setSelectedValue('')

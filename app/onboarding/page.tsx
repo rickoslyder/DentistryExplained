@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { analytics } from "@/lib/analytics-enhanced"
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -71,10 +72,42 @@ export default function OnboardingPage() {
         firstName: user.firstName || "",
         lastName: user.lastName || "",
       }))
+      
+      // Track onboarding start
+      analytics.track('onboarding_started', {
+        user_type: userType,
+        user_id: user.id,
+      })
     }
-  }, [user])
+  }, [user, userType])
 
   const handleNext = () => {
+    // Track step completion
+    analytics.track('onboarding_step_completed', {
+      step: currentStep,
+      total_steps: totalSteps,
+      user_type: userType,
+      step_data: {
+        ...(currentStep === 1 && {
+          has_location: !!formData.location,
+        }),
+        ...(currentStep === 2 && {
+          interests_count: formData.interests.length,
+          interests: formData.interests,
+        }),
+        ...(currentStep === 3 && {
+          email_notifications: formData.notifications.email,
+          new_articles: formData.notifications.newArticles,
+          health_tips: formData.notifications.healthTips,
+        }),
+        ...(currentStep === 4 && {
+          has_gdc_number: !!formData.gdcNumber,
+          practice_type: formData.practiceType,
+          specializations_count: formData.specializations.length,
+        }),
+      },
+    })
+    
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
     } else {
@@ -104,6 +137,20 @@ export default function OnboardingPage() {
             verificationStatus: "pending",
           }),
         },
+      })
+
+      // Track onboarding completion and registration
+      analytics.trackRegistration(userType || 'patient', 'email')
+      analytics.track('onboarding_completed', {
+        user_type: userType,
+        total_steps: totalSteps,
+        interests_count: formData.interests.length,
+        has_location: !!formData.location,
+        ...(userType === "professional" && {
+          has_gdc_number: !!formData.gdcNumber,
+          practice_type: formData.practiceType,
+          specializations_count: formData.specializations.length,
+        }),
       })
 
       // Redirect based on user type
