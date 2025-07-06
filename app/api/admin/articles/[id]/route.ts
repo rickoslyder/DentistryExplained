@@ -115,6 +115,20 @@ export async function PUT(
       .eq('id', params.id)
       .single()
 
+    // Save current version to revisions before updating
+    if (originalArticle) {
+      const { error: revisionError } = await supabase.rpc('save_article_revision', {
+        p_article_id: params.id,
+        p_author_id: profile.id,
+        p_change_summary: body.changeNotes || null
+      })
+      
+      if (revisionError) {
+        console.error('Failed to save revision:', revisionError)
+        // Continue with update even if revision fails
+      }
+    }
+
     // Update article
     const { data: article, error } = await supabase
       .from('articles')

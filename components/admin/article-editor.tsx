@@ -13,6 +13,14 @@ import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { 
   Save, 
   Eye, 
@@ -21,7 +29,8 @@ import {
   Info,
   FileText,
   Settings,
-  Search
+  Search,
+  History
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { validateMDX, processMDXPreview } from '@/lib/mdx'
@@ -29,6 +38,12 @@ import dynamic from 'next/dynamic'
 
 // Dynamically import MDX editor to avoid SSR issues
 const MDXEditor = dynamic(() => import('@/components/admin/mdx-editor'), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+})
+
+// Dynamically import version history to avoid SSR issues
+const ArticleVersionHistory = dynamic(() => import('@/components/admin/article-version-history').then(mod => ({ default: mod.ArticleVersionHistory })), {
   ssr: false,
   loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
 })
@@ -92,6 +107,8 @@ Start writing your article content here...`,
   const [tagInput, setTagInput] = useState('')
   const [keywordInput, setKeywordInput] = useState('')
   const [errors, setErrors] = useState<string[]>([])
+  const [changeNotes, setChangeNotes] = useState('')
+  const [showChangeNotesDialog, setShowChangeNotesDialog] = useState(false)
   
   // Generate slug from title
   const generateSlug = useCallback((title: string) => {
@@ -177,6 +194,18 @@ Start writing your article content here...`,
       return
     }
     
+    // For existing articles, show change notes dialog
+    if (article) {
+      setShowChangeNotesDialog(true)
+      return
+    }
+    
+    // For new articles, save directly
+    performSave()
+  }
+  
+  // Perform the actual save
+  const performSave = async () => {
     setIsSubmitting(true)
     
     try {
@@ -184,12 +213,17 @@ Start writing your article content here...`,
         ? `/api/admin/articles/${article.id}`
         : '/api/admin/articles'
       
+      const payload = {
+        ...formData,
+        ...(article && changeNotes ? { changeNotes } : {})
+      }
+      
       const response = await fetch(endpoint, {
         method: article ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
       
       if (!response.ok) {
@@ -199,6 +233,10 @@ Start writing your article content here...`,
       const result = await response.json()
       
       toast.success(article ? 'Article updated!' : 'Article created!')
+      
+      // Reset change notes
+      setChangeNotes('')
+      setShowChangeNotesDialog(false)
       
       // Redirect to edit page if creating new
       if (!article) {
@@ -240,7 +278,7 @@ Start writing your article content here...`,
       )}
       
       <Tabs defaultValue="content" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="content">
             <FileText className="w-4 h-4 mr-2" />
             Content
@@ -252,6 +290,10 @@ Start writing your article content here...`,
           <TabsTrigger value="settings">
             <Settings className="w-4 h-4 mr-2" />
             Settings
+          </TabsTrigger>
+          <TabsTrigger value="versions" disabled={!article}>
+            <History className="w-4 h-4 mr-2" />
+            History
           </TabsTrigger>
         </TabsList>
         
@@ -466,6 +508,18 @@ Start writing your article content here...`,
             </CardContent>
           </Card>
         </TabsContent>
+        
+        <TabsContent value="versions" className="space-y-6">
+          {article && (
+            <ArticleVersionHistory 
+              articleId={article.id}
+              currentVersion={{
+                title: formData.title,
+                updated_at: new Date().toISOString()
+              }}
+            />
+          )}
+        </TabsContent>
       </Tabs>
       
       {/* Action Buttons */}
@@ -524,6 +578,38 @@ Start writing your article content here...`,
           </CardContent>
         </Card>
       )}
+      
+      {/* Change Notes Dialog */}
+      <Dialog open={showChangeNotesDialog} onOpenChange={setShowChangeNotesDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Describe Your Changes</DialogTitle>
+            <DialogDescription>
+              Provide a brief summary of the changes you made. This helps track the version history.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <Textarea
+              value={changeNotes}
+              onChange={(e) => setChangeNotes(e.target.value)}
+              placeholder="e.g., Updated treatment options section, fixed typos in prevention paragraph"
+              rows={3}
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowChangeNotesDialog(false)}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button onClick={performSave} disabled={isSubmitting}>
+              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

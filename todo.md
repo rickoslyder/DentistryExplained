@@ -151,6 +151,61 @@ Phase 3 successfully implements a comprehensive activity logging system:
 
 The implementation provides enterprise-grade auditing capabilities while maintaining the simplicity principle. All admin actions are now tracked with sufficient detail for compliance, debugging, and security analysis.
 
+## Admin Panel Phase 4: Advanced Features (July 6, 2025)
+
+### Planned Features
+
+#### 1. Content Versioning System
+- [ ] Create article_versions table to store historical versions
+- [ ] Automatically save versions on each update
+- [ ] Add version history UI to article editor
+- [ ] Implement diff viewer to compare versions
+- [ ] Add restore functionality to revert to previous versions
+- [ ] Show who made changes and when
+
+#### 2. Scheduled Publishing
+- [ ] Add scheduled_at field to articles
+- [ ] Create cron job or background task for publishing
+- [ ] Add scheduling UI to article editor
+- [ ] Show scheduled articles in dashboard
+- [ ] Allow cancellation of scheduled publishes
+
+#### 3. Article Preview Mode
+- [ ] Create preview endpoint with draft content
+- [ ] Add preview button to article editor
+- [ ] Generate shareable preview links
+- [ ] Preview should work for unpublished content
+- [ ] Mobile-responsive preview
+
+#### 4. Content Import/Export
+- [ ] Export articles to CSV/JSON format
+- [ ] Import articles from CSV/JSON
+- [ ] Include all metadata and categories
+- [ ] Validation and error handling
+- [ ] Bulk operations support
+
+#### 5. Advanced Search
+- [ ] Full-text search across all content
+- [ ] Filter by status, category, author, date range
+- [ ] Search in article content, titles, and metadata
+- [ ] Save search filters
+- [ ] Export search results
+
+#### 6. Dashboard Widgets
+- [ ] Customizable dashboard layout
+- [ ] Drag-and-drop widget arrangement
+- [ ] Widget types: stats, charts, recent activity, quick actions
+- [ ] Save widget preferences per user
+- [ ] Real-time data updates
+
+### Implementation Priority
+1. Content versioning (critical for content safety)
+2. Article preview (improves workflow)
+3. Scheduled publishing (common requirement)
+4. Advanced search (improves content discovery)
+5. Import/Export (data portability)
+6. Dashboard widgets (nice-to-have enhancement)
+
 ## Latest Enhancements (July 5, 2025)
 
 ### Completed Tasks ✅

@@ -64,18 +64,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create article' }, { status: 500 })
     }
     
-    // Create initial revision
-    await supabase
-      .from('article_revisions')
-      .insert({
-        article_id: article.id,
-        title: validatedData.title,
-        content: validatedData.content,
-        excerpt: validatedData.excerpt,
-        revision_number: 1,
-        author_id: profile.id,
-        change_summary: 'Initial version',
-      })
+    // Create initial revision using the function
+    const { error: revisionError } = await supabase.rpc('save_article_revision', {
+      p_article_id: article.id,
+      p_author_id: profile.id,
+      p_change_summary: 'Initial version'
+    })
+    
+    if (revisionError) {
+      console.error('Failed to save initial revision:', revisionError)
+    }
     
     return NextResponse.json(article, { status: 201 })
     
