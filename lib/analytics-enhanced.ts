@@ -134,10 +134,12 @@ class EnhancedAnalytics {
   track(eventName: CustomEvent | string, parameters?: Record<string, any>) {
     if (typeof window === 'undefined') return;
 
+    const eventId = this.generateEventId();
     const enhancedEventData: EnhancedEventData = {
       event_name: eventName,
       event_parameters: {
         ...parameters,
+        event_id: eventId,
         user_type: this.user.type,
         session_id: this.sessionId,
         timestamp: new Date().toISOString(),
@@ -146,11 +148,19 @@ class EnhancedAnalytics {
       sanitized: false,
     };
 
-    // Client-side tracking (immediate)
+    // Client-side tracking (immediate) with enhanced data
     window.dataLayer.push({
       event: eventName,
       ...enhancedEventData.event_parameters,
+      user_properties: {
+        user_type: this.user.type,
+        user_id: this.user.id ? this.hashUserId(this.user.id) : undefined,
+        is_verified: this.user.isVerified || false,
+        email_hash: this.user.email ? this.hashEmail(this.user.email) : undefined,
+      },
+      ecommerce: this.getEcommerceData(eventName, parameters),
       server_container_endpoint: this.serverEndpoint,
+      send_to_server: true,
     });
 
     // Also send to GA4 if available
@@ -428,6 +438,62 @@ class EnhancedAnalytics {
     const attempts = parseInt(sessionStorage.getItem('verification_attempts') || '0');
     sessionStorage.setItem('verification_attempts', (attempts + 1).toString());
     return attempts + 1;
+  }
+
+  private getEcommerceData(eventName: string, parameters?: Record<string, any>): any {
+    // Map events to ecommerce actions for future monetization tracking
+    const ecommerceEvents: Record<string, any> = {
+      'article_view': {
+        currency: 'GBP',
+        value: parameters?.value || 0.50,
+        items: [{
+          item_id: parameters?.article_id,
+          item_name: parameters?.article_title,
+          item_category: parameters?.article_category,
+          item_brand: 'Dentistry Explained',
+          price: parameters?.value || 0.50,
+          quantity: 1
+        }]
+      },
+      'professional_verification_submit': {
+        currency: 'GBP',
+        value: 100.00,
+        items: [{
+          item_id: 'prof_verification',
+          item_name: 'Professional Verification',
+          item_category: 'subscription',
+          item_brand: 'Dentistry Explained',
+          price: 100.00,
+          quantity: 1
+        }]
+      },
+      'consent_form_download': {
+        currency: 'GBP',
+        value: 5.00,
+        items: [{
+          item_id: parameters?.form_id,
+          item_name: parameters?.form_title,
+          item_category: 'professional_resource',
+          item_brand: 'Dentistry Explained',
+          price: 5.00,
+          quantity: 1
+        }]
+      },
+      'sign_up': {
+        currency: 'GBP',
+        value: parameters?.user_type === 'professional' ? 50.00 : 10.00,
+        items: [{
+          item_id: `${parameters?.user_type}_account`,
+          item_name: `${parameters?.user_type} Account`,
+          item_category: 'registration',
+          item_brand: 'Dentistry Explained',
+          price: parameters?.user_type === 'professional' ? 50.00 : 10.00,
+          quantity: 1
+        }]
+      }
+    };
+
+    return ecommerceEvents[eventName] || null;
   }
 
   private sanitizeSeverity(severity: string): string {

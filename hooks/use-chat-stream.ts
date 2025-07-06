@@ -60,7 +60,7 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
     setIsLoading(true)
     
     // Track chat message sent
-    analytics.track('chat_message_sent', {
+    analytics.trackChatInteraction('message', sessionId || crypto.randomUUID(), {
       message_length: content.length,
       has_page_context: !!options.pageContext,
       page_context_title: options.pageContext?.title,
@@ -255,10 +255,10 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
     URL.revokeObjectURL(url)
     
     // Track chat export
-    analytics.track('chat_exported', {
+    analytics.trackChatInteraction('export', sessionId || '', {
       message_count: messages.length,
-      session_id: sessionId,
       export_size: blob.size,
+      export_format: 'text',
     })
     
     toast.success('Chat exported successfully')

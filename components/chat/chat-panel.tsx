@@ -56,12 +56,21 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
     if (isOpen && user && !hasInitialized.current) {
       hasInitialized.current = true
       
-      // Track chat panel opened
+      // Track chat panel opened and session start
       analytics.track('chat_panel_opened', {
         has_page_context: !!pageContext,
         page_context_title: pageContext?.title,
         page_context_category: pageContext?.category,
         ai_configured: isConfigured,
+      })
+      
+      // Track chat session start
+      const currentSessionId = sessionId || localStorage.getItem(`chat_session_${user.id}`) || crypto.randomUUID()
+      analytics.trackChatInteraction('start', currentSessionId, {
+        has_page_context: !!pageContext,
+        page_context_title: pageContext?.title,
+        page_context_category: pageContext?.category,
+        user_type: user.publicMetadata?.userType || 'patient',
       })
       
       // Check localStorage for existing session

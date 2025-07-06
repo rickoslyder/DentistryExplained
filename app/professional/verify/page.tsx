@@ -48,6 +48,7 @@ export default function ProfessionalVerifyPage() {
     isValid: true,
     error: ""
   })
+  const [hasStartedForm, setHasStartedForm] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -91,6 +92,15 @@ export default function ProfessionalVerifyPage() {
   }
 
   const handleGDCNumberChange = (value: string) => {
+    // Track form start on first interaction
+    if (!hasStartedForm && value.length > 0) {
+      setHasStartedForm(true)
+      analytics.track('professional_verification_started', {
+        entry_field: 'gdc_number',
+        has_existing_verification: !!verification,
+      })
+    }
+    
     const validation = validateGDCNumber(value)
     setGdcValidation({
       isValid: validation.isValid,
@@ -113,6 +123,9 @@ export default function ProfessionalVerifyPage() {
     }
 
     setIsSubmitting(true)
+    
+    // Track verification submission attempt
+    analytics.trackProfessionalVerification('submit', 'gdc_number')
 
     try {
       const response = await fetch('/api/professional/verification', {
@@ -128,8 +141,11 @@ export default function ProfessionalVerifyPage() {
         setVerification(data.verification)
         toast.success('Verification submitted successfully')
         
-        // Track verification submission
-        analytics.track('professional_verification_submitted', {
+        // Track successful verification submission
+        analytics.trackProfessionalVerification('success', 'gdc_number')
+        
+        // Also track additional details
+        analytics.track('professional_verification_details', {
           has_gdc_number: !!formData.gdc_number,
           has_practice_name: !!formData.practice_name,
           has_practice_address: !!formData.practice_address,
@@ -143,7 +159,10 @@ export default function ProfessionalVerifyPage() {
         const error = await response.json()
         toast.error(error.message || 'Failed to submit verification')
         
-        // Track verification error
+        // Track verification failure
+        analytics.trackProfessionalVerification('failure', 'gdc_number')
+        
+        // Track error details
         analytics.track('professional_verification_error', {
           error_message: error.message,
           error_type: 'submission_failed',
