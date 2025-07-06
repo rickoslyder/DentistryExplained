@@ -30,10 +30,12 @@ import {
   FileText,
   Settings,
   Search,
-  History
+  History,
+  Calendar
 } from 'lucide-react'
 import { toast } from 'sonner'
-import { validateMDX, processMDXPreview } from '@/lib/mdx'
+import { validateMDX } from '@/lib/mdx'
+import { processMDXPreview } from '@/lib/mdx-utils'
 import dynamic from 'next/dynamic'
 
 // Dynamically import MDX editor to avoid SSR issues
@@ -46,6 +48,12 @@ const MDXEditor = dynamic(() => import('@/components/admin/mdx-editor'), {
 const ArticleVersionHistory = dynamic(() => import('@/components/admin/article-version-history').then(mod => ({ default: mod.ArticleVersionHistory })), {
   ssr: false,
   loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+})
+
+// Dynamically import scheduling component to avoid SSR issues
+const ArticleScheduling = dynamic(() => import('@/components/admin/article-scheduling').then(mod => ({ default: mod.ArticleScheduling })), {
+  ssr: false,
+  loading: () => <div className="h-48 bg-gray-50 animate-pulse rounded-lg" />
 })
 
 interface Category {
@@ -70,6 +78,7 @@ interface ArticleEditorProps {
     meta_keywords?: string[]
     is_featured: boolean
     allow_comments: boolean
+    scheduled_at?: string | null
   }
 }
 
@@ -507,6 +516,19 @@ Start writing your article content here...`,
               </div>
             </CardContent>
           </Card>
+          
+          {/* Article Scheduling */}
+          <ArticleScheduling
+            articleId={article?.id || ''}
+            articleStatus={formData.status}
+            currentScheduledAt={article?.scheduled_at}
+            onScheduleUpdate={(scheduledAt) => {
+              // Refresh the page to show updated schedule status
+              if (article) {
+                router.refresh()
+              }
+            }}
+          />
         </TabsContent>
         
         <TabsContent value="versions" className="space-y-6">
@@ -524,14 +546,26 @@ Start writing your article content here...`,
       
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
-        <Button
-          variant="outline"
-          onClick={() => setShowPreview(!showPreview)}
-          className="bg-transparent"
-        >
-          <Eye className="w-4 h-4 mr-2" />
-          {showPreview ? 'Hide' : 'Show'} Preview
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setShowPreview(!showPreview)}
+            className="bg-transparent"
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            {showPreview ? 'Hide' : 'Show'} Quick Preview
+          </Button>
+          {article && (
+            <Button
+              variant="outline"
+              onClick={() => router.push(`/admin/articles/${article.id}/preview`)}
+              className="bg-transparent"
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              Full Preview
+            </Button>
+          )}
+        </div>
         
         <div className="flex items-center gap-2">
           <Button

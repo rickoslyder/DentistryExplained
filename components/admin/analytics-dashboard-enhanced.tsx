@@ -183,7 +183,7 @@ Active Subscribers,${data.funnelData.activeSubscribers}
         </TabsContent>
 
         <TabsContent value="realtime">
-          <RealtimeMetrics />
+          <RealtimeMetrics useGA4={true} />
         </TabsContent>
 
         <TabsContent value="basic">

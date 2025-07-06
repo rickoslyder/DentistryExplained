@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { logActivity } from '@/lib/activity-logger'
+import { serverAnalytics } from '@/lib/analytics-server'
 
 // POST /api/admin/articles/[id]/versions/[versionId]/restore - Restore a version
 export async function POST(
@@ -101,6 +102,14 @@ export async function POST(
         version_id: params.versionId
       }
     })
+
+    // Track server-side analytics (non-blocking)
+    serverAnalytics.trackContentVersion(
+      'restored',
+      params.id,
+      params.versionId,
+      profile.id
+    ).catch(err => console.error('[Analytics] Failed to track version restore:', err))
 
     return NextResponse.json({ 
       success: true,

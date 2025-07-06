@@ -286,7 +286,13 @@ export function ArticlesDataTable({ articles }: ArticlesDataTableProps) {
                         <DropdownMenuItem asChild>
                           <Link href={`/${article.slug}`} target="_blank">
                             <Eye className="w-4 h-4 mr-2" />
-                            View
+                            View Live
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/admin/articles/${article.id}/preview`}>
+                            <Eye className="w-4 h-4 mr-2" />
+                            Preview
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>

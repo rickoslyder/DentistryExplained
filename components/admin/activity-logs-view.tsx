@@ -68,9 +68,10 @@ interface ActivityLog {
   ip_address?: string
   user_agent?: string
   profiles: {
-    full_name?: string
+    first_name?: string
+    last_name?: string
     email?: string
-    image_url?: string
+    avatar_url?: string
   }
 }
 
@@ -88,7 +89,7 @@ interface ActivityLogsViewProps {
   filterOptions: {
     actions: string[]
     resources: string[]
-    users: Array<{ id: string; full_name?: string; email?: string }>
+    users: Array<{ id: string; first_name?: string; last_name?: string; email?: string }>
   }
 }
 
@@ -147,7 +148,9 @@ export function ActivityLogsView({
   }
 
   const getUserDisplay = (log: ActivityLog) => {
-    const name = log.profiles?.full_name || log.profiles?.email || 'Unknown User'
+    const name = log.profiles?.first_name && log.profiles?.last_name 
+      ? `${log.profiles.first_name} ${log.profiles.last_name}`
+      : log.profiles?.email || 'Unknown User'
     const initials = name
       .split(' ')
       .map((n) => n[0])
@@ -155,7 +158,7 @@ export function ActivityLogsView({
       .toUpperCase()
       .slice(0, 2)
 
-    return { name, initials, image: log.profiles?.image_url }
+    return { name, initials, image: log.profiles?.avatar_url }
   }
 
   const getDeviceIcon = (userAgent?: string) => {
@@ -256,7 +259,7 @@ export function ActivityLogsView({
                 <SelectItem value="">All users</SelectItem>
                 {filterOptions.users.map((user) => (
                   <SelectItem key={user.id} value={user.id}>
-                    {user.full_name || user.email || user.id}
+                    {user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.email || user.id}
                   </SelectItem>
                 ))}
               </SelectContent>

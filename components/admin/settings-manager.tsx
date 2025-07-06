@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,6 +22,12 @@ import {
   Plus,
   X
 } from 'lucide-react'
+
+// Dynamically import AI settings component to avoid SSR issues
+const AISettingsEnhanced = dynamic(() => import('@/components/admin/ai-settings-enhanced').then(mod => ({ default: mod.AISettingsEnhanced })), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+})
 
 interface SiteSettings {
   site: {
@@ -92,14 +99,85 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
     setSaving(true)
     
     try {
+      // Prepare settings for database storage
+      const settingsToSave = [
+        {
+          key: 'seo_defaults',
+          value: {
+            title_suffix: settings.seo.default_title_suffix,
+            default_description: settings.seo.default_description,
+            default_keywords: settings.seo.default_keywords
+          }
+        },
+        {
+          key: 'email_config',
+          value: {
+            notifications_enabled: true,
+            from_name: 'Dentistry Explained',
+            from_email: settings.site.contact_email
+          }
+        },
+        {
+          key: 'chat_config',
+          value: {
+            enabled: settings.features.chat_enabled,
+            retention_days: 180,
+            max_messages_per_session: 100,
+            rate_limit_per_hour: settings.features.chat_rate_limit
+          }
+        },
+        {
+          key: 'professional_verification',
+          value: {
+            enabled: settings.features.professional_verification_enabled,
+            auto_approve: false,
+            gdc_api_enabled: false,
+            verification_email_template: 'professional_verification'
+          }
+        },
+        {
+          key: 'site_maintenance',
+          value: {
+            enabled: false,
+            message: '',
+            site_name: settings.site.name,
+            site_description: settings.site.description,
+            site_url: settings.site.url
+          }
+        },
+        {
+          key: 'features_config',
+          value: {
+            web_search_enabled: settings.features.web_search_enabled,
+            glossary_quiz_enabled: settings.features.glossary_quiz_enabled
+          }
+        },
+        {
+          key: 'ai_config',
+          value: {
+            model: settings.ai.model,
+            temperature: settings.ai.temperature,
+            max_tokens: settings.ai.max_tokens,
+            system_prompt: settings.ai.system_prompt
+          }
+        }
+      ]
+      
+      // Make API call to save settings
       const response = await fetch('/api/admin/settings', {
-        method: 'PUT',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings),
+        body: JSON.stringify({ settings: settingsToSave }),
       })
       
       if (!response.ok) {
         throw new Error('Failed to save settings')
+      }
+      
+      const result = await response.json()
+      
+      if (result.errors && result.errors.length > 0) {
+        throw new Error(`Failed to save some settings: ${result.errors.map((e: any) => e.key).join(', ')}`)
       }
       
       toast({
@@ -109,7 +187,7 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to save settings. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to save settings. Please try again.',
         variant: 'destructive',
       })
     } finally {
@@ -357,63 +435,10 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
         </TabsContent>
         
         <TabsContent value="ai" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Bot className="h-5 w-5" />
-                AI Configuration
-              </CardTitle>
-              <CardDescription>
-                Configure AI model settings
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="ai-model">Model</Label>
-                <Input
-                  id="ai-model"
-                  value={settings.ai.model}
-                  onChange={(e) => updateSettings('ai', 'model', e.target.value)}
-                />
-              </div>
-              <div>
-                <Label>Temperature: {settings.ai.temperature}</Label>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Controls randomness (0 = focused, 1 = creative)
-                </p>
-                <Slider
-                  value={[settings.ai.temperature]}
-                  onValueChange={([value]) => updateSettings('ai', 'temperature', value)}
-                  min={0}
-                  max={1}
-                  step={0.1}
-                />
-              </div>
-              <div>
-                <Label>Max Tokens: {settings.ai.max_tokens}</Label>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Maximum response length
-                </p>
-                <Slider
-                  value={[settings.ai.max_tokens]}
-                  onValueChange={([value]) => updateSettings('ai', 'max_tokens', value)}
-                  min={500}
-                  max={4000}
-                  step={100}
-                />
-              </div>
-              <div>
-                <Label htmlFor="system-prompt">System Prompt</Label>
-                <Textarea
-                  id="system-prompt"
-                  value={settings.ai.system_prompt}
-                  onChange={(e) => updateSettings('ai', 'system_prompt', e.target.value)}
-                  rows={4}
-                  className="font-mono text-sm"
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <AISettingsEnhanced
+            settings={settings.ai}
+            onUpdate={(field, value) => updateSettings('ai', field, value)}
+          />
         </TabsContent>
       </Tabs>
       

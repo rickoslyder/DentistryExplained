@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { validateGDCNumber } from '@/types/professional'
 import { ApiErrors, validateRequestBody, mapDatabaseError } from '@/lib/api-errors'
 import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { serverAnalytics } from '@/lib/analytics-server'
 
 const verificationSchema = z.object({
   gdc_number: z.string().min(6).max(7),
@@ -124,6 +125,14 @@ const createVerificationHandler = compose(
         console.error('[Verification] Failed to log activity:', error)
       }
     })
+
+  // Track server-side analytics (non-blocking)
+  serverAnalytics.trackProfessionalVerification(
+    'submitted',
+    userId,
+    gdcValidation.formatted,
+    verification.id
+  ).catch(err => console.error('[Analytics] Failed to track verification:', err))
 
   // Update user profile with professional info (non-blocking)
   if (validatedData.professional_title) {

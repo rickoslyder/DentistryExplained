@@ -3,6 +3,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { withOptionalAuth, withRateLimit, compose } from '@/lib/api-middleware'
 import { z } from 'zod'
+import { serverAnalytics } from '@/lib/analytics-server'
 
 // Validation schema for search parameters
 const searchParamsSchema = z.object({
@@ -104,6 +105,14 @@ const searchHandler = compose(
       slug: result.slug,
       relevance: result.rank
     })) || []
+    
+    // Track server-side search analytics (non-blocking)
+    serverAnalytics.trackSearch(
+      query,
+      transformedResults.length,
+      'article',
+      context.userId
+    ).catch(err => console.error('[Analytics] Failed to track search:', err))
     
     return NextResponse.json({ 
       results: transformedResults,

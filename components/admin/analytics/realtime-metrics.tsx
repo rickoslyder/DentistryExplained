@@ -3,81 +3,130 @@
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Users, Activity, MessageSquare, FileText, Circle } from 'lucide-react'
+import { Users, Activity, MessageSquare, FileText, Circle, RefreshCw, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
-interface ActiveUser {
-  id: string
-  type: 'patient' | 'professional' | 'guest'
-  currentPage: string
-  timeOnSite: number
-  actions: number
-}
-
-interface RealtimeData {
-  activeUsers: ActiveUser[]
-  activeChatSessions: number
-  currentPageViews: Record<string, number>
+interface GA4RealtimeData {
+  activeUsers: number
+  usersByPage: Array<{
+    page: string
+    users: number
+  }>
+  usersBySource: Array<{
+    source: string
+    users: number
+  }>
   recentEvents: Array<{
-    id: string
-    event: string
-    user: string
-    timestamp: Date
+    eventName: string
+    count: number
+    page?: string
   }>
 }
 
 interface RealtimeMetricsProps {
-  initialData?: RealtimeData
+  initialData?: GA4RealtimeData
+  useGA4?: boolean
 }
 
-export function RealtimeMetrics({ initialData }: RealtimeMetricsProps) {
-  const [data, setData] = useState<RealtimeData>(initialData || {
-    activeUsers: [],
-    activeChatSessions: 0,
-    currentPageViews: {},
+export function RealtimeMetrics({ initialData, useGA4 = true }: RealtimeMetricsProps) {
+  const [data, setData] = useState<GA4RealtimeData>(initialData || {
+    activeUsers: 0,
+    usersByPage: [],
+    usersBySource: [],
     recentEvents: [],
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [lastUpdate, setLastUpdate] = useState(new Date())
 
-  // Simulate real-time updates (in production, this would be WebSocket or SSE)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // This would be replaced with actual real-time data fetching
-      setData(prev => ({
-        ...prev,
-        activeUsers: prev.activeUsers.map(user => ({
-          ...user,
-          timeOnSite: user.timeOnSite + 1,
-        })),
-      }))
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const getUserTypeColor = (type: string) => {
-    switch (type) {
-      case 'professional':
-        return 'bg-purple-100 text-purple-800'
-      case 'patient':
-        return 'bg-blue-100 text-blue-800'
-      default:
-        return 'bg-gray-100 text-gray-800'
+  // Fetch real-time data from GA4
+  const fetchRealtimeData = async () => {
+    if (!useGA4) return
+    
+    setIsLoading(true)
+    try {
+      const response = await fetch('/api/analytics/ga4?type=realtime')
+      if (!response.ok) {
+        throw new Error('Failed to fetch analytics data')
+      }
+      
+      const realtimeData: GA4RealtimeData = await response.json()
+      setData(realtimeData)
+      setLastUpdate(new Date())
+    } catch (error) {
+      console.error('Failed to fetch real-time data:', error)
+      toast.error('Failed to load real-time analytics')
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
+  // Initial fetch and periodic updates
+  useEffect(() => {
+    if (useGA4) {
+      fetchRealtimeData()
+      
+      // Refresh every 30 seconds
+      const interval = setInterval(() => {
+        fetchRealtimeData()
+      }, 30000)
+      
+      return () => clearInterval(interval)
+    }
+  }, [useGA4])
+
+  const getSourceColor = (source: string) => {
+    const lowerSource = source.toLowerCase()
+    if (lowerSource.includes('organic')) return 'bg-green-100 text-green-800'
+    if (lowerSource.includes('direct')) return 'bg-blue-100 text-blue-800'
+    if (lowerSource.includes('social')) return 'bg-purple-100 text-purple-800'
+    if (lowerSource.includes('referral')) return 'bg-yellow-100 text-yellow-800'
+    if (lowerSource.includes('paid')) return 'bg-red-100 text-red-800'
+    return 'bg-gray-100 text-gray-800'
   }
 
-  // Get top pages being viewed
-  const topPages = Object.entries(data.currentPageViews)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 5)
+  const getEventIcon = (eventName: string) => {
+    const name = eventName.toLowerCase()
+    if (name.includes('chat')) return MessageSquare
+    if (name.includes('page_view')) return FileText
+    if (name.includes('sign_up') || name.includes('verification')) return Users
+    return Activity
+  }
+
+  const formatPagePath = (path: string) => {
+    // Clean up and format page paths
+    if (path === '/' || path === '(not set)') return 'Home'
+    return path.replace(/^\//g, '').replace(/[_-]/g, ' ').split('/').map(s => 
+      s.charAt(0).toUpperCase() + s.slice(1)
+    ).join(' › ')
+  }
 
   return (
     <div className="grid gap-4">
+      {/* Header with refresh button */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-lg font-semibold">Real-Time Analytics</h3>
+          <p className="text-sm text-muted-foreground">
+            Last updated: {lastUpdate.toLocaleTimeString()}
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={fetchRealtimeData}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <RefreshCw className="w-4 h-4" />
+          )}
+          Refresh
+        </Button>
+      </div>
+
       {/* Live Stats Cards */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
@@ -88,47 +137,50 @@ export function RealtimeMetrics({ initialData }: RealtimeMetricsProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.activeUsers.length}</div>
+            <div className="text-2xl font-bold">{data.activeUsers}</div>
             <p className="text-xs text-muted-foreground">
-              {data.activeUsers.filter(u => u.type === 'professional').length} professionals
+              users on site right now
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Active Chats</CardTitle>
+            <CardTitle className="text-sm font-medium">Top Page</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{data.activeChatSessions}</div>
-            <p className="text-xs text-muted-foreground">AI conversations</p>
+            <div className="text-lg font-bold truncate">
+              {data.usersByPage[0] ? formatPagePath(data.usersByPage[0].page) : 'N/A'}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {data.usersByPage[0]?.users || 0} users viewing
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Page Views/min</CardTitle>
+            <CardTitle className="text-sm font-medium">Top Source</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {Object.values(data.currentPageViews).reduce((a, b) => a + b, 0)}
+            <div className="text-lg font-bold">
+              {data.usersBySource[0]?.source || 'Direct'}
             </div>
-            <p className="text-xs text-muted-foreground">Across all pages</p>
+            <p className="text-xs text-muted-foreground">
+              {data.usersBySource[0]?.users || 0} users
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Avg. Session</CardTitle>
+            <CardTitle className="text-sm font-medium">Events/min</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatTime(
-                data.activeUsers.reduce((acc, u) => acc + u.timeOnSite, 0) / 
-                (data.activeUsers.length || 1)
-              )}
+              {data.recentEvents.reduce((sum, event) => sum + event.count, 0)}
             </div>
-            <p className="text-xs text-muted-foreground">Time on site</p>
+            <p className="text-xs text-muted-foreground">Total events</p>
           </CardContent>
         </Card>
       </div>
@@ -144,12 +196,20 @@ export function RealtimeMetrics({ initialData }: RealtimeMetricsProps) {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {topPages.map(([page, count]) => (
-                <div key={page} className="flex items-center justify-between">
-                  <p className="text-sm font-medium truncate max-w-[250px]">{page}</p>
-                  <Badge variant="secondary">{count} users</Badge>
-                </div>
-              ))}
+              {data.usersByPage.length > 0 ? (
+                data.usersByPage.slice(0, 5).map((item) => (
+                  <div key={item.page} className="flex items-center justify-between">
+                    <p className="text-sm font-medium truncate max-w-[250px]">
+                      {formatPagePath(item.page)}
+                    </p>
+                    <Badge variant="secondary">{item.users} users</Badge>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                  No active page views
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -159,60 +219,77 @@ export function RealtimeMetrics({ initialData }: RealtimeMetricsProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Activity className="w-4 h-4" />
-              Recent Activity
+              Recent Events
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {data.recentEvents.slice(0, 5).map((event) => (
-                <div key={event.id} className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <Circle className="w-2 h-2 fill-current" />
-                    <span className="font-medium">{event.event}</span>
-                    <span className="text-muted-foreground">by {event.user}</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    {new Date(event.timestamp).toLocaleTimeString()}
-                  </span>
-                </div>
-              ))}
+              {data.recentEvents.length > 0 ? (
+                data.recentEvents.slice(0, 5).map((event, idx) => {
+                  const Icon = getEventIcon(event.eventName)
+                  return (
+                    <div key={`${event.eventName}-${idx}`} className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Icon className="w-3 h-3 text-muted-foreground shrink-0" />
+                        <span className="font-medium truncate">
+                          {event.eventName.replace(/_/g, ' ')}
+                        </span>
+                      </div>
+                      <Badge variant="outline" className="ml-2">
+                        {event.count}
+                      </Badge>
+                    </div>
+                  )
+                })
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                  No recent events
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Active Users Detail */}
+      {/* Traffic Sources */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="w-4 h-4" />
-            Active Users Detail
+            Traffic Sources
           </CardTitle>
           <CardDescription>
-            Real-time view of users currently on the platform
+            Where your active users are coming from
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {data.activeUsers.slice(0, 10).map((user) => (
-              <div key={user.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50">
-                <div className="flex items-center gap-3">
-                  <Badge className={getUserTypeColor(user.type)} variant="secondary">
-                    {user.type}
-                  </Badge>
-                  <div>
-                    <p className="text-sm font-medium">{user.currentPage}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatTime(user.timeOnSite)} on site · {user.actions} actions
-                    </p>
+          <div className="space-y-3">
+            {data.usersBySource.length > 0 ? (
+              data.usersBySource.map((source) => (
+                <div key={source.source} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Badge className={cn(getSourceColor(source.source))} variant="secondary">
+                        {source.source}
+                      </Badge>
+                    </div>
+                    <span className="text-sm font-medium">{source.users} users</span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary transition-all duration-500"
+                      style={{
+                        width: `${(source.users / data.activeUsers) * 100}%`
+                      }}
+                    />
                   </div>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  <Circle className="w-2 h-2 fill-green-500 text-green-500 mr-1" />
-                  Active
-                </Badge>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                No traffic data available
+              </p>
+            )}
           </div>
         </CardContent>
       </Card>

@@ -21,9 +21,10 @@ interface ActivityLog {
   ip_address?: string
   user_agent?: string
   profiles: {
-    full_name?: string
+    first_name?: string
+    last_name?: string
     email?: string
-    image_url?: string
+    avatar_url?: string
   }
 }
 
@@ -57,9 +58,10 @@ async function getActivityLogs(searchParams: SearchParams, userId: string) {
       ip_address,
       user_agent,
       profiles!activity_logs_user_id_fkey (
-        full_name,
+        first_name,
+        last_name,
         email,
-        image_url
+        avatar_url
       )
     `, { count: 'exact' })
     .order('created_at', { ascending: false })
@@ -131,7 +133,8 @@ async function getFilterOptions() {
       user_id,
       profiles!activity_logs_user_id_fkey (
         id,
-        full_name,
+        first_name,
+        last_name,
         email
       )
     `)
@@ -142,7 +145,7 @@ async function getFilterOptions() {
       acc.push(u.profiles)
     }
     return acc
-  }, [] as Array<{ id: string; full_name?: string; email?: string }>) || []
+  }, [] as Array<{ id: string; first_name?: string; last_name?: string; email?: string }>) || []
   
   return {
     actions: uniqueActions,
@@ -154,8 +157,9 @@ async function getFilterOptions() {
 export default async function ActivityLogsPage({
   searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }) {
+  const params = await searchParams
   const { userId } = await auth()
   const user = await currentUser()
   
@@ -177,7 +181,7 @@ export default async function ActivityLogsPage({
   }
   
   const [{ logs, totalCount, totalPages }, filterOptions] = await Promise.all([
-    getActivityLogs(searchParams, userId),
+    getActivityLogs(params, userId),
     getFilterOptions(),
   ])
   
@@ -194,12 +198,12 @@ export default async function ActivityLogsPage({
         logs={logs}
         totalCount={totalCount}
         totalPages={totalPages}
-        currentPage={parseInt(searchParams.page || '1')}
+        currentPage={parseInt(params.page || '1')}
         filters={{
-          action: searchParams.action,
-          resource: searchParams.resource,
-          user: searchParams.user,
-          date: searchParams.date,
+          action: params.action,
+          resource: params.resource,
+          user: params.user,
+          date: params.date,
         }}
         filterOptions={filterOptions}
       />

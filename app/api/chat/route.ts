@@ -6,6 +6,7 @@ import { withAuth, withRateLimit, withBodyLimit, compose } from '@/lib/api-middl
 import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 import { currentUser } from '@clerk/nextjs/server'
+import { serverAnalytics } from '@/lib/analytics-server'
 
 // Schema for chat message
 const chatMessageSchema = z.object({
@@ -143,6 +144,15 @@ const chatHandler = compose(
         },
         streamingEnabled: stream
       })
+    }
+
+    // Track chat session creation (server-side)
+    if (!sessionId) {
+      serverAnalytics.trackChatSession(
+        'created',
+        chatSession.session_id,
+        userProfile.id
+      ).catch(err => console.error('[Analytics] Failed to track chat session:', err))
     }
 
     // Don't add current message here - it will be added in generateAIResponse
