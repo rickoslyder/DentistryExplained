@@ -33,7 +33,7 @@ The Dentistry Explained platform has a strong foundation with excellent UI/UX de
 - Comprehensive dental knowledge base implemented ✅
 - Emergency detection and response system ✅
 - User preference personalization ✅
-- Using Gemini 2.5 Flash Lite model ✅
+- Using o4-mini reasoning model ✅
 
 **Still Missing:**
 - Conversation analytics dashboard
@@ -257,4 +257,4 @@ As of July 2025, the Dentistry Explained platform has successfully built its cor
 2. **API integrations** for GDC, NHS, and practice data  
 3. **Payment system** for monetization
 
-The AI chat is now active with Gemini 2.5 Flash Lite. With focused effort on content creation and API integrations, the platform could be production-ready within 3-4 weeks.
+The AI chat is now active with the o4-mini reasoning model via LiteLLM proxy. With focused effort on content creation and API integrations, the platform could be production-ready within 3-4 weeks.
