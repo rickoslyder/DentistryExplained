@@ -1,4 +1,4 @@
-import { clerkMiddleware, createRouteMatcher, currentUser } from "@clerk/nextjs/server"
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 
 // Routes accessible to everyone (logged in or not)
 const isPublicRoute = createRouteMatcher([
@@ -59,20 +59,16 @@ const isAdminRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId, sessionClaims } = await auth()
+  const { userId, sessionClaims, sessionId } = await auth()
   
-  // Get the current user to access publicMetadata
-  const user = userId ? await currentUser() : null
-  const userType = user?.publicMetadata?.userType as string | undefined
-  const userRole = user?.publicMetadata?.role as string | undefined
+  // For now, we'll skip the admin route check in middleware and rely on the layout check
+  // This is because sessionClaims doesn't include publicMetadata and currentUser() isn't available in middleware
   
-  // Debug logging for admin access
+  // Debug logging
   if (req.nextUrl.pathname.startsWith('/admin')) {
-    console.log('[Middleware Debug] Admin route accessed:', req.nextUrl.pathname)
-    console.log('[Middleware Debug] userId:', userId)
-    console.log('[Middleware Debug] publicMetadata:', user?.publicMetadata)
-    console.log('[Middleware Debug] userType from publicMetadata:', userType)
-    console.log('[Middleware Debug] userRole from publicMetadata:', userRole)
+    console.log('[Middleware Debug] Admin route accessed, userId:', userId)
+    console.log('[Middleware Debug] sessionId:', sessionId)
+    console.log('[Middleware Debug] Skipping middleware check, will rely on layout check')
   }
 
   // API routes handle their own authentication
@@ -88,25 +84,22 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // Check professional-only routes
+  // NOTE: We can't check userType from publicMetadata in middleware, so these checks are disabled
+  // The actual authorization happens in the page layouts
+  /*
   if (isProfessionalOnlyRoute(req)) {
     if (!userId) {
       return Response.redirect(new URL("/sign-in?redirect_url=" + encodeURIComponent(req.url), req.url))
     }
-    
-    if (userType !== "professional") {
-      return Response.redirect(new URL("/professional/upgrade?from=" + encodeURIComponent(req.url), req.url))
-    }
   }
+  */
 
-  // Check admin routes
+  // Check admin routes - only check if user is logged in
   if (isAdminRoute(req)) {
     if (!userId) {
       return Response.redirect(new URL("/sign-in", req.url))
     }
-    
-    if (userType !== "professional" || !["admin", "editor"].includes(userRole || "")) {
-      return Response.redirect(new URL("/access-denied", req.url))
-    }
+    // The actual admin check happens in the admin layout
   }
 })
 
