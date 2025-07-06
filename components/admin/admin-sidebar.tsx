@@ -14,12 +14,14 @@ import {
   MessageSquare,
   Shield,
   ArrowLeft,
-  ScrollText
+  ScrollText,
+  Search
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Articles', href: '/admin/articles', icon: FileText },
+  { name: 'Advanced Search', href: '/admin/search', icon: Search },
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
   { name: 'Media', href: '/admin/media', icon: Image },
   { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
