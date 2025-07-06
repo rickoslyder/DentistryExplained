@@ -209,14 +209,14 @@ export function ActivityLogsView({
           <div className="space-y-2">
             <Label htmlFor="action-filter">Action</Label>
             <Select
-              value={filters.action || ''}
-              onValueChange={(value) => updateFilter('action', value)}
+              value={filters.action || 'all'}
+              onValueChange={(value) => updateFilter('action', value === 'all' ? '' : value)}
             >
               <SelectTrigger id="action-filter">
                 <SelectValue placeholder="All actions" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All actions</SelectItem>
+                <SelectItem value="all">All actions</SelectItem>
                 {filterOptions.actions.map((action) => (
                   <SelectItem key={action} value={action}>
                     {action.replace('_', ' ')}
@@ -229,14 +229,14 @@ export function ActivityLogsView({
           <div className="space-y-2">
             <Label htmlFor="resource-filter">Resource Type</Label>
             <Select
-              value={filters.resource || ''}
-              onValueChange={(value) => updateFilter('resource', value)}
+              value={filters.resource || 'all'}
+              onValueChange={(value) => updateFilter('resource', value === 'all' ? '' : value)}
             >
               <SelectTrigger id="resource-filter">
                 <SelectValue placeholder="All resources" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All resources</SelectItem>
+                <SelectItem value="all">All resources</SelectItem>
                 {filterOptions.resources.map((resource) => (
                   <SelectItem key={resource} value={resource}>
                     {resource.replace('_', ' ')}
@@ -249,14 +249,14 @@ export function ActivityLogsView({
           <div className="space-y-2">
             <Label htmlFor="user-filter">User</Label>
             <Select
-              value={filters.user || ''}
-              onValueChange={(value) => updateFilter('user', value)}
+              value={filters.user || 'all'}
+              onValueChange={(value) => updateFilter('user', value === 'all' ? '' : value)}
             >
               <SelectTrigger id="user-filter">
                 <SelectValue placeholder="All users" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All users</SelectItem>
+                <SelectItem value="all">All users</SelectItem>
                 {filterOptions.users.map((user) => (
                   <SelectItem key={user.id} value={user.id}>
                     {user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.email || user.id}
