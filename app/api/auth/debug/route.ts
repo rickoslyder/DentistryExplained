@@ -71,8 +71,7 @@ export async function GET() {
         roleFromPublicMetadata: user?.publicMetadata?.role,
         supabaseUserType: supabaseProfile?.user_type,
         supabaseRole: supabaseProfile?.role,
-        middlewareWouldAllow: sessionClaims?.metadata?.userType === 'professional' && 
-          ['admin', 'editor'].includes(sessionClaims?.metadata?.role || ''),
+        middlewareNowOnlyChecksAuth: 'Middleware only checks if logged in (simplified)',
         layoutWouldAllow: supabaseProfile?.user_type === 'professional' && 
           ['admin', 'editor'].includes(supabaseProfile?.role || ''),
       }
