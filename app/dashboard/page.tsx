@@ -33,8 +33,8 @@ export default function DashboardPage() {
   const { stats, recentReading, professionalStats, isLoading: statsLoading } = useDashboardData()
 
   useEffect(() => {
-    if (user?.unsafeMetadata) {
-      setUserMetadata(user.unsafeMetadata as UserMetadata)
+    if (user?.publicMetadata) {
+      setUserMetadata(user.publicMetadata as UserMetadata)
     }
   }, [user])
 

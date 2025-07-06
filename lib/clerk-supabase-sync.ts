@@ -15,6 +15,7 @@ export async function syncUserProfile(clerkUser: {
   imageUrl?: string | null
   publicMetadata?: {
     userType?: 'patient' | 'professional'
+    role?: 'user' | 'admin' | 'editor'
   }
 }) {
   try {
@@ -24,11 +25,13 @@ export async function syncUserProfile(clerkUser: {
     }
 
     const userType = clerkUser.publicMetadata?.userType || 'patient'
+    const role = clerkUser.publicMetadata?.role || 'user'
 
     const profileData: ProfileInsert = {
       clerk_id: clerkUser.id,
       email,
       user_type: userType,
+      role,
       first_name: clerkUser.firstName,
       last_name: clerkUser.lastName,
       avatar_url: clerkUser.imageUrl,
@@ -47,6 +50,8 @@ export async function syncUserProfile(clerkUser: {
         .from('profiles')
         .update({
           email: profileData.email,
+          user_type: profileData.user_type,
+          role: profileData.role,
           first_name: profileData.first_name,
           last_name: profileData.last_name,
           avatar_url: profileData.avatar_url,

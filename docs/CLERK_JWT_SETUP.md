@@ -23,10 +23,13 @@ The application uses Clerk for authentication and Supabase for the database. To 
 **Claims**:
 ```json
 {
-  "sub": "{{user.id}}",
   "email": "{{user.primary_email_address.email_address}}",
   "user_metadata": {
     "full_name": "{{user.full_name}}"
+  },
+  "metadata": {
+    "userType": "{{user.public_metadata.userType}}",
+    "role": "{{user.public_metadata.role}}"
   }
 }
 ```

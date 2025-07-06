@@ -13,12 +13,12 @@ export async function GET(req: NextRequest) {
     
     // Check if user is admin
     const { data: profile, error } = await supabase
-      .from('user_profiles')
+      .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('clerk_id', user.id)
       .single()
 
-    if (error || !profile || profile.role !== 'admin') {
+    if (error || !profile || !['admin', 'editor'].includes(profile.role || '')) {
       return NextResponse.json({ error: 'Access denied' }, { status: 403 })
     }
 

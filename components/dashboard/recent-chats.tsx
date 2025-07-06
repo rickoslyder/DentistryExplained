@@ -46,7 +46,7 @@ export function RecentChats({ userId }: RecentChatsProps) {
           return {
             id: session.id,
             preview,
-            lastMessage: new Date(session.updated_at),
+            lastMessage: session.last_activity ? new Date(session.last_activity) : new Date(session.created_at),
             messageCount: session.message_count || 0,
             topic: session.topic || undefined
           }

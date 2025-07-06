@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { analytics } from "@/lib/analytics-enhanced"
+import { updateUserMetadata } from "@/app/actions/update-user-metadata"
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -119,25 +120,23 @@ export default function OnboardingPage() {
     setIsLoading(true)
 
     try {
-      // Here you would typically save the onboarding data to your database
-      // For now, we'll simulate an API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Update user metadata in Clerk
-      await user?.update({
-        unsafeMetadata: {
-          userType,
-          onboardingCompleted: true,
-          interests: formData.interests,
-          location: formData.location,
-          ...(userType === "professional" && {
-            gdcNumber: formData.gdcNumber,
-            practiceType: formData.practiceType,
-            specializations: formData.specializations,
-            verificationStatus: "pending",
-          }),
-        },
+      // Update user metadata using server action (publicMetadata)
+      const result = await updateUserMetadata({
+        userType,
+        onboardingCompleted: true,
+        interests: formData.interests,
+        location: formData.location,
+        ...(userType === "professional" && {
+          gdcNumber: formData.gdcNumber,
+          practiceType: formData.practiceType,
+          specializations: formData.specializations,
+          verificationStatus: "pending",
+        }),
       })
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to update user metadata')
+      }
 
       // Track onboarding completion and registration
       analytics.trackRegistration(userType || 'patient', 'email')

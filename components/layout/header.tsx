@@ -2,18 +2,20 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, Search, BookOpen, MapPin, Users, FileText } from "lucide-react"
+import { Menu, Search, BookOpen, MapPin, Users, FileText, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { UserButton, useUser } from "@clerk/nextjs"
 import { AIAssistantButton } from "@/components/chat/ai-assistant-button"
 import { SearchDialog } from "@/components/search/search-dialog"
 import { useBookmarks } from "@/hooks/use-bookmarks"
+import { useIsAdmin } from "@/lib/hooks/use-is-admin"
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { isSignedIn } = useUser()
   const { bookmarks } = useBookmarks()
+  const { isAdmin } = useIsAdmin()
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
@@ -43,6 +45,11 @@ export function Header() {
             <Link href="/professional" className="text-gray-700 hover:text-primary transition-colors font-medium">
               For Professionals
             </Link>
+            {isAdmin && (
+              <Link href="/admin" className="text-gray-700 hover:text-primary transition-colors font-medium">
+                Admin
+              </Link>
+            )}
           </nav>
 
           {/* Right side actions */}
@@ -129,6 +136,15 @@ export function Header() {
                     <Users className="w-5 h-5 text-primary" />
                     <span className="font-medium">For Professionals</span>
                   </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      <Shield className="w-5 h-5 text-primary" />
+                      <span className="font-medium">Admin Panel</span>
+                    </Link>
+                  )}
                   <div className="pt-4 border-t">
                     <Button variant="ghost" className="w-full justify-start" onClick={() => setIsSearchOpen(true)}>
                       <Search className="w-5 h-5 mr-3" />

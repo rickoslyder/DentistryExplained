@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Shield, FileText, Users, BookOpen, Download, Star, CheckCircle, ArrowRight } from "lucide-react"
 import { Header } from "@/components/layout/header"
@@ -5,8 +7,25 @@ import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { analytics } from "@/lib/analytics-enhanced"
 
 export default function ProfessionalPage() {
+  const handlePreview = (resourceType: string, resourceTitle: string) => {
+    // Track preview attempt
+    analytics.track('professional_resource_preview_clicked', {
+      resource_type: resourceType,
+      resource_title: resourceTitle,
+      source: 'professional_marketing_page',
+    })
+    
+    // For now, show a simple alert since these are marketing previews
+    // In production, this would generate actual preview PDFs
+    alert(`Preview functionality for "${resourceTitle}" coming soon! Visit the Professional Dashboard after signing up to access full resources.`)
+    
+    // Alternative: Could redirect to sign-up page
+    // window.location.href = '/sign-up?userType=professional&preview=' + encodeURIComponent(resourceType)
+  }
+
   const features = [
     {
       icon: FileText,
@@ -199,7 +218,11 @@ export default function ProfessionalPage() {
                   </ul>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">{resource.downloadCount}</span>
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => handlePreview(resource.title.toLowerCase().replace(/\s+/g, '_'), resource.title)}
+                    >
                       <Download className="w-4 h-4 mr-2" />
                       Preview
                     </Button>
