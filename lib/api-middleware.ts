@@ -16,7 +16,7 @@ export type ApiHandler<T = any> = (
 export interface ApiContext {
   userId: string
   userProfile: UserProfile
-  supabase: ReturnType<typeof createServerSupabaseClient>
+  supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>
   requestId: string
 }
 
