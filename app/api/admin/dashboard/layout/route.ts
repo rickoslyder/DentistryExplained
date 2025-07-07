@@ -40,8 +40,6 @@ const getHandler = withAuth(async (request: NextRequest, context) => {
     const supabase = context.supabase!
     const userProfile = context.userProfile!
     
-    console.log('[Dashboard Layout API] Fetching for profile:', userProfile.id)
-    
     // Get user's dashboard layout - use direct query instead of RPC
     const { data, error } = await supabase
       .from('dashboard_layouts')
@@ -50,10 +48,7 @@ const getHandler = withAuth(async (request: NextRequest, context) => {
       .eq('is_default', true)
       .single()
     
-    console.log('[Dashboard Layout API] Query result:', { data, error })
-    
     if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
-      console.error('[Dashboard Layout API] Database error:', error)
       return ApiErrors.fromDatabaseError(error, 'get_dashboard_layout', requestId)
     }
     
