@@ -105,6 +105,7 @@ export function PerformanceMonitor() {
           })
         }
         setTimeSeriesData(mockTimeSeries)
+      }
     } catch (error) {
       toast({
         title: 'Error fetching performance metrics',
