@@ -3,7 +3,7 @@ import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { logActivity, formatResourceName, ActivityMetadata } from '@/lib/activity-logger'
-import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
+import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization-server'
 
 // Schema for article updates
 const updateArticleSchema = z.object({

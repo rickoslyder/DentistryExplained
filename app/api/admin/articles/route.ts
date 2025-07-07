@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withAuth, withCSRF, withRateLimit, withAudit, compose } from '@/lib/api-middleware'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
+import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization-server'
 
 // Article validation schema
 const articleSchema = z.object({
