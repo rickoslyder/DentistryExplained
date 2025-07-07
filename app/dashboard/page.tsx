@@ -30,6 +30,7 @@ export default function DashboardPage() {
   const { user, isLoaded } = useUser()
   const [userMetadata, setUserMetadata] = useState<UserMetadata>({})
   const [debugData, setDebugData] = useState<any>(null)
+  const [showDebug, setShowDebug] = useState(false)
   const { bookmarks } = useBookmarks()
   const { stats, recentReading, professionalStats, isLoading: statsLoading } = useDashboardData()
 
@@ -39,15 +40,21 @@ export default function DashboardPage() {
     }
   }, [user])
   
-  // Fetch debug data
+  // Check for debug parameter
   useEffect(() => {
-    if (user) {
+    const params = new URLSearchParams(window.location.search)
+    setShowDebug(params.get('debug') === 'true')
+  }, [])
+  
+  // Fetch debug data only if debug mode is enabled
+  useEffect(() => {
+    if (user && showDebug) {
       fetch('/api/auth/debug')
         .then(res => res.json())
         .then(data => setDebugData(data))
         .catch(err => console.error('Failed to fetch debug data:', err))
     }
-  }, [user])
+  }, [user, showDebug])
 
   if (!isLoaded || statsLoading) {
     return (
@@ -144,11 +151,12 @@ export default function DashboardPage() {
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* TEMPORARY DEBUG SECTION */}
-        {debugData && (
+        {/* DEBUG SECTION - Only visible with ?debug=true */}
+        {showDebug && debugData && (
           <Card className="mb-8 border-orange-200 bg-orange-50">
             <CardHeader>
-              <CardTitle className="text-orange-800">🔍 Auth Debug Info (Temporary)</CardTitle>
+              <CardTitle className="text-orange-800">🔍 Auth Debug Info</CardTitle>
+              <CardDescription className="text-orange-700">Only visible with ?debug=true parameter</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4 font-mono text-xs">
