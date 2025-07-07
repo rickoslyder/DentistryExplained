@@ -44,7 +44,12 @@ export function SettingsManagerWrapper() {
   
   const fetchSettings = async () => {
     try {
-      const response = await fetch('/api/admin/settings')
+      const response = await fetch('/api/admin/settings', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       if (!response.ok) throw new Error('Failed to fetch settings')
       
       const { settings: dbSettings } = await response.json()

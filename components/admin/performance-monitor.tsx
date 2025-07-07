@@ -48,64 +48,63 @@ export function PerformanceMonitor() {
   const fetchMetrics = async () => {
     setIsLoading(true)
     try {
-      // In a real implementation, this would fetch from a performance monitoring API
-      // For now, we'll generate mock data
-      const mockMetrics: PerformanceMetric[] = [
-        {
-          endpoint: '/api/chat',
-          method: 'POST',
-          avg_response_time: 245,
-          min_response_time: 120,
-          max_response_time: 890,
-          request_count: 1234,
-          error_count: 12,
-          error_rate: 0.97
+      const response = await fetch(`/api/admin/performance?range=${timeRange}`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          endpoint: '/api/search',
-          method: 'GET',
-          avg_response_time: 89,
-          min_response_time: 45,
-          max_response_time: 234,
-          request_count: 5678,
-          error_count: 5,
-          error_rate: 0.09
-        },
-        {
-          endpoint: '/api/articles',
-          method: 'GET',
-          avg_response_time: 67,
-          min_response_time: 32,
-          max_response_time: 145,
-          request_count: 3456,
-          error_count: 2,
-          error_rate: 0.06
-        },
-        {
-          endpoint: '/api/admin/dashboard/layout',
-          method: 'GET',
-          avg_response_time: 134,
-          min_response_time: 89,
-          max_response_time: 234,
-          request_count: 234,
-          error_count: 0,
-          error_rate: 0
-        }
-      ]
-
-      // Generate time series data
-      const now = new Date()
-      const mockTimeSeries: TimeSeriesData[] = []
-      for (let i = 0; i < 24; i++) {
-        const time = new Date(now.getTime() - (23 - i) * 5 * 60 * 1000)
-        mockTimeSeries.push({
-          time: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-          value: Math.floor(Math.random() * 200) + 50
-        })
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch performance metrics')
       }
-
-      setMetrics(mockMetrics)
-      setTimeSeriesData(mockTimeSeries)
+      
+      const data = await response.json()
+      
+      setMetrics(data.metrics || [])
+      
+      // Process time series data for chart
+      if (data.timeSeries && data.timeSeries.length > 0) {
+        // Group by time intervals
+        const intervalMinutes = timeRange === '1h' ? 5 : timeRange === '6h' ? 15 : 60
+        const grouped: Record<string, number[]> = {}
+        
+        data.timeSeries.forEach((point: any) => {
+          const date = new Date(point.time)
+          const interval = Math.floor(date.getTime() / (intervalMinutes * 60 * 1000))
+          const key = new Date(interval * intervalMinutes * 60 * 1000).toISOString()
+          
+          if (!grouped[key]) {
+            grouped[key] = []
+          }
+          if (point.response_time > 0) {
+            grouped[key].push(point.response_time)
+          }
+        })
+        
+        // Calculate averages for each interval
+        const timeSeries = Object.entries(grouped)
+          .map(([time, values]) => ({
+            time: new Date(time).toLocaleTimeString(),
+            value: values.length > 0 
+              ? Math.round(values.reduce((a, b) => a + b, 0) / values.length)
+              : 0
+          }))
+          .slice(-24) // Last 24 data points
+        
+        setTimeSeriesData(timeSeries)
+      } else {
+        // Generate placeholder data if no real data
+        const now = new Date()
+        const mockTimeSeries: TimeSeriesData[] = []
+        for (let i = 0; i < 24; i++) {
+          const time = new Date(now.getTime() - (23 - i) * 5 * 60 * 1000)
+          mockTimeSeries.push({
+            time: time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+            value: Math.floor(Math.random() * 200) + 50
+          })
+        }
+        setTimeSeriesData(mockTimeSeries)
     } catch (error) {
       toast({
         title: 'Error fetching performance metrics',

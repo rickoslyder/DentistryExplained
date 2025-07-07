@@ -24,7 +24,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      afterSignInUrl="/dashboard"
+      afterSignUpUrl="/onboarding"
+    >
       <html lang="en" suppressHydrationWarning>
         <head>
           <GoogleTagManager />

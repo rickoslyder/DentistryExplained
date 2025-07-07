@@ -166,6 +166,7 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
       // Make API call to save settings
       const response = await fetch('/api/admin/settings', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ settings: settingsToSave }),
       })

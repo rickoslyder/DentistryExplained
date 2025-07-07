@@ -170,37 +170,50 @@ export function ErrorTracker() {
   }
 
   const fetchErrorSummary = async () => {
+    if (!supabase) return
+    
     try {
-      // In a real implementation, this would be an aggregated query
-      // For now, we'll create mock summary data
-      const mockSummary: ErrorSummary[] = [
-        {
-          error_type: 'TypeError',
-          count: 45,
-          last_occurrence: new Date().toISOString(),
-          trend: 'up'
-        },
-        {
-          error_type: 'NetworkError',
-          count: 23,
-          last_occurrence: new Date(Date.now() - 3600000).toISOString(),
-          trend: 'down'
-        },
-        {
-          error_type: 'ValidationError',
-          count: 12,
-          last_occurrence: new Date(Date.now() - 7200000).toISOString(),
-          trend: 'stable'
-        },
-        {
-          error_type: 'ReferenceError',
-          count: 8,
-          last_occurrence: new Date(Date.now() - 10800000).toISOString(),
-          trend: 'down'
-        }
-      ]
+      // Get error counts by type for the last 24 hours
+      const { data: errorCounts, error } = await supabase
+        .rpc('get_error_summary', {
+          hours: 24
+        })
 
-      setErrorSummary(mockSummary)
+      if (error) {
+        console.error('Error fetching error summary:', error)
+        // Fall back to manual aggregation if RPC doesn't exist
+        const { data: errors } = await supabase
+          .from('error_logs')
+          .select('error_type, created_at')
+          .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+        
+        if (errors) {
+          // Group by error type
+          const grouped = errors.reduce((acc: any, error) => {
+            if (!acc[error.error_type]) {
+              acc[error.error_type] = {
+                error_type: error.error_type,
+                count: 0,
+                last_occurrence: error.created_at
+              }
+            }
+            acc[error.error_type].count++
+            if (new Date(error.created_at) > new Date(acc[error.error_type].last_occurrence)) {
+              acc[error.error_type].last_occurrence = error.created_at
+            }
+            return acc
+          }, {})
+          
+          const summary: ErrorSummary[] = Object.values(grouped).map((item: any) => ({
+            ...item,
+            trend: 'stable' // You'd need historical data to calculate trends
+          }))
+          
+          setErrorSummary(summary)
+        }
+      } else if (errorCounts) {
+        setErrorSummary(errorCounts)
+      }
     } catch (error) {
       console.error('Error fetching error summary:', error)
     }
