@@ -275,7 +275,7 @@ Added comprehensive security headers in `next.config.mjs`:
 - **CORS Headers**: Configured for API routes
 
 Allowed CSP domains:
-- Clerk authentication: `https://clerk.accounts.dev`
+- Clerk authentication: `https://clerk.accounts.dev`, `https://*.clerk.accounts.dev`, `https://actual-feline-35.accounts.dev`
 - AI proxy: `https://openai-proxy-0l7e.onrender.com`
 - Supabase: `https://*.supabase.co`
 - Resend email: `https://api.resend.com`
