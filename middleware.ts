@@ -40,6 +40,8 @@ const isPublicRoute = createRouteMatcher([
   "/sign-up(.*)",
   "/access-denied",
   "/professional/upgrade",
+  // Test routes during development
+  "/test-(.*)",
   // Dynamic routes for articles
   "/(.*)/(.*)$", // This allows [category]/[slug] pages
 ])
@@ -76,9 +78,17 @@ export default clerkMiddleware(async (auth, req) => {
     return
   }
 
+  // Handle RSC requests (React Server Components) differently
+  const isRSCRequest = req.headers.get('RSC') === '1' || req.nextUrl.searchParams.has('_rsc')
+  
   // Protect non-public routes - require authentication
   if (!isPublicRoute(req)) {
     if (!userId) {
+      // For RSC requests, return 401 instead of redirecting to avoid CORS issues
+      if (isRSCRequest) {
+        return new Response('Unauthorized', { status: 401 })
+      }
+      // For regular requests, use Clerk's protect method
       await auth.protect()
     }
   }
@@ -97,6 +107,11 @@ export default clerkMiddleware(async (auth, req) => {
   // Check admin routes - only check if user is logged in
   if (isAdminRoute(req)) {
     if (!userId) {
+      // For RSC requests, return 401 instead of redirecting
+      if (isRSCRequest) {
+        return new Response('Unauthorized', { status: 401 })
+      }
+      // For regular requests, redirect to sign-in
       return Response.redirect(new URL("/sign-in", req.url))
     }
     // The actual admin check happens in the admin layout
