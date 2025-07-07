@@ -66,6 +66,11 @@ export function ErrorTracker() {
   // Using the global supabase client
 
   useEffect(() => {
+    if (!supabase) {
+      console.error('Supabase client not initialized')
+      return
+    }
+    
     fetchErrors()
     fetchErrorSummary()
 
@@ -92,6 +97,8 @@ export function ErrorTracker() {
   }, [])
 
   const fetchSingleError = async (errorId: string) => {
+    if (!supabase) return
+    
     const { data, error } = await supabase
       .from('error_logs')
       .select(`
@@ -112,6 +119,11 @@ export function ErrorTracker() {
   }
 
   const fetchErrors = async () => {
+    if (!supabase) {
+      setIsLoading(false)
+      return
+    }
+    
     setIsLoading(true)
     try {
       let query = supabase

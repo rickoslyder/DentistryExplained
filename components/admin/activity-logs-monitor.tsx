@@ -52,6 +52,11 @@ export function ActivityLogsMonitor() {
   // Using the global supabase client
 
   useEffect(() => {
+    if (!supabase) {
+      console.error('Supabase client not initialized')
+      return
+    }
+    
     fetchLogs()
 
     // Set up real-time subscription
@@ -77,6 +82,8 @@ export function ActivityLogsMonitor() {
   }, [])
 
   const fetchSingleLog = async (logId: string) => {
+    if (!supabase) return
+    
     const { data, error } = await supabase
       .from('activity_logs')
       .select(`
@@ -95,6 +102,11 @@ export function ActivityLogsMonitor() {
   }
 
   const fetchLogs = async () => {
+    if (!supabase) {
+      setIsLoading(false)
+      return
+    }
+    
     setIsLoading(true)
     try {
       let query = supabase

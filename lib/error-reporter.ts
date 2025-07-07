@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { createClient } from '@supabase/supabase-js'
 
 interface ErrorReport {
   error_type: string
@@ -10,12 +10,30 @@ interface ErrorReport {
 }
 
 class ErrorReporter {
-  private supabase = supabase
+  private supabase: any
   private queue: ErrorReport[] = []
   private isReporting = false
+  private initialized = false
+
+  private initialize() {
+    if (this.initialized) return
+    
+    // Only initialize if we're in the browser and have the required env vars
+    if (typeof window !== 'undefined' && 
+        process.env.NEXT_PUBLIC_SUPABASE_URL && 
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      this.supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      )
+      this.initialized = true
+    }
+  }
 
   async report(error: Error | ErrorEvent, additionalInfo?: Record<string, any>) {
     try {
+      this.initialize()
+      if (!this.supabase) return
       const errorReport: ErrorReport = {
         error_type: error.constructor.name || 'UnknownError',
         message: error.message || 'Unknown error occurred',
@@ -56,6 +74,8 @@ class ErrorReporter {
       const batch = this.queue.splice(0, 10)
 
       for (const errorReport of batch) {
+        if (!this.supabase) continue
+        
         await this.supabase
           .from('error_logs')
           .insert({
