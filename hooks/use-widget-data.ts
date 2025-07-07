@@ -26,20 +26,41 @@ export function useWidgetData<T = any>({
       setError(undefined)
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch data'))
-      setData(undefined)
+      // Don't clear data on error - keep showing stale data
     } finally {
       setIsLoading(false)
     }
   }, [fetchFn, enabled])
 
   useEffect(() => {
-    fetchData()
-
-    if (refreshInterval && enabled) {
-      const interval = setInterval(fetchData, refreshInterval)
-      return () => clearInterval(interval)
+    // Initial fetch
+    let mounted = true
+    
+    const initialFetch = async () => {
+      if (mounted) {
+        await fetchData()
+      }
     }
-  }, [fetchData, refreshInterval, enabled])
+    
+    initialFetch()
+
+    // Set up interval if needed
+    let interval: NodeJS.Timeout | undefined
+    if (refreshInterval && enabled) {
+      interval = setInterval(() => {
+        if (mounted && !isLoading) {
+          fetchData()
+        }
+      }, refreshInterval)
+    }
+    
+    return () => {
+      mounted = false
+      if (interval) {
+        clearInterval(interval)
+      }
+    }
+  }, [fetchData, refreshInterval, enabled, isLoading])
 
   return {
     data,

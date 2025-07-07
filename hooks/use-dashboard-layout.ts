@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { debounce } from '@/lib/utils'
 import type { WidgetConfig } from '@/lib/widgets/types'
 
 interface DashboardLayout {
@@ -16,6 +17,13 @@ export function useDashboardLayout() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const { toast } = useToast()
+  const layoutRef = useRef<DashboardLayout | null>(null)
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    layoutRef.current = layout
+  }, [layout])
 
   // Fetch layout on mount
   useEffect(() => {
@@ -52,8 +60,8 @@ export function useDashboardLayout() {
     }
   }
 
-  const saveLayout = useCallback(async (widgets: WidgetConfig[]) => {
-    if (!layout || isSaving) return
+  const saveLayoutInternal = useCallback(async (widgets: WidgetConfig[]) => {
+    if (!layoutRef.current || isSaving) return
 
     try {
       setIsSaving(true)
@@ -84,30 +92,52 @@ export function useDashboardLayout() {
     } finally {
       setIsSaving(false)
     }
-  }, [layout, isSaving, toast])
+  }, [isSaving, toast])
+
+  // Debounced save function
+  const saveLayout = useCallback((widgets: WidgetConfig[]) => {
+    // Clear any pending save
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current)
+    }
+
+    // Set a new timeout for saving
+    saveTimeoutRef.current = setTimeout(() => {
+      saveLayoutInternal(widgets)
+    }, 1000) // Wait 1 second before saving
+  }, [saveLayoutInternal])
 
   const addWidget = useCallback((widget: WidgetConfig) => {
-    if (!layout) return
+    if (!layoutRef.current) return
 
-    const updatedWidgets = [...layout.widgets, widget]
-    setLayout({ ...layout, widgets: updatedWidgets })
+    const updatedWidgets = [...layoutRef.current.widgets, widget]
+    setLayout({ ...layoutRef.current, widgets: updatedWidgets })
     saveLayout(updatedWidgets)
-  }, [layout, saveLayout])
+  }, [saveLayout])
 
   const removeWidget = useCallback((widgetId: string) => {
-    if (!layout) return
+    if (!layoutRef.current) return
 
-    const updatedWidgets = layout.widgets.filter(w => w.id !== widgetId)
-    setLayout({ ...layout, widgets: updatedWidgets })
+    const updatedWidgets = layoutRef.current.widgets.filter(w => w.id !== widgetId)
+    setLayout({ ...layoutRef.current, widgets: updatedWidgets })
     saveLayout(updatedWidgets)
-  }, [layout, saveLayout])
+  }, [saveLayout])
 
   const updateWidgets = useCallback((widgets: WidgetConfig[]) => {
-    if (!layout) return
+    if (!layoutRef.current) return
 
-    setLayout({ ...layout, widgets })
+    setLayout({ ...layoutRef.current, widgets })
     saveLayout(widgets)
-  }, [layout, saveLayout])
+  }, [saveLayout])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return {
     layout,

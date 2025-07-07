@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout'
 import { widgetRegistry } from '@/lib/widgets/registry'
 import { WidgetWrapper } from './widget-wrapper'
+import { WidgetErrorBoundary } from './widget-error-boundary'
 import type { WidgetConfig } from '@/lib/widgets/types'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -36,7 +37,12 @@ export function DashboardGrid({
 
     const updatedWidgets = widgets.map(widget => {
       const layoutItem = layout.find(item => item.i === widget.id)
-      if (layoutItem) {
+      if (layoutItem && (
+        layoutItem.x !== widget.x ||
+        layoutItem.y !== widget.y ||
+        layoutItem.w !== widget.w ||
+        layoutItem.h !== widget.h
+      )) {
         return {
           ...widget,
           x: layoutItem.x,
@@ -48,7 +54,17 @@ export function DashboardGrid({
       return widget
     })
 
-    onLayoutChange(updatedWidgets)
+    // Only call onLayoutChange if something actually changed
+    const hasChanges = updatedWidgets.some((widget, index) => 
+      widget.x !== widgets[index].x ||
+      widget.y !== widgets[index].y ||
+      widget.w !== widgets[index].w ||
+      widget.h !== widgets[index].h
+    )
+
+    if (hasChanges) {
+      onLayoutChange(updatedWidgets)
+    }
   }, [widgets, isEditing, onLayoutChange])
 
   const renderWidget = (widget: WidgetConfig) => {
@@ -70,18 +86,20 @@ export function DashboardGrid({
 
     return (
       <div key={widget.id} data-grid={widget}>
-        <WidgetComponent
-          id={widget.id}
-          config={widget}
-          isEditing={isEditing}
-          onRemove={() => onRemoveWidget(widget.id)}
-          onSettingsChange={(settings) => {
-            const updatedWidgets = widgets.map(w =>
-              w.id === widget.id ? { ...w, settings } : w
-            )
-            onLayoutChange(updatedWidgets)
-          }}
-        />
+        <WidgetErrorBoundary widgetName={widget.title}>
+          <WidgetComponent
+            id={widget.id}
+            config={widget}
+            isEditing={isEditing}
+            onRemove={() => onRemoveWidget(widget.id)}
+            onSettingsChange={(settings) => {
+              const updatedWidgets = widgets.map(w =>
+                w.id === widget.id ? { ...w, settings } : w
+              )
+              onLayoutChange(updatedWidgets)
+            }}
+          />
+        </WidgetErrorBoundary>
       </div>
     )
   }
