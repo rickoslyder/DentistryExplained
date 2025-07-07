@@ -19,8 +19,7 @@ import type { WidgetConfig } from '@/lib/widgets/types'
 export function DashboardClient() {
   const [isEditing, setIsEditing] = useState(false)
   const widgetsRegistered = useRef(false)
-  const initRef = useRef(false)
-  const { layout, isLoading, isSaving, addWidget, removeWidget, updateWidgets } = useDashboardLayout()
+  const { layout, isLoading, isSaving, addWidget, removeWidget, updateWidgets, initializeDefaultWidgets } = useDashboardLayout()
 
   // Register widgets only once
   useEffect(() => {
@@ -69,60 +68,6 @@ export function DashboardClient() {
     )
   }
 
-  // Initialize default widgets only once
-  useEffect(() => {
-    if (!isLoading && layout && layout.widgets.length === 0 && !initRef.current && !isSaving) {
-      initRef.current = true
-      const defaultWidgets: WidgetConfig[] = [
-        {
-          id: uuidv4(),
-          type: 'stats',
-          title: 'Platform Stats',
-          x: 0,
-          y: 0,
-          w: 6,
-          h: 4,
-        },
-        {
-          id: uuidv4(),
-          type: 'quick-actions',
-          title: 'Quick Actions',
-          x: 6,
-          y: 0,
-          w: 6,
-          h: 4,
-        },
-        {
-          id: uuidv4(),
-          type: 'recent-activity',
-          title: 'Recent Activity',
-          x: 0,
-          y: 4,
-          w: 6,
-          h: 6,
-        },
-        {
-          id: uuidv4(),
-          type: 'content-status',
-          title: 'Content Status',
-          x: 6,
-          y: 4,
-          w: 3,
-          h: 6,
-        },
-        {
-          id: uuidv4(),
-          type: 'user-growth',
-          title: 'User Growth',
-          x: 9,
-          y: 4,
-          w: 3,
-          h: 6,
-        },
-      ]
-      updateWidgets(defaultWidgets)
-    }
-  }, [isLoading, layout?.widgets?.length, isSaving, updateWidgets])
 
   const widgets = layout?.widgets || []
 
@@ -183,16 +128,25 @@ export function DashboardClient() {
         </div>
       </div>
 
-      <DashboardGrid
-        widgets={widgets}
-        isEditing={isEditing}
-        onLayoutChange={updateWidgets}
-        onRemoveWidget={removeWidget}
-        onWidgetSettings={(widgetId) => {
-          // TODO: Open widget settings dialog
-          console.log('Widget settings:', widgetId)
-        }}
-      />
+      {widgets.length === 0 && !isLoading ? (
+        <div className="flex flex-col items-center justify-center h-96 border-2 border-dashed border-gray-300 rounded-lg">
+          <p className="text-gray-500 mb-4">No widgets configured yet</p>
+          <Button onClick={initializeDefaultWidgets}>
+            Initialize Default Dashboard
+          </Button>
+        </div>
+      ) : (
+        <DashboardGrid
+          widgets={widgets}
+          isEditing={isEditing}
+          onLayoutChange={updateWidgets}
+          onRemoveWidget={removeWidget}
+          onWidgetSettings={(widgetId) => {
+            // TODO: Open widget settings dialog
+            console.log('Widget settings:', widgetId)
+          }}
+        />
+      )}
     </div>
   )
 }

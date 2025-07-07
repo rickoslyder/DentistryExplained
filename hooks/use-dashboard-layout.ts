@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { debounce } from '@/lib/utils'
 import type { WidgetConfig } from '@/lib/widgets/types'
 
 interface DashboardLayout {
@@ -46,13 +45,19 @@ export function useDashboardLayout() {
       }
       
       const data = await response.json()
-      setLayout(data.layout || {
-        id: null,
-        name: 'Default Layout',
-        widgets: [],
-        settings: {},
-        is_default: true,
-      })
+      // If no layout exists, create one with default widgets
+      if (!data.layout) {
+        const defaultLayout: DashboardLayout = {
+          id: null,
+          name: 'Default Layout',
+          widgets: [],
+          settings: {},
+          is_default: true,
+        }
+        setLayout(defaultLayout)
+      } else {
+        setLayout(data.layout)
+      }
     } catch (error) {
       toast({
         title: 'Error loading dashboard',
@@ -154,6 +159,60 @@ export function useDashboardLayout() {
     }
   }, [])
 
+  const initializeDefaultWidgets = useCallback(() => {
+    if (!layout || layout.widgets.length > 0) return
+    
+    const defaultWidgets: WidgetConfig[] = [
+      {
+        id: `widget_${Date.now()}_1`,
+        type: 'stats',
+        title: 'Platform Stats',
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 4,
+      },
+      {
+        id: `widget_${Date.now()}_2`,
+        type: 'quick-actions',
+        title: 'Quick Actions',
+        x: 6,
+        y: 0,
+        w: 6,
+        h: 4,
+      },
+      {
+        id: `widget_${Date.now()}_3`,
+        type: 'recent-activity',
+        title: 'Recent Activity',
+        x: 0,
+        y: 4,
+        w: 6,
+        h: 6,
+      },
+      {
+        id: `widget_${Date.now()}_4`,
+        type: 'content-status',
+        title: 'Content Status',
+        x: 6,
+        y: 4,
+        w: 3,
+        h: 6,
+      },
+      {
+        id: `widget_${Date.now()}_5`,
+        type: 'user-growth',
+        title: 'User Growth',
+        x: 9,
+        y: 4,
+        w: 3,
+        h: 6,
+      },
+    ]
+    
+    updateWidgets(defaultWidgets)
+  }, [layout, updateWidgets])
+
   return {
     layout,
     isLoading,
@@ -161,6 +220,7 @@ export function useDashboardLayout() {
     addWidget,
     removeWidget,
     updateWidgets,
+    initializeDefaultWidgets,
     refetch: fetchLayout,
   }
 }
