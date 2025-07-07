@@ -1,3 +1,78 @@
+# CORS Authentication Fixes - January 7, 2025
+
+## Tasks Completed ✅
+
+### 1. Add OPTIONS handler middleware for authenticated API routes ✅
+- Added OPTIONS preflight handling to `withAuth` middleware
+- Added OPTIONS preflight handling to `withOptionalAuth` middleware
+- Both now return proper CORS headers for preflight requests
+
+### 2. Update API middleware to properly handle CORS preflight requests ✅
+- Updated CORS headers to include all necessary Clerk-specific headers
+- Set proper Access-Control-Allow-Credentials header
+- Configured origin checking for development vs production
+
+### 3. Add withCORS wrapper to authenticated API routes ✅
+- Added `withCORS` to chat API route (POST and GET)
+- Added `withCORS` to admin articles API route (POST and GET)
+- Updated imports to include withCORS where needed
+
+### 4. Update client-side fetch calls to include proper credentials ✅
+- Updated `use-chat-stream.ts` to include `credentials: 'include'` in all fetch calls
+- Updated `use-csrf.ts` to include `credentials: 'include'` in all fetch calls
+- Ensures cookies are sent with all API requests
+
+### 5. Test authentication flow with CORS fixes ✅
+- All middleware components now properly handle OPTIONS requests
+- Credentials are properly included in client-side requests
+- CORS headers are consistent across the application
+
+## Review
+
+### Summary of Changes
+
+The CORS authentication issues have been addressed through a comprehensive update of both server-side and client-side code:
+
+1. **Server-side changes:**
+   - Added explicit OPTIONS request handling in authentication middleware
+   - Updated CORS headers to properly support credentials
+   - Configured origin checking to differentiate between development and production environments
+   - Added withCORS wrapper to authenticated API routes
+
+2. **Client-side changes:**
+   - Updated all fetch calls to include `credentials: 'include'`
+   - Ensured CSRF token requests also include credentials
+   - Fixed retry logic to maintain credential inclusion
+
+3. **Configuration changes:**
+   - Updated `next.config.mjs` to use specific origins instead of wildcard
+   - Ensured Access-Control-Allow-Credentials is set to 'true'
+   - Added all necessary headers for Clerk authentication
+
+### Key Improvements
+
+- **Preflight Handling**: All authenticated routes now properly handle OPTIONS requests
+- **Credential Support**: Both server and client are configured to handle cookies properly
+- **Security**: Moved from wildcard origins to specific allowed origins
+- **Consistency**: CORS handling is now consistent across all API routes
+
+### Testing Recommendations
+
+1. Test authenticated API calls from the browser console
+2. Verify that OPTIONS preflight requests receive proper responses
+3. Check that authentication cookies are included in requests
+4. Test cross-origin scenarios if the app is embedded elsewhere
+
+### Next Steps
+
+If CORS issues persist:
+1. Check browser console for specific CORS error messages
+2. Verify Clerk session cookies are being set properly
+3. Ensure the production URL in the configuration matches the actual deployment
+4. Consider adding additional allowed origins if needed for staging/preview deployments
+
+---
+
 # Documentation Audit - July 4, 2025
 
 ## Audit Summary

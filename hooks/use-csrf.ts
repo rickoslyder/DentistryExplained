@@ -12,7 +12,9 @@ export function useCSRF() {
 
   const fetchCSRFToken = async () => {
     try {
-      const response = await fetch('/api/auth/csrf')
+      const response = await fetch('/api/auth/csrf', {
+        credentials: 'include', // Include cookies for authentication
+      })
       if (response.ok) {
         const data = await response.json()
         setCSRFToken(data.token)
@@ -49,7 +51,8 @@ export function useCSRF() {
     
     const response = await fetch(url, {
       ...options,
-      headers
+      headers,
+      credentials: 'include', // Include cookies for authentication
     })
 
     // If CSRF token expired, try to refresh
@@ -60,7 +63,8 @@ export function useCSRF() {
         // Retry request with new token
         return fetch(url, {
           ...options,
-          headers: getHeaders(options.headers)
+          headers: getHeaders(options.headers),
+          credentials: 'include', // Include cookies for authentication
         })
       }
     }

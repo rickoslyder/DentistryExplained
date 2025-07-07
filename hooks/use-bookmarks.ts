@@ -31,7 +31,12 @@ export function useBookmarks() {
 
     setIsLoading(true)
     try {
-      const response = await fetch('/api/bookmarks')
+      const response = await fetch('/api/bookmarks', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       if (response.ok) {
         const data = await response.json()
         const formattedBookmarks = data.bookmarks.map((b: any) => ({
@@ -73,6 +78,7 @@ export function useBookmarks() {
     try {
       const response = await fetch('/api/bookmarks', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -121,6 +127,10 @@ export function useBookmarks() {
     try {
       const response = await fetch(`/api/bookmarks?articleSlug=${encodeURIComponent(articleSlug)}`, {
         method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
 
       if (response.ok) {

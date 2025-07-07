@@ -53,7 +53,12 @@ export function useDashboardData() {
     setIsLoading(true)
     try {
       // Fetch real dashboard stats from API
-      const response = await fetch('/api/dashboard/stats')
+      const response = await fetch('/api/dashboard/stats', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard stats')

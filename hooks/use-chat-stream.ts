@@ -93,6 +93,7 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
           stream: useStreaming,
         }),
         signal: abortControllerRef.current.signal,
+        credentials: 'include', // Include cookies for authentication
       })
 
       if (!response.ok) {
@@ -152,6 +153,7 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
                 content: accumulatedContent,
                 role: 'assistant',
               }),
+              credentials: 'include', // Include cookies for authentication
             })
           } catch (saveError) {
             console.error('Failed to save assistant message:', saveError)
@@ -266,7 +268,9 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
 
   const loadChatHistory = useCallback(async (sessionIdToLoad: string) => {
     try {
-      const response = await fetch(`/api/chat?sessionId=${sessionIdToLoad}`)
+      const response = await fetch(`/api/chat?sessionId=${sessionIdToLoad}`, {
+        credentials: 'include', // Include cookies for authentication
+      })
       
       if (!response.ok) {
         throw new Error('Failed to load chat history')

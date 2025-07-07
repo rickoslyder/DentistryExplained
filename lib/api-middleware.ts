@@ -29,6 +29,20 @@ export function withAuth<T = any>(
   }
 ): (request: NextRequest) => Promise<NextResponse> {
   return async (request: NextRequest) => {
+    // Handle OPTIONS requests for CORS preflight
+    if (request.method === 'OPTIONS') {
+      return new NextResponse(null, {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Max-Age': '86400',
+        }
+      })
+    }
+
     try {
       // Check authentication
       const { userId } = await auth()
@@ -72,7 +86,13 @@ export function withAuth<T = any>(
       }
 
       // Call handler
-      return await handler(request, context)
+      const response = await handler(request, context)
+      
+      // Add CORS headers to response
+      response.headers.set('Access-Control-Allow-Origin', '*')
+      response.headers.set('Access-Control-Allow-Credentials', 'true')
+      
+      return response
     } catch (error) {
       return ApiErrors.internal(error, 'authentication')
     }
@@ -87,6 +107,20 @@ export function withOptionalAuth<T = any>(
   ) => Promise<NextResponse<T>>
 ): (request: NextRequest) => Promise<NextResponse> {
   return async (request: NextRequest) => {
+    // Handle OPTIONS requests for CORS preflight
+    if (request.method === 'OPTIONS') {
+      return new NextResponse(null, {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Max-Age': '86400',
+        }
+      })
+    }
+
     try {
       const { userId } = await auth()
       const context: Partial<ApiContext> = {
@@ -102,7 +136,13 @@ export function withOptionalAuth<T = any>(
         }
       }
 
-      return await handler(request, context)
+      const response = await handler(request, context)
+      
+      // Add CORS headers to response
+      response.headers.set('Access-Control-Allow-Origin', '*')
+      response.headers.set('Access-Control-Allow-Credentials', 'true')
+      
+      return response
     } catch (error) {
       return ApiErrors.internal(error, 'optional auth')
     }
@@ -142,27 +182,35 @@ export function withCORS(
 
       // Handle preflight
       if (request.method === 'OPTIONS') {
-        return new NextResponse(null, {
-          status: 200,
-          headers: {
-            'Access-Control-Allow-Origin': allowedOrigins.includes('*') ? '*' : 
-              (allowedOrigins.includes(origin) ? origin : ''),
-            'Access-Control-Allow-Methods': allowedMethods.join(', '),
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Max-Age': '86400',
-          }
+        const headers = new Headers({
+          'Access-Control-Allow-Methods': allowedMethods.join(', '),
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+          'Access-Control-Max-Age': '86400',
+          'Access-Control-Allow-Credentials': 'true'
         })
+
+        // Set origin header based on allowed origins
+        if (allowedOrigins.includes('*')) {
+          headers.set('Access-Control-Allow-Origin', '*')
+        } else if (allowedOrigins.includes(origin)) {
+          headers.set('Access-Control-Allow-Origin', origin)
+          headers.set('Vary', 'Origin')
+        }
+
+        return new NextResponse(null, { status: 200, headers })
       }
 
       const response = await handler(...args)
       
       // Add CORS headers to response
-      if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-        response.headers.set(
-          'Access-Control-Allow-Origin', 
-          allowedOrigins.includes('*') ? '*' : origin
-        )
+      if (allowedOrigins.includes('*')) {
+        response.headers.set('Access-Control-Allow-Origin', '*')
+      } else if (allowedOrigins.includes(origin)) {
+        response.headers.set('Access-Control-Allow-Origin', origin)
+        response.headers.set('Vary', 'Origin')
       }
+      
+      response.headers.set('Access-Control-Allow-Credentials', 'true')
 
       return response
     }) as T

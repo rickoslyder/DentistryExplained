@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateId } from '@/lib/utils'
 import { generateAIResponse, UserContext } from '@/lib/litellm'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { withAuth, withBodyLimit, withRateLimit, compose } from '@/lib/api-middleware'
+import { withAuth, withBodyLimit, withRateLimit, withCORS, compose } from '@/lib/api-middleware'
 import { rateLimiters } from '@/lib/rate-limiter'
 import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
@@ -36,6 +36,7 @@ const chatMessageSchema = z.object({
 
 const chatHandler = compose(
   withBodyLimit(1024 * 50), // 50KB limit
+  withCORS(),
   withAuth
 )(async (request: NextRequest, context) => {
   // Apply chat-specific rate limiting
@@ -279,6 +280,7 @@ export const POST = chatHandler
 // GET endpoint for retrieving chat history
 const getChatHistoryHandler = compose(
   withRateLimit(60000, 100),
+  withCORS(),
   withAuth
 )(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)

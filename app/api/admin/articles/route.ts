@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { withAuth, withCSRF, withRateLimit, withAudit, compose } from '@/lib/api-middleware'
+import { withAuth, withCSRF, withRateLimit, withAudit, withCORS, compose } from '@/lib/api-middleware'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization-server'
 
@@ -29,6 +29,7 @@ const createArticleHandler = compose(
     includeResponseData: true
   }),
   withRateLimit(60000, 30), // 30 requests per minute
+  withCORS(),
   withCSRF,
   withAuth
 )(async (request: NextRequest, context) => {
@@ -114,6 +115,7 @@ const getArticlesHandler = compose(
     entityType: 'articles'
   }),
   withRateLimit(60000, 100),
+  withCORS(),
   withAuth
 )(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)

@@ -36,6 +36,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/articles/(.*)/views",
   "/api/article-views",
   "/api/webhooks/(.*)",
+  "/api/auth/(.*)",
   "/sign-in(.*)",
   "/sign-up(.*)",
   "/access-denied",
@@ -63,6 +64,15 @@ const isAdminRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims, sessionId } = await auth()
   
+  // Skip middleware for Clerk auth endpoints to avoid CORS issues
+  const pathname = req.nextUrl.pathname
+  if (pathname.includes('clerk.accounts.dev') || 
+      pathname.includes('__clerk') ||
+      pathname.startsWith('/_next/') ||
+      pathname.startsWith('/api/clerk/')) {
+    return
+  }
+  
   // For now, we'll skip the admin route check in middleware and rely on the layout check
   // This is because sessionClaims doesn't include publicMetadata and currentUser() isn't available in middleware
   
@@ -86,7 +96,13 @@ export default clerkMiddleware(async (auth, req) => {
     if (!userId) {
       // For RSC requests, return 401 instead of redirecting to avoid CORS issues
       if (isRSCRequest) {
-        return new Response('Unauthorized', { status: 401 })
+        return new Response('Unauthorized', { 
+          status: 401,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true',
+          }
+        })
       }
       // For regular requests, use Clerk's protect method
       await auth.protect()
@@ -109,7 +125,13 @@ export default clerkMiddleware(async (auth, req) => {
     if (!userId) {
       // For RSC requests, return 401 instead of redirecting
       if (isRSCRequest) {
-        return new Response('Unauthorized', { status: 401 })
+        return new Response('Unauthorized', { 
+          status: 401,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true',
+          }
+        })
       }
       // For regular requests, redirect to sign-in
       return Response.redirect(new URL("/sign-in", req.url))

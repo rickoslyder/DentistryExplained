@@ -149,7 +149,7 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*'
+            value: process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://dentistry-explained.vercel.app'
           },
           {
             key: 'Access-Control-Allow-Methods',
