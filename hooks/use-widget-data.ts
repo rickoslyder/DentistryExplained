@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import type { WidgetDataResult } from '@/lib/widgets/types'
 
 interface UseWidgetDataOptions<T> {
@@ -15,13 +15,19 @@ export function useWidgetData<T = any>({
   const [data, setData] = useState<T | undefined>()
   const [error, setError] = useState<Error | undefined>()
   const [isLoading, setIsLoading] = useState(true)
+  const fetchFnRef = useRef(fetchFn)
+  
+  // Keep ref updated with latest fetchFn
+  useEffect(() => {
+    fetchFnRef.current = fetchFn
+  }, [fetchFn])
 
   const fetchData = useCallback(async () => {
     if (!enabled) return
 
     try {
       setIsLoading(true)
-      const result = await fetchFn()
+      const result = await fetchFnRef.current()
       setData(result)
       setError(undefined)
     } catch (err) {
@@ -30,7 +36,7 @@ export function useWidgetData<T = any>({
     } finally {
       setIsLoading(false)
     }
-  }, [fetchFn, enabled])
+  }, [enabled])
 
   useEffect(() => {
     // Initial fetch

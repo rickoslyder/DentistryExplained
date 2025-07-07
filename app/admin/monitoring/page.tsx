@@ -1,5 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RateLimitMonitor } from '@/components/admin/rate-limit-monitor'
+import { ActivityLogsMonitor } from '@/components/admin/activity-logs-monitor'
+import { PerformanceMonitor } from '@/components/admin/performance-monitor'
+import { ErrorTracker } from '@/components/admin/error-tracker'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,9 +19,9 @@ export default function MonitoringPage() {
       <Tabs defaultValue="rate-limits" className="space-y-6">
         <TabsList>
           <TabsTrigger value="rate-limits">Rate Limits</TabsTrigger>
-          <TabsTrigger value="activity" disabled>Activity Logs</TabsTrigger>
-          <TabsTrigger value="performance" disabled>Performance</TabsTrigger>
-          <TabsTrigger value="errors" disabled>Error Tracking</TabsTrigger>
+          <TabsTrigger value="activity">Activity Logs</TabsTrigger>
+          <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="errors">Error Tracking</TabsTrigger>
         </TabsList>
 
         <TabsContent value="rate-limits">
@@ -26,21 +29,15 @@ export default function MonitoringPage() {
         </TabsContent>
 
         <TabsContent value="activity">
-          <div className="text-center py-12 text-muted-foreground">
-            Activity log monitoring coming soon...
-          </div>
+          <ActivityLogsMonitor />
         </TabsContent>
 
         <TabsContent value="performance">
-          <div className="text-center py-12 text-muted-foreground">
-            Performance monitoring coming soon...
-          </div>
+          <PerformanceMonitor />
         </TabsContent>
 
         <TabsContent value="errors">
-          <div className="text-center py-12 text-muted-foreground">
-            Error tracking coming soon...
-          </div>
+          <ErrorTracker />
         </TabsContent>
       </Tabs>
     </div>
