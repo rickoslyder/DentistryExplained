@@ -37,7 +37,8 @@ interface ActivityLog {
   metadata: any
   created_at: string
   profiles: {
-    name: string | null
+    first_name: string | null
+    last_name: string | null
     email: string | null
   }
 }
@@ -89,7 +90,8 @@ export function ActivityLogsMonitor() {
       .select(`
         *,
         profiles (
-          name,
+          first_name,
+          last_name,
           email
         )
       `)
@@ -114,7 +116,8 @@ export function ActivityLogsMonitor() {
         .select(`
           *,
           profiles (
-            name,
+            first_name,
+            last_name,
             email
           )
         `)
@@ -279,7 +282,11 @@ export function ActivityLogsMonitor() {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <div className="font-medium">{log.profiles?.name || 'Unknown'}</div>
+                        <div className="font-medium">
+                          {log.profiles?.first_name || log.profiles?.last_name 
+                            ? `${log.profiles.first_name || ''} ${log.profiles.last_name || ''}`.trim()
+                            : 'Unknown'}
+                        </div>
                         <div className="text-muted-foreground">{log.profiles?.email}</div>
                       </div>
                     </TableCell>

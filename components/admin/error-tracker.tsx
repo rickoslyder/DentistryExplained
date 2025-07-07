@@ -43,7 +43,8 @@ interface ErrorLog {
   metadata: any
   created_at: string
   profiles?: {
-    name: string | null
+    first_name: string | null
+    last_name: string | null
     email: string | null
   }
 }
@@ -104,7 +105,8 @@ export function ErrorTracker() {
       .select(`
         *,
         profiles (
-          name,
+          first_name,
+          last_name,
           email
         )
       `)
@@ -131,7 +133,8 @@ export function ErrorTracker() {
         .select(`
           *,
           profiles (
-            name,
+            first_name,
+            last_name,
             email
           )
         `)
@@ -332,7 +335,11 @@ export function ErrorTracker() {
                     <TableCell>
                       {error.profiles ? (
                         <div className="text-sm">
-                          <div className="font-medium">{error.profiles.name || 'Unknown'}</div>
+                          <div className="font-medium">
+                            {error.profiles.first_name || error.profiles.last_name 
+                              ? `${error.profiles.first_name || ''} ${error.profiles.last_name || ''}`.trim()
+                              : 'Unknown'}
+                          </div>
                           <div className="text-muted-foreground">{error.profiles.email}</div>
                         </div>
                       ) : (

@@ -16,11 +16,16 @@ export function useWidgetData<T = any>({
   const [error, setError] = useState<Error | undefined>()
   const [isLoading, setIsLoading] = useState(true)
   const fetchFnRef = useRef(fetchFn)
+  const isLoadingRef = useRef(isLoading)
   
-  // Keep ref updated with latest fetchFn
+  // Keep refs updated
   useEffect(() => {
     fetchFnRef.current = fetchFn
   }, [fetchFn])
+  
+  useEffect(() => {
+    isLoadingRef.current = isLoading
+  }, [isLoading])
 
   const fetchData = useCallback(async () => {
     if (!enabled) return
@@ -54,7 +59,7 @@ export function useWidgetData<T = any>({
     let interval: NodeJS.Timeout | undefined
     if (refreshInterval && enabled) {
       interval = setInterval(() => {
-        if (mounted && !isLoading) {
+        if (mounted && !isLoadingRef.current) {
           fetchData()
         }
       }, refreshInterval)

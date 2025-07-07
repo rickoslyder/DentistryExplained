@@ -66,7 +66,15 @@ export async function GET(request: NextRequest) {
       return acc
     }, {})
     
-    return NextResponse.json({ settings: groupedSettings })
+    return NextResponse.json(
+      { settings: groupedSettings },
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+        }
+      }
+    )
   } catch (error) {
     console.error('Error in GET /api/admin/settings:', error)
     return new NextResponse('Internal Server Error', { status: 500 })
@@ -240,4 +248,18 @@ export async function POST(request: NextRequest) {
     console.error('Error in POST /api/admin/settings:', error)
     return new NextResponse('Internal Server Error', { status: 500 })
   }
+}
+
+// Handle OPTIONS requests for CORS
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    }
+  })
 }
