@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { withOptionalAuth, compose } from '@/lib/api-middleware'
+import { withOptionalAuth, withRateLimit, compose } from '@/lib/api-middleware'
 import { rateLimiters } from '@/lib/rate-limiter'
 import { z } from 'zod'
 import { serverAnalytics } from '@/lib/analytics-server'
