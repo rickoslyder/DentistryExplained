@@ -127,13 +127,13 @@ const nextConfig = {
               style-src 'self' 'unsafe-inline' https:;
               img-src 'self' data: https: blob:;
               font-src 'self' data: https:;
-              connect-src 'self' https: wss: blob:;
+              connect-src 'self' https: wss: blob: https://*.clerk.accounts.dev https://clerk.accounts.dev https://actual-feline-35.accounts.dev;
               media-src 'self' https: blob:;
               object-src 'none';
               worker-src 'self' blob:;
-              frame-src 'self' https:;
+              frame-src 'self' https: https://*.clerk.accounts.dev https://clerk.accounts.dev https://actual-feline-35.accounts.dev;
               base-uri 'self';
-              form-action 'self' https:;
+              form-action 'self' https: https://*.clerk.accounts.dev https://clerk.accounts.dev https://actual-feline-35.accounts.dev;
               frame-ancestors 'none';
               upgrade-insecure-requests;
             `.replace(/\s+/g, ' ').trim()
@@ -149,44 +149,15 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: process.env.NEXT_PUBLIC_APP_URL || '*'
+            value: '*'
           },
           {
             key: 'Access-Control-Allow-Methods',
-            value: 'GET,DELETE,PATCH,POST,PUT'
+            value: 'GET,DELETE,PATCH,POST,PUT,OPTIONS'
           },
           {
             key: 'Access-Control-Allow-Headers',
-            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-          }
-        ]
-      },
-      {
-        // Add CORS headers for Clerk authentication
-        source: '/:path*',
-        has: [
-          {
-            type: 'header',
-            key: 'origin',
-            value: '(https://.*\\.clerk\\.accounts\\.dev|https://clerk\\.accounts\\.dev|https://actual-feline-35\\.accounts\\.dev)'
-          }
-        ],
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: ':origin'
-          },
-          {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true'
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS'
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, Clerk-Backend-API-URL, Clerk-Frontend-API-URL'
           }
         ]
       }
