@@ -122,7 +122,7 @@ export function DashboardClient() {
       ]
       updateWidgets(defaultWidgets)
     }
-  }, [isLoading, layout, isSaving, updateWidgets])
+  }, [isLoading, layout?.widgets?.length, isSaving, updateWidgets])
 
   const widgets = layout?.widgets || []
 

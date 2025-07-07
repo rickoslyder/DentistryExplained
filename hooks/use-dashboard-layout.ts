@@ -19,6 +19,7 @@ export function useDashboardLayout() {
   const { toast } = useToast()
   const layoutRef = useRef<DashboardLayout | null>(null)
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const isSavingRef = useRef(false)
 
   // Keep ref in sync with state
   useEffect(() => {
@@ -72,9 +73,10 @@ export function useDashboardLayout() {
   }
 
   const saveLayoutInternal = useCallback(async (widgets: WidgetConfig[]) => {
-    if (!layoutRef.current || isSaving) return
+    if (!layoutRef.current || isSavingRef.current) return
 
     try {
+      isSavingRef.current = true
       setIsSaving(true)
       
       const response = await fetch('/api/admin/dashboard/layout', {
@@ -102,9 +104,10 @@ export function useDashboardLayout() {
         variant: 'destructive',
       })
     } finally {
+      isSavingRef.current = false
       setIsSaving(false)
     }
-  }, [isSaving, toast])
+  }, [toast]) // Remove isSaving from dependencies
 
   // Debounced save function
   const saveLayout = useCallback((widgets: WidgetConfig[]) => {
