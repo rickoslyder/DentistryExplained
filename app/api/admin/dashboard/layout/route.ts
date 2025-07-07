@@ -38,13 +38,13 @@ const getHandler = withAuth(async (request: NextRequest, context) => {
   
   try {
     const supabase = context.supabase!
-    const userId = context.userId!
+    const userProfile = context.userProfile!
     
     // Get user's dashboard layout - use direct query instead of RPC
     const { data, error } = await supabase
       .from('dashboard_layouts')
       .select('*')
-      .eq('user_id', userId)
+      .eq('user_id', userProfile.id)
       .eq('is_default', true)
       .single()
     
@@ -68,13 +68,13 @@ const putHandler = withAuth(async (request: NextRequest, context) => {
     const validatedData = layoutUpdateSchema.parse(body)
     
     const supabase = context.supabase!
-    const userId = context.userId!
+    const userProfile = context.userProfile!
     
     // Check if user has any layouts
     const { data: existingLayouts } = await supabase
       .from('dashboard_layouts')
       .select('id')
-      .eq('user_id', userId)
+      .eq('user_id', userProfile.id)
       .limit(1)
     
     let result
@@ -84,7 +84,7 @@ const putHandler = withAuth(async (request: NextRequest, context) => {
       const { data, error } = await supabase
         .from('dashboard_layouts')
         .insert({
-          user_id: userId,
+          user_id: userProfile.id,
           name: validatedData.name || 'My Dashboard',
           description: validatedData.description,
           widgets: validatedData.widgets || [],
@@ -111,7 +111,7 @@ const putHandler = withAuth(async (request: NextRequest, context) => {
           is_default: validatedData.is_default,
           updated_at: new Date().toISOString(),
         })
-        .eq('user_id', userId)
+        .eq('user_id', userProfile.id)
         .eq('is_default', true)
         .select()
         .single()
@@ -127,7 +127,7 @@ const putHandler = withAuth(async (request: NextRequest, context) => {
     await supabase
       .from('activity_logs')
       .insert({
-        user_id: userId,
+        user_id: userProfile.id,
         action: 'update_dashboard_layout',
         resource_type: 'dashboard_layout',
         resource_id: result.id,
@@ -157,13 +157,13 @@ const postHandler = withAuth(async (request: NextRequest, context) => {
     const validatedData = layoutUpdateSchema.parse(body)
     
     const supabase = context.supabase!
-    const userId = context.userId!
+    const userProfile = context.userProfile!
     
     // Create new layout
     const { data, error } = await supabase
       .from('dashboard_layouts')
       .insert({
-        user_id: userId,
+        user_id: userProfile.id,
         name: validatedData.name || 'New Dashboard',
         description: validatedData.description,
         widgets: validatedData.widgets || [],
@@ -181,7 +181,7 @@ const postHandler = withAuth(async (request: NextRequest, context) => {
     await supabase
       .from('activity_logs')
       .insert({
-        user_id: userId,
+        user_id: userProfile.id,
         action: 'create_dashboard_layout',
         resource_type: 'dashboard_layout',
         resource_id: data.id,
