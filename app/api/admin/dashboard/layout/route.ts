@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ApiErrors, getRequestId } from '@/lib/api-errors'
-import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
+import { withAuth } from '@/lib/api-middleware'
 import { z } from 'zod'
 
 // Widget configuration schema
@@ -33,10 +33,7 @@ const layoutUpdateSchema = z.object({
 })
 
 // GET handler to fetch user's dashboard layout
-const getHandler = compose(
-  withRateLimit(60000, 100),
-  withAuth
-)(async (request: NextRequest, context) => {
+const getHandler = withAuth(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
   
   try {
@@ -60,13 +57,10 @@ const getHandler = compose(
   } catch (error) {
     return ApiErrors.internal(error, 'get_dashboard_layout', requestId)
   }
-})
+}, { requireRole: 'admin' })
 
 // PUT handler to update dashboard layout
-const putHandler = compose(
-  withRateLimit(60000, 50),
-  withAuth
-)(async (request: NextRequest, context) => {
+const putHandler = withAuth(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
   
   try {
@@ -152,13 +146,10 @@ const putHandler = compose(
     }
     return ApiErrors.internal(error, 'update_dashboard_layout', requestId)
   }
-})
+}, { requireRole: 'admin' })
 
 // POST handler to create new layout
-const postHandler = compose(
-  withRateLimit(60000, 20),
-  withAuth
-)(async (request: NextRequest, context) => {
+const postHandler = withAuth(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
   
   try {
@@ -209,8 +200,22 @@ const postHandler = compose(
     }
     return ApiErrors.internal(error, 'create_dashboard_layout', requestId)
   }
-})
+}, { requireRole: 'admin' })
 
 export const GET = getHandler
 export const PUT = putHandler
 export const POST = postHandler
+
+// Handle OPTIONS requests for CORS
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, PUT, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    }
+  })
+}

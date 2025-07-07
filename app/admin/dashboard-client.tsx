@@ -18,8 +18,8 @@ import type { WidgetConfig } from '@/lib/widgets/types'
 
 export function DashboardClient() {
   const [isEditing, setIsEditing] = useState(false)
-  const [hasInitialized, setHasInitialized] = useState(false)
   const widgetsRegistered = useRef(false)
+  const initRef = useRef(false)
   const { layout, isLoading, isSaving, addWidget, removeWidget, updateWidgets } = useDashboardLayout()
 
   // Register widgets only once
@@ -71,8 +71,8 @@ export function DashboardClient() {
 
   // Initialize default widgets only once
   useEffect(() => {
-    if (!isLoading && layout && layout.widgets.length === 0 && !hasInitialized && !isSaving) {
-      setHasInitialized(true)
+    if (!isLoading && layout && layout.widgets.length === 0 && !initRef.current && !isSaving) {
+      initRef.current = true
       const defaultWidgets: WidgetConfig[] = [
         {
           id: uuidv4(),
@@ -122,7 +122,7 @@ export function DashboardClient() {
       ]
       updateWidgets(defaultWidgets)
     }
-  }, [isLoading, layout?.widgets.length, hasInitialized, isSaving]) // Remove updateWidgets from deps
+  }, [isLoading, layout, isSaving, updateWidgets])
 
   const widgets = layout?.widgets || []
 
