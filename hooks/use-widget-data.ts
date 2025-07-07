@@ -60,7 +60,7 @@ export function useWidgetData<T = any>({
         clearInterval(interval)
       }
     }
-  }, [fetchData, refreshInterval, enabled, isLoading])
+  }, [fetchData, refreshInterval, enabled])
 
   return {
     data,

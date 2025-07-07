@@ -5,7 +5,8 @@ class WidgetRegistry {
 
   register(entry: WidgetRegistryEntry) {
     if (this.widgets.has(entry.type)) {
-      console.warn(`Widget type "${entry.type}" is already registered. Overwriting.`)
+      // Skip re-registration if already exists
+      return
     }
     this.widgets.set(entry.type, entry)
   }
