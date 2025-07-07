@@ -31,21 +31,18 @@ const emailTemplateSchema = z.object({
 })
 
 // GET - List all email templates
-const getTemplatesHandler = compose(
-  withRateLimit(60000, 100),
-  withAuth
-)(async (request: NextRequest, context) => {
+const getTemplatesHandler = withAuth(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
   
   try {
     const supabase = context.supabase!
-    const user = context.user!
+    const userProfile = context.userProfile!
     
     // Check admin role
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('id', userProfile.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -79,24 +76,21 @@ const getTemplatesHandler = compose(
   } catch (error) {
     return ApiErrors.internal(error, 'get_templates', requestId)
   }
-})
+}, { requireRole: 'admin' })
 
 // POST - Create new email template
-const createTemplateHandler = compose(
-  withRateLimit(60000, 20),
-  withAuth
-)(async (request: NextRequest, context) => {
+const createTemplateHandler = withAuth(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
   
   try {
     const supabase = context.supabase!
-    const user = context.user!
+    const userProfile = context.userProfile!
     
     // Check admin role
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('id', userProfile.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -110,8 +104,8 @@ const createTemplateHandler = compose(
       .from('email_templates')
       .insert({
         ...validatedData,
-        created_by: user.id,
-        updated_by: user.id
+        created_by: userProfile.id,
+        updated_by: userProfile.id
       })
       .select()
       .single()
@@ -127,7 +121,21 @@ const createTemplateHandler = compose(
     }
     return ApiErrors.internal(error, 'create_template', requestId)
   }
-})
+}, { requireRole: 'admin' })
 
 export const GET = getTemplatesHandler
 export const POST = createTemplateHandler
+
+// Handle OPTIONS requests for CORS
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Clerk-Backend-API-URL, Clerk-Frontend-API-URL',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Max-Age': '86400',
+    }
+  })
+}

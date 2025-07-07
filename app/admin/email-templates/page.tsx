@@ -76,7 +76,12 @@ export default function EmailTemplatesPage() {
 
   const fetchTemplates = async () => {
     try {
-      const response = await fetch('/api/admin/email-templates')
+      const response = await fetch('/api/admin/email-templates', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       if (!response.ok) throw new Error('Failed to fetch templates')
       
       const data = await response.json()
@@ -124,7 +129,8 @@ export default function EmailTemplatesPage() {
 
     try {
       const response = await fetch(`/api/admin/email-templates/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include',
       })
 
       if (!response.ok) throw new Error('Failed to delete template')
@@ -148,6 +154,7 @@ export default function EmailTemplatesPage() {
     try {
       const response = await fetch('/api/admin/email-templates', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: `${template.name} (Copy)`,

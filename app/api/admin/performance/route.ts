@@ -8,7 +8,7 @@ const getPerformanceMetricsHandler = withAuth(async (request: NextRequest, conte
   const timeRange = searchParams.get('range') || '1h'
   
   try {
-    const supabase = await createServerSupabaseClient()
+    const supabase = context.supabase!
     
     // Calculate time window based on range
     let hoursAgo = 1
