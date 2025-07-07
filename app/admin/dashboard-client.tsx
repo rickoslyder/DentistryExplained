@@ -122,7 +122,7 @@ export function DashboardClient() {
       ]
       updateWidgets(defaultWidgets)
     }
-  }, [isLoading, layout, hasInitialized, isSaving, updateWidgets])
+  }, [isLoading, layout?.widgets.length, hasInitialized, isSaving]) // Remove updateWidgets from deps
 
   const widgets = layout?.widgets || []
 

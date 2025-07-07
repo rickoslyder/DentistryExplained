@@ -33,14 +33,25 @@ export function useDashboardLayout() {
   const fetchLayout = async () => {
     try {
       setIsLoading(true)
-      const response = await fetch('/api/admin/dashboard/layout')
+      const response = await fetch('/api/admin/dashboard/layout', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard layout')
       }
       
       const data = await response.json()
-      setLayout(data.layout)
+      setLayout(data.layout || {
+        id: null,
+        name: 'Default Layout',
+        widgets: [],
+        settings: {},
+        is_default: true,
+      })
     } catch (error) {
       toast({
         title: 'Error loading dashboard',
@@ -68,6 +79,7 @@ export function useDashboardLayout() {
       
       const response = await fetch('/api/admin/dashboard/layout', {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

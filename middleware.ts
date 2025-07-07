@@ -104,8 +104,10 @@ export default clerkMiddleware(async (auth, req) => {
           }
         })
       }
-      // For regular requests, use Clerk's protect method
-      await auth.protect()
+      // For regular requests, redirect to sign-in with proper origin
+      const signInUrl = new URL('/sign-in', req.url)
+      signInUrl.searchParams.set('redirect_url', req.url)
+      return Response.redirect(signInUrl)
     }
   }
 

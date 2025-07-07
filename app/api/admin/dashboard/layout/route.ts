@@ -43,15 +43,20 @@ const getHandler = compose(
     const supabase = context.supabase!
     const userId = context.userId!
     
-    // Get user's dashboard layout
+    // Get user's dashboard layout - use direct query instead of RPC
     const { data, error } = await supabase
-      .rpc('get_user_dashboard_layout', { p_user_id: userId })
+      .from('dashboard_layouts')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('is_default', true)
+      .single()
     
-    if (error) {
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
       return ApiErrors.fromDatabaseError(error, 'get_dashboard_layout', requestId)
     }
     
-    return NextResponse.json({ layout: data })
+    // If no layout exists, return null (frontend will use default)
+    return NextResponse.json({ layout: data || null })
   } catch (error) {
     return ApiErrors.internal(error, 'get_dashboard_layout', requestId)
   }
