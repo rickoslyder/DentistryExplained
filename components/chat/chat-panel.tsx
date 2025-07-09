@@ -269,7 +269,7 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
                 </h3>
                 <p className="text-gray-600 text-sm mb-4">
                   I can help answer questions about dental health, treatments, and oral care.
-                  {pageContext && (
+                  {pageContext && pageContext.title !== 'Home' && (
                     <span className="block mt-2">
                       I see you're reading about "{pageContext.title}". Feel free to ask me anything!
                     </span>

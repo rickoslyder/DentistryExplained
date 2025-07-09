@@ -204,8 +204,8 @@ export async function generateAIResponse(
       })
     }
 
-    // Add page context if available
-    if (pageContext?.title) {
+    // Add page context if available (but not for homepage)
+    if (pageContext?.title && pageContext.title !== 'Home') {
       messages.push({
         role: "system",
         content: `The user is currently reading: "${pageContext.title}" in the "${pageContext.category}" category. URL: ${pageContext.url}. Consider this context when answering.`
@@ -465,8 +465,8 @@ function generateFallbackResponse(message: string, pageContext?: DentalContext):
     return `Here are key prevention tips:\n• ${tips}\n\nRegular dental check-ups help catch problems early. Book your next appointment today!`
   }
   
-  // Context-aware response
-  if (pageContext?.title) {
+  // Context-aware response (not for homepage)
+  if (pageContext?.title && pageContext.title !== 'Home') {
     return `I see you're reading about "${pageContext.title}". While I can provide general information about ${pageContext.category?.toLowerCase() || 'dental health'}, for specific concerns related to this topic, it's best to consult with a dental professional who can evaluate your individual situation. Is there something specific about ${pageContext.title} you'd like to understand better?`
   }
   

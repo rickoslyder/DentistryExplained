@@ -3275,3 +3275,1475 @@ Cleaned 1 expired cache entries
  ✓ Compiled in 787ms (1368 modules)
  ✓ Compiled in 1162ms (1368 modules)
  ✓ Compiled in 2.2s (1368 modules)
+ ✓ Compiled in 932ms (1368 modules)
+ ✓ Compiled in 952ms (1368 modules)
+ ✓ Compiled in 1042ms (1368 modules)
+ ✓ Compiled in 866ms (1368 modules)
+ ✓ Compiled in 524ms (1368 modules)
+ ✓ Compiled in 1454ms (1368 modules)
+ ✓ Compiled in 530ms (1368 modules)
+ ✓ Compiled in 953ms (1368 modules)
+ ✓ Compiled in 651ms (1368 modules)
+ ✓ Compiled in 692ms (1368 modules)
+ ✓ Compiled in 649ms (1368 modules)
+ ✓ Compiled in 733ms (1368 modules)
+ ✓ Compiled in 920ms (1368 modules)
+ ✓ Compiled in 642ms (1368 modules)
+ ✓ Compiled in 627ms (1368 modules)
+ ✓ Compiled in 918ms (1368 modules)
+ ✓ Compiled in 653ms (1368 modules)
+ ✓ Compiled in 514ms (1368 modules)
+ ✓ Compiled in 535ms (1368 modules)
+ ✓ Compiled in 593ms (1368 modules)
+ ✓ Compiled in 525ms (1368 modules)
+ ✓ Compiled in 744ms (1368 modules)
+ ✓ Compiled in 589ms (1368 modules)
+ ✓ Compiled in 587ms (1368 modules)
+ ✓ Compiled in 551ms (1368 modules)
+ ✓ Compiled in 871ms (1368 modules)
+ ✓ Compiled in 732ms (1368 modules)
+ ✓ Compiled in 896ms (1368 modules)
+ ✓ Compiled in 569ms (1368 modules)
+ ✓ Compiled in 931ms (1368 modules)
+ ✓ Compiled in 774ms (1368 modules)
+ ✓ Compiled in 715ms (1368 modules)
+ ✓ Compiled in 786ms (1368 modules)
+ ✓ Compiled in 515ms (1368 modules)
+ ✓ Compiled in 609ms (1368 modules)
+ ✓ Compiled in 558ms (1368 modules)
+ ✓ Compiled in 600ms (1368 modules)
+ ✓ Compiled in 655ms (1368 modules)
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 1420ms (1751 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=7mrjxed5qomjs44pzp1lmn 200 in 2765ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=7mrjxed5qomjs44pzp1lmn 200 in 470ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=rrfagn3x3drwgnhl00pvi 200 in 553ms
+ ○ Compiling /api/chat/generate-title ...
+ ✓ Compiled /api/chat/generate-title in 721ms (1753 modules)
+ ✓ Compiled (1755 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ POST /api/chat/generate-title 404 in 1577ms
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ POST /api/chat/suggestions 200 in 3358ms
+ POST /api/chat/suggestions 200 in 3525ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=hnojeggo2z5p590sfvn2xc 200 in 479ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ POST /api/chat/suggestions 200 in 1168ms
+ POST /api/chat/suggestions 200 in 1201ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=lbj8xrmuioq5w2e14ld04r 200 in 495ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ POST /api/chat/suggestions 200 in 1242ms
+ POST /api/chat/suggestions 200 in 1390ms
+ POST /api/chat/suggestions 200 in 1673ms
+ POST /api/chat/suggestions 200 in 1697ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=1nnrv6sim62310xgv9z2ku 200 in 464ms
+ GET / 200 in 215ms
+ GET / 200 in 188ms
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 200 in 540ms
+ GET / 200 in 520ms
+ GET / 200 in 157ms
+ ○ Compiling /api/chat/generate-title ...
+ ✓ Compiled /api/chat/generate-title in 870ms (1744 modules)
+ ✓ Compiled (1747 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET / 200 in 1317ms
+ GET / 200 in 134ms
+ POST /api/chat/generate-title 404 in 1683ms
+ GET / 200 in 144ms
+ GET / 200 in 71ms
+ GET / 200 in 73ms
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET / 200 in 87ms
+ GET / 200 in 68ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/bookmarks 200 in 2217ms
+ GET / 200 in 104ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET / 200 in 81ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET / 200 in 71ms
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET / 200 in 68ms
+ GET / 200 in 65ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/bookmarks 200 in 481ms
+ GET / 200 in 70ms
+ GET / 200 in 128ms
+ GET / 200 in 87ms
+ GET / 200 in 182ms
+ GET / 200 in 76ms
+ GET / 200 in 97ms
+ GET / 200 in 82ms
+ GET / 200 in 84ms
+ GET / 200 in 79ms
+ GET / 200 in 73ms
+ GET / 200 in 100ms
+ GET / 200 in 76ms
+ GET / 200 in 75ms
+ GET / 200 in 65ms
+ GET / 200 in 62ms
+ GET / 200 in 65ms
+ GET / 200 in 89ms
+ GET / 200 in 86ms
+ GET / 200 in 88ms
+ GET / 200 in 76ms
+ GET / 200 in 80ms
+ GET / 200 in 130ms
+ GET / 200 in 70ms
+ GET / 200 in 127ms
+ GET / 200 in 77ms
+ GET / 200 in 88ms
+ GET / 200 in 67ms
+ GET / 200 in 66ms
+ GET / 200 in 65ms
+ GET / 200 in 72ms
+ GET / 200 in 70ms
+ GET / 200 in 78ms
+ GET / 200 in 65ms
+ GET / 200 in 73ms
+ GET / 200 in 75ms
+ GET / 200 in 75ms
+ GET / 200 in 78ms
+ GET / 200 in 69ms
+ GET / 200 in 92ms
+ GET / 200 in 124ms
+ GET / 200 in 114ms
+ GET / 200 in 80ms
+ GET / 200 in 150ms
+ GET / 200 in 90ms
+ GET / 200 in 127ms
+ GET / 200 in 74ms
+ GET / 200 in 72ms
+ GET / 200 in 79ms
+ GET / 200 in 85ms
+ GET / 200 in 69ms
+ GET / 200 in 75ms
+ GET / 200 in 101ms
+ GET / 200 in 69ms
+ GET / 200 in 67ms
+ GET / 200 in 72ms
+ GET / 200 in 63ms
+ GET / 200 in 69ms
+ GET / 200 in 74ms
+ GET / 200 in 83ms
+ GET / 200 in 93ms
+ GET / 200 in 234ms
+ GET / 200 in 190ms
+ GET / 200 in 232ms
+ GET / 200 in 93ms
+ GET / 200 in 73ms
+ GET / 200 in 89ms
+ GET / 200 in 115ms
+ GET / 200 in 82ms
+ GET / 200 in 261ms
+ GET / 200 in 140ms
+ GET / 200 in 103ms
+ GET / 200 in 104ms
+ GET / 200 in 84ms
+ GET / 200 in 76ms
+ GET / 200 in 92ms
+ GET / 200 in 94ms
+ GET / 200 in 148ms
+ GET / 200 in 71ms
+ GET / 200 in 66ms
+ GET / 200 in 146ms
+ GET / 200 in 69ms
+ GET / 200 in 73ms
+ GET / 200 in 67ms
+ GET / 200 in 60ms
+ GET / 200 in 71ms
+ GET / 200 in 74ms
+ GET / 200 in 75ms
+ GET / 200 in 68ms
+ GET / 200 in 74ms
+ GET / 200 in 71ms
+ GET / 200 in 71ms
+ GET / 200 in 148ms
+ GET / 200 in 105ms
+ GET / 200 in 79ms
+ GET / 200 in 77ms
+ GET / 200 in 87ms
+ GET / 200 in 78ms
+ GET / 200 in 82ms
+ GET / 200 in 72ms
+ GET / 200 in 70ms
+ GET / 200 in 89ms
+ GET / 200 in 112ms
+ GET / 200 in 63ms
+ ✓ Compiled /api/chat in 290ms (1755 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET / 200 in 844ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET / 200 in 204ms
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET / 200 in 88ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET / 200 in 90ms
+ GET /api/chat?sessionId=1nnrv6sim62310xgv9z2ku 200 in 1462ms
+ GET / 200 in 75ms
+ GET / 200 in 128ms
+ GET / 200 in 73ms
+ GET / 200 in 96ms
+ GET / 200 in 120ms
+ GET / 200 in 78ms
+ GET / 200 in 85ms
+ GET / 200 in 78ms
+ GET / 200 in 105ms
+ GET / 200 in 70ms
+ GET / 200 in 73ms
+ GET / 200 in 114ms
+ GET / 200 in 77ms
+ GET / 200 in 74ms
+ GET / 200 in 80ms
+ GET / 200 in 97ms
+ GET / 200 in 103ms
+ GET / 200 in 83ms
+ GET / 200 in 109ms
+ GET / 200 in 68ms
+ GET / 200 in 169ms
+ GET / 200 in 79ms
+ GET / 200 in 168ms
+ GET / 200 in 143ms
+ GET / 200 in 76ms
+ GET / 200 in 98ms
+ GET / 200 in 378ms
+ GET / 200 in 125ms
+ GET / 200 in 98ms
+ GET / 200 in 246ms
+ GET / 200 in 141ms
+ GET / 200 in 81ms
+ GET / 200 in 68ms
+ GET / 200 in 107ms
+ GET / 200 in 63ms
+ GET / 200 in 69ms
+ GET / 200 in 193ms
+ GET / 200 in 105ms
+ GET / 200 in 93ms
+ GET / 200 in 86ms
+ GET / 200 in 78ms
+ GET / 200 in 85ms
+ GET / 200 in 70ms
+ GET / 200 in 83ms
+ GET / 200 in 101ms
+ GET / 200 in 64ms
+ GET / 200 in 469ms
+ GET / 200 in 99ms
+ GET / 200 in 213ms
+ GET / 200 in 67ms
+ GET / 200 in 234ms
+ GET / 200 in 73ms
+ GET / 200 in 102ms
+ GET / 200 in 77ms
+ GET / 200 in 116ms
+ GET / 200 in 69ms
+ GET / 200 in 118ms
+ GET / 200 in 88ms
+ GET / 200 in 73ms
+ GET / 200 in 102ms
+ GET / 200 in 119ms
+ GET / 200 in 70ms
+ GET / 200 in 76ms
+ GET / 200 in 105ms
+ GET / 200 in 67ms
+ GET / 200 in 128ms
+ GET / 200 in 105ms
+ GET / 200 in 215ms
+ GET / 200 in 192ms
+ GET / 200 in 136ms
+ GET / 200 in 86ms
+ GET / 200 in 79ms
+ GET / 200 in 87ms
+ GET / 200 in 103ms
+ GET / 200 in 92ms
+ GET / 200 in 114ms
+ GET / 200 in 83ms
+ GET / 200 in 91ms
+ GET / 200 in 68ms
+ GET / 200 in 102ms
+ GET / 200 in 80ms
+ GET / 200 in 155ms
+ GET / 200 in 74ms
+ GET / 200 in 102ms
+ GET / 200 in 71ms
+ GET / 200 in 213ms
+ GET / 200 in 72ms
+ GET / 200 in 81ms
+ GET / 200 in 68ms
+ GET / 200 in 71ms
+ GET / 200 in 78ms
+ GET / 200 in 86ms
+ GET / 200 in 96ms
+ GET / 200 in 69ms
+ GET / 200 in 105ms
+ GET / 200 in 88ms
+ GET / 200 in 89ms
+ GET / 200 in 71ms
+ GET / 200 in 71ms
+ GET / 200 in 95ms
+ GET / 200 in 161ms
+ GET / 200 in 194ms
+ GET / 200 in 223ms
+ GET / 200 in 706ms
+ GET / 200 in 84ms
+ GET / 200 in 563ms
+ GET / 200 in 248ms
+ GET / 200 in 223ms
+ GET / 200 in 92ms
+ GET / 200 in 93ms
+ GET / 200 in 79ms
+ GET / 200 in 114ms
+ GET / 200 in 223ms
+ GET / 200 in 178ms
+ GET / 200 in 104ms
+ GET / 200 in 1120ms
+ GET / 200 in 109ms
+ GET / 200 in 358ms
+ GET / 200 in 98ms
+ GET / 200 in 96ms
+ GET / 200 in 92ms
+ GET / 200 in 244ms
+ GET / 200 in 165ms
+ GET / 200 in 76ms
+ GET / 200 in 63ms
+ GET / 200 in 88ms
+ GET / 200 in 70ms
+ GET / 200 in 109ms
+ GET / 200 in 78ms
+ GET / 200 in 69ms
+ GET / 200 in 60ms
+ GET / 200 in 63ms
+ GET / 200 in 59ms
+ GET / 200 in 68ms
+ GET / 200 in 95ms
+ GET / 200 in 57ms
+ GET / 200 in 61ms
+ GET / 200 in 62ms
+ GET / 200 in 58ms
+ GET / 200 in 66ms
+ GET / 200 in 76ms
+ GET / 200 in 70ms
+ GET / 200 in 83ms
+ GET / 200 in 87ms
+ GET / 200 in 66ms
+ GET / 200 in 173ms
+ GET / 200 in 68ms
+ GET / 200 in 65ms
+ GET / 200 in 83ms
+ GET / 200 in 89ms
+ GET / 200 in 61ms
+ GET / 200 in 54ms
+ GET / 200 in 64ms
+ GET / 200 in 87ms
+ GET / 200 in 96ms
+ GET / 200 in 108ms
+ GET / 200 in 75ms
+ GET / 200 in 68ms
+ GET / 200 in 61ms
+ GET / 200 in 103ms
+ GET / 200 in 110ms
+ GET / 200 in 87ms
+ GET / 200 in 106ms
+ GET / 200 in 69ms
+ GET / 200 in 73ms
+ GET / 200 in 111ms
+ GET / 200 in 76ms
+ GET / 200 in 74ms
+ GET / 200 in 80ms
+ GET / 200 in 67ms
+ GET / 200 in 111ms
+ GET / 200 in 78ms
+ GET / 200 in 78ms
+ GET / 200 in 92ms
+ GET / 200 in 79ms
+ GET / 200 in 105ms
+ GET / 200 in 94ms
+ GET / 200 in 99ms
+ GET / 200 in 102ms
+ GET / 200 in 72ms
+ GET / 200 in 84ms
+ GET / 200 in 105ms
+ GET / 200 in 94ms
+ GET / 200 in 99ms
+ GET / 200 in 157ms
+ GET / 200 in 151ms
+ GET / 200 in 85ms
+ GET / 200 in 82ms
+ GET / 200 in 67ms
+ GET / 200 in 72ms
+ GET / 200 in 89ms
+ GET / 200 in 70ms
+ GET / 200 in 76ms
+ GET / 200 in 75ms
+ GET / 200 in 68ms
+ GET / 200 in 81ms
+ GET / 200 in 94ms
+ GET / 200 in 74ms
+ GET / 200 in 76ms
+ GET / 200 in 69ms
+ GET / 200 in 75ms
+ GET / 200 in 61ms
+ GET / 200 in 70ms
+ GET / 200 in 89ms
+ GET / 200 in 68ms
+ GET / 200 in 58ms
+ GET / 200 in 85ms
+ GET / 200 in 67ms
+ GET / 200 in 135ms
+ GET / 200 in 104ms
+ GET / 200 in 71ms
+ GET / 200 in 75ms
+ GET / 200 in 88ms
+ GET / 200 in 62ms
+ GET / 200 in 68ms
+ GET / 200 in 70ms
+ GET / 200 in 66ms
+ GET / 200 in 73ms
+ GET / 200 in 78ms
+ GET / 200 in 67ms
+ GET / 200 in 61ms
+ GET / 200 in 69ms
+ GET / 200 in 62ms
+ GET / 200 in 57ms
+ GET / 200 in 61ms
+ GET / 200 in 63ms
+ GET / 200 in 57ms
+ GET / 200 in 58ms
+ GET / 200 in 56ms
+ GET / 200 in 99ms
+ GET / 200 in 81ms
+ GET / 200 in 78ms
+ GET / 200 in 128ms
+ GET / 200 in 66ms
+ GET / 200 in 56ms
+ GET / 200 in 133ms
+ GET / 200 in 153ms
+ GET / 200 in 339ms
+ GET / 200 in 75ms
+ GET / 200 in 126ms
+ GET / 200 in 75ms
+ GET / 200 in 71ms
+ GET / 200 in 67ms
+ GET / 200 in 74ms
+ GET / 200 in 61ms
+ GET / 200 in 56ms
+ GET / 200 in 59ms
+ GET / 200 in 60ms
+ GET / 200 in 56ms
+ GET / 200 in 72ms
+ GET / 200 in 57ms
+ GET / 200 in 131ms
+ GET / 200 in 65ms
+ GET / 200 in 57ms
+ GET / 200 in 60ms
+ GET / 200 in 82ms
+ GET / 200 in 81ms
+ GET / 200 in 70ms
+ GET / 200 in 140ms
+ GET / 200 in 79ms
+ GET / 200 in 62ms
+ GET / 200 in 69ms
+ GET / 200 in 62ms
+ GET / 200 in 58ms
+ GET / 200 in 58ms
+ GET / 200 in 59ms
+ GET / 200 in 62ms
+ GET / 200 in 73ms
+ GET / 200 in 59ms
+ GET / 200 in 58ms
+ GET / 200 in 67ms
+ GET / 200 in 60ms
+ GET / 200 in 57ms
+ GET / 200 in 59ms
+ GET / 200 in 69ms
+ GET / 200 in 81ms
+ GET / 200 in 86ms
+ GET / 200 in 58ms
+ GET / 200 in 52ms
+ GET / 200 in 53ms
+ GET / 200 in 55ms
+ GET / 200 in 53ms
+ GET / 200 in 55ms
+ GET / 200 in 61ms
+ GET / 200 in 64ms
+ GET / 200 in 58ms
+ GET / 200 in 64ms
+ GET / 200 in 76ms
+ GET / 200 in 63ms
+ GET / 200 in 56ms
+ GET / 200 in 56ms
+ GET / 200 in 95ms
+ GET / 200 in 60ms
+ GET / 200 in 63ms
+ GET / 200 in 57ms
+ GET / 200 in 72ms
+ GET / 200 in 105ms
+ GET / 200 in 65ms
+ GET / 200 in 56ms
+ GET / 200 in 56ms
+ GET / 200 in 60ms
+ GET / 200 in 71ms
+ GET / 200 in 77ms
+ GET / 200 in 67ms
+ GET / 200 in 60ms
+ GET / 200 in 155ms
+ GET / 200 in 69ms
+ GET / 200 in 80ms
+ GET / 200 in 94ms
+ GET / 200 in 67ms
+ GET / 200 in 79ms
+ GET / 200 in 85ms
+ GET / 200 in 108ms
+ GET / 200 in 84ms
+ GET / 200 in 66ms
+ GET / 200 in 102ms
+ GET / 200 in 84ms
+ GET / 200 in 70ms
+ GET / 200 in 173ms
+ GET / 200 in 258ms
+ GET / 200 in 117ms
+ GET / 200 in 73ms
+ GET / 200 in 73ms
+ GET / 200 in 69ms
+ GET / 200 in 73ms
+ GET / 200 in 91ms
+ GET / 200 in 85ms
+ GET / 200 in 60ms
+ GET / 200 in 56ms
+ GET / 200 in 56ms
+ GET / 200 in 60ms
+ GET / 200 in 60ms
+ GET / 200 in 57ms
+ GET / 200 in 64ms
+ GET / 200 in 59ms
+ GET / 200 in 57ms
+ GET / 200 in 55ms
+ GET / 200 in 57ms
+ GET / 200 in 56ms
+ GET / 200 in 63ms
+ GET / 200 in 65ms
+ GET / 200 in 79ms
+ GET / 200 in 78ms
+ GET / 200 in 67ms
+ GET / 200 in 59ms
+ GET / 200 in 63ms
+ GET / 200 in 84ms
+ GET / 200 in 113ms
+ GET / 200 in 74ms
+ GET / 200 in 62ms
+ GET / 200 in 62ms
+ GET / 200 in 64ms
+ GET / 200 in 71ms
+ GET / 200 in 69ms
+ GET / 200 in 78ms
+ GET / 200 in 64ms
+ GET / 200 in 80ms
+ GET / 200 in 74ms
+ GET / 200 in 80ms
+ GET / 200 in 73ms
+ GET / 200 in 64ms
+ GET / 200 in 70ms
+ GET / 200 in 63ms
+ GET / 200 in 119ms
+ GET / 200 in 102ms
+ GET / 200 in 233ms
+ GET / 200 in 68ms
+ GET / 200 in 63ms
+ GET / 200 in 61ms
+ GET / 200 in 60ms
+ GET / 200 in 57ms
+ GET / 200 in 58ms
+ GET / 200 in 57ms
+ GET / 200 in 61ms
+ GET / 200 in 69ms
+ GET / 200 in 60ms
+ GET / 200 in 64ms
+ GET / 200 in 106ms
+ GET / 200 in 65ms
+ GET / 200 in 83ms
+ GET / 200 in 65ms
+ GET / 200 in 64ms
+ GET / 200 in 79ms
+ GET / 200 in 85ms
+ GET / 200 in 62ms
+ GET / 200 in 64ms
+ GET / 200 in 64ms
+ GET / 200 in 58ms
+ GET / 200 in 55ms
+ GET / 200 in 57ms
+ GET / 200 in 154ms
+ GET / 200 in 64ms
+ GET / 200 in 62ms
+ GET / 200 in 59ms
+ GET / 200 in 59ms
+ GET / 200 in 67ms
+ GET / 200 in 62ms
+ GET / 200 in 63ms
+ GET / 200 in 68ms
+ GET / 200 in 71ms
+ GET / 200 in 62ms
+ GET / 200 in 57ms
+ GET / 200 in 59ms
+ GET / 200 in 59ms
+ GET / 200 in 69ms
+ GET / 200 in 64ms
+ GET / 200 in 60ms
+ GET / 200 in 59ms
+ GET / 200 in 62ms
+ GET / 200 in 61ms
+ GET / 200 in 62ms
+ GET / 200 in 65ms
+ GET / 200 in 53ms
+ GET / 200 in 79ms
+ GET / 200 in 59ms
+ GET / 200 in 55ms
+ GET / 200 in 151ms
+ GET / 200 in 74ms
+ GET / 200 in 103ms
+ GET / 200 in 74ms
+ GET / 200 in 90ms
+ GET / 200 in 63ms
+ GET / 200 in 63ms
+ GET / 200 in 59ms
+ GET / 200 in 60ms
+ GET / 200 in 69ms
+ GET / 200 in 56ms
+ GET / 200 in 57ms
+ GET / 200 in 61ms
+ GET / 200 in 65ms
+ GET / 200 in 79ms
+ GET / 200 in 65ms
+ GET / 200 in 69ms
+ GET / 200 in 65ms
+ GET / 200 in 56ms
+ GET / 200 in 54ms
+ GET / 200 in 64ms
+ GET / 200 in 61ms
+ GET / 200 in 52ms
+ GET / 200 in 62ms
+ GET / 200 in 71ms
+ GET / 200 in 122ms
+ GET / 200 in 71ms
+ GET / 200 in 58ms
+ GET / 200 in 59ms
+ GET / 200 in 58ms
+ GET / 200 in 64ms
+ GET / 200 in 66ms
+ GET / 200 in 60ms
+ GET / 200 in 64ms
+ GET / 200 in 58ms
+ GET / 200 in 59ms
+ GET / 200 in 58ms
+ GET / 200 in 64ms
+ GET / 200 in 69ms
+ GET / 200 in 61ms
+ GET / 200 in 69ms
+ GET / 200 in 66ms
+ GET / 200 in 54ms
+ GET / 200 in 58ms
+ GET / 200 in 63ms
+ GET / 200 in 60ms
+ GET / 200 in 58ms
+ GET / 200 in 59ms
+ GET / 200 in 67ms
+ GET / 200 in 67ms
+ GET / 200 in 69ms
+ GET / 200 in 66ms
+ GET / 200 in 140ms
+ GET / 200 in 72ms
+ GET / 200 in 85ms
+ GET / 200 in 102ms
+ GET / 200 in 102ms
+ GET / 200 in 83ms
+ GET / 200 in 69ms
+ GET / 200 in 64ms
+ GET / 200 in 60ms
+ GET / 200 in 91ms
+ GET / 200 in 85ms
+ GET / 200 in 86ms
+ GET / 200 in 91ms
+ GET / 200 in 68ms
+ GET / 200 in 55ms
+ GET / 200 in 56ms
+ GET / 200 in 64ms
+ GET / 200 in 57ms
+ GET / 200 in 58ms
+ GET / 200 in 57ms
+ GET / 200 in 59ms
+ GET / 200 in 54ms
+ GET / 200 in 55ms
+ GET / 200 in 98ms
+ GET / 200 in 61ms
+ GET / 200 in 77ms
+ GET / 200 in 59ms
+ GET / 200 in 57ms
+ GET / 200 in 58ms
+ GET / 200 in 55ms
+ GET / 200 in 55ms
+ GET / 200 in 63ms
+ GET / 200 in 61ms
+ GET / 200 in 61ms
+ GET / 200 in 59ms
+ GET / 200 in 63ms
+ GET / 200 in 58ms
+ GET / 200 in 67ms
+ GET / 200 in 61ms
+ GET / 200 in 60ms
+ GET / 200 in 56ms
+ GET / 200 in 53ms
+ GET / 200 in 52ms
+ GET / 200 in 61ms
+ GET / 200 in 68ms
+ GET / 200 in 69ms
+ GET / 200 in 108ms
+ GET / 200 in 71ms
+ GET / 200 in 203ms
+ GET / 200 in 61ms
+ GET / 200 in 61ms
+ GET / 200 in 68ms
+ GET / 200 in 64ms
+ GET / 200 in 73ms
+ GET / 200 in 73ms
+ GET / 200 in 70ms
+ GET / 200 in 74ms
+ GET / 200 in 87ms
+ GET / 200 in 68ms
+ GET / 200 in 67ms
+ GET / 200 in 65ms
+ GET / 200 in 67ms
+ GET / 200 in 66ms
+ GET / 200 in 65ms
+ GET / 200 in 63ms
+ GET / 200 in 63ms
+ GET / 200 in 97ms
+ GET / 200 in 86ms
+ GET / 200 in 64ms
+ GET / 200 in 71ms
+ GET / 200 in 574ms
+ GET / 200 in 88ms
+ GET / 200 in 80ms
+ GET / 200 in 81ms
+ GET / 200 in 70ms
+ GET / 200 in 67ms
+ GET / 200 in 63ms
+ GET / 200 in 72ms
+ GET / 200 in 89ms
+ GET / 200 in 59ms
+ GET / 200 in 73ms
+ GET / 200 in 84ms
+ GET / 200 in 61ms
+ GET / 200 in 61ms
+ GET / 200 in 130ms
+ GET / 200 in 61ms
+ GET / 200 in 76ms
+ GET / 200 in 61ms
+ GET / 200 in 80ms
+ GET / 200 in 58ms
+ GET / 200 in 63ms
+ GET / 200 in 137ms
+ GET / 200 in 83ms
+ GET / 200 in 66ms
+ GET / 200 in 85ms
+ GET / 200 in 99ms
+ GET / 200 in 66ms
+ GET / 200 in 69ms
+ GET / 200 in 61ms
+ GET / 200 in 78ms
+ GET / 200 in 62ms
+ GET / 200 in 64ms
+ GET / 200 in 72ms
+ GET / 200 in 68ms
+ GET / 200 in 65ms
+ GET / 200 in 79ms
+ GET / 200 in 69ms
+ GET / 200 in 97ms
+ GET / 200 in 75ms
+ GET / 200 in 78ms
+ GET / 200 in 76ms
+ GET / 200 in 96ms
+ GET / 200 in 93ms
+ GET / 200 in 139ms
+ GET / 200 in 107ms
+ GET / 200 in 93ms
+ GET / 200 in 84ms
+ GET / 200 in 71ms
+ GET / 200 in 72ms
+ GET / 200 in 80ms
+ GET / 200 in 72ms
+ GET / 200 in 63ms
+ GET / 200 in 64ms
+ GET / 200 in 74ms
+ GET / 200 in 60ms
+ GET / 200 in 78ms
+ GET / 200 in 76ms
+ GET / 200 in 79ms
+ GET / 200 in 64ms
+ GET / 200 in 64ms
+ GET / 200 in 73ms
+ GET / 200 in 60ms
+ GET / 200 in 63ms
+ GET / 200 in 95ms
+ GET / 200 in 69ms
+ GET / 200 in 89ms
+ GET / 200 in 208ms
+ GET / 200 in 75ms
+ GET / 200 in 92ms
+ GET / 200 in 287ms
+ GET / 200 in 180ms
+ GET / 200 in 100ms
+ GET / 200 in 177ms
+ GET / 200 in 135ms
+ GET / 200 in 110ms
+ GET / 200 in 123ms
+ GET / 200 in 111ms
+ GET / 200 in 292ms
+ GET / 200 in 82ms
+ GET / 200 in 103ms
+ GET / 200 in 87ms
+ GET / 200 in 78ms
+ GET / 200 in 162ms
+ GET / 200 in 114ms
+ GET / 200 in 290ms
+ GET / 200 in 111ms
+ GET / 200 in 93ms
+ GET / 200 in 96ms
+ GET / 200 in 149ms
+ GET / 200 in 104ms
+ GET / 200 in 97ms
+ GET / 200 in 169ms
+ GET / 200 in 99ms
+ GET / 200 in 152ms
+ GET / 200 in 87ms
+ GET / 200 in 189ms
+ GET / 200 in 125ms
+ GET / 200 in 216ms
+ GET / 200 in 236ms
+ GET / 200 in 77ms
+ GET / 200 in 111ms
+ GET / 200 in 77ms
+ GET / 200 in 64ms
+ GET / 200 in 69ms
+ GET / 200 in 64ms
+ GET / 200 in 62ms
+ GET / 200 in 59ms
+ GET / 200 in 106ms
+ GET / 200 in 111ms
+ GET / 200 in 60ms
+ GET / 200 in 53ms
+ GET / 200 in 56ms
+ GET / 200 in 68ms
+ GET / 200 in 58ms
+ GET / 200 in 65ms
+ GET / 200 in 67ms
+ GET / 200 in 60ms
+ GET / 200 in 80ms
+ GET / 200 in 66ms
+ GET / 200 in 73ms
+ GET / 200 in 63ms
+ GET / 200 in 70ms
+ GET / 200 in 76ms
+ GET / 200 in 94ms
+ GET / 200 in 300ms
+ GET / 200 in 72ms
+ GET / 200 in 75ms
+ GET / 200 in 71ms
+ GET / 200 in 77ms
+ GET / 200 in 127ms
+ GET / 200 in 62ms
+ GET / 200 in 63ms
+ GET / 200 in 68ms
+ GET / 200 in 129ms
+ GET / 200 in 168ms
+ GET / 200 in 77ms
+ GET / 200 in 97ms
+ GET / 200 in 76ms
+ GET / 200 in 92ms
+ GET / 200 in 74ms
+ GET / 200 in 75ms
+ GET / 200 in 78ms
+ GET / 200 in 81ms
+ GET / 200 in 70ms
+ GET / 200 in 167ms
+ GET / 200 in 146ms
+ GET / 200 in 122ms
+ GET / 200 in 115ms
+ GET / 200 in 77ms
+ GET / 200 in 252ms
+ GET / 200 in 262ms
+ GET / 200 in 186ms
+ GET / 200 in 98ms
+ GET / 200 in 72ms
+ GET / 200 in 97ms
+ GET / 200 in 83ms
+ GET / 200 in 67ms
+ GET / 200 in 75ms
+ GET / 200 in 79ms
+ GET / 200 in 106ms
+ GET / 200 in 84ms
+ GET / 200 in 224ms
+ GET / 200 in 338ms
+ GET / 200 in 93ms
+ GET / 200 in 67ms
+ GET / 200 in 67ms
+ GET / 200 in 145ms
+ GET / 200 in 131ms
+ GET / 200 in 147ms
+ GET / 200 in 66ms
+ GET / 200 in 100ms
+ GET / 200 in 67ms
+ GET / 200 in 64ms
+ GET / 200 in 67ms
+ GET / 200 in 62ms
+ GET / 200 in 65ms
+ GET / 200 in 69ms
+ GET / 200 in 97ms
+ GET / 200 in 133ms
+ GET / 200 in 115ms
+ GET / 200 in 64ms
+ GET / 200 in 68ms
+ GET / 200 in 63ms
+ GET / 200 in 68ms
+ GET / 200 in 77ms
+ GET / 200 in 65ms
+ GET / 200 in 70ms
+ GET / 200 in 67ms
+ GET / 200 in 80ms
+ GET / 200 in 167ms
+ GET / 200 in 79ms
+ GET / 200 in 68ms
+ GET / 200 in 69ms
+ GET / 200 in 82ms
+ GET / 200 in 71ms
+ GET / 200 in 81ms
+ GET / 200 in 81ms
+ GET / 200 in 65ms
+ GET / 200 in 65ms
+ GET / 200 in 87ms
+ GET / 200 in 183ms
+ GET / 200 in 95ms
+ GET / 200 in 76ms
+ GET / 200 in 89ms
+ GET / 200 in 104ms
+ GET / 200 in 108ms
+ GET / 200 in 126ms
+ GET / 200 in 147ms
+ GET / 200 in 133ms
+ GET / 200 in 152ms
+ GET / 200 in 67ms
+ GET / 200 in 71ms
+ GET / 200 in 130ms
+ GET / 200 in 82ms
+ GET / 200 in 91ms
+ GET / 200 in 72ms
+ GET / 200 in 77ms
+ GET / 200 in 120ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET / 200 in 165ms
+ ○ Compiling /admin/articles ...
+ ✓ Compiled /admin/articles in 4.5s (3173 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 6883ms
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 2395ms
+ ✓ Compiled in 3s (1435 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles 200 in 3902ms
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 3322ms
+ ○ Compiling /api/auth/csrf ...
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 373ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled /api/auth/csrf in 10.4s (3246 modules)
+ GET /api/auth/csrf 200 in 7341ms
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 4428ms
+ GET /api/auth/csrf 200 in 176ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 416ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1101ms (1435 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 404ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 276ms
+ ✓ Compiled in 753ms (1435 modules)
+ ✓ Compiled in 548ms (1435 modules)
+ ✓ Compiled in 657ms (1435 modules)
+ ✓ Compiled in 683ms (1435 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/email-templates ...
+ ✓ Compiled /admin/email-templates in 3.3s (3255 modules)
+ GET /admin/email-templates 200 in 3700ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 183ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 340ms
+[createServerSupabaseClient] Successfully got JWT token
+ ○ Compiling /api/admin/email-templates ...
+ GET /admin/email-templates 200 in 921ms
+ ✓ Compiled /api/admin/email-templates in 2.6s (3272 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 2267ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 673ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/email-templates/[id]/preview ...
+ ✓ Compiled /admin/email-templates/[id]/preview in 2.3s (3285 modules)
+ ✓ Compiled in 1154ms (1443 modules)
+ ✓ Compiled in 1044ms (1443 modules)
+(node:65784) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 5022ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 773ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /api/admin/email-templates/[id]/preview ...
+[createServerSupabaseClient] Successfully got JWT token
+Error: Route "/admin/email-templates/[id]/preview" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at EmailTemplatePreviewPage (app/admin/email-templates/[id]/preview/page.tsx:32:13)
+  30 |   useEffect(() => {
+  31 |     fetchPreview()
+> 32 |   }, [params.id, variables])
+     |             ^
+  33 |
+  34 |   const fetchPreview = async () => {
+  35 |     try {
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 1293ms
+(node:65842) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled /api/admin/email-templates/[id]/preview in 5.1s (3288 modules)
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 3696ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 126ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+(node:65940) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 558ms
+ ✓ Compiled in 1617ms (1443 modules)
+(node:65943) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/preview/route.ts:24:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-09T23:15:13.360Z'
+}
+ POST /api/admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 500 in 6872ms
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/preview/route.ts:24:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-09T23:15:13.362Z'
+}
+ POST /api/admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 500 in 6874ms
+ ✓ Compiled in 1002ms (1443 modules)
+(node:65977) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 806ms (1443 modules)
+ ✓ Compiled in 1245ms (1443 modules)
+ ✓ Compiled in 1296ms (1443 modules)
+ ✓ Compiled in 1328ms (1443 modules)
+ ✓ Compiled in 883ms (1443 modules)
+ ✓ Compiled in 904ms (1443 modules)
+ ✓ Compiled in 853ms (1443 modules)
+ ✓ Compiled in 994ms (1443 modules)
+ ✓ Compiled in 1225ms (1443 modules)
+ ✓ Compiled in 1180ms (1443 modules)
+ ✓ Compiled in 830ms (1443 modules)
+ ✓ Compiled in 1035ms (1443 modules)
+ ✓ Compiled in 896ms (1443 modules)
+ ✓ Compiled in 840ms (1443 modules)
+ ✓ Compiled in 1112ms (1443 modules)
+ ✓ Compiled in 725ms (1443 modules)
+ ✓ Compiled in 900ms (1443 modules)
+ ✓ Compiled in 905ms (1443 modules)
+ ✓ Compiled in 738ms (1443 modules)
+ ✓ Compiled in 1112ms (1443 modules)
+ ✓ Compiled in 1123ms (1443 modules)
+ ✓ Compiled in 1391ms (1443 modules)
+ ✓ Compiled in 1517ms (1443 modules)
+ ✓ Compiled in 882ms (1443 modules)
+ ✓ Compiled in 1062ms (1443 modules)
+ ✓ Compiled in 596ms (1443 modules)
+ ✓ Compiled in 709ms (1443 modules)
+ ✓ Compiled in 1230ms (1443 modules)
+ ✓ Compiled in 929ms (1443 modules)
+ ✓ Compiled in 1393ms (1443 modules)
+ ✓ Compiled in 831ms (1443 modules)
+ ✓ Compiled in 1474ms (1443 modules)
+ ✓ Compiled in 811ms (1443 modules)
+ ✓ Compiled in 2.4s (1443 modules)
+ ✓ Compiled in 1260ms (1443 modules)
+ ✓ Compiled in 1537ms (1443 modules)
+ ✓ Compiled in 1023ms (1443 modules)
+ ✓ Compiled in 967ms (1443 modules)
+ ✓ Compiled in 737ms (1443 modules)
+ ✓ Compiled in 792ms (1443 modules)
+ ✓ Compiled in 1208ms (1443 modules)
+ ✓ Compiled in 682ms (1443 modules)
+ ✓ Compiled in 775ms (1443 modules)
+ ✓ Compiled in 896ms (1443 modules)
+ ✓ Compiled in 1243ms (1443 modules)
+ ✓ Compiled in 1434ms (1443 modules)
+ ✓ Compiled in 1087ms (1443 modules)
+ ✓ Compiled in 766ms (1443 modules)
+ ✓ Compiled in 1600ms (1443 modules)
+ ✓ Compiled in 726ms (1443 modules)
