@@ -33,7 +33,8 @@ export function generateSessionId(): string {
  * Generate a unique ID for chat sessions and other entities
  */
 export function generateId(): string {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  // Generate a UUID v4
+  return crypto.randomUUID()
 }
 
 export function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {

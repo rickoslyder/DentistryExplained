@@ -14,10 +14,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { toast } from "sonner"
+import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
 import { 
   Shield, CheckCircle, XCircle, Clock, ExternalLink, FileText, 
-  Search, Filter, RefreshCw, Download, Eye, AlertCircle 
+  Search, Filter, RefreshCw, Download, Eye, AlertCircle, Edit 
 } from "lucide-react"
 import { ProfessionalVerification, VerificationDocument, VerificationStats } from "@/types/professional"
 
@@ -42,6 +43,8 @@ export default function AdminVerificationsPage() {
   const [reviewAction, setReviewAction] = useState<"approve" | "reject" | null>(null)
   const [rejectionReason, setRejectionReason] = useState("")
   const [expiryDate, setExpiryDate] = useState("")
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [editData, setEditData] = useState<any>({})
 
   useEffect(() => {
     checkAdminAccess()
@@ -115,6 +118,40 @@ export default function AdminVerificationsPage() {
     setSelectedVerification(verification)
     setIsReviewDialogOpen(true)
     await loadDocuments(verification.id)
+  }
+
+  const handleEdit = (verification: ProfessionalVerification) => {
+    setSelectedVerification(verification)
+    setEditData({
+      practice_name: verification.practice_name || '',
+      practice_address: verification.practice_address || '',
+      practice_phone: verification.practice_phone || '',
+      practice_website: verification.practice_website || '',
+      practice_email: verification.practice_email || '',
+      gdc_number: verification.gdc_number || '',
+    })
+    setIsEditDialogOpen(true)
+  }
+
+  const handleUpdate = async () => {
+    if (!selectedVerification) return
+
+    try {
+      const response = await fetch(`/api/admin/users/${selectedVerification.user_id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editData),
+      })
+
+      if (!response.ok) throw new Error('Failed to update practice details')
+
+      toast.success('Practice details updated successfully')
+      setIsEditDialogOpen(false)
+      loadVerifications()
+    } catch (error) {
+      console.error('Update error:', error)
+      toast.error('Failed to update practice details')
+    }
   }
 
   const submitReview = async () => {
@@ -327,6 +364,13 @@ export default function AdminVerificationsPage() {
                         </Button>
                         <Button
                           size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(verification)}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          size="sm"
                           variant="ghost"
                           asChild
                         >
@@ -506,6 +550,99 @@ export default function AdminVerificationsPage() {
                 {reviewAction === 'approve' ? 'Approve Verification' : 'Reject Verification'}
               </Button>
             )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Practice Details Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit Practice Details</DialogTitle>
+            <DialogDescription>
+              Update practice information for {selectedVerification?.full_name}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="gdc_number">GDC Number</Label>
+              <Input
+                id="gdc_number"
+                value={editData.gdc_number || ''}
+                onChange={(e) => setEditData({ ...editData, gdc_number: e.target.value })}
+                placeholder="e.g., 123456"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="practice_name">Practice Name</Label>
+              <Input
+                id="practice_name"
+                value={editData.practice_name || ''}
+                onChange={(e) => setEditData({ ...editData, practice_name: e.target.value })}
+                placeholder="e.g., Smile Dental Clinic"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="practice_address">Practice Address</Label>
+              <Textarea
+                id="practice_address"
+                value={editData.practice_address || ''}
+                onChange={(e) => setEditData({ ...editData, practice_address: e.target.value })}
+                placeholder="Full practice address"
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="practice_phone">Practice Phone</Label>
+                <Input
+                  id="practice_phone"
+                  value={editData.practice_phone || ''}
+                  onChange={(e) => setEditData({ ...editData, practice_phone: e.target.value })}
+                  placeholder="e.g., 020 1234 5678"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="practice_email">Practice Email</Label>
+                <Input
+                  id="practice_email"
+                  type="email"
+                  value={editData.practice_email || ''}
+                  onChange={(e) => setEditData({ ...editData, practice_email: e.target.value })}
+                  placeholder="e.g., info@practice.com"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="practice_website">Practice Website</Label>
+              <Input
+                id="practice_website"
+                value={editData.practice_website || ''}
+                onChange={(e) => setEditData({ ...editData, practice_website: e.target.value })}
+                placeholder="e.g., https://www.practice.com"
+              />
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsEditDialogOpen(false)
+                setEditData({})
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleUpdate}>
+              Save Changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

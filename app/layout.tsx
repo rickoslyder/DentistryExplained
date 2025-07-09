@@ -4,10 +4,12 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Providers } from "@/components/providers"
+import { ChatProvider } from "@/components/chat/chat-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GoogleTagManager, GoogleAnalytics, GoogleTagManagerNoscript } from "@/components/analytics/google-tag-manager"
 import { ErrorReporterInit } from "@/components/error-reporter-init"
+import { URLParameterHandler } from "@/components/url-parameter-handler"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -45,10 +47,13 @@ export default function RootLayout({
         <body className={inter.className} suppressHydrationWarning>
           <GoogleTagManagerNoscript />
           <Providers>
-            <ErrorReporterInit />
-            {children}
-            <Toaster />
-            <SpeedInsights />
+            <ChatProvider>
+              <ErrorReporterInit />
+              {/* <URLParameterHandler /> */}
+              {children}
+              <Toaster />
+              <SpeedInsights />
+            </ChatProvider>
           </Providers>
         </body>
       </html>

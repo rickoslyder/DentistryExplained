@@ -34,7 +34,7 @@ This makes it incompatible with static rendering at build time.
 - **Already has**: No dynamic export
 - **Action**: Needs `export const dynamic = 'force-dynamic'`
 
-### 5. `/app/professional/patient-materials/page.tsx`
+### 5. `/app/professional/resources/patient-education/page.tsx`
 - **Uses Auth**: YES (uses `auth()` and checks user permissions)
 - **Already has**: No dynamic export
 - **Action**: Needs `export const dynamic = 'force-dynamic'`
@@ -69,7 +69,7 @@ This makes it incompatible with static rendering at build time.
    - `/app/admin/articles/new/page.tsx`
 
 2. **All professional pages** (use auth directly):
-   - `/app/professional/patient-materials/page.tsx`
+   - `/app/professional/resources/patient-education/page.tsx`
    - `/app/professional/practice/page.tsx`
 
 ## Pages That DON'T Need Dynamic Rendering

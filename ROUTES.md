@@ -90,12 +90,10 @@ This document outlines all routes in the Dentistry Explained application, their 
 - ✅ `/professional/dashboard` - Professional dashboard
 
 ### Professional Resources
-- ✅ `/professional/consent-forms` - Downloadable consent forms
-- ✅ `/professional/patient-materials` - Patient education downloads
 - ✅ `/professional/practice` - Practice listing management
 - ✅ `/professional/resources` - Resources hub
-- ✅ `/professional/resources/consent-forms` - Nested consent forms
-- ✅ `/professional/resources/patient-education` - Nested patient education
+- ✅ `/professional/resources/consent-forms` - Consent forms library
+- ✅ `/professional/resources/patient-education` - Patient education materials
 
 ### API Routes (Professional)
 - ✅ `/api/professional/verification` - Verification API
@@ -146,7 +144,7 @@ This document outlines all routes in the Dentistry Explained application, their 
 
 2. **Consent Forms**:
    - `/consent-forms` - Public viewing (no downloads)
-   - `/professional/consent-forms` - Professional downloads
+   - `/professional/resources/consent-forms` - Professional downloads
 
 3. **Dashboard**:
    - Shows different content based on user type

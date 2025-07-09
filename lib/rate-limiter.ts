@@ -178,7 +178,7 @@ export const rateLimiters = {
   // AI chat limit
   chat: createRateLimiter({
     windowMs: 60000, // 1 minute
-    maxRequests: 10,
+    maxRequests: 30, // Increased from 10 to 30 for better UX
     onLimitReached: (req, key) => {
       console.warn(`Chat rate limit reached for ${key}`)
     }

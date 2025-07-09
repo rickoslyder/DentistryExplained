@@ -775,6 +775,15 @@ function GlossaryTermCard({
                   {term.definition}
                 </p>
 
+                {/* Ask AI button - always visible */}
+                <div className="mt-3">
+                  <GlossaryAIChat 
+                    term={term} 
+                    variant="outline"
+                    size="sm"
+                  />
+                </div>
+
                 {isExpanded && (
                   <div className="mt-4 space-y-3">
                     {term.example && (
@@ -884,17 +893,6 @@ function GlossaryTermCard({
             </Button>
           </div>
         </div>
-        
-        {isExpanded && (
-          <div className="mt-4 pt-4 border-t flex justify-end">
-            <GlossaryAIChat 
-              term={term} 
-              variant="outline"
-              size="sm"
-              className="w-full sm:w-auto"
-            />
-          </div>
-        )}
       </CardContent>
     </Card>
   )

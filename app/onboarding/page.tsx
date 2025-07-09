@@ -156,7 +156,7 @@ export default function OnboardingPage() {
       if (userType === "professional") {
         router.push("/professional/verify")
       } else {
-        router.push("/dashboard")
+        router.push("/")
       }
     } catch (error) {
       console.error("Onboarding error:", error)

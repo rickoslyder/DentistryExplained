@@ -25,6 +25,11 @@ interface SiteSettings {
     professional_verification_enabled: boolean
     glossary_quiz_enabled: boolean
   }
+  email: {
+    from_name: string
+    from_email: string
+    reply_to: string
+  }
   ai: {
     model: string
     temperature: number
@@ -55,12 +60,13 @@ export function SettingsManagerWrapper() {
       const { settings: dbSettings } = await response.json()
       
       // Map database settings to component state
+      const emailConfig = dbSettings.email?.find((s: any) => s.key === 'email_config')?.value || {}
       const mappedSettings: SiteSettings = {
         site: {
           name: dbSettings.general?.find((s: any) => s.key === 'site_maintenance')?.value?.site_name || 'Dentistry Explained',
           description: dbSettings.general?.find((s: any) => s.key === 'site_maintenance')?.value?.site_description || 'UK\'s premier dental education platform',
           url: dbSettings.general?.find((s: any) => s.key === 'site_maintenance')?.value?.site_url || 'https://dentistryexplained.co.uk',
-          contact_email: dbSettings.email?.find((s: any) => s.key === 'email_config')?.value?.from_email || 'hello@dentistryexplained.co.uk'
+          contact_email: emailConfig.from_email || 'hello@dentistryexplained.co.uk'
         },
         seo: {
           default_title_suffix: dbSettings.seo?.find((s: any) => s.key === 'seo_defaults')?.value?.title_suffix || ' | Dentistry Explained',
@@ -73,6 +79,11 @@ export function SettingsManagerWrapper() {
           web_search_enabled: dbSettings.general?.find((s: any) => s.key === 'features_config')?.value?.web_search_enabled !== false,
           professional_verification_enabled: dbSettings.verification?.find((s: any) => s.key === 'professional_verification')?.value?.enabled !== false,
           glossary_quiz_enabled: dbSettings.general?.find((s: any) => s.key === 'features_config')?.value?.glossary_quiz_enabled !== false
+        },
+        email: {
+          from_name: emailConfig.from_name || 'Dentistry Explained',
+          from_email: emailConfig.from_email || 'hello@dentistryexplained.co.uk',
+          reply_to: emailConfig.reply_to || 'support@dentistryexplained.co.uk'
         },
         ai: {
           model: dbSettings.ai?.find((s: any) => s.key === 'ai_config')?.value?.model || 'o4-mini',
@@ -106,6 +117,11 @@ export function SettingsManagerWrapper() {
           web_search_enabled: true,
           professional_verification_enabled: true,
           glossary_quiz_enabled: true
+        },
+        email: {
+          from_name: 'Dentistry Explained',
+          from_email: 'hello@dentistryexplained.co.uk',
+          reply_to: 'support@dentistryexplained.co.uk'
         },
         ai: {
           model: 'o4-mini',

@@ -2,9 +2,25 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, Search, BookOpen, MapPin, Users, FileText, Shield } from "lucide-react"
+import { Menu, Search, BookOpen, MapPin, Users, FileText, Shield, AlertCircle, HelpCircle, Phone, Stethoscope, CreditCard, Heart, Info, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 import { UserButton, useUser } from "@clerk/nextjs"
 import { AIAssistantButton } from "@/components/chat/ai-assistant-button"
 import { SearchDialog } from "@/components/search/search-dialog"
@@ -13,9 +29,173 @@ import { useIsAdmin } from "@/lib/hooks/use-is-admin"
 
 export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const { isSignedIn } = useUser()
+  const { isSignedIn, user } = useUser()
   const { bookmarks } = useBookmarks()
   const { isAdmin } = useIsAdmin()
+  
+  const isProfessional = user?.publicMetadata?.userType === 'professional'
+
+  const topicCategories = [
+    {
+      id: "dental-problems",
+      title: "Dental Problems",
+      description: "Common dental issues, symptoms, and causes",
+      href: "/categories/dental-problems"
+    },
+    {
+      id: "treatments",
+      title: "Treatments",
+      description: "Dental procedures and treatment options",
+      href: "/categories/treatments"
+    },
+    {
+      id: "prevention",
+      title: "Prevention",
+      description: "Maintaining good oral health",
+      href: "/categories/prevention"
+    },
+    {
+      id: "oral-surgery",
+      title: "Oral Surgery",
+      description: "Surgical procedures and what to expect",
+      href: "/categories/oral-surgery"
+    },
+    {
+      id: "cosmetic-dentistry",
+      title: "Cosmetic Dentistry",
+      description: "Improving the appearance of your smile",
+      href: "/categories/cosmetic-dentistry"
+    },
+    {
+      id: "pediatric-dentistry",
+      title: "Pediatric Dentistry",
+      description: "Dental care for children",
+      href: "/categories/pediatric-dentistry"
+    }
+  ]
+
+  const adminResources = [
+    {
+      title: "Content Management",
+      items: [
+        {
+          title: "Articles",
+          description: "Create and manage articles",
+          href: "/admin/articles",
+          icon: FileText
+        },
+        {
+          title: "Categories",
+          description: "Organize content categories",
+          href: "/admin/categories",
+          icon: BookOpen
+        }
+      ]
+    },
+    {
+      title: "User Management",
+      items: [
+        {
+          title: "Users",
+          description: "View and manage users",
+          href: "/admin/users",
+          icon: Users
+        },
+        {
+          title: "Verifications",
+          description: "Professional verification requests",
+          href: "/admin/verifications",
+          icon: Shield
+        }
+      ]
+    },
+    {
+      title: "Analytics",
+      items: [
+        {
+          title: "Dashboard",
+          description: "Site analytics overview",
+          href: "/admin",
+          icon: Info
+        }
+      ]
+    }
+  ]
+
+  const resourceCategories = [
+    {
+      title: "Emergency & Urgent Care",
+      items: [
+        {
+          title: "Emergency Dental Guide",
+          description: "Immediate help for dental emergencies",
+          href: "/emergency",
+          icon: AlertCircle,
+          urgent: true
+        },
+        {
+          title: "NHS 111",
+          description: "24/7 NHS urgent care helpline",
+          href: "tel:111",
+          icon: Phone,
+          external: true
+        }
+      ]
+    },
+    {
+      title: "Educational Resources",
+      items: [
+        {
+          title: "Dental Glossary",
+          description: "A-Z guide of dental terms",
+          href: "/glossary",
+          icon: BookOpen
+        },
+        {
+          title: "Search Articles",
+          description: "Find specific information quickly",
+          href: "/search",
+          icon: Search
+        }
+      ]
+    },
+    {
+      title: "Patient Support",
+      items: [
+        {
+          title: "Find a Dentist",
+          description: "Locate dental practices near you",
+          href: "/find-dentist",
+          icon: Stethoscope
+        },
+        {
+          title: "Treatment Costs",
+          description: "NHS charges and private costs",
+          href: "/treatments#costs",
+          icon: CreditCard
+        }
+      ]
+    },
+    ...(isProfessional ? [{
+      title: "Professional Resources",
+      items: [
+        {
+          title: "Patient Education",
+          description: "Printable guides and leaflets",
+          href: "/professional/resources/patient-education",
+          icon: Heart,
+          isPro: true
+        },
+        {
+          title: "Consent Forms",
+          description: "Downloadable consent templates",
+          href: "/professional/resources/consent-forms",
+          icon: FileText,
+          isPro: true
+        }
+      ]
+    }] : [])
+  ]
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
@@ -32,25 +212,161 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/topics" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Topics
-            </Link>
-            <Link href="/resources" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Resources
-            </Link>
-            <Link href="/find-dentist" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              Find a Dentist
-            </Link>
-            <Link href="/professional" className="text-gray-700 hover:text-primary transition-colors font-medium">
-              For Professionals
-            </Link>
-            {isAdmin && (
-              <Link href="/admin" className="text-gray-700 hover:text-primary transition-colors font-medium">
-                Admin
-              </Link>
-            )}
-          </nav>
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-gray-700 hover:text-primary transition-colors font-medium">
+                  Topics
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {topicCategories.map((category) => (
+                      <li key={category.id}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={category.href}
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{category.title}</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              {category.description}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                    <li className="col-span-full">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/topics"
+                          className="flex items-center justify-center rounded-md bg-primary/10 p-3 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          View All Topics →
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="text-gray-700 hover:text-primary transition-colors font-medium">
+                  Resources
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="w-[600px] p-4">
+                    <div className="grid grid-cols-2 gap-6">
+                      {resourceCategories.map((category, idx) => (
+                        <div key={idx} className="space-y-3">
+                          <h3 className="font-medium text-sm text-muted-foreground">{category.title}</h3>
+                          <ul className="space-y-2">
+                            {category.items.map((item, itemIdx) => {
+                              const Icon = item.icon
+                              return (
+                                <li key={itemIdx}>
+                                  <NavigationMenuLink asChild>
+                                    <Link
+                                      href={item.href}
+                                      className="group flex items-start space-x-3 rounded-md p-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                                      {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                                    >
+                                      <Icon className={`w-5 h-5 mt-0.5 ${item.urgent ? 'text-red-500' : 'text-muted-foreground group-hover:text-accent-foreground'}`} />
+                                      <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-sm font-medium leading-none">{item.title}</span>
+                                          {item.urgent && (
+                                            <Badge variant="destructive" className="text-xs">URGENT</Badge>
+                                          )}
+                                          {item.isPro && (
+                                            <Badge variant="secondary" className="text-xs">PRO</Badge>
+                                          )}
+                                        </div>
+                                        <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                                          {item.description}
+                                        </p>
+                                      </div>
+                                    </Link>
+                                  </NavigationMenuLink>
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 pt-4 border-t">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/resources"
+                          className="flex items-center justify-center rounded-md bg-primary/10 p-3 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+                        >
+                          View All Resources →
+                        </Link>
+                      </NavigationMenuLink>
+                    </div>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/find-dentist" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle() + " text-gray-700 hover:text-primary transition-colors font-medium"}>
+                    Find a Dentist
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link href="/professional" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle() + " text-gray-700 hover:text-primary transition-colors font-medium"}>
+                    For Professionals
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
+              {isAdmin && (
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-gray-700 hover:text-primary transition-colors font-medium">
+                    Admin
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-[500px] p-4">
+                      <div className="space-y-4">
+                        {adminResources.map((category, idx) => (
+                          <div key={idx} className="space-y-3">
+                            <h3 className="font-medium text-sm text-muted-foreground">{category.title}</h3>
+                            <ul className="space-y-2">
+                              {category.items.map((item, itemIdx) => {
+                                const Icon = item.icon
+                                return (
+                                  <li key={itemIdx}>
+                                    <NavigationMenuLink asChild>
+                                      <Link
+                                        href={item.href}
+                                        className="group flex items-start space-x-3 rounded-md p-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                                      >
+                                        <Icon className="w-5 h-5 mt-0.5 text-muted-foreground group-hover:text-accent-foreground" />
+                                        <div className="flex-1">
+                                          <div className="text-sm font-medium leading-none">{item.title}</div>
+                                          <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                                            {item.description}
+                                          </p>
+                                        </div>
+                                      </Link>
+                                    </NavigationMenuLink>
+                                  </li>
+                                )
+                              })}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              )}
+            </NavigationMenuList>
+          </NavigationMenu>
 
           {/* Right side actions */}
           <div className="flex items-center space-x-4">
@@ -98,6 +414,23 @@ export function Header() {
               </div>
             )}
 
+            {/* Emergency Button with Tooltip */}
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/emergency">
+                    <Button variant="destructive" size="icon" className="hidden sm:flex">
+                      <AlertCircle className="w-5 h-5" />
+                      <span className="sr-only">Emergency Guide</span>
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Emergency Guide</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
@@ -108,6 +441,13 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col space-y-4 mt-8">
+                  <Link
+                    href="/emergency"
+                    className="flex items-center space-x-3 p-3 rounded-lg hover:bg-red-50 transition-colors text-red-600"
+                  >
+                    <AlertCircle className="w-5 h-5 text-red-600" />
+                    <span className="font-medium">Emergency Guide</span>
+                  </Link>
                   <Link
                     href="/topics"
                     className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"

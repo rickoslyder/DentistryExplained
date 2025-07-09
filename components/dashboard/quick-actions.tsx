@@ -15,7 +15,12 @@ export function QuickActions({ userType = "patient" }: QuickActionsProps) {
       icon: MessageSquareText,
       label: "Ask AI Assistant",
       description: "Get instant answers",
-      href: "/?openChat=true",
+      href: "#",
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault()
+        // The chat will be opened by the button click handler in the header
+        document.querySelector<HTMLButtonElement>('[aria-label="Open AI Assistant"]')?.click()
+      },
       color: "text-blue-500"
     },
     {
@@ -44,7 +49,7 @@ export function QuickActions({ userType = "patient" }: QuickActionsProps) {
       icon: MessageSquareText,
       label: "Patient Materials",
       description: "Educational resources",
-      href: "/professional/patient-materials",
+      href: "/professional/resources/patient-education",
       color: "text-blue-500"
     },
     {
@@ -58,7 +63,7 @@ export function QuickActions({ userType = "patient" }: QuickActionsProps) {
       icon: BookOpen,
       label: "Consent Forms",
       description: "Download templates",
-      href: "/professional/consent-forms",
+      href: "/professional/resources/consent-forms",
       color: "text-purple-500"
     },
     {
@@ -82,6 +87,24 @@ export function QuickActions({ userType = "patient" }: QuickActionsProps) {
         <div className="grid grid-cols-2 gap-3">
           {actions.map((action, index) => {
             const Icon = action.icon
+            
+            if (action.onClick) {
+              return (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="w-full h-auto p-4 flex flex-col items-center space-y-2 hover:border-primary/50 hover:bg-gray-50"
+                  onClick={action.onClick}
+                >
+                  <Icon className={`w-6 h-6 ${action.color}`} />
+                  <div className="text-center">
+                    <div className="font-medium text-sm">{action.label}</div>
+                    <div className="text-xs text-gray-500">{action.description}</div>
+                  </div>
+                </Button>
+              )
+            }
+            
             return (
               <Link key={index} href={action.href}>
                 <Button

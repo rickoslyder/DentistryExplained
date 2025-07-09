@@ -17,7 +17,17 @@ const chatMessageSchema = z.object({
     title: z.string().optional(),
     url: z.string().optional(),
     category: z.string().optional(),
-    content: z.string().optional()
+    content: z.string().optional(),
+    glossaryTerm: z.object({
+      term: z.string(),
+      definition: z.string(),
+      pronunciation: z.string().nullable().optional(),
+      alsoKnownAs: z.array(z.string()).nullable().optional(),
+      relatedTerms: z.array(z.string()).nullable().optional(),
+      category: z.string().nullable().optional(),
+      difficulty: z.string().nullable().optional(),
+      example: z.string().nullable().optional()
+    }).optional()
   }).optional(),
   glossaryContext: z.object({
     term: z.string(),
@@ -299,7 +309,7 @@ const getChatHistoryHandler = compose(
     // Verify session belongs to user
     const { data: session, error: sessionError } = await supabase
       .from('chat_sessions')
-      .select('session_id')
+      .select('id, session_id')
       .eq('session_id', sessionId)
       .eq('user_id', userProfile.id)
       .single()
@@ -311,11 +321,11 @@ const getChatHistoryHandler = compose(
       return ApiErrors.fromDatabaseError(sessionError, 'verify_session', requestId)
     }
 
-    // Get messages
+    // Get messages - use the UUID id, not the text session_id
     const { data: messages, error: messagesError } = await supabase
       .from('chat_messages')
       .select('*')
-      .eq('session_id', sessionId)
+      .eq('session_id', session.id)
       .order('created_at', { ascending: true })
 
     if (messagesError) {
@@ -323,7 +333,7 @@ const getChatHistoryHandler = compose(
     }
 
     return NextResponse.json({
-      sessionId,
+      sessionId: session.session_id,
       messages: messages || []
     })
   } catch (error) {

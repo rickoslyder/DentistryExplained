@@ -92,7 +92,7 @@ const resources = [
       {
         title: "Consent Forms Library",
         description: "Downloadable patient consent forms for dental professionals.",
-        href: "/professional/consent-forms",
+        href: "/professional/resources/consent-forms",
         icon: Shield,
         badge: "PRO",
         badgeColor: "secondary" as const,
@@ -100,7 +100,7 @@ const resources = [
       {
         title: "Patient Education Materials",
         description: "Printable guides and leaflets for patient education.",
-        href: "/professional/patient-materials",
+        href: "/professional/resources/patient-education",
         icon: Heart,
         badge: "PRO",
         badgeColor: "secondary" as const,

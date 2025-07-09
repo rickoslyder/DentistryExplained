@@ -49,10 +49,11 @@ const isPublicRoute = createRouteMatcher([
 
 // Routes that require professional verification
 const isProfessionalOnlyRoute = createRouteMatcher([
-  "/professional/consent-forms",
-  "/professional/patient-materials",
   "/professional/practice",
   "/professional/verify",
+  "/professional/resources",
+  "/professional/resources/(.*)",
+  "/professional/dashboard",
 ])
 
 // Routes that require admin or editor role
@@ -62,16 +63,17 @@ const isAdminRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId, sessionClaims, sessionId } = await auth()
-  
-  // Skip middleware for Clerk auth endpoints to avoid CORS issues
-  const pathname = req.nextUrl.pathname
-  if (pathname.includes('clerk.accounts.dev') || 
-      pathname.includes('__clerk') ||
-      pathname.startsWith('/_next/') ||
-      pathname.startsWith('/api/clerk/')) {
-    return
-  }
+  try {
+    const { userId, sessionClaims, sessionId } = await auth()
+    
+    // Skip middleware for Clerk auth endpoints to avoid CORS issues
+    const pathname = req.nextUrl.pathname
+    if (pathname.includes('clerk.accounts.dev') || 
+        pathname.includes('__clerk') ||
+        pathname.startsWith('/_next/') ||
+        pathname.startsWith('/api/clerk/')) {
+      return
+    }
   
   // For now, we'll skip the admin route check in middleware and rely on the layout check
   // This is because sessionClaims doesn't include publicMetadata and currentUser() isn't available in middleware
@@ -139,6 +141,21 @@ export default clerkMiddleware(async (auth, req) => {
       return Response.redirect(new URL("/sign-in", req.url))
     }
     // The actual admin check happens in the admin layout
+  }
+  } catch (error) {
+    console.error('[Middleware Error]:', error)
+    // If there's an error with auth, treat as unauthenticated
+    const pathname = req.nextUrl.pathname
+    
+    // Allow public routes even if auth fails
+    if (isPublicRoute(req)) {
+      return
+    }
+    
+    // For protected routes, redirect to sign-in
+    const signInUrl = new URL('/sign-in', req.url)
+    signInUrl.searchParams.set('redirect_url', req.url)
+    return Response.redirect(signInUrl)
   }
 })
 

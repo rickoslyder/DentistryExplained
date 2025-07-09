@@ -9,6 +9,7 @@ import { formatDistanceToNow } from "date-fns"
 
 interface Chat {
   id: string
+  title: string
   preview: string
   lastMessage: Date
   messageCount: number
@@ -37,17 +38,12 @@ export function RecentChats({ userId }: RecentChatsProps) {
         
         // Transform the API data to match our component structure
         const formattedChats: Chat[] = data.sessions.map((session: any) => {
-          // Get first message as preview or use default
-          const firstMessage = session.messages?.[0]?.content || 'New conversation'
-          const preview = firstMessage.length > 60 
-            ? firstMessage.substring(0, 60) + '...' 
-            : firstMessage
-          
           return {
             id: session.id,
-            preview,
-            lastMessage: session.last_activity ? new Date(session.last_activity) : new Date(session.created_at),
-            messageCount: session.message_count || 0,
+            title: session.title || 'New conversation',
+            preview: session.preview || session.title || 'New conversation',
+            lastMessage: session.lastActivity ? new Date(session.lastActivity) : new Date(session.createdAt),
+            messageCount: session.messageCount || 0,
             topic: session.topic || undefined
           }
         })
@@ -92,23 +88,42 @@ export function RecentChats({ userId }: RecentChatsProps) {
             <MessageSquare className="w-12 h-12 mx-auto text-gray-300 mb-3" />
             <p className="text-sm text-gray-500">No conversations yet</p>
             <Button variant="outline" size="sm" className="mt-4" asChild>
-              <Link href="/?openChat=true">
+              <a 
+                href="#" 
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.querySelector<HTMLButtonElement>('[aria-label="Open AI Assistant"]')?.click()
+                }}
+              >
                 Start a conversation
-              </Link>
+              </a>
             </Button>
           </div>
         ) : (
           <div className="space-y-3">
             {recentChats.map((chat) => (
-              <Link
+              <a
                 key={chat.id}
-                href={`/?openChat=true&sessionId=${chat.id}`}
+                href="#"
                 className="block group"
+                onClick={(e) => {
+                  e.preventDefault()
+                  // Open chat and load the session
+                  const chatButton = document.querySelector<HTMLButtonElement>('[aria-label="Open AI Assistant"]')
+                  if (chatButton) {
+                    chatButton.click()
+                    // Load the session after a small delay to ensure chat is open
+                    setTimeout(() => {
+                      const event = new CustomEvent('loadChatSession', { detail: { sessionId: chat.id } })
+                      window.dispatchEvent(event)
+                    }, 100)
+                  }
+                }}
               >
                 <div className="p-3 rounded-lg border hover:border-primary/50 hover:bg-gray-50 transition-all">
                   <div className="flex items-start justify-between mb-1">
                     <h4 className="text-sm font-medium line-clamp-1 group-hover:text-primary">
-                      {chat.preview}
+                      {chat.title}
                     </h4>
                     <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
@@ -125,7 +140,7 @@ export function RecentChats({ userId }: RecentChatsProps) {
                     )}
                   </div>
                 </div>
-              </Link>
+              </a>
             ))}
             
             <Button variant="ghost" size="sm" className="w-full mt-2" asChild>

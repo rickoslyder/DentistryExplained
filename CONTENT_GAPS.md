@@ -79,8 +79,8 @@ All placeholder content is marked with:
 
 ### ⚠️ Pages with Mock/Placeholder Data
 - `/find-dentist` - Using 3 hardcoded practices (needs real data)
-- `/professional/patient-materials` - No real PDFs uploaded
-- `/professional/consent-forms` - No actual consent forms
+- `/professional/resources/patient-education` - No real PDFs uploaded
+- `/professional/resources/consent-forms` - No actual consent forms
 - All article pages - Using placeholder medical content
 
 ### ❌ Missing Content (Not Infrastructure)

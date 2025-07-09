@@ -47,12 +47,39 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Get practice details (in production, this would come from the user's practice profile)
-    const practiceDetails = {
-      practiceName: userProfile.name || 'Dental Practice',
-      practiceAddress: '123 High Street, London, UK',
-      professionalName: userProfile.name || 'Dr. Professional',
-      gdcNumber: '123456', // In production, get from professional_verifications table
+    // Get practice details based on preview/download mode
+    let practiceDetails = {
+      practiceName: 'Preview Only',
+      practiceAddress: 'Professional verification required for customization',
+      professionalName: 'Dr. Professional',
+      gdcNumber: 'XXXXX',
+    }
+    
+    if (!isPreview) {
+      // For downloads, check verification and get real practice details
+      const { createServerSupabaseClient } = await import('@/lib/supabase-auth')
+      const supabase = await createServerSupabaseClient()
+      
+      const { data: verification } = await supabase
+        .from('professional_verifications')
+        .select('*')
+        .eq('user_id', userProfile.id) // Use the Supabase profile ID
+        .eq('verification_status', 'verified')
+        .single()
+
+      if (!verification) {
+        return NextResponse.json(
+          { error: 'Professional verification required for downloads' },
+          { status: 403 }
+        )
+      }
+      
+      practiceDetails = {
+        practiceName: verification.practice_name || userProfile.name || 'Dental Practice',
+        practiceAddress: verification.practice_address || '123 High Street, London, UK',
+        professionalName: verification.full_name || userProfile.name || 'Dr. Professional',
+        gdcNumber: verification.gdc_number || 'XXXXX',
+      }
     }
 
     // Generate PDF

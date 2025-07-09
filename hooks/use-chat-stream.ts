@@ -268,6 +268,16 @@ export function useChatStream(options: UseChatStreamOptions = {}) {
 
   const loadChatHistory = useCallback(async (sessionIdToLoad: string) => {
     try {
+      // Validate session ID format (UUID or legacy alphanumeric)
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      const legacyIdRegex = /^[a-z0-9]{20,30}$/i
+      
+      if (!uuidRegex.test(sessionIdToLoad) && !legacyIdRegex.test(sessionIdToLoad)) {
+        console.error('Invalid session ID format:', sessionIdToLoad)
+        toast.error('Invalid session ID format')
+        return
+      }
+      
       const response = await fetch(`/api/chat?sessionId=${sessionIdToLoad}`, {
         credentials: 'include', // Include cookies for authentication
       })

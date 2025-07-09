@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useUser } from "@clerk/nextjs"
-import { BookOpen, Clock, Bookmark, TrendingUp, Calendar, MapPin, Bell, Settings, Stethoscope, CheckCircle, ArrowRight } from "lucide-react"
+import { BookOpen, Clock, Bookmark, TrendingUp, Calendar, MapPin, Bell, Settings, Stethoscope, CheckCircle, ArrowRight, Shield } from "lucide-react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { Button } from "@/components/ui/button"
@@ -237,6 +237,31 @@ export default function DashboardPage() {
                     className="border-yellow-300 text-yellow-700 hover:bg-yellow-100 bg-transparent"
                   >
                     View Status
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
+        {/* Professional Verification Required Alert */}
+        {isProfessional && (!professionalStats?.verificationStatus || professionalStats?.verificationStatus === "not_started") && (
+          <Card className="mb-8 border-primary bg-primary/5">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Shield className="w-5 h-5 text-primary mr-3" />
+                  <div>
+                    <h3 className="font-medium text-gray-900">Complete Your Professional Verification</h3>
+                    <p className="text-sm text-gray-600">
+                      Verify your GDC registration to unlock all professional features including downloading consent forms and patient materials.
+                    </p>
+                  </div>
+                </div>
+                <Link href="/professional/verify">
+                  <Button size="sm">
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Start Verification
                   </Button>
                 </Link>
               </div>
@@ -542,13 +567,13 @@ export default function DashboardPage() {
                     <CardDescription>Access your professional tools and materials</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <Link href="/professional/consent-forms">
+                    <Link href="/professional/resources/consent-forms">
                       <Button variant="outline" className="w-full justify-start bg-transparent">
                         <BookOpen className="w-4 h-4 mr-2" />
                         Consent Forms Library
                       </Button>
                     </Link>
-                    <Link href="/professional/patient-materials">
+                    <Link href="/professional/resources/patient-education">
                       <Button variant="outline" className="w-full justify-start bg-transparent">
                         <Calendar className="w-4 h-4 mr-2" />
                         Patient Education Materials

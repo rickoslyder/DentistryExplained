@@ -90,7 +90,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
     if (!hasConsent('analytics')) return;
 
     // Import web-vitals dynamically
-    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
+    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
       const reportWebVital = ({ name, value, rating }: any) => {
         analytics.track('web_vitals', {
           metric_name: name,
@@ -101,7 +101,6 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       };
 
       onCLS(reportWebVital);
-      onFID(reportWebVital);
       onFCP(reportWebVital);
       onLCP(reportWebVital);
       onTTFB(reportWebVital);

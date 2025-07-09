@@ -2,8 +2,8 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
-import { X, Send, Download, Loader2, StopCircle, Bot, AlertCircle, Trash2 } from "lucide-react"
+import { useState, useEffect, useRef, useContext } from "react"
+import { X, Send, Download, Loader2, StopCircle, Bot, AlertCircle, Trash2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -14,6 +14,7 @@ import { useChatStream } from "@/hooks/use-chat-stream"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { isLiteLLMConfigured } from "@/lib/config/litellm"
 import { analytics } from "@/lib/analytics-enhanced"
+import { ChatContext } from "./chat-provider"
 
 interface ChatPanelProps {
   isOpen: boolean
@@ -32,22 +33,26 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const hasInitialized = useRef(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const hasGeneratedTitle = useRef(false)
   
-  const {
-    messages,
-    isLoading,
-    sessionId,
-    sendMessage,
-    clearMessages,
-    cancelStream,
-    exportChat,
-    loadChatHistory,
-  } = useChatStream({
+  // Use context if available, otherwise fall back to local hook
+  const chatContext = useContext(ChatContext)
+  
+  // Use context values if available, otherwise use local hook
+  const localChatStream = useChatStream({
     pageContext,
     onError: (error) => {
       console.error("Chat error:", error)
     },
   })
+  
+  const messages = chatContext?.messages ?? localChatStream.messages
+  const isLoading = chatContext?.isLoading ?? localChatStream.isLoading
+  const sessionId = chatContext?.sessionId ?? localChatStream.sessionId
+  const sendMessage = chatContext?.sendMessage ?? localChatStream.sendMessage
+  const clearMessages = chatContext?.clearMessages ?? localChatStream.clearMessages
+  const cancelStream = chatContext?.cancelStream ?? localChatStream.cancelStream
+  const exportChat = chatContext?.exportChat ?? localChatStream.exportChat
 
   const isConfigured = isLiteLLMConfigured()
 
@@ -75,11 +80,38 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
       
       // Check localStorage for existing session
       const storedSessionId = localStorage.getItem(`chat_session_${user.id}`)
-      if (storedSessionId) {
-        loadChatHistory(storedSessionId)
+      if (storedSessionId && chatContext?.loadSession) {
+        chatContext.loadSession(storedSessionId)
+      } else if (storedSessionId && localChatStream.loadChatHistory) {
+        localChatStream.loadChatHistory(storedSessionId)
       }
     }
-  }, [isOpen, user, loadChatHistory, pageContext, isConfigured])
+  }, [isOpen, user, pageContext, isConfigured, chatContext?.loadSession, localChatStream.loadChatHistory])
+  
+  // Generate title after first exchange
+  useEffect(() => {
+    if (!hasGeneratedTitle.current && messages.length >= 2 && sessionId) {
+      const userMessage = messages.find(m => m.role === 'user')
+      const assistantMessage = messages.find(m => m.role === 'assistant')
+      
+      if (userMessage && assistantMessage) {
+        hasGeneratedTitle.current = true
+        
+        // Generate title in background
+        fetch('/api/chat/generate-title', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId,
+            messages: [
+              { role: 'user', content: userMessage.content },
+              { role: 'assistant', content: assistantMessage.content }
+            ]
+          })
+        }).catch(err => console.error('Failed to generate title:', err))
+      }
+    }
+  }, [messages, sessionId])
 
   // Store session ID when it changes
   useEffect(() => {
@@ -150,13 +182,10 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex">
-      {/* Backdrop */}
-      <div className="flex-1 bg-black/20 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Chat Panel */}
+    <>
+      {/* Chat Panel - No backdrop, positioned to the right */}
       <div 
-        className="w-full sm:max-w-md bg-white shadow-2xl chat-slide-in flex flex-col"
+        className="fixed right-0 top-0 h-full w-full sm:max-w-md bg-white shadow-2xl chat-slide-in flex flex-col z-50"
         role="dialog"
         aria-modal="true"
         aria-label="AI Dental Assistant"
@@ -175,38 +204,46 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
             </div>
           </div>
           <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                if (chatContext?.createNewSession) {
+                  chatContext.createNewSession()
+                } else {
+                  clearMessages()
+                }
+                hasGeneratedTitle.current = false
+              }}
+              className="text-white hover:bg-white/20 text-xs"
+              title="New chat"
+              aria-label="Start new chat"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              New
+            </Button>
             {messages.length > 0 && (
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={clearMessages}
+                onClick={exportChat}
                 className="text-white hover:bg-white/20"
-                title="Clear chat history"
-                aria-label="Clear chat history"
+                title="Export chat as text file"
+                aria-label="Export chat as text file"
               >
-                <Trash2 className="w-4 h-4" />
+                <Download className="w-4 h-4" />
               </Button>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={exportChat}
-              className="text-white hover:bg-white/20"
-              disabled={messages.length === 0}
-              title="Export chat as text file"
-              aria-label="Export chat as text file"
-            >
-              <Download className="w-4 h-4" />
-            </Button>
             <Button 
               variant="ghost" 
-              size="icon" 
+              size="sm" 
               onClick={onClose} 
-              className="text-white hover:bg-white/20"
+              className="text-white hover:bg-white/20 text-xs"
               title="Close chat panel"
               aria-label="Close chat panel"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4 mr-1" />
+              Close
             </Button>
           </div>
         </div>
@@ -316,6 +353,6 @@ export function ChatPanel({ isOpen, onClose, pageContext }: ChatPanelProps) {
           </p>
         </div>
       </div>
-    </div>
+    </>
   )
 }

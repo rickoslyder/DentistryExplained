@@ -24,18 +24,17 @@ const getSessionsHandler = withAuth(async (request: NextRequest, context) => {
     return mapDatabaseError(error)
   }
 
-  // Process sessions to include message count and preview
+  // Process sessions to include message count and use title if available
   const processedSessions = sessions?.map(session => {
     const messages = session.chat_messages || []
     const firstUserMessage = messages.find((msg: any) => msg.role === 'user')
     
     return {
-      id: session.id,
-      session_id: session.session_id,
-      created_at: session.created_at,
-      last_activity: session.last_activity,
-      page_context: session.page_context,
-      message_count: messages.length,
+      id: session.session_id, // Use session_id for the chat history sidebar
+      title: session.title || firstUserMessage?.content?.substring(0, 50) || 'New conversation',
+      createdAt: session.created_at,
+      lastActivity: session.last_activity || session.created_at,
+      messageCount: messages.length,
       preview: firstUserMessage?.content?.substring(0, 100) || 'New conversation',
     }
   }) || []

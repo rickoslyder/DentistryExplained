@@ -11,9 +11,16 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { 
   BookOpen, Download, Search, Filter, Calendar, Clock, 
-  Shield, Star, TrendingUp, Info, Eye, FileText
+  Shield, Star, TrendingUp, Info, Eye, FileText, X
 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -221,6 +228,9 @@ export default function PatientEducationPage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedType, setSelectedType] = useState("all")
   const [sortBy, setSortBy] = useState<"popular" | "recent">("popular")
+  const [previewMaterial, setPreviewMaterial] = useState<EducationMaterial | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [isPreviewLoading, setIsPreviewLoading] = useState(false)
 
   useEffect(() => {
     checkVerificationStatus()
@@ -238,18 +248,25 @@ export default function PatientEducationPage() {
 
       if (data.verification?.verification_status === 'verified') {
         setIsVerified(true)
-      } else {
-        router.push('/professional/verify')
       }
+      // Remove automatic redirect - allow browsing without verification
+      // Users will only be prompted when trying to download
     } catch (error) {
       console.error('Error checking verification:', error)
-      router.push('/professional/verify')
+      // Don't redirect on error - allow browsing
     } finally {
       setIsLoading(false)
     }
   }
 
   const handleDownload = async (material: EducationMaterial) => {
+    // Check if verified before downloading
+    if (!isVerified) {
+      toast.error('Professional verification required to download materials')
+      router.push('/professional/verify')
+      return
+    }
+
     try {
       // Track download
       await fetch('/api/professional/resources/download', {
@@ -281,6 +298,35 @@ export default function PatientEducationPage() {
       console.error('Download error:', error)
       toast.error('Failed to download material')
     }
+  }
+
+  const handlePreview = async (material: EducationMaterial) => {
+    try {
+      setIsPreviewLoading(true)
+      setPreviewMaterial(material)
+
+      // Generate PDF for preview - use a preview-specific endpoint that doesn't require verification
+      const response = await fetch(`/api/professional/resources/patient-education/${material.id}?preview=true`)
+      if (!response.ok) throw new Error('Failed to generate preview')
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      setPreviewUrl(url)
+    } catch (error) {
+      console.error('Preview error:', error)
+      toast.error('Failed to load preview')
+      setPreviewMaterial(null)
+    } finally {
+      setIsPreviewLoading(false)
+    }
+  }
+
+  const closePreview = () => {
+    if (previewUrl) {
+      window.URL.revokeObjectURL(previewUrl)
+    }
+    setPreviewMaterial(null)
+    setPreviewUrl(null)
   }
 
   const filteredMaterials = educationMaterials.filter(material => {
@@ -469,10 +515,8 @@ export default function PatientEducationPage() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => {
-                        // TODO: Implement preview
-                        toast.info('Preview feature coming soon')
-                      }}
+                      onClick={() => handlePreview(material)}
+                      disabled={isPreviewLoading}
                     >
                       <Eye className="w-4 h-4" />
                     </Button>
@@ -544,6 +588,61 @@ export default function PatientEducationPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Preview Dialog */}
+      <Dialog open={!!previewMaterial} onOpenChange={(open) => !open && closePreview()}>
+        <DialogContent className="max-w-4xl h-[90vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>{previewMaterial?.title}</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={closePreview}
+                className="h-8 w-8"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </DialogTitle>
+            <DialogDescription>
+              Preview of patient education material
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex-1 overflow-hidden">
+            {isPreviewLoading ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              </div>
+            ) : previewUrl ? (
+              <iframe
+                src={previewUrl}
+                className="w-full h-full border-0"
+                title="PDF Preview"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500">
+                Failed to load preview
+              </div>
+            )}
+          </div>
+          
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={closePreview}>
+              Close
+            </Button>
+            {previewMaterial && (
+              <Button onClick={() => {
+                handleDownload(previewMaterial)
+                closePreview()
+              }}>
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

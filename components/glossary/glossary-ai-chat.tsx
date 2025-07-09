@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button } from '@/components/ui/button'
 import { MessageSquare, Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { ChatContext } from '@/components/chat/chat-provider'
 
 interface GlossaryTerm {
   term: string
@@ -30,91 +30,61 @@ export function GlossaryAIChat({
   size = 'sm',
   className = ''
 }: GlossaryAIChatProps) {
-  const [isStarting, setIsStarting] = useState(false)
-  const router = useRouter()
-
-  const startChatWithContext = async () => {
-    setIsStarting(true)
-    
-    try {
-      // Create initial message with glossary context
-      const contextMessage = `I'd like to learn more about "${term.term}". ${term.definition}`
-      
-      // Create a new chat session with glossary context
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: contextMessage,
-          glossaryContext: {
-            term: term.term,
-            definition: term.definition,
-            pronunciation: term.pronunciation,
-            alsoKnownAs: term.also_known_as,
-            relatedTerms: term.related_terms,
-            category: term.category,
-            difficulty: term.difficulty,
-            example: term.example
-          },
-          pageContext: {
-            title: `Glossary: ${term.term}`,
-            url: `/glossary#${term.term.toLowerCase().replace(/\s+/g, '-')}`,
-            category: 'glossary'
-          }
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to start chat')
-      }
-
-      const data = await response.json()
-      
-      // Store the session ID and initial context in sessionStorage
-      if (data.sessionId) {
-        sessionStorage.setItem('currentChatSession', data.sessionId)
-        sessionStorage.setItem('chatGlossaryContext', JSON.stringify(term))
-      }
-
-      // Navigate to chat page
-      router.push('/chat?glossary=' + encodeURIComponent(term.term))
-      
-      toast.success('Starting AI chat about ' + term.term, {
-        description: 'Loading your personalized learning session...'
-      })
-      
-    } catch (error) {
-      console.error('Failed to start chat:', error)
-      toast.error('Failed to start chat', {
-        description: 'Please try again'
-      })
-    } finally {
-      setIsStarting(false)
+  const chatContext = useContext(ChatContext)
+  
+  const handleAskAI = () => {
+    if (!chatContext) {
+      toast.error('Chat system is not available')
+      return
     }
+
+    // Open the chat sidebar
+    chatContext.setIsChatOpen(true)
+    
+    // Create a new session or clear current messages
+    chatContext.createNewSession()
+    
+    // Set page context for the glossary term
+    chatContext.setPageContext({
+      title: `Glossary: ${term.term}`,
+      url: `/glossary#${term.term.toLowerCase().replace(/\s+/g, '-')}`,
+      category: 'glossary',
+      glossaryTerm: {
+        term: term.term,
+        definition: term.definition,
+        pronunciation: term.pronunciation,
+        alsoKnownAs: term.also_known_as,
+        relatedTerms: term.related_terms,
+        category: term.category,
+        difficulty: term.difficulty,
+        example: term.example
+      }
+    })
+    
+    // Send initial message with context
+    const contextMessage = `I'd like to learn more about the dental term "${term.term}". ${term.definition}${term.pronunciation ? ` (pronounced: ${term.pronunciation})` : ''}`
+    
+    // Delay slightly to ensure chat is open
+    setTimeout(() => {
+      chatContext.sendMessage(contextMessage)
+    }, 100)
+    
+    toast.success(`Ask AI about ${term.term}`, {
+      description: 'Chat panel opened with context'
+    })
   }
 
   return (
     <Button
       variant={variant}
       size={size}
-      onClick={startChatWithContext}
-      disabled={isStarting}
+      onClick={handleAskAI}
+      disabled={!chatContext}
       className={className}
       title={`Ask AI about ${term.term}`}
     >
-      {isStarting ? (
-        <>
-          <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
-          Starting...
-        </>
-      ) : (
-        <>
-          <MessageSquare className="h-4 w-4 mr-1.5" />
-          Ask AI
-        </>
-      )}
+      <MessageSquare className="h-4 w-4 mr-1.5" />
+      Ask AI
     </Button>
   )
 }

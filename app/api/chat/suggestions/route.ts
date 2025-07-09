@@ -53,6 +53,14 @@ Requirements:
 - Each question should explore a different aspect
 ${pageContext?.category ? `- Consider the context: ${pageContext.category}` : ''}
 
+CRITICAL: All questions MUST be from the user's perspective - questions they would ask TO the AI assistant.
+- CORRECT: "What are the treatment options for this condition?"
+- CORRECT: "How can I prevent this from happening again?"
+- WRONG: "Are you interested in learning more about X?"
+- WRONG: "Would you like me to explain Y?"
+
+Never generate questions that are FROM the assistant TO the user. These are follow-up questions the user might want to ask.
+
 Return ONLY the 3 questions as a JSON array, nothing else.
 Example format: ["Question 1?", "Question 2?", "Question 3?"]`
 
@@ -81,9 +89,9 @@ Example format: ["Question 1?", "Question 2?", "Question 3?"]`
           .slice(0, 3)
         
         questions = lines.length > 0 ? lines : [
-          "Can you tell me more about this?",
-          "What should I do next?",
-          "When should I see a dentist about this?"
+          "What are the main symptoms I should watch for?",
+          "How long does this treatment typically take?",
+          "What are the costs involved with this procedure?"
         ]
       }
 
@@ -104,9 +112,9 @@ Example format: ["Question 1?", "Question 2?", "Question 3?"]`
       
       return NextResponse.json({ 
         questions: [
-          "Can you explain this in more detail?",
-          "What are my options?",
-          "Is this something I should be concerned about?"
+          "What specific steps should I take next?",
+          "How does this compare to other treatment options?",
+          "What are the potential risks or complications?"
         ],
         generated: false 
       })

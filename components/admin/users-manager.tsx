@@ -33,7 +33,25 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { toast } from '@/components/ui/use-toast'
-import { Users, UserCog, Shield, ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Users, UserCog, Shield, ChevronLeft, ChevronRight, Search, Edit, MoreVertical } from 'lucide-react'
 import { format } from 'date-fns'
 
 interface User {
@@ -76,6 +94,8 @@ export function UsersManager({
   const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false)
   const [newRole, setNewRole] = useState<string>('')
   const [search, setSearch] = useState(searchParams.get('search') || '')
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [editData, setEditData] = useState<any>({})
 
   // Update URL with search params
   const updateSearch = (params: Record<string, string | null>) => {
@@ -108,8 +128,8 @@ export function UsersManager({
     if (!selectedUser || !newRole) return
 
     try {
-      const response = await fetch(`/api/admin/users/${selectedUser.id}/role`, {
-        method: 'PUT',
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole }),
       })
@@ -131,6 +151,40 @@ export function UsersManager({
       toast({
         title: 'Error',
         description: error instanceof Error ? error.message : 'Failed to update role',
+        variant: 'destructive',
+      })
+    }
+  }
+
+  // Handle user update
+  const handleUserUpdate = async () => {
+    if (!selectedUser) return
+
+    try {
+      const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editData),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to update user')
+      }
+
+      toast({
+        title: 'User updated',
+        description: 'User details have been updated successfully',
+      })
+
+      router.refresh()
+      setIsEditDialogOpen(false)
+      setSelectedUser(null)
+      setEditData({})
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to update user',
         variant: 'destructive',
       })
     }
@@ -318,17 +372,43 @@ export function UsersManager({
                     }
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedUser(user)
-                        setNewRole(user.role)
-                        setIsRoleDialogOpen(true)
-                      }}
-                    >
-                      Change role
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setSelectedUser(user)
+                            setEditData({
+                              user_type: user.user_type,
+                              practice_name: '',
+                              practice_address: '',
+                              gdc_number: '',
+                              verification_status: user.verification_status || 'pending',
+                            })
+                            setIsEditDialogOpen(true)
+                          }}
+                        >
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setSelectedUser(user)
+                            setNewRole(user.role)
+                            setIsRoleDialogOpen(true)
+                          }}
+                        >
+                          <Shield className="h-4 w-4 mr-2" />
+                          Change Role
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))}
@@ -403,6 +483,102 @@ export function UsersManager({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Edit User Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit User Details</DialogTitle>
+            <DialogDescription>
+              Update user information and professional details for {selectedUser?.email}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="user_type">User Type</Label>
+              <Select 
+                value={editData.user_type || 'patient'} 
+                onValueChange={(value) => setEditData({ ...editData, user_type: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="patient">Patient</SelectItem>
+                  <SelectItem value="professional">Professional</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {editData.user_type === 'professional' && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="gdc_number">GDC Number</Label>
+                  <Input
+                    id="gdc_number"
+                    value={editData.gdc_number || ''}
+                    onChange={(e) => setEditData({ ...editData, gdc_number: e.target.value })}
+                    placeholder="e.g., 123456"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="practice_name">Practice Name</Label>
+                  <Input
+                    id="practice_name"
+                    value={editData.practice_name || ''}
+                    onChange={(e) => setEditData({ ...editData, practice_name: e.target.value })}
+                    placeholder="e.g., Smile Dental Clinic"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="practice_address">Practice Address</Label>
+                  <Textarea
+                    id="practice_address"
+                    value={editData.practice_address || ''}
+                    onChange={(e) => setEditData({ ...editData, practice_address: e.target.value })}
+                    placeholder="Full practice address"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="verification_status">Verification Status</Label>
+                  <Select 
+                    value={editData.verification_status || 'pending'} 
+                    onValueChange={(value) => setEditData({ ...editData, verification_status: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="verified">Verified</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
+            )}
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsEditDialogOpen(false)
+                setSelectedUser(null)
+                setEditData({})
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleUserUpdate}>
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
