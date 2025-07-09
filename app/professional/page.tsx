@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { Shield, FileText, Users, BookOpen, Download, Star, CheckCircle, ArrowRight } from "lucide-react"
 import { Header } from "@/components/layout/header"
@@ -8,8 +9,19 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { analytics } from "@/lib/analytics-enhanced"
+import { PreviewModal } from "@/components/professional/preview-modal"
 
 export default function ProfessionalPage() {
+  const [previewModal, setPreviewModal] = useState<{
+    isOpen: boolean
+    resourceType: string
+    resourceTitle: string
+  }>({
+    isOpen: false,
+    resourceType: "",
+    resourceTitle: "",
+  })
+
   const handlePreview = (resourceType: string, resourceTitle: string) => {
     // Track preview attempt
     analytics.track('professional_resource_preview_clicked', {
@@ -18,12 +30,12 @@ export default function ProfessionalPage() {
       source: 'professional_marketing_page',
     })
     
-    // For now, show a simple alert since these are marketing previews
-    // In production, this would generate actual preview PDFs
-    alert(`Preview functionality for "${resourceTitle}" coming soon! Visit the Professional Dashboard after signing up to access full resources.`)
-    
-    // Alternative: Could redirect to sign-up page
-    // window.location.href = '/sign-up?userType=professional&preview=' + encodeURIComponent(resourceType)
+    // Open the preview modal
+    setPreviewModal({
+      isOpen: true,
+      resourceType,
+      resourceTitle,
+    })
   }
 
   const features = [
@@ -327,6 +339,20 @@ export default function ProfessionalPage() {
       </section>
 
       <Footer />
+
+      {/* Preview Modal */}
+      <PreviewModal
+        isOpen={previewModal.isOpen}
+        onClose={() =>
+          setPreviewModal({
+            isOpen: false,
+            resourceType: "",
+            resourceTitle: "",
+          })
+        }
+        resourceType={previewModal.resourceType}
+        resourceTitle={previewModal.resourceTitle}
+      />
     </div>
   )
 }
