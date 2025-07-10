@@ -1,6 +1,6 @@
 import os
 import asyncio
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 import json
 
@@ -69,7 +69,7 @@ class ResearchResponse(BaseModel):
     topic: str
     report: str
     sources: List[Dict[str, str]]
-    metadata: Dict[str, any]
+    metadata: Dict[str, Any]
     generated_at: str
 
 def authenticate(authorization: Optional[str] = Header(None)):
