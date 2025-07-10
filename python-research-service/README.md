@@ -6,7 +6,8 @@ This is a Python microservice that provides GPT-Researcher functionality for the
 
 - AI-powered research report generation
 - Medical source prioritization for dental content
-- Support for multiple LLM providers (OpenAI, Azure, HuggingFace)
+- LiteLLM proxy integration for centralized model management
+- Support for any model available through your LiteLLM proxy
 - FastAPI-based REST API
 - Docker support for easy deployment
 
@@ -65,38 +66,31 @@ The service will be available at http://localhost:8000
 ### Environment Variables
 
 - **Required**:
-  - `OPENAI_API_KEY`: Your OpenAI API key
+  - `LITELLM_API_KEY`: Your LiteLLM API key
   - `TAVILY_API_KEY`: Your Tavily API key for web search
   - `RESEARCH_SERVICE_AUTH_TOKEN`: Secure token for API authentication
 
 - **Optional**:
-  - `LLM_PROVIDER`: LLM provider (openai, azure, huggingface)
-  - `FAST_LLM_MODEL`: Model for quick tasks (default: gpt-4o-mini)
-  - `SMART_LLM_MODEL`: Model for complex tasks (default: gpt-4o)
+  - `LITELLM_PROXY_URL`: LiteLLM proxy URL (default: https://openai-proxy-0l7e.onrender.com)
+  - `FAST_LLM_MODEL`: Model for quick tasks (default: o4-mini)
+  - `SMART_LLM_MODEL`: Model for complex tasks (default: o4)
   - `EMBEDDING_MODEL`: Model for embeddings (default: text-embedding-3-small)
   - `FRONTEND_URL`: Allowed CORS origin
 
-### LLM Provider Options
+### LiteLLM Integration
 
-#### OpenAI (Default)
-```env
-LLM_PROVIDER=openai
-OPENAI_API_KEY=your-key
-```
+This service uses LiteLLM proxy for all AI operations, which provides:
+- Centralized API key management
+- Support for 100+ LLM providers
+- Usage tracking and cost monitoring
+- Model switching without code changes
+- Rate limiting and load balancing
 
-#### Azure OpenAI
-```env
-LLM_PROVIDER=azure
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
-AZURE_OPENAI_API_KEY=your-key
-OPENAI_API_VERSION=2024-05-01-preview
-```
-
-#### HuggingFace
-```env
-LLM_PROVIDER=huggingface
-HUGGINGFACE_API_KEY=your-key
-```
+The service automatically routes all OpenAI API calls through your LiteLLM proxy, so you can:
+- Use any model available in your LiteLLM configuration
+- Track usage across all your services
+- Switch models without redeploying
+- Manage costs centrally
 
 ## API Endpoints
 
@@ -170,9 +164,11 @@ The Next.js app will automatically use these to connect to the research service.
 2. Check Authorization header format: `Bearer {token}`
 
 ### No results returned
-1. Check API key validity (OpenAI, Tavily)
-2. Verify you have API credits/quota
-3. Check service logs for specific errors
+1. Check LiteLLM API key validity
+2. Verify your LiteLLM proxy is running and accessible
+3. Check Tavily API key for web search
+4. Verify model availability in your LiteLLM configuration
+5. Check service logs for specific errors
 
 ## Support
 

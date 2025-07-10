@@ -16,11 +16,18 @@ load_dotenv()
 
 app = FastAPI(title="GPT Researcher Service for Dentistry Explained")
 
-# LLM Configuration
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # openai, azure, huggingface
-FAST_LLM_MODEL = os.getenv("FAST_LLM_MODEL", "gpt-4o-mini")
-SMART_LLM_MODEL = os.getenv("SMART_LLM_MODEL", "gpt-4o")
+# LiteLLM Configuration
+LITELLM_PROXY_URL = os.getenv("LITELLM_PROXY_URL", "https://openai-proxy-0l7e.onrender.com")
+LITELLM_API_KEY = os.getenv("LITELLM_API_KEY")
+
+# Model Configuration - These will be passed through LiteLLM
+FAST_LLM_MODEL = os.getenv("FAST_LLM_MODEL", "o4-mini")  # For quick research tasks
+SMART_LLM_MODEL = os.getenv("SMART_LLM_MODEL", "o4")     # For comprehensive research
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+
+# Set OpenAI base URL to use LiteLLM proxy
+os.environ["OPENAI_API_BASE"] = f"{LITELLM_PROXY_URL}/v1"
+os.environ["OPENAI_API_KEY"] = LITELLM_API_KEY or "dummy-key-for-litellm"
 
 app.add_middleware(
     CORSMiddleware,
@@ -99,18 +106,13 @@ async def conduct_research(
             "retriever": "tavily",
             "report_format": "markdown",
             "include_citations": request.include_citations,
-            "fast_llm": f"{LLM_PROVIDER}:{FAST_LLM_MODEL}",
-            "smart_llm": f"{LLM_PROVIDER}:{SMART_LLM_MODEL}",
-            "embedding": f"{LLM_PROVIDER}:{EMBEDDING_MODEL}"
+            # Use LiteLLM proxy with our models
+            "fast_llm": FAST_LLM_MODEL,
+            "smart_llm": SMART_LLM_MODEL,
+            "embedding": EMBEDDING_MODEL,
+            # Tell GPT-Researcher to use OpenAI provider (which will route through LiteLLM)
+            "llm_provider": "openai"
         }
-        
-        # Add Azure-specific config if using Azure
-        if LLM_PROVIDER == "azure":
-            custom_config.update({
-                "openai_api_version": os.getenv("OPENAI_API_VERSION", "2024-05-01-preview"),
-                "azure_openai_endpoint": os.getenv("AZURE_OPENAI_ENDPOINT"),
-                "azure_openai_api_key": os.getenv("AZURE_OPENAI_API_KEY")
-            })
         
         researcher = GPTResearcher(
             query=query,

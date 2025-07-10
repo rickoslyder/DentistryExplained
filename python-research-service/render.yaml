@@ -4,18 +4,18 @@ services:
     runtime: docker
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: OPENAI_API_KEY
+      - key: LITELLM_PROXY_URL
+        value: https://openai-proxy-0l7e.onrender.com
+      - key: LITELLM_API_KEY
         sync: false
       - key: TAVILY_API_KEY
         sync: false
       - key: RESEARCH_SERVICE_AUTH_TOKEN
         generateValue: true
-      - key: LLM_PROVIDER
-        value: openai
       - key: FAST_LLM_MODEL
-        value: gpt-4o-mini
+        value: o4-mini
       - key: SMART_LLM_MODEL
-        value: gpt-4o
+        value: o4
       - key: EMBEDDING_MODEL
         value: text-embedding-3-small
       - key: FRONTEND_URL
