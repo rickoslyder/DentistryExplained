@@ -17,7 +17,7 @@ interface PreviewData {
   variables_used: string[]
 }
 
-export default function EmailTemplatePreviewPage({ params }: { params: { id: string } }) {
+export default function EmailTemplatePreviewPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(true)
@@ -26,14 +26,23 @@ export default function EmailTemplatePreviewPage({ params }: { params: { id: str
   const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop')
   const [testEmail, setTestEmail] = useState('')
   const [sendingTest, setSendingTest] = useState(false)
+  const [templateId, setTemplateId] = useState<string | null>(null)
 
   useEffect(() => {
-    fetchPreview()
-  }, [params.id, variables])
+    params.then(p => setTemplateId(p.id))
+  }, [params])
+
+  useEffect(() => {
+    if (templateId) {
+      fetchPreview()
+    }
+  }, [templateId, variables])
 
   const fetchPreview = async () => {
+    if (!templateId) return
+    
     try {
-      const response = await fetch(`/api/admin/email-templates/${params.id}/preview`, {
+      const response = await fetch(`/api/admin/email-templates/${templateId}/preview`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ variables })
@@ -66,7 +75,7 @@ export default function EmailTemplatePreviewPage({ params }: { params: { id: str
 
     setSendingTest(true)
     try {
-      const response = await fetch(`/api/admin/email-templates/${params.id}/test`, {
+      const response = await fetch(`/api/admin/email-templates/${templateId}/test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ to: testEmail, variables })
@@ -102,7 +111,7 @@ export default function EmailTemplatePreviewPage({ params }: { params: { id: str
     <div className="max-w-6xl mx-auto p-6">
       <Button
         variant="ghost"
-        onClick={() => router.push(`/admin/email-templates/${params.id}`)}
+        onClick={() => router.push(`/admin/email-templates/${templateId}`)}
         className="mb-4"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
