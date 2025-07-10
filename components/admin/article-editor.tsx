@@ -32,7 +32,8 @@ import {
   Settings,
   Search,
   History,
-  Calendar
+  Calendar,
+  Sparkles
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { validateMDX } from '@/lib/mdx'
@@ -121,6 +122,7 @@ Start writing your article content here...`,
   const [errors, setErrors] = useState<string[]>([])
   const [changeNotes, setChangeNotes] = useState('')
   const [showChangeNotesDialog, setShowChangeNotesDialog] = useState(false)
+  const [isResearching, setIsResearching] = useState(false)
   
   // Generate slug from title
   const generateSlug = useCallback((title: string) => {
@@ -287,6 +289,53 @@ Start writing your article content here...`,
     }
   }
   
+  // Handle AI research
+  const handleResearch = async () => {
+    if (!formData.title) {
+      toast.error('Please enter a title to research the topic')
+      return
+    }
+    
+    setIsResearching(true)
+    
+    try {
+      const response = await secureRequest('/api/admin/research', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          topic: formData.title,
+          reportType: 'research_report',
+          sourcesCount: 10,
+          focusMedical: true,
+          includeCitations: true,
+        }),
+      })
+      
+      if (!response.ok) {
+        throw new Error('Research failed')
+      }
+      
+      const result = await response.json()
+      
+      if (result.success && result.data?.content) {
+        setFormData(prev => ({
+          ...prev,
+          content: result.data.content
+        }))
+        toast.success('AI research draft generated successfully!')
+      } else {
+        throw new Error('No content returned from research')
+      }
+    } catch (error) {
+      toast.error('Failed to generate AI research draft')
+      console.error('Research error:', error)
+    } finally {
+      setIsResearching(false)
+    }
+  }
+  
   return (
     <div className="space-y-6">
       {errors.length > 0 && (
@@ -330,12 +379,25 @@ Start writing your article content here...`,
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={handleTitleChange}
-                    placeholder="Enter article title"
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      id="title"
+                      value={formData.title}
+                      onChange={handleTitleChange}
+                      placeholder="Enter article title"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleResearch}
+                      disabled={isResearching || !formData.title}
+                      title="Generate AI research draft based on the title"
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      {isResearching ? 'Researching...' : 'Research'}
+                    </Button>
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="slug">Slug</Label>

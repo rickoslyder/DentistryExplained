@@ -1,13 +1,14 @@
 import { z } from 'zod'
 import { supabaseAdmin } from '@/lib/supabase'
 import { getCachedSearch, setCachedSearch, cleanExpiredCache as cleanDbCache } from './web-search-cache'
+import { ResearchService } from './research'
 
 // Search result schemas
 export const searchResultSchema = z.object({
   title: z.string(),
   url: z.string(),
   snippet: z.string(),
-  source: z.enum(['perplexity', 'exa']),
+  source: z.enum(['perplexity', 'exa', 'gpt-researcher']),
   relevanceScore: z.number().optional(),
   publishedDate: z.string().optional(),
   citations: z.array(z.string()).optional()
@@ -38,6 +39,7 @@ export interface SearchOptions {
   excludeDomains?: string[]
   userId?: string
   sessionId?: string
+  forceDeepResearch?: boolean
 }
 
 // Cache configuration
@@ -54,8 +56,13 @@ if (typeof global !== 'undefined' && !global.webSearchCacheCleanupInterval) {
 }
 
 // Determine which API to use based on query intent
-function determineSearchProvider(query: string, searchType?: string): 'perplexity' | 'exa' {
+function determineSearchProvider(query: string, searchType?: string, forceDeepResearch?: boolean): 'perplexity' | 'exa' | 'gpt-researcher' {
   const lowerQuery = query.toLowerCase()
+  
+  // Use GPT-Researcher for deep research requests
+  if (forceDeepResearch || lowerQuery.includes('deep research') || lowerQuery.includes('comprehensive report')) {
+    return 'gpt-researcher'
+  }
   
   // Use Perplexity for real-time information
   if (
@@ -309,6 +316,48 @@ async function searchWithExa(
   }
 }
 
+// Search with GPT-Researcher
+async function searchWithGPTResearcher(
+  query: string,
+  options: SearchOptions = {}
+): Promise<SearchResult[]> {
+  try {
+    const researchService = new ResearchService()
+    
+    // Check if service is available
+    const serviceHealthy = await researchService.checkHealth()
+    if (!serviceHealthy) {
+      console.warn('GPT-Researcher service not available, falling back to Exa')
+      return searchWithExa(query, options)
+    }
+
+    // Conduct research
+    const research = await researchService.conductResearch({
+      topic: query,
+      reportType: 'research_report',
+      sourcesCount: options.maxResults || 10,
+      focusMedical: options.searchType === 'medical' || options.searchType === 'academic',
+      includeCitations: true
+    })
+
+    // Convert research sources to search results
+    const results: SearchResult[] = research.sources.map((source, index) => ({
+      title: source.title,
+      url: source.url,
+      snippet: source.snippet,
+      source: 'gpt-researcher' as const,
+      relevanceScore: 1 - (index * 0.05), // Higher scores for earlier results
+      citations: [source.url]
+    }))
+
+    return results
+  } catch (error) {
+    console.error('GPT-Researcher search error:', error)
+    // Fallback to Exa on error
+    return searchWithExa(query, options)
+  }
+}
+
 // Main search function with database caching and routing
 export async function webSearch(
   query: string,
@@ -327,7 +376,7 @@ export async function webSearch(
       trackWebSearch({
         query,
         searchType: options.searchType || 'general',
-        provider: determineSearchProvider(query, options.searchType),
+        provider: determineSearchProvider(query, options.searchType, options.forceDeepResearch),
         resultsCount: cached.results.length,
         cached: true,
         userId,
@@ -345,14 +394,16 @@ export async function webSearch(
   
   try {
     // Determine which provider to use
-    const provider = determineSearchProvider(query, options.searchType)
+    const provider = determineSearchProvider(query, options.searchType, options.forceDeepResearch)
     
     // Perform search
     let results: SearchResult[]
     if (provider === 'perplexity') {
       results = await searchWithPerplexity(query, options)
-    } else {
+    } else if (provider === 'exa') {
       results = await searchWithExa(query, options)
+    } else {
+      results = await searchWithGPTResearcher(query, options)
     }
 
     // Build response
@@ -392,7 +443,7 @@ export async function webSearch(
 async function trackWebSearch(params: {
   query: string
   searchType: string
-  provider: 'perplexity' | 'exa'
+  provider: 'perplexity' | 'exa' | 'gpt-researcher'
   resultsCount: number
   cached: boolean
   userId?: string
@@ -443,6 +494,17 @@ export async function searchDentalNews(query: string): Promise<WebSearchResponse
       from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) // Last 30 days
     },
     maxResults: 15
+  })
+}
+
+// Deep research function using GPT-Researcher
+export async function searchDeepResearch(query: string, userId?: string, sessionId?: string): Promise<WebSearchResponse> {
+  return webSearch(query, {
+    searchType: 'academic',
+    forceDeepResearch: true,
+    maxResults: 15,
+    userId,
+    sessionId
   })
 }
 

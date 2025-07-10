@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: gpt-researcher-dentistry
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: RESEARCH_SERVICE_AUTH_TOKEN
+        generateValue: true
+      - key: LLM_PROVIDER
+        value: openai
+      - key: FAST_LLM_MODEL
+        value: gpt-4o-mini
+      - key: SMART_LLM_MODEL
+        value: gpt-4o
+      - key: EMBEDDING_MODEL
+        value: text-embedding-3-small
+      - key: FRONTEND_URL
+        value: https://dentistry-explained.vercel.app
