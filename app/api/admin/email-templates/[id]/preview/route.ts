@@ -4,6 +4,7 @@ import { ApiErrors, getRequestId } from '@/lib/api-errors'
 import { withAuth, withRateLimit, compose } from '@/lib/api-middleware'
 import { z } from 'zod'
 import { renderEmailTemplate } from '@/lib/email/template-renderer'
+import { currentUser } from '@clerk/nextjs/server'
 
 // Schema for preview data
 const previewSchema = z.object({
@@ -11,16 +12,21 @@ const previewSchema = z.object({
 })
 
 // POST - Preview email template with variables
-const previewTemplateHandler = compose(
-  withRateLimit(60000, 50),
-  withAuth
-)(async (request: NextRequest, context) => {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const requestId = getRequestId(request)
-  const { id } = context.params!
+  const { id } = await params
   
   try {
-    const supabase = context.supabase!
-    const user = context.user!
+    // Check authentication
+    const user = await currentUser()
+    if (!user) {
+      return ApiErrors.unauthorized('Authentication required', requestId)
+    }
+    
+    const supabase = await createServerSupabaseClient()
     
     // Check admin role
     const { data: profile } = await supabase
@@ -77,9 +83,7 @@ const previewTemplateHandler = compose(
     }
     return ApiErrors.internal(error, 'preview_template', requestId)
   }
-})
-
-export const POST = previewTemplateHandler
+}
 
 // Handle OPTIONS requests for CORS
 export async function OPTIONS(request: NextRequest) {

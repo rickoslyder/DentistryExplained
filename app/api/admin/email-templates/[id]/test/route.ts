@@ -13,14 +13,19 @@ const testEmailSchema = z.object({
 })
 
 // POST - Send test email
-const sendTestEmailHandler = compose(
-  withRateLimit(60000, 10), // Limit test emails to prevent abuse
-  withAuth
-)(async (request: NextRequest, context) => {
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const requestId = getRequestId(request)
-  const { id } = context.params!
+  const { id } = await params
   
-  try {
+  // Apply middleware
+  return compose(
+    withRateLimit(60000, 10), // Limit test emails to prevent abuse
+    withAuth
+  )(async (request: NextRequest, context) => {
+    try {
     const supabase = context.supabase!
     const user = context.user!
     
@@ -91,9 +96,8 @@ const sendTestEmailHandler = compose(
     }
     return ApiErrors.internal(error, 'send_test_email', requestId)
   }
-})
-
-export const POST = sendTestEmailHandler
+  })(request, {})
+}
 
 // Handle OPTIONS requests for CORS
 export async function OPTIONS(request: NextRequest) {
