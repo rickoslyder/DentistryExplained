@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
 from gpt_researcher import GPTResearcher
-from gpt_researcher.master.actions import stream_output
 
 load_dotenv()
 
