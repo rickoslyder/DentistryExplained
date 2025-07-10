@@ -42,16 +42,9 @@ const getTemplateHandler = compose(
   
   try {
     const supabase = context.supabase!
-    const user = context.user!
     
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('clerk_id', user.id)
-      .single()
-    
-    if (profile?.role !== 'admin') {
+    // userProfile is guaranteed to be present when using withAuth
+    if (context.userProfile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     
@@ -97,16 +90,9 @@ const updateTemplateHandler = compose(
   
   try {
     const supabase = context.supabase!
-    const user = context.user!
     
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('clerk_id', user.id)
-      .single()
-    
-    if (profile?.role !== 'admin') {
+    // userProfile is guaranteed to be present when using withAuth
+    if (context.userProfile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     
@@ -120,7 +106,7 @@ const updateTemplateHandler = compose(
       .from('email_templates')
       .update({
         ...updateData,
-        updated_by: profile.id
+        updated_by: context.userProfile.id
       })
       .eq('id', id)
       .select()
@@ -164,16 +150,9 @@ const deleteTemplateHandler = compose(
   
   try {
     const supabase = context.supabase!
-    const user = context.user!
     
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('clerk_id', user.id)
-      .single()
-    
-    if (profile?.role !== 'admin') {
+    // userProfile is guaranteed to be present when using withAuth
+    if (context.userProfile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     

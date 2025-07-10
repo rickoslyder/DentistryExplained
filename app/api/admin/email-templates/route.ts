@@ -36,16 +36,9 @@ const getTemplatesHandler = withAuth(async (request: NextRequest, context) => {
   
   try {
     const supabase = context.supabase!
-    const userProfile = context.userProfile!
     
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('clerk_id', context.user!.id)
-      .single()
-    
-    if (profile?.role !== 'admin') {
+    // userProfile is guaranteed to be present when using withAuth with requireRole
+    if (context.userProfile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     
@@ -84,16 +77,9 @@ const createTemplateHandler = withAuth(async (request: NextRequest, context) => 
   
   try {
     const supabase = context.supabase!
-    const userProfile = context.userProfile!
     
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('clerk_id', context.user!.id)
-      .single()
-    
-    if (profile?.role !== 'admin') {
+    // userProfile is guaranteed to be present when using withAuth with requireRole
+    if (context.userProfile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     
@@ -104,8 +90,8 @@ const createTemplateHandler = withAuth(async (request: NextRequest, context) => 
       .from('email_templates')
       .insert({
         ...validatedData,
-        created_by: profile.id,
-        updated_by: profile.id
+        created_by: context.userProfile.id,
+        updated_by: context.userProfile.id
       })
       .select()
       .single()
