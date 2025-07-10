@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { ApiErrors } from '@/lib/api-errors'
 import { ResearchService, ResearchRequestSchema, formatResearchAsMarkdown } from '@/lib/research'
-import { createClientWithClerkAuth } from '@/lib/supabase-auth'
+import { createRouteSupabaseClient } from '@/lib/supabase-auth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,13 +11,17 @@ export async function POST(request: NextRequest) {
       return ApiErrors.unauthorized()
     }
 
-    const supabase = await createClientWithClerkAuth()
+    console.log('[Research API] Clerk userId:', userId)
+
+    const supabase = await createRouteSupabaseClient()
     
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', userId)
+      .eq('clerk_id', userId)
       .single()
+
+    console.log('[Research API] Profile lookup result:', { profile, error: profileError })
 
     if (profileError || profile?.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required')

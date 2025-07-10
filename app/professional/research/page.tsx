@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { createClientWithClerkAuth } from '@/lib/supabase-auth'
+import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { ProfessionalResearchTool } from '@/components/professional/research-tool'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
@@ -18,13 +18,13 @@ export default async function ProfessionalResearchPage() {
     redirect('/sign-in')
   }
 
-  const supabase = await createClientWithClerkAuth()
+  const supabase = await createServerSupabaseClient()
   
   // Check if user is a professional or admin
   const { data: profile } = await supabase
     .from('profiles')
-    .select('role')
-    .eq('id', userId)
+    .select('id, role')
+    .eq('clerk_id', userId)
     .single()
 
   if (profile?.role !== 'professional' && profile?.role !== 'admin') {
@@ -37,7 +37,7 @@ export default async function ProfessionalResearchPage() {
     const { data: verification } = await supabase
       .from('professional_verifications')
       .select('status')
-      .eq('user_id', userId)
+      .eq('user_id', profile.id)
       .single()
 
     isVerified = verification?.status === 'approved'

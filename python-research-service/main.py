@@ -21,7 +21,7 @@ LITELLM_API_KEY = os.getenv("LITELLM_API_KEY")
 
 # Model Configuration - These will be passed through LiteLLM
 FAST_LLM_MODEL = os.getenv("FAST_LLM_MODEL", "o4-mini")  # For quick research tasks
-SMART_LLM_MODEL = os.getenv("SMART_LLM_MODEL", "o4")     # For comprehensive research
+SMART_LLM_MODEL = os.getenv("SMART_LLM_MODEL", "o4-mini")  # Use o4-mini for now to avoid streaming issues
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 
 # Set OpenAI base URL to use LiteLLM proxy
@@ -110,7 +110,9 @@ async def conduct_research(
             "smart_llm": SMART_LLM_MODEL,
             "embedding": EMBEDDING_MODEL,
             # Tell GPT-Researcher to use OpenAI provider (which will route through LiteLLM)
-            "llm_provider": "openai"
+            "llm_provider": "openai",
+            # Disable streaming to avoid organization verification issues
+            "stream": False
         }
         
         researcher = GPTResearcher(

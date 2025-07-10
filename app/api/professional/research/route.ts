@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { ApiErrors } from '@/lib/api-errors'
 import { ResearchService, ResearchRequestSchema } from '@/lib/research'
-import { createClientWithClerkAuth } from '@/lib/supabase-auth'
+import { createRouteSupabaseClient } from '@/lib/supabase-auth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,13 +11,13 @@ export async function POST(request: NextRequest) {
       return ApiErrors.unauthorized()
     }
 
-    const supabase = await createClientWithClerkAuth()
+    const supabase = await createRouteSupabaseClient()
     
     // Check if user is a verified professional
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('role')
-      .eq('id', userId)
+      .select('id, role')
+      .eq('clerk_id', userId)
       .single()
 
     if (profileError || profile?.role !== 'professional') {
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       const { data: verification } = await supabase
         .from('professional_verifications')
         .select('status')
-        .eq('user_id', userId)
+        .eq('user_id', profile.id)
         .single()
 
       if (!verification || verification.status !== 'approved') {
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     await supabase
       .from('professional_research_logs')
       .insert({
-        user_id: userId,
+        user_id: profile.id,
         topic: validatedData.topic,
         report_type: validatedData.reportType,
         sources_count: researchResult.sources.length,

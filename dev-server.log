@@ -12683,3 +12683,1553 @@ Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/code
  ✓ Compiled in 647ms (1462 modules)
  ✓ Compiled in 718ms (1462 modules)
  ✓ Compiled in 948ms (1462 modules)
+ ✓ Compiled in 2.2s (1462 modules)
+ ✓ Compiled in 1236ms (1462 modules)
+ ✓ Compiled in 1970ms (1462 modules)
+ ✓ Compiled in 2.6s (1462 modules)
+ ✓ Compiled in 1025ms (1462 modules)
+ ✓ Compiled in 1219ms (1462 modules)
+ ✓ Compiled in 1986ms (1462 modules)
+ ✓ Compiled in 868ms (1462 modules)
+ ✓ Compiled in 1255ms (1462 modules)
+ ✓ Compiled in 2.2s (1462 modules)
+ ✓ Compiled in 1019ms (1462 modules)
+ ✓ Compiled in 1222ms (1462 modules)
+ ✓ Compiled in 2.6s (1462 modules)
+ ✓ Compiled in 1715ms (1462 modules)
+ ✓ Compiled in 666ms (1462 modules)
+ ✓ Compiled in 1277ms (1462 modules)
+ ✓ Compiled in 869ms (1462 modules)
+ ✓ Compiled in 1181ms (1462 modules)
+ ✓ Compiled in 1117ms (1462 modules)
+ ✓ Compiled in 1494ms (1462 modules)
+ ✓ Compiled in 1407ms (1462 modules)
+ ✓ Compiled in 552ms (1462 modules)
+ ✓ Compiled in 584ms (1462 modules)
+ ✓ Compiled in 965ms (1462 modules)
+ ✓ Compiled in 1009ms (1462 modules)
+ ✓ Compiled in 1432ms (1462 modules)
+ ✓ Compiled in 629ms (1462 modules)
+ ✓ Compiled in 685ms (1462 modules)
+ ✓ Compiled in 807ms (1462 modules)
+ ✓ Compiled in 1005ms (1462 modules)
+ ✓ Compiled in 1660ms (1462 modules)
+ ✓ Compiled in 1037ms (1462 modules)
+ ✓ Compiled in 656ms (1462 modules)
+ ✓ Compiled in 619ms (1462 modules)
+ ✓ Compiled in 1016ms (1462 modules)
+ ✓ Compiled in 1179ms (1462 modules)
+ ✓ Compiled in 991ms (1462 modules)
+ ✓ Compiled in 789ms (1462 modules)
+ ✓ Compiled in 818ms (1462 modules)
+ ✓ Compiled in 620ms (1462 modules)
+ ✓ Compiled in 743ms (1462 modules)
+ ✓ Compiled in 1457ms (1462 modules)
+ ✓ Compiled in 1678ms (1462 modules)
+ ✓ Compiled in 563ms (1462 modules)
+ ✓ Compiled in 1438ms (1462 modules)
+ ✓ Compiled in 3.8s (1462 modules)
+ ✓ Compiled in 1369ms (1462 modules)
+ ✓ Compiled in 1456ms (1462 modules)
+ ✓ Compiled in 1371ms (1462 modules)
+ ✓ Compiled in 683ms (1462 modules)
+ ✓ Compiled in 801ms (1462 modules)
+ ✓ Compiled in 1599ms (1462 modules)
+ ✓ Compiled in 1864ms (1462 modules)
+ ✓ Compiled in 1126ms (1462 modules)
+ ✓ Compiled in 1738ms (1462 modules)
+ ✓ Compiled in 793ms (1462 modules)
+ ✓ Compiled in 1073ms (1462 modules)
+ ✓ Compiled in 800ms (1462 modules)
+ ✓ Compiled in 750ms (1462 modules)
+ ✓ Compiled in 570ms (1462 modules)
+ ✓ Compiled in 709ms (1462 modules)
+ ✓ Compiled in 808ms (1462 modules)
+ ✓ Compiled in 921ms (1462 modules)
+ ✓ Compiled in 869ms (1462 modules)
+ ✓ Compiled in 1493ms (1462 modules)
+ ✓ Compiled in 2.6s (1462 modules)
+ ✓ Compiled in 1808ms (1462 modules)
+ ✓ Compiled in 1726ms (1462 modules)
+ ✓ Compiled in 1591ms (1462 modules)
+ ✓ Compiled in 1073ms (1462 modules)
+ ✓ Compiled in 1267ms (1462 modules)
+ ✓ Compiled in 995ms (1462 modules)
+ ✓ Compiled in 1015ms (1462 modules)
+ ✓ Compiled in 850ms (1462 modules)
+ ✓ Compiled in 1064ms (1462 modules)
+ ✓ Compiled in 1186ms (1462 modules)
+ ✓ Compiled in 1405ms (1462 modules)
+ ✓ Compiled in 1166ms (1462 modules)
+ ✓ Compiled in 2s (1462 modules)
+ ✓ Compiled in 863ms (1462 modules)
+ ✓ Compiled in 895ms (1462 modules)
+ ✓ Compiled in 949ms (1462 modules)
+ ✓ Compiled in 1086ms (1462 modules)
+ ✓ Compiled in 1473ms (1462 modules)
+ ✓ Compiled in 812ms (1462 modules)
+ ✓ Compiled in 1274ms (1462 modules)
+ ✓ Compiled in 707ms (1462 modules)
+ ✓ Compiled in 1750ms (1462 modules)
+ ✓ Compiled in 712ms (1462 modules)
+ ✓ Compiled in 1376ms (1462 modules)
+ ✓ Compiled in 1542ms (1462 modules)
+ ✓ Compiled in 1119ms (1462 modules)
+ ✓ Compiled in 1134ms (1462 modules)
+ ✓ Compiled in 714ms (1462 modules)
+ ✓ Compiled in 1350ms (1462 modules)
+ ✓ Compiled in 1570ms (1462 modules)
+ ✓ Compiled in 837ms (1462 modules)
+ ✓ Compiled in 713ms (1462 modules)
+ ✓ Compiled in 1078ms (1462 modules)
+ ✓ Compiled in 675ms (1462 modules)
+ ✓ Compiled in 1624ms (1462 modules)
+ ✓ Compiled in 890ms (1462 modules)
+ ✓ Compiled in 1584ms (1462 modules)
+ ✓ Compiled in 1758ms (1462 modules)
+ ✓ Compiled in 913ms (1462 modules)
+ ✓ Compiled in 625ms (1462 modules)
+ ✓ Compiled in 1323ms (1462 modules)
+ ✓ Compiled in 918ms (1462 modules)
+ ✓ Compiled in 1479ms (1462 modules)
+ ✓ Compiled in 998ms (1462 modules)
+ ✓ Compiled in 994ms (1462 modules)
+ ✓ Compiled in 640ms (1462 modules)
+ ✓ Compiled in 1530ms (1462 modules)
+ ✓ Compiled in 2s (1462 modules)
+ ✓ Compiled in 939ms (1462 modules)
+ ✓ Compiled in 559ms (1462 modules)
+ ✓ Compiled in 1240ms (1462 modules)
+ ✓ Compiled in 852ms (1462 modules)
+ ✓ Compiled in 1027ms (1462 modules)
+ ✓ Compiled in 914ms (1462 modules)
+ ✓ Compiled in 1423ms (1462 modules)
+ ✓ Compiled in 1548ms (1462 modules)
+ ✓ Compiled in 696ms (1462 modules)
+ ✓ Compiled in 1036ms (1462 modules)
+ ✓ Compiled in 1160ms (1462 modules)
+ ✓ Compiled in 1347ms (1462 modules)
+ ✓ Compiled in 1055ms (1462 modules)
+ ✓ Compiled in 849ms (1462 modules)
+ ✓ Compiled in 1038ms (1462 modules)
+ ✓ Compiled in 558ms (1462 modules)
+ ✓ Compiled in 1667ms (1462 modules)
+ ✓ Compiled in 691ms (1462 modules)
+ ✓ Compiled in 1109ms (1462 modules)
+ ✓ Compiled in 841ms (1462 modules)
+ ✓ Compiled in 2.1s (1462 modules)
+ ✓ Compiled in 1750ms (1462 modules)
+ ✓ Compiled in 1086ms (1462 modules)
+ ✓ Compiled in 1365ms (1462 modules)
+ ✓ Compiled in 1740ms (1462 modules)
+ ✓ Compiled in 903ms (1462 modules)
+ ✓ Compiled in 1220ms (1462 modules)
+ ✓ Compiled in 1328ms (1462 modules)
+ ✓ Compiled in 873ms (1462 modules)
+ ✓ Compiled in 615ms (1462 modules)
+ ✓ Compiled in 1184ms (1462 modules)
+ ✓ Compiled in 619ms (1462 modules)
+ ✓ Compiled in 1757ms (1462 modules)
+ ✓ Compiled in 1208ms (1462 modules)
+ ✓ Compiled in 942ms (1462 modules)
+ ✓ Compiled in 1434ms (1462 modules)
+ ✓ Compiled in 1158ms (1462 modules)
+ ✓ Compiled in 1050ms (1462 modules)
+ ✓ Compiled in 965ms (1462 modules)
+ ✓ Compiled in 1095ms (1462 modules)
+ ✓ Compiled in 1219ms (1462 modules)
+ ✓ Compiled in 594ms (1462 modules)
+ ✓ Compiled in 511ms (1462 modules)
+ ✓ Compiled in 1088ms (1462 modules)
+ ✓ Compiled in 543ms (1462 modules)
+ ✓ Compiled in 558ms (1462 modules)
+ ✓ Compiled in 889ms (1462 modules)
+ ✓ Compiled in 1361ms (1462 modules)
+ ✓ Compiled in 2s (1462 modules)
+ ✓ Compiled in 2.3s (1462 modules)
+ ✓ Compiled in 1322ms (1462 modules)
+ ✓ Compiled in 1087ms (1462 modules)
+ ✓ Compiled in 2.2s (1462 modules)
+ ✓ Compiled in 1429ms (1462 modules)
+ ✓ Compiled in 860ms (1462 modules)
+ ✓ Compiled in 878ms (1462 modules)
+ ✓ Compiled in 3.3s (1462 modules)
+ ✓ Compiled in 982ms (1462 modules)
+ ✓ Compiled in 707ms (1462 modules)
+ ✓ Compiled in 1804ms (1462 modules)
+ ✓ Compiled in 1019ms (1462 modules)
+ ✓ Compiled in 998ms (1462 modules)
+ ✓ Compiled in 850ms (1462 modules)
+ ✓ Compiled in 472ms (1462 modules)
+ ✓ Compiled in 1016ms (1462 modules)
+ ✓ Compiled in 752ms (1462 modules)
+ ✓ Compiled in 722ms (1462 modules)
+ ✓ Compiled in 479ms (1462 modules)
+ ✓ Compiled in 624ms (1462 modules)
+ ✓ Compiled in 517ms (1462 modules)
+ ✓ Compiled in 870ms (1462 modules)
+ ✓ Compiled in 554ms (1462 modules)
+ ✓ Compiled in 1039ms (1462 modules)
+ ✓ Compiled in 536ms (1462 modules)
+ ✓ Compiled in 642ms (1462 modules)
+ ✓ Compiled in 529ms (1462 modules)
+ ✓ Compiled in 586ms (1462 modules)
+ ✓ Compiled in 499ms (1462 modules)
+ ✓ Compiled in 431ms (1462 modules)
+ ✓ Compiled in 1027ms (1462 modules)
+ ✓ Compiled in 662ms (1462 modules)
+ ✓ Compiled in 513ms (1462 modules)
+ ✓ Compiled in 708ms (1462 modules)
+ ✓ Compiled in 1031ms (1462 modules)
+ ✓ Compiled in 1586ms (1462 modules)
+ ✓ Compiled in 1358ms (1462 modules)
+ ✓ Compiled in 865ms (1462 modules)
+ ✓ Compiled in 513ms (1462 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 5.6s (3202 modules)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET / 200 in 6228ms
+ ✓ Compiled in 2.9s (1462 modules)
+ ✓ Compiled in 1600ms (1462 modules)
+ ✓ Compiled in 706ms (1462 modules)
+ ✓ Compiled in 735ms (1462 modules)
+ ✓ Compiled in 871ms (1462 modules)
+ ✓ Compiled in 820ms (1462 modules)
+ ✓ Compiled in 561ms (1462 modules)
+ ✓ Compiled in 849ms (1462 modules)
+ ✓ Compiled in 733ms (1462 modules)
+ ✓ Compiled in 1462ms (1462 modules)
+ ✓ Compiled in 788ms (1462 modules)
+ ✓ Compiled in 711ms (1462 modules)
+ ✓ Compiled in 873ms (1462 modules)
+ ✓ Compiled in 879ms (1462 modules)
+ ✓ Compiled in 945ms (1462 modules)
+ ✓ Compiled in 1229ms (1462 modules)
+ ✓ Compiled in 670ms (1462 modules)
+ ✓ Compiled in 544ms (1462 modules)
+ ✓ Compiled in 655ms (1462 modules)
+ ✓ Compiled in 568ms (1462 modules)
+ ✓ Compiled in 589ms (1462 modules)
+ ✓ Compiled in 1612ms (1462 modules)
+ GET / 200 in 448ms
+ ✓ Compiled in 1592ms (1462 modules)
+ ✓ Compiled in 1118ms (1462 modules)
+ ○ Compiling /api/bookmarks ...
+ GET / 200 in 2029ms
+ GET / 200 in 921ms
+ ✓ Compiled /api/chat/sessions in 7.3s (3294 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET / 200 in 6504ms
+ GET / 200 in 418ms
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET /api/glossary 200 in 9043ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/bookmarks 200 in 8089ms
+ GET /api/chat/sessions 200 in 8113ms
+ ✓ Compiled in 1597ms (1462 modules)
+ GET / 200 in 354ms
+ GET / 200 in 517ms
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 5.7s (3285 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ ✓ Compiled in 759ms (1462 modules)
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat?sessionId=1nnrv6sim62310xgv9z2ku 200 in 6691ms
+ ○ Compiling /api/chat/generate-title ...
+ ✓ Compiled /api/chat/generate-title in 1985ms (3287 modules)
+ POST /api/chat/generate-title 404 in 2051ms
+ ✓ Compiled in 616ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/articles ...
+ ✓ Compiled /admin/articles in 4s (3321 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 376ms
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 4369ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 989ms (1462 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 482ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 277ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 746ms (1462 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 330ms
+ ✓ Compiled in 577ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 207ms
+ ✓ Compiled in 685ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 209ms
+ ✓ Compiled in 765ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 381ms
+ ✓ Compiled in 718ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 437ms
+ ✓ Compiled in 672ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 320ms
+ ✓ Compiled in 675ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 409ms
+ ✓ Compiled in 698ms (1462 modules)
+ ✓ Compiled in 1649ms (1462 modules)
+ ✓ Compiled in 631ms (1462 modules)
+ ✓ Compiled in 535ms (1462 modules)
+ ✓ Compiled in 564ms (1462 modules)
+ ✓ Compiled in 762ms (1462 modules)
+ ✓ Compiled in 683ms (1462 modules)
+ ✓ Compiled in 607ms (1462 modules)
+ ✓ Compiled in 901ms (1462 modules)
+ ✓ Compiled in 497ms (1462 modules)
+ ✓ Compiled in 566ms (1462 modules)
+ ✓ Compiled in 686ms (1462 modules)
+ ✓ Compiled in 885ms (1462 modules)
+ ✓ Compiled in 986ms (1462 modules)
+ ✓ Compiled in 619ms (1462 modules)
+ ✓ Compiled in 602ms (1462 modules)
+ ✓ Compiled in 778ms (1462 modules)
+ ✓ Compiled in 593ms (1462 modules)
+ ✓ Compiled in 579ms (1462 modules)
+ ✓ Compiled in 977ms (1462 modules)
+ ✓ Compiled in 773ms (1462 modules)
+ ✓ Compiled in 605ms (1462 modules)
+ ✓ Compiled in 719ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/categories ...
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled /admin/categories in 17.4s (3337 modules)
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 6819ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 18431ms
+ GET /admin/categories 200 in 807ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 461ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 2.1s (1468 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 329ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 520ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 304ms
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /api/auth/csrf ...
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET /api/glossary 200 in 1603ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat/sessions 200 in 1760ms
+ ✓ Compiled /api/auth/csrf in 4.7s (3339 modules)
+ GET /api/auth/csrf 200 in 4120ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/categories 200 in 3849ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/categories 200 in 432ms
+ GET /admin/articles 200 in 522ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 458ms
+ ✓ Compiled in 1423ms (1468 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 512ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 1889ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 1756ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 2.6s (1468 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/categories 200 in 632ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+Error: Route "/admin/articles" used `searchParams.page`. `searchParams` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at ArticlesPage (app/admin/articles/page.tsx:46:44)
+  44 |
+  45 | export default async function ArticlesPage({ searchParams }: PageProps) {
+> 46 |   const currentPage = parseInt(searchParams.page || '1')
+     |                                            ^
+  47 |   const { articles, totalCount } = await getArticles(currentPage)
+  48 |   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  49 |   
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+Error fetching articles: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column profiles_1.full_name does not exist'
+}
+ GET /admin/articles 200 in 280ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 340ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/categories 200 in 402ms
+ ✓ Compiled in 1343ms (1468 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/articles/new ...
+ ✓ Compiled /admin/articles/new in 14.3s (5645 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 14885ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 151ms
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/articles/new 200 in 300ms
+ GET /admin/articles/new 200 in 15454ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 522ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/articles/new 200 in 384ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ ✓ Compiled in 2s (2725 modules)
+ GET /admin/categories 200 in 1569ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 625ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/articles/new 200 in 1117ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 2050ms
+ GET /admin/categories 200 in 1275ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 976ms
+ GET /admin/categories 200 in 671ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 4.4s (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 516ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 378ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 291ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1366ms (2725 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/categories 200 in 728ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 226ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 272ms
+ ✓ Compiled in 1188ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/articles/new 200 in 213ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 603ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1232ms (2725 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/categories 200 in 512ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 890ms
+ GET /admin/categories 200 in 713ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 598ms
+ ✓ Compiled in 2s (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 355ms
+ ✓ Compiled in 1725ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 425ms
+ ✓ Compiled in 989ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 1047ms
+ ✓ Compiled in 1926ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 1070ms
+ ✓ Compiled in 2.7s (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 327ms
+ ✓ Compiled in 2.7s (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 584ms
+ ✓ Compiled in 1094ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 191ms
+ ✓ Compiled in 1294ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 127ms
+ ✓ Compiled in 792ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 446ms
+ ✓ Compiled in 1023ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 360ms
+ ✓ Compiled in 733ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 172ms
+ ✓ Compiled in 775ms (2725 modules)
+ ✓ Compiled in 1090ms (2725 modules)
+ ✓ Compiled in 775ms (2725 modules)
+ ✓ Compiled in 653ms (2725 modules)
+ ✓ Compiled in 1135ms (2725 modules)
+ ✓ Compiled in 1881ms (2725 modules)
+ ✓ Compiled in 665ms (2725 modules)
+ ✓ Compiled in 800ms (2725 modules)
+ ✓ Compiled in 621ms (2725 modules)
+ ✓ Compiled in 604ms (2725 modules)
+ ✓ Compiled in 860ms (2725 modules)
+ ✓ Compiled in 586ms (2725 modules)
+ ✓ Compiled in 704ms (2725 modules)
+ ✓ Compiled in 900ms (2725 modules)
+ ✓ Compiled in 590ms (2725 modules)
+ ○ Compiling /api/admin/research ...
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+[API Error] INTERNAL_ERROR: (0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function {
+  status: 500,
+  details: {
+    error: '(0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function',
+    stack: 'TypeError: (0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function\n' +
+      '    at POST (webpack-internal:///(rsc)/./app/api/admin/research/route.ts:21:109)\n' +
+      '    at runNextTicks (node:internal/process/task_queues:65:5)\n' +
+      '    at process.processImmediate (node:internal/timers:479:9)\n' +
+      '    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'research'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T02:52:23.360Z'
+}
+ POST /api/admin/research 500 in 5071ms
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/articles/new 200 in 3486ms
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 6333ms
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+   Reload env: .env.local
+ ✓ Compiled /_not-found in 4.8s (5756 modules)
+ ✓ Compiled in 1009ms (2725 modules)
+ ✓ Compiled in 1028ms (2725 modules)
+ ✓ Compiled in 820ms (2725 modules)
+ ✓ Compiled in 777ms (2725 modules)
+ ✓ Compiled in 807ms (2725 modules)
+ ✓ Compiled in 709ms (2725 modules)
+ ✓ Compiled in 807ms (2725 modules)
+ ✓ Compiled in 2.1s (2725 modules)
+ ✓ Compiled in 907ms (2725 modules)
+ ✓ Compiled in 1336ms (2725 modules)
+ ✓ Compiled in 757ms (2725 modules)
+ ✓ Compiled in 832ms (2725 modules)
+ ✓ Compiled in 730ms (2725 modules)
+ ✓ Compiled in 1126ms (2725 modules)
+ ✓ Compiled in 793ms (2725 modules)
+ ✓ Compiled in 862ms (2725 modules)
+ ✓ Compiled in 869ms (2725 modules)
+ ✓ Compiled in 2s (2725 modules)
+ ✓ Compiled in 964ms (2725 modules)
+ ✓ Compiled in 885ms (2725 modules)
+ ✓ Compiled in 606ms (2725 modules)
+ ✓ Compiled in 768ms (2725 modules)
+ ✓ Compiled in 746ms (2725 modules)
+ ✓ Compiled in 655ms (2725 modules)
+ ✓ Compiled in 597ms (2725 modules)
+ ✓ Compiled in 612ms (2725 modules)
+ ✓ Compiled in 704ms (2725 modules)
+ ✓ Compiled in 2.9s (2725 modules)
+ ✓ Compiled in 1639ms (2725 modules)
+ ✓ Compiled in 1355ms (2725 modules)
+ ✓ Compiled in 807ms (2725 modules)
+ ✓ Compiled in 791ms (2725 modules)
+ ✓ Compiled in 617ms (2725 modules)
+ ✓ Compiled in 628ms (2725 modules)
+ ✓ Compiled in 672ms (2725 modules)
+ ✓ Compiled in 600ms (2725 modules)
+ ✓ Compiled in 769ms (2725 modules)
+ ✓ Compiled in 594ms (2725 modules)
+ ✓ Compiled in 1951ms (2725 modules)
+ ✓ Compiled in 848ms (2725 modules)
+ ✓ Compiled in 1493ms (2725 modules)
+ ✓ Compiled in 884ms (2725 modules)
+ ✓ Compiled in 686ms (2725 modules)
+ ✓ Compiled in 659ms (2725 modules)
+ ✓ Compiled in 751ms (2725 modules)
+ ✓ Compiled in 836ms (2725 modules)
+ ✓ Compiled in 1020ms (2725 modules)
+ ✓ Compiled in 858ms (2725 modules)
+ ✓ Compiled in 2s (2725 modules)
+ ✓ Compiled in 699ms (2725 modules)
+ ✓ Compiled in 656ms (2725 modules)
+ ✓ Compiled in 755ms (2725 modules)
+ ✓ Compiled in 704ms (2725 modules)
+ ✓ Compiled in 706ms (2725 modules)
+ ✓ Compiled in 701ms (2725 modules)
+ ✓ Compiled in 662ms (2725 modules)
+ ✓ Compiled in 768ms (2725 modules)
+ ✓ Compiled in 752ms (2725 modules)
+   Reload env: .env.local
+ ✓ Compiled in 3.4s (5756 modules)
+ ✓ Compiled in 951ms (2725 modules)
+ ✓ Compiled in 828ms (2725 modules)
+ ✓ Compiled in 754ms (2725 modules)
+ ✓ Compiled in 705ms (2725 modules)
+ ✓ Compiled in 827ms (2725 modules)
+ ✓ Compiled in 867ms (2725 modules)
+ ○ Compiling /api/admin/research ...
+ ⚠ ./app/api/admin/research/route.ts
+Attempted import error: 'createClientWithClerkAuth' is not exported from '@/lib/supabase-auth' (imported as 'createClientWithClerkAuth').
+
+Import trace for requested module:
+./app/api/admin/research/route.ts
+[API Error] INTERNAL_ERROR: (0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function {
+  status: 500,
+  details: {
+    error: '(0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function',
+    stack: 'TypeError: (0 , _lib_supabase_auth__WEBPACK_IMPORTED_MODULE_3__.createClientWithClerkAuth) is not a function\n' +
+      '    at POST (webpack-internal:///(rsc)/./app/api/admin/research/route.ts:21:109)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'research'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T02:55:45.232Z'
+}
+ POST /api/admin/research 500 in 2438ms
+ ✓ Compiled /api/admin/research in 8.8s (5549 modules)
+ ✓ Compiled in 831ms (2725 modules)
+ ✓ Compiled in 940ms (2725 modules)
+ ✓ Compiled in 1550ms (2725 modules)
+ ✓ Compiled in 1092ms (2725 modules)
+ ✓ Compiled in 968ms (2725 modules)
+ ✓ Compiled in 781ms (2725 modules)
+ ✓ Compiled in 806ms (2725 modules)
+ ✓ Compiled in 1090ms (2725 modules)
+ ✓ Compiled in 2.1s (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/categories ...
+ ✓ Compiled /admin/categories in 6.4s (5559 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 6616ms
+ ✓ Compiled in 1174ms (2725 modules)
+ ✓ Compiled in 783ms (2725 modules)
+ ✓ Compiled in 975ms (2725 modules)
+ ✓ Compiled in 892ms (2725 modules)
+ ✓ Compiled in 738ms (2725 modules)
+ ✓ Compiled in 845ms (2725 modules)
+ ✓ Compiled in 725ms (2725 modules)
+ ✓ Compiled in 1581ms (2725 modules)
+ ✓ Compiled in 1035ms (2725 modules)
+ ✓ Compiled in 656ms (2725 modules)
+ ✓ Compiled in 1025ms (2725 modules)
+ ✓ Compiled in 853ms (2725 modules)
+ ✓ Compiled in 677ms (2725 modules)
+ ✓ Compiled in 818ms (2725 modules)
+ ✓ Compiled in 752ms (2725 modules)
+ ✓ Compiled in 679ms (2725 modules)
+ ✓ Compiled in 996ms (2725 modules)
+ ✓ Compiled in 1213ms (2725 modules)
+ ✓ Compiled in 2.1s (2725 modules)
+ ✓ Compiled in 622ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 285ms
+ ✓ Compiled in 930ms (2725 modules)
+ ✓ Compiled in 885ms (2725 modules)
+ ✓ Compiled in 788ms (2725 modules)
+ ✓ Compiled in 821ms (2725 modules)
+ ✓ Compiled in 843ms (2725 modules)
+ ✓ Compiled in 1459ms (2725 modules)
+ ✓ Compiled in 1046ms (2725 modules)
+ ✓ Compiled in 776ms (2725 modules)
+ ✓ Compiled in 661ms (2725 modules)
+ ✓ Compiled in 2.9s (2725 modules)
+ ✓ Compiled in 1098ms (2725 modules)
+ ✓ Compiled in 1383ms (2725 modules)
+ ✓ Compiled in 783ms (2725 modules)
+ ✓ Compiled in 705ms (2725 modules)
+ ✓ Compiled in 791ms (2725 modules)
+ ✓ Compiled in 891ms (2725 modules)
+ ✓ Compiled in 854ms (2725 modules)
+ ✓ Compiled in 920ms (2725 modules)
+ ✓ Compiled in 625ms (2725 modules)
+ ✓ Compiled in 743ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 259ms
+ ✓ Compiled in 2.3s (2725 modules)
+ ✓ Compiled in 1297ms (2725 modules)
+ ✓ Compiled in 721ms (2725 modules)
+ ✓ Compiled in 1124ms (2725 modules)
+ ✓ Compiled in 1351ms (2725 modules)
+ ✓ Compiled in 1493ms (2725 modules)
+ ✓ Compiled in 831ms (2725 modules)
+ ✓ Compiled in 1541ms (2725 modules)
+[API Error] FORBIDDEN: Admin access required {
+  status: 403,
+  details: undefined,
+  requestId: undefined,
+  timestamp: '2025-07-10T02:57:27.195Z'
+}
+ POST /api/admin/research 403 in 1171ms
+ ✓ Compiled in 811ms (2725 modules)
+ ✓ Compiled in 743ms (2725 modules)
+ ✓ Compiled in 894ms (2725 modules)
+ ✓ Compiled in 2.2s (2725 modules)
+ ✓ Compiled in 1096ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 1009ms
+ ✓ Compiled in 6.3s (2725 modules)
+ ✓ Compiled in 1160ms (2725 modules)
+ ✓ Compiled in 857ms (2725 modules)
+ ✓ Compiled in 2.1s (2725 modules)
+ ✓ Compiled in 1070ms (2725 modules)
+ ✓ Compiled in 887ms (2725 modules)
+ ✓ Compiled in 1348ms (2725 modules)
+ ✓ Compiled in 1202ms (2725 modules)
+ ✓ Compiled in 1077ms (2725 modules)
+ ✓ Compiled in 1381ms (2725 modules)
+ ✓ Compiled in 918ms (2725 modules)
+ ✓ Compiled in 1002ms (2725 modules)
+ ✓ Compiled in 855ms (2725 modules)
+ ✓ Compiled in 941ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 13.3s (5559 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 8293ms
+ ✓ Compiled in 1674ms (2725 modules)
+ ✓ Compiled in 907ms (2725 modules)
+ ✓ Compiled in 802ms (2725 modules)
+ ✓ Compiled in 1730ms (2725 modules)
+ ✓ Compiled in 1490ms (2725 modules)
+ ✓ Compiled in 1548ms (2725 modules)
+ ✓ Compiled in 1233ms (2725 modules)
+ ✓ Compiled in 1873ms (2725 modules)
+ ✓ Compiled in 3.1s (2725 modules)
+ ✓ Compiled in 1094ms (2725 modules)
+ ✓ Compiled in 1168ms (2725 modules)
+ ✓ Compiled in 1007ms (2725 modules)
+ ✓ Compiled in 1435ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 251ms
+ ✓ Compiled in 1756ms (2725 modules)
+ ✓ Compiled in 803ms (2725 modules)
+ ✓ Compiled in 1160ms (2725 modules)
+ ✓ Compiled in 1404ms (2725 modules)
+ ✓ Compiled in 2.4s (2725 modules)
+ ✓ Compiled in 3.3s (2725 modules)
+ ✓ Compiled in 1198ms (2725 modules)
+ ✓ Compiled in 1233ms (2725 modules)
+ ✓ Compiled in 1115ms (2725 modules)
+ ✓ Compiled in 1198ms (2725 modules)
+ ✓ Compiled in 1005ms (2725 modules)
+ ✓ Compiled in 883ms (2725 modules)
+ ✓ Compiled in 1063ms (2725 modules)
+ ✓ Compiled in 804ms (2725 modules)
+ ✓ Compiled in 901ms (2725 modules)
+ ✓ Compiled in 851ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 1705ms
+ ✓ Compiled in 2.8s (2725 modules)
+ ✓ Compiled in 1448ms (2725 modules)
+ ✓ Compiled in 800ms (2725 modules)
+ ✓ Compiled in 845ms (2725 modules)
+ ✓ Compiled in 761ms (2725 modules)
+ ✓ Compiled in 1066ms (2725 modules)
+ ✓ Compiled in 1364ms (2725 modules)
+ ✓ Compiled in 930ms (2725 modules)
+ ✓ Compiled in 1448ms (2725 modules)
+ ✓ Compiled in 859ms (2725 modules)
+ ✓ Compiled in 1645ms (2725 modules)
+ ✓ Compiled in 5.3s (2725 modules)
+ ✓ Compiled in 1789ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 348ms
+ ✓ Compiled in 1414ms (2725 modules)
+ ✓ Compiled in 2.7s (2725 modules)
+ ✓ Compiled in 1472ms (2725 modules)
+ ✓ Compiled in 1162ms (2725 modules)
+ ✓ Compiled in 1113ms (2725 modules)
+ ✓ Compiled in 860ms (2725 modules)
+ ✓ Compiled in 1264ms (2725 modules)
+ ✓ Compiled in 1020ms (2725 modules)
+ ✓ Compiled in 1149ms (2725 modules)
+ ✓ Compiled in 704ms (2725 modules)
+ ✓ Compiled in 972ms (2725 modules)
+ ✓ Compiled in 779ms (2725 modules)
+ ✓ Compiled in 2s (2725 modules)
+ ✓ Compiled in 828ms (2725 modules)
+ ✓ Compiled in 1138ms (2725 modules)
+ ✓ Compiled in 849ms (2725 modules)
+ ✓ Compiled in 1061ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 695ms
+ ✓ Compiled in 1346ms (2725 modules)
+ ✓ Compiled in 888ms (2725 modules)
+ ✓ Compiled in 614ms (2725 modules)
+ ✓ Compiled in 5.7s (5542 modules)
+ ✓ Compiled in 799ms (2725 modules)
+ ✓ Compiled in 679ms (2725 modules)
+ ✓ Compiled in 1023ms (2725 modules)
+ ✓ Compiled in 814ms (2725 modules)
+ ○ Compiling /api/admin/research ...
+ ✓ Compiled /api/admin/research in 1163ms (2834 modules)
+[Research API] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Research API] Profile lookup result: { profile: { role: 'admin' }, error: null }
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 978ms
+[Middleware Debug] Admin route accessed, userId: null
+[Middleware Debug] sessionId: null
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ⨯ [Error [TypeError]: immutable]
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 5.1s (5560 modules)
+ ⨯ [Error: ENOENT: no such file or directory, open '/Users/rkb/DentistryExplained/dentistry-explained/.next/server/pages/_document.js'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/rkb/DentistryExplained/dentistry-explained/.next/server/pages/_document.js'
+}
+ GET /admin/categories 404 in 2ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.8s (5561 modules)
+ ✓ Compiled in 732ms (2726 modules)
+ ✓ Compiled in 658ms (2726 modules)
+ ✓ Compiled in 589ms (2726 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 176ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 74ms
+ POST /api/admin/research 200 in 71996ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 139ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 69ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 186ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 137ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 145ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 125ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 195ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 112ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 84ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 98ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 165ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 242ms
+ ✓ Compiled in 3.7s (2725 modules)
+ ✓ Compiled in 1539ms (2725 modules)
+ ✓ Compiled in 1388ms (2725 modules)
+ ✓ Compiled in 2s (2725 modules)
+ ✓ Compiled in 1003ms (2725 modules)
+ ✓ Compiled in 673ms (2725 modules)
+ ✓ Compiled in 1204ms (2725 modules)
+ ✓ Compiled in 938ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1116ms (2725 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 1215ms
+ ✓ Compiled in 1469ms (2725 modules)
+ ✓ Compiled in 2.4s (2725 modules)
+ ✓ Compiled in 1096ms (2725 modules)
+ ✓ Compiled in 825ms (2725 modules)
+ ✓ Compiled in 1696ms (2725 modules)
+ ✓ Compiled in 679ms (2725 modules)
+ ✓ Compiled in 802ms (2725 modules)
+ ✓ Compiled in 843ms (2725 modules)
+ ✓ Compiled in 737ms (2725 modules)
+ ✓ Compiled in 1231ms (2725 modules)
+ ✓ Compiled in 794ms (2725 modules)
+ ✓ Compiled in 1023ms (2725 modules)
+ ✓ Compiled in 2.3s (2725 modules)
+ ✓ Compiled in 794ms (2725 modules)
+ ✓ Compiled in 774ms (2725 modules)
+ ✓ Compiled in 860ms (2725 modules)
+ ✓ Compiled in 928ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1193ms (2725 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 288ms
+ ✓ Compiled in 1257ms (2725 modules)
+ ✓ Compiled in 866ms (2725 modules)
+ ✓ Compiled in 894ms (2725 modules)
+ ✓ Compiled in 1556ms (2725 modules)
+ ✓ Compiled in 1930ms (2725 modules)
+ ✓ Compiled in 3.7s (2725 modules)
+ ✓ Compiled in 997ms (2725 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/categories 200 in 406ms
