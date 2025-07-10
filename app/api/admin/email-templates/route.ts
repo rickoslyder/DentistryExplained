@@ -42,7 +42,7 @@ const getTemplatesHandler = withAuth(async (request: NextRequest, context) => {
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', userProfile.id)
+      .eq('clerk_id', context.user!.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -90,7 +90,7 @@ const createTemplateHandler = withAuth(async (request: NextRequest, context) => 
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', userProfile.id)
+      .eq('clerk_id', context.user!.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -104,8 +104,8 @@ const createTemplateHandler = withAuth(async (request: NextRequest, context) => 
       .from('email_templates')
       .insert({
         ...validatedData,
-        created_by: userProfile.id,
-        updated_by: userProfile.id
+        created_by: profile.id,
+        updated_by: profile.id
       })
       .select()
       .single()

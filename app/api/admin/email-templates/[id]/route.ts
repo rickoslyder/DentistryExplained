@@ -37,7 +37,8 @@ const getTemplateHandler = compose(
   withAuth
 )(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
-  const { id } = context.params!
+  const params = await context.params!
+  const { id } = params
   
   try {
     const supabase = context.supabase!
@@ -47,7 +48,7 @@ const getTemplateHandler = compose(
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('clerk_id', user.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -91,7 +92,8 @@ const updateTemplateHandler = compose(
   withAuth
 )(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
-  const { id } = context.params!
+  const params = await context.params!
+  const { id } = params
   
   try {
     const supabase = context.supabase!
@@ -101,7 +103,7 @@ const updateTemplateHandler = compose(
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('clerk_id', user.id)
       .single()
     
     if (profile?.role !== 'admin') {
@@ -118,7 +120,7 @@ const updateTemplateHandler = compose(
       .from('email_templates')
       .update({
         ...updateData,
-        updated_by: user.id
+        updated_by: profile.id
       })
       .eq('id', id)
       .select()
@@ -157,7 +159,8 @@ const deleteTemplateHandler = compose(
   withAuth
 )(async (request: NextRequest, context) => {
   const requestId = getRequestId(request)
-  const { id } = context.params!
+  const params = await context.params!
+  const { id } = params
   
   try {
     const supabase = context.supabase!
@@ -167,7 +170,7 @@ const deleteTemplateHandler = compose(
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('clerk_id', user.id)
       .single()
     
     if (profile?.role !== 'admin') {

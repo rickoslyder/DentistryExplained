@@ -76,7 +76,7 @@ const templateTypeOptions = [
   { value: 'custom', label: 'Custom' }
 ]
 
-export default function EmailTemplateEditPage({ params }: { params: { id: string } }) {
+export default function EmailTemplateEditPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(true)
@@ -85,10 +85,17 @@ export default function EmailTemplateEditPage({ params }: { params: { id: string
   const [versions, setVersions] = useState<EmailTemplateVersion[]>([])
   const [activeTab, setActiveTab] = useState('editor')
   const [changeNotes, setChangeNotes] = useState('')
+  const [templateId, setTemplateId] = useState<string | null>(null)
 
-  const isNew = params.id === 'new'
+  const isNew = templateId === 'new'
 
   useEffect(() => {
+    params.then(p => setTemplateId(p.id))
+  }, [params])
+
+  useEffect(() => {
+    if (templateId === null) return
+    
     if (!isNew) {
       fetchTemplate()
     } else {
@@ -108,11 +115,11 @@ export default function EmailTemplateEditPage({ params }: { params: { id: string
       })
       setLoading(false)
     }
-  }, [params.id])
+  }, [templateId])
 
   const fetchTemplate = async () => {
     try {
-      const response = await fetch(`/api/admin/email-templates/${params.id}`)
+      const response = await fetch(`/api/admin/email-templates/${templateId}`)
       if (!response.ok) throw new Error('Failed to fetch template')
       
       const data = await response.json()
@@ -137,7 +144,7 @@ export default function EmailTemplateEditPage({ params }: { params: { id: string
     try {
       const url = isNew 
         ? '/api/admin/email-templates'
-        : `/api/admin/email-templates/${params.id}`
+        : `/api/admin/email-templates/${templateId}`
       
       // Sanitize template content before saving
       const sanitizedTemplate = {
@@ -218,13 +225,13 @@ export default function EmailTemplateEditPage({ params }: { params: { id: string
             {!isNew && (
               <>
                 <Button variant="outline" asChild>
-                  <a href={`/admin/email-templates/${params.id}/preview`} target="_blank">
+                  <a href={`/admin/email-templates/${templateId}/preview`} target="_blank">
                     <Eye className="w-4 h-4 mr-2" />
                     Preview
                   </a>
                 </Button>
                 <Button variant="outline" asChild>
-                  <a href={`/admin/email-templates/${params.id}/test`} target="_blank">
+                  <a href={`/admin/email-templates/${templateId}/test`} target="_blank">
                     <Send className="w-4 h-4 mr-2" />
                     Send Test
                   </a>

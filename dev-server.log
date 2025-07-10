@@ -7953,3 +7953,709 @@ Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/code
  GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 95ms
 (node:43608) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 504ms
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 1735ms
+ GET /api/auth/csrf 200 in 174ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/glossary 200 in 833ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET /api/auth/csrf 200 in 105ms
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+(node:45692) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ POST /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 568ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/chat/sessions 200 in 611ms
+(node:45752) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/email-templates/[id] ...
+ ✓ Compiled /admin/email-templates/[id] in 2.9s (1836 modules)
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 3246ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /api/admin/email-templates/[id] ...
+(node:46583) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled /api/admin/email-templates/[id] in 3s (3300 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+Error: Route "/admin/email-templates/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at EmailTemplateEditPage (app/admin/email-templates/[id]/page.tsx:89:23)
+  87 |   const [changeNotes, setChangeNotes] = useState('')
+  88 |
+> 89 |   const isNew = params.id === 'new'
+     |                       ^
+  90 |
+  91 |   useEffect(() => {
+  92 |     if (!isNew) {
+Error: Route "/admin/email-templates/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at EmailTemplateEditPage (app/admin/email-templates/[id]/page.tsx:111:13)
+  109 |       setLoading(false)
+  110 |     }
+> 111 |   }, [params.id])
+      |             ^
+  112 |
+  113 |   const fetchTemplate = async () => {
+  114 |     try {
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 4052ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 981ms
+ ✓ Compiled in 1843ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+(node:46694) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+(node:46695) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 611ms
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/route.ts:46:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T00:12:14.001Z'
+}
+ GET /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 500 in 5957ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled in 1267ms (1462 modules)
+ GET /admin/email-templates 200 in 289ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+(node:46726) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/route.ts:46:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T00:12:14.988Z'
+}
+ GET /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 500 in 752ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 405ms
+ GET /admin/email-templates 200 in 337ms
+(node:46753) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 1207ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 487ms
+ ○ Compiling /api/admin/email-templates ...
+ ✓ Compiled /api/admin/email-templates in 2.9s (3233 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 4283ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 632ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ ✓ Compiled in 2.1s (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 1027ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 611ms
+ ✓ Compiled in 978ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 643ms
+ ✓ Compiled in 993ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 688ms
+ ✓ Compiled in 955ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 761ms
+ ✓ Compiled in 746ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 463ms
+ ✓ Compiled in 737ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 712ms
+ ✓ Compiled in 874ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 320ms
+ ✓ Compiled in 817ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 546ms
+ ✓ Compiled in 1352ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 471ms
+ ✓ Compiled in 670ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 364ms
+ ✓ Compiled in 751ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 559ms
+ ✓ Compiled in 849ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 506ms
+ ✓ Compiled in 649ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 570ms
+ ✓ Compiled in 966ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 157ms
+ GET /admin/email-templates 200 in 1030ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[createServerSupabaseClient] Successfully got JWT token
+ ✓ Compiled in 1881ms (1462 modules)
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/route.ts:46:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T00:12:34.683Z'
+}
+ GET /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 500 in 644ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 200 in 488ms
+ GET /admin/email-templates 200 in 472ms
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+(node:47247) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:47238) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[createServerSupabaseClient] Successfully got JWT token
+[API Error] INTERNAL_ERROR: Cannot destructure property 'id' of 'context.params' as it is undefined. {
+  status: 500,
+  details: {
+    error: "Cannot destructure property 'id' of 'context.params' as it is undefined.",
+    stack: "TypeError: Cannot destructure property 'id' of 'context.params' as it is undefined.\n" +
+      '    at eval (webpack-internal:///(rsc)/./app/api/admin/email-templates/[id]/route.ts:46:13)\n' +
+      '    at eval (webpack-internal:///(rsc)/./lib/api-middleware.ts:78:36)\n' +
+      '    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+      '    at async eval (webpack-internal:///(rsc)/./lib/rate-limiter.ts:94:30)\n' +
+      '    at async AppRouteRouteModule.do (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:34112)\n' +
+      '    at async AppRouteRouteModule.handle (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:26:41338)\n' +
+      '    at async doRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1518:42)\n' +
+      '    at async DevServer.renderToResponseWithComponentsImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1920:28)\n' +
+      '    at async DevServer.renderPageComponent (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2408:24)\n' +
+      '    at async DevServer.renderToResponseImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:2445:32)\n' +
+      '    at async DevServer.pipeImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:1008:25)\n' +
+      '    at async NextNodeServer.handleCatchallRenderRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/next-server.js:305:17)\n' +
+      '    at async DevServer.handleRequestImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/base-server.js:900:17)\n' +
+      '    at async /Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:371:20\n' +
+      '    at async Span.traceAsyncFn (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/trace/trace.js:157:20)\n' +
+      '    at async DevServer.handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/dev/next-dev-server.js:368:24)\n' +
+      '    at async invokeRender (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:237:21)\n' +
+      '    at async handleRequest (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:428:24)\n' +
+      '    at async requestHandlerImpl (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/router-server.js:452:13)\n' +
+      '    at async Server.requestListener (/Users/rkb/DentistryExplained/dentistry-explained/node_modules/next/dist/server/lib/start-server.js:158:13)',
+    context: 'authentication'
+  },
+  requestId: undefined,
+  timestamp: '2025-07-10T00:12:35.559Z'
+}
+ GET /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71 500 in 707ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ ✓ Compiled in 1278ms (1462 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET /admin/email-templates 200 in 375ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 665ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 490ms
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ ✓ Compiled in 1141ms (1462 modules)
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[createServerSupabaseClient] Successfully got JWT token
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /api/admin/email-templates 200 in 1382ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 957ms
+ ✓ Compiled in 2s (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 558ms
+ ✓ Compiled in 897ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 375ms
+ ✓ Compiled in 913ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 365ms
+ ✓ Compiled in 1687ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 463ms
+ ✓ Compiled in 921ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 565ms
+ ✓ Compiled in 855ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 498ms
+ ✓ Compiled in 862ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 524ms
+ ✓ Compiled in 845ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 721ms
+ ✓ Compiled in 930ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 626ms
+ ✓ Compiled in 1039ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 565ms
+ ✓ Compiled in 592ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 618ms
+ ✓ Compiled in 710ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 774ms
+ ✓ Compiled in 1042ms (1462 modules)
+ ✓ Compiled in 718ms (1462 modules)
+ ✓ Compiled in 1566ms (1462 modules)
+ ✓ Compiled in 1183ms (1462 modules)
+ ✓ Compiled in 867ms (1462 modules)
+ ✓ Compiled in 639ms (1462 modules)
+ ✓ Compiled in 764ms (1462 modules)
+ ✓ Compiled in 883ms (1462 modules)
+ ✓ Compiled in 827ms (1462 modules)
+ ✓ Compiled in 706ms (1462 modules)
+ ✓ Compiled in 770ms (1462 modules)
+ ✓ Compiled in 783ms (1462 modules)
+ ✓ Compiled in 679ms (1462 modules)
+ ✓ Compiled in 910ms (1462 modules)
+ ✓ Compiled in 1176ms (1462 modules)
+ ✓ Compiled in 1522ms (1462 modules)
+ ✓ Compiled in 737ms (1462 modules)
+ ✓ Compiled in 1021ms (1462 modules)
+ ✓ Compiled in 652ms (1462 modules)
+ ✓ Compiled in 610ms (1462 modules)
+ ✓ Compiled in 608ms (1462 modules)
+ ✓ Compiled in 637ms (1462 modules)
+ ✓ Compiled in 629ms (1462 modules)
+ ✓ Compiled in 599ms (1462 modules)
+ ✓ Compiled in 680ms (1462 modules)
+ ✓ Compiled in 544ms (1462 modules)
+ ✓ Compiled in 894ms (1462 modules)
+ ✓ Compiled in 742ms (1462 modules)
+ ✓ Compiled in 775ms (1462 modules)
+ ✓ Compiled in 661ms (1462 modules)
+ ✓ Compiled in 510ms (1462 modules)
+ ✓ Compiled in 742ms (1462 modules)
+ ✓ Compiled in 1646ms (1462 modules)
+ ✓ Compiled in 536ms (1462 modules)
+ ✓ Compiled in 637ms (1462 modules)
+ ✓ Compiled in 669ms (1462 modules)
+ ✓ Compiled in 738ms (1462 modules)
+ ✓ Compiled in 722ms (1462 modules)
+ ✓ Compiled in 541ms (1462 modules)
+ ✓ Compiled in 615ms (1462 modules)
+ ✓ Compiled in 566ms (1462 modules)
+ ✓ Compiled in 704ms (1462 modules)
+ ✓ Compiled in 583ms (1462 modules)
+ ✓ Compiled in 762ms (1462 modules)
+ ✓ Compiled in 954ms (1462 modules)
+ ✓ Compiled in 645ms (1462 modules)
+ ✓ Compiled in 796ms (1462 modules)
+ ✓ Compiled in 715ms (1462 modules)
+ ✓ Compiled in 744ms (1462 modules)
+ ✓ Compiled in 763ms (1462 modules)
+ ✓ Compiled in 937ms (1462 modules)
+ ✓ Compiled in 737ms (1462 modules)
+ ✓ Compiled in 645ms (1462 modules)
+ ✓ Compiled in 751ms (1462 modules)
+ ✓ Compiled in 747ms (1462 modules)
+ ✓ Compiled in 641ms (1462 modules)
+ ✓ Compiled in 1622ms (1462 modules)
+ ✓ Compiled in 821ms (1462 modules)
+ ✓ Compiled in 727ms (1462 modules)
+ ✓ Compiled in 739ms (1462 modules)
+ ✓ Compiled in 553ms (1462 modules)
+ ✓ Compiled in 697ms (1462 modules)
+ ✓ Compiled in 1081ms (1462 modules)
+ ✓ Compiled in 587ms (1462 modules)
+ ✓ Compiled in 666ms (1462 modules)
+ ✓ Compiled in 625ms (1462 modules)
+ ✓ Compiled in 587ms (1462 modules)
+ ✓ Compiled in 640ms (1462 modules)
+ ✓ Compiled in 1132ms (1462 modules)
+ ✓ Compiled in 916ms (1462 modules)
+ ✓ Compiled in 901ms (1462 modules)
+ ✓ Compiled in 651ms (1462 modules)
+ ✓ Compiled in 705ms (1462 modules)
+ ✓ Compiled in 873ms (1462 modules)
+ ✓ Compiled in 951ms (1462 modules)
+ ✓ Compiled in 840ms (1462 modules)
+ ✓ Compiled in 769ms (1462 modules)
+ ✓ Compiled in 662ms (1462 modules)
+ ✓ Compiled in 769ms (1462 modules)
+ ✓ Compiled in 952ms (1462 modules)
+ ✓ Compiled in 904ms (1462 modules)
+ ✓ Compiled in 768ms (1462 modules)
+ ✓ Compiled in 968ms (1462 modules)
+ ✓ Compiled in 752ms (1462 modules)
+ ✓ Compiled in 728ms (1462 modules)
+ ✓ Compiled in 731ms (1462 modules)
+ ✓ Compiled in 982ms (1462 modules)
+ ✓ Compiled in 695ms (1462 modules)
+ ✓ Compiled in 923ms (1462 modules)
+ ✓ Compiled in 1125ms (1462 modules)
+ ✓ Compiled in 1330ms (1462 modules)
+ ✓ Compiled in 2s (1462 modules)
+ ✓ Compiled in 1390ms (1462 modules)
+ ✓ Compiled in 1875ms (1462 modules)
+ ✓ Compiled in 1636ms (1462 modules)
+ ✓ Compiled in 1393ms (1462 modules)
+ ✓ Compiled in 1147ms (1462 modules)
+ ✓ Compiled in 1147ms (1462 modules)
+ ✓ Compiled in 672ms (1462 modules)
+ ✓ Compiled in 692ms (1462 modules)
+ ✓ Compiled in 1202ms (1462 modules)
+ ✓ Compiled in 921ms (1462 modules)
+ ✓ Compiled in 1081ms (1462 modules)
+ ✓ Compiled in 989ms (1462 modules)
+ ✓ Compiled in 3.4s (3133 modules)
+ ✓ Compiled in 549ms (1462 modules)
+ ✓ Compiled in 621ms (1462 modules)
+ ✓ Compiled in 625ms (1462 modules)
+ ✓ Compiled in 512ms (1462 modules)
+ ✓ Compiled in 610ms (1462 modules)
+ ✓ Compiled in 589ms (1462 modules)
+ ✓ Compiled in 527ms (1462 modules)
+ ✓ Compiled in 924ms (1462 modules)
+ ✓ Compiled in 578ms (1462 modules)
+ ✓ Compiled in 600ms (1462 modules)
+ ✓ Compiled in 511ms (1462 modules)
+ ✓ Compiled in 547ms (1462 modules)
+ ✓ Compiled in 508ms (1462 modules)
+ ✓ Compiled in 461ms (1462 modules)
+ ✓ Compiled in 501ms (1462 modules)
+ ✓ Compiled in 676ms (1462 modules)
+ ✓ Compiled in 915ms (1462 modules)
+ ✓ Compiled in 556ms (1462 modules)
+ ✓ Compiled in 749ms (1462 modules)
+ ✓ Compiled in 470ms (1462 modules)
+ ✓ Compiled in 452ms (1462 modules)
+ ✓ Compiled in 509ms (1462 modules)
+ ✓ Compiled in 577ms (1462 modules)
+ ✓ Compiled in 450ms (1462 modules)
+ ✓ Compiled in 503ms (1462 modules)
+ ✓ Compiled in 549ms (1462 modules)
+ ✓ Compiled in 665ms (1462 modules)
+ ✓ Compiled in 956ms (1462 modules)
+ ✓ Compiled in 719ms (1462 modules)
+ ✓ Compiled in 489ms (1462 modules)
+ ✓ Compiled in 545ms (1462 modules)
+ ✓ Compiled in 515ms (1462 modules)
+ ✓ Compiled in 504ms (1462 modules)
+ ✓ Compiled in 522ms (1462 modules)
+ ✓ Compiled in 569ms (1462 modules)
+ ✓ Compiled in 582ms (1462 modules)
+ ✓ Compiled in 523ms (1462 modules)
+ ✓ Compiled in 500ms (1462 modules)
+ ✓ Compiled in 521ms (1462 modules)
+ ✓ Compiled in 567ms (1462 modules)
+ ✓ Compiled in 1015ms (1462 modules)
+ ✓ Compiled in 514ms (1462 modules)
+ ✓ Compiled in 578ms (1462 modules)
+ ✓ Compiled in 518ms (1462 modules)
+ ✓ Compiled in 466ms (1462 modules)
+ ✓ Compiled in 519ms (1462 modules)
+ ✓ Compiled in 573ms (1462 modules)
+ ✓ Compiled in 556ms (1462 modules)
+ ✓ Compiled in 557ms (1462 modules)
+ ✓ Compiled in 610ms (1462 modules)
+ ✓ Compiled in 588ms (1462 modules)
+ ✓ Compiled in 620ms (1462 modules)
+ ✓ Compiled in 749ms (1462 modules)
+ ✓ Compiled in 531ms (1462 modules)
+ ✓ Compiled in 596ms (1462 modules)
+ ✓ Compiled in 655ms (1462 modules)
+ ✓ Compiled in 750ms (1462 modules)
+ ✓ Compiled in 688ms (1462 modules)
+ ✓ Compiled in 486ms (1462 modules)
+ ✓ Compiled in 523ms (1462 modules)
+ ✓ Compiled in 720ms (1462 modules)
+ ✓ Compiled in 591ms (1462 modules)
+ ✓ Compiled in 831ms (1462 modules)
+ ✓ Compiled in 941ms (1462 modules)
+ ✓ Compiled in 1149ms (1462 modules)
+ ✓ Compiled in 529ms (1462 modules)
+ ✓ Compiled in 515ms (1462 modules)
+ ✓ Compiled in 483ms (1462 modules)
+ ✓ Compiled in 547ms (1462 modules)
+ ✓ Compiled in 499ms (1462 modules)
+ ✓ Compiled in 489ms (1462 modules)
+ ✓ Compiled in 4.6s (3133 modules)
+ ✓ Compiled in 563ms (1462 modules)
+ ✓ Compiled in 564ms (1462 modules)
+ ✓ Compiled in 471ms (1462 modules)
+ ✓ Compiled in 547ms (1462 modules)
+ ✓ Compiled in 502ms (1462 modules)
+ ✓ Compiled in 527ms (1462 modules)
+ ✓ Compiled in 480ms (1462 modules)
+ ✓ Compiled in 632ms (1462 modules)
+ ✓ Compiled in 500ms (1462 modules)
+ ✓ Compiled in 476ms (1462 modules)
+ ✓ Compiled in 1013ms (1462 modules)
+ ✓ Compiled in 560ms (1462 modules)
+ ✓ Compiled in 482ms (1462 modules)
+ ✓ Compiled in 457ms (1462 modules)
+ ✓ Compiled in 473ms (1462 modules)
+ ✓ Compiled in 1414ms (3133 modules)
+ ✓ Compiled in 480ms (1462 modules)
+ ✓ Compiled in 560ms (1462 modules)
+ ✓ Compiled in 516ms (1462 modules)
+ ✓ Compiled in 464ms (1462 modules)
+ ✓ Compiled in 858ms (1462 modules)
+ ✓ Compiled in 466ms (1462 modules)
+ ✓ Compiled in 567ms (1462 modules)
+ ✓ Compiled in 575ms (1462 modules)
+ ✓ Compiled in 569ms (1462 modules)
+ ✓ Compiled in 520ms (1462 modules)
+ ✓ Compiled in 482ms (1462 modules)
+ ✓ Compiled in 496ms (1462 modules)
+ ✓ Compiled in 487ms (1462 modules)
+ ✓ Compiled in 450ms (1462 modules)
+ ✓ Compiled in 451ms (1462 modules)
+ ✓ Compiled in 674ms (1462 modules)
+ ✓ Compiled in 803ms (1462 modules)
+ ✓ Compiled in 474ms (1462 modules)
+ ✓ Compiled in 609ms (1462 modules)
+ ✓ Compiled in 552ms (1462 modules)
+ ✓ Compiled in 459ms (1462 modules)
+ ✓ Compiled in 464ms (1462 modules)
+ ✓ Compiled in 495ms (1462 modules)
+ ✓ Compiled in 507ms (1462 modules)
+ ✓ Compiled in 474ms (1462 modules)
+ ✓ Compiled in 494ms (1462 modules)
+ ✓ Compiled in 544ms (1462 modules)
+ ✓ Compiled in 536ms (1462 modules)
+ ✓ Compiled in 910ms (1462 modules)
+ ✓ Compiled in 476ms (1462 modules)
+ ✓ Compiled in 550ms (1462 modules)
+ ✓ Compiled in 463ms (1462 modules)
+ ✓ Compiled in 522ms (1462 modules)
+ ✓ Compiled in 479ms (1462 modules)
+ ✓ Compiled in 527ms (1462 modules)
+ ✓ Compiled in 537ms (1462 modules)
+ ✓ Compiled in 497ms (1462 modules)
+ ✓ Compiled in 489ms (1462 modules)
+ ✓ Compiled in 494ms (1462 modules)
+ ✓ Compiled in 492ms (1462 modules)
