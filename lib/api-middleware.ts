@@ -9,7 +9,7 @@ export { withAudit } from './api-middleware/audit'
 // Type for API handler with context
 export type ApiHandler<T = any> = (
   request: NextRequest,
-  context: ApiContext
+  context: ApiContext & { params?: Promise<any> }
 ) => Promise<NextResponse<T>>
 
 // Context passed to API handlers
@@ -27,8 +27,8 @@ export function withAuth<T = any>(
     requireProfile?: boolean
     requireRole?: 'admin' | 'professional'
   }
-): (request: NextRequest) => Promise<NextResponse> {
-  return async (request: NextRequest) => {
+): (request: NextRequest, routeContext?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, routeContext?: any) => {
     // Handle OPTIONS requests for CORS preflight
     if (request.method === 'OPTIONS') {
       return new NextResponse(null, {
@@ -78,11 +78,12 @@ export function withAuth<T = any>(
       }
 
       // Create context
-      const context: ApiContext = {
+      const context: ApiContext & { params?: Promise<any> } = {
         userId,
         userProfile: userProfile!,
         supabase: await createServerSupabaseClient(),
-        requestId: `req_${Date.now()}_${Math.random().toString(36).substring(7)}`
+        requestId: `req_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+        ...(routeContext || {})
       }
 
       // Call handler
