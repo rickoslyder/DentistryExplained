@@ -28,14 +28,14 @@ export async function POST(
     
     const supabase = await createServerSupabaseClient()
     
-    // Check admin role
+    // Get user profile by clerk_id
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.id)
+      .eq('clerk_id', user.id)
       .single()
     
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return ApiErrors.forbidden('Admin access required', requestId)
     }
     

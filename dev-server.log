@@ -7713,3 +7713,243 @@ Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/code
  ✓ Compiled in 968ms (1462 modules)
  ✓ Compiled in 483ms (1462 modules)
  ✓ Compiled in 623ms (1462 modules)
+ ✓ Compiled in 578ms (1462 modules)
+ ✓ Compiled in 547ms (1462 modules)
+ ✓ Compiled in 590ms (1462 modules)
+ ✓ Compiled in 690ms (1462 modules)
+ ✓ Compiled in 655ms (1462 modules)
+ ✓ Compiled in 510ms (1462 modules)
+ ✓ Compiled in 472ms (1462 modules)
+ ✓ Compiled in 604ms (1462 modules)
+ ✓ Compiled in 532ms (1462 modules)
+ ✓ Compiled in 1091ms (1462 modules)
+ ✓ Compiled in 811ms (1462 modules)
+ ✓ Compiled in 550ms (1462 modules)
+ ✓ Compiled in 542ms (1462 modules)
+ ✓ Compiled in 552ms (1462 modules)
+ ✓ Compiled in 487ms (1462 modules)
+ ✓ Compiled in 556ms (1462 modules)
+ ✓ Compiled in 468ms (1462 modules)
+ ✓ Compiled in 558ms (1462 modules)
+ ✓ Compiled in 598ms (1462 modules)
+ ✓ Compiled in 468ms (1462 modules)
+ ✓ Compiled in 530ms (1462 modules)
+ ✓ Compiled in 1012ms (1462 modules)
+ ✓ Compiled in 498ms (1462 modules)
+ ✓ Compiled in 521ms (1462 modules)
+ ✓ Compiled in 533ms (1462 modules)
+ ✓ Compiled in 612ms (1462 modules)
+ ✓ Compiled in 578ms (1462 modules)
+ ✓ Compiled in 468ms (1462 modules)
+ ✓ Compiled in 612ms (1462 modules)
+ ✓ Compiled in 537ms (1462 modules)
+ ✓ Compiled in 496ms (1462 modules)
+ ✓ Compiled in 543ms (1462 modules)
+ ✓ Compiled in 619ms (1462 modules)
+ ✓ Compiled in 831ms (1462 modules)
+ ✓ Compiled in 524ms (1462 modules)
+ ✓ Compiled in 542ms (1462 modules)
+ ✓ Compiled in 466ms (1462 modules)
+ ✓ Compiled in 482ms (1462 modules)
+ ✓ Compiled in 473ms (1462 modules)
+ ✓ Compiled in 559ms (1462 modules)
+ ✓ Compiled in 591ms (1462 modules)
+ ✓ Compiled in 492ms (1462 modules)
+ ✓ Compiled in 542ms (1462 modules)
+ ✓ Compiled in 517ms (1462 modules)
+ ✓ Compiled in 496ms (1462 modules)
+ ✓ Compiled in 788ms (1462 modules)
+ ✓ Compiled in 653ms (1462 modules)
+ ✓ Compiled in 547ms (1462 modules)
+ ✓ Compiled in 530ms (1462 modules)
+ ✓ Compiled in 488ms (1462 modules)
+ ✓ Compiled in 677ms (1462 modules)
+ ✓ Compiled in 971ms (1462 modules)
+ ✓ Compiled in 1300ms (1462 modules)
+ ✓ Compiled in 694ms (1462 modules)
+ ✓ Compiled in 780ms (1462 modules)
+ ✓ Compiled in 734ms (1462 modules)
+ ✓ Compiled in 1116ms (1462 modules)
+ ✓ Compiled in 1221ms (1462 modules)
+ ✓ Compiled in 587ms (1462 modules)
+ ✓ Compiled in 1143ms (1462 modules)
+ ✓ Compiled in 749ms (1462 modules)
+ ✓ Compiled in 1248ms (1462 modules)
+ ✓ Compiled in 572ms (1462 modules)
+ ✓ Compiled in 773ms (1462 modules)
+ ✓ Compiled in 1037ms (1462 modules)
+ ✓ Compiled in 724ms (1462 modules)
+ ✓ Compiled in 748ms (1462 modules)
+ ✓ Compiled in 1237ms (1462 modules)
+ ✓ Compiled in 582ms (1462 modules)
+ ✓ Compiled in 1233ms (1462 modules)
+ ✓ Compiled in 616ms (1462 modules)
+ ✓ Compiled in 733ms (1462 modules)
+ ✓ Compiled in 1070ms (1462 modules)
+ ✓ Compiled in 664ms (1462 modules)
+ ✓ Compiled in 926ms (1462 modules)
+ ✓ Compiled in 680ms (1462 modules)
+ ✓ Compiled in 1191ms (1462 modules)
+ ✓ Compiled in 555ms (1462 modules)
+ ✓ Compiled in 761ms (1462 modules)
+ ✓ Compiled in 656ms (1462 modules)
+ ✓ Compiled in 749ms (1462 modules)
+ ✓ Compiled in 969ms (1462 modules)
+ ✓ Compiled in 927ms (1462 modules)
+ ✓ Compiled in 508ms (1462 modules)
+ ✓ Compiled in 1337ms (1462 modules)
+ ✓ Compiled in 715ms (1462 modules)
+ ✓ Compiled in 695ms (1462 modules)
+ ✓ Compiled in 967ms (1462 modules)
+ ✓ Compiled in 658ms (1462 modules)
+ ✓ Compiled in 718ms (1462 modules)
+ ✓ Compiled in 819ms (1462 modules)
+ ✓ Compiled in 675ms (1462 modules)
+ ✓ Compiled in 664ms (1462 modules)
+ ✓ Compiled in 1069ms (1462 modules)
+ ✓ Compiled in 780ms (1462 modules)
+ ✓ Compiled in 833ms (1462 modules)
+ ✓ Compiled in 895ms (1462 modules)
+ ✓ Compiled in 1688ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/d6dd43a6-c65b-4913-a7da-f92790c6db14/preview 200 in 1776ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 9.1s (3146 modules)
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+(node:41924) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 7524ms
+ ✓ Compiled in 811ms (1462 modules)
+ ✓ Compiled in 2.4s (1462 modules)
+ ✓ Compiled in 2.4s (1462 modules)
+ ✓ Compiled in 1918ms (1462 modules)
+ ✓ Compiled in 2.5s (1462 modules)
+ ✓ Compiled in 989ms (1462 modules)
+ ✓ Compiled in 1137ms (1462 modules)
+ ✓ Compiled in 664ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ○ Compiling /admin/email-templates ...
+ ✓ Compiled /admin/email-templates in 5.7s (3181 modules)
+[createServerSupabaseClient] Successfully got JWT token
+`legacyBehavior` is deprecated and will be removed in a future release. A codemod is available to upgrade your components:
+
+npx @next/codemod@latest new-link .
+
+Learn more: https://nextjs.org/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 252ms
+ GET /admin/email-templates 200 in 5794ms
+ ✓ Compiled in 1373ms (1462 modules)
+ ✓ Compiled in 799ms (1462 modules)
+ ○ Compiling /api/auth/csrf ...
+ ✓ Compiled /api/auth/csrf in 4.8s (3275 modules)
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[withAuth] Authenticated userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[getCurrentUserProfile] Clerk userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+ GET /api/auth/csrf 200 in 3991ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[getCurrentUserProfile] Successfully fetched profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+[withAuth] Got user profile: ee1579cf-2d82-4d47-b69d-35871bfb3402
+ GET /api/glossary 200 in 4335ms
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /api/admin/email-templates 200 in 4561ms
+ GET /admin/email-templates 200 in 541ms
+ GET /api/chat/sessions 200 in 4811ms
+ ✓ Compiled in 820ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 666ms
+ ✓ Compiled in 1288ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 655ms
+ ✓ Compiled in 1102ms (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates 200 in 273ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 808ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+ ✓ Compiled /api/admin/email-templates/[id]/preview in 496ms (1816 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+(node:42659) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[createServerSupabaseClient] Successfully got JWT token
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 986ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 1731ms
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[API Error] FORBIDDEN: Admin access required {
+  status: 403,
+  details: undefined,
+  requestId: 'req_1752106172718_chf4ug',
+  timestamp: '2025-07-10T00:09:33.292Z'
+}
+ POST /api/admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 403 in 1787ms
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 505ms
+(node:42682) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:42683) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled in 3.7s (3278 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 265ms
+ ✓ Compiled in 2s (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 200ms
+ ✓ Compiled in 4.3s (1462 modules)
+(node:43394) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 865ms
+ ✓ Compiled in 2.3s (1462 modules)
+[Middleware Debug] Admin route accessed, userId: user_2zPiF5T2aRztuDTL9j7xPN3QK8q
+[Middleware Debug] sessionId: sess_2zVa7tyhIR47l9BgEhiu3eviNMb
+[Middleware Debug] Skipping middleware check, will rely on layout check
+[createServerSupabaseClient] Successfully got JWT token
+ GET /admin/email-templates/a3c1b4a4-b441-4d0f-970b-824bcbb88e71/preview 200 in 95ms
+(node:43608) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
