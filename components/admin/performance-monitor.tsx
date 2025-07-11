@@ -131,6 +131,36 @@ export function PerformanceMonitor() {
     }
   }
 
+  // Calculate overview statistics from the fetched metrics
+  const calculateOverviewStats = () => {
+    if (!metrics || metrics.length === 0) {
+      return {
+        avgResponseTime: 0,
+        totalRequests: 0,
+        errorRate: 0,
+        uptime: 99.9 // Default uptime
+      }
+    }
+
+    const totalRequests = metrics.reduce((sum, m) => sum + m.request_count, 0)
+    const totalErrors = metrics.reduce((sum, m) => sum + m.error_count, 0)
+    const weightedResponseTime = metrics.reduce((sum, m) => sum + (m.avg_response_time * m.request_count), 0)
+    const avgResponseTime = totalRequests > 0 ? Math.round(weightedResponseTime / totalRequests) : 0
+    const errorRate = totalRequests > 0 ? ((totalErrors / totalRequests) * 100).toFixed(2) : '0.00'
+    
+    // Calculate uptime based on error rate (simple approximation)
+    const uptime = totalRequests > 0 ? (100 - parseFloat(errorRate)).toFixed(2) : '99.90'
+
+    return {
+      avgResponseTime,
+      totalRequests,
+      errorRate,
+      uptime
+    }
+  }
+
+  const stats = calculateOverviewStats()
+
   return (
     <div className="space-y-6">
       {/* Overview Cards */}
@@ -143,10 +173,10 @@ export function PerformanceMonitor() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">145ms</div>
-            <div className="flex items-center gap-1 text-sm text-green-600">
-              <TrendingDown className="h-3 w-3" />
-              <span>-12.3%</span>
+            <div className="text-2xl font-bold">{stats.avgResponseTime}ms</div>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Activity className="h-3 w-3" />
+              <span>{timeRange} average</span>
             </div>
           </CardContent>
         </Card>
@@ -159,10 +189,9 @@ export function PerformanceMonitor() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">10,802</div>
-            <div className="flex items-center gap-1 text-sm text-green-600">
-              <TrendingUp className="h-3 w-3" />
-              <span>+23.5%</span>
+            <div className="text-2xl font-bold">{stats.totalRequests.toLocaleString()}</div>
+            <div className="text-sm text-muted-foreground">
+              In {timeRange === '1h' ? 'last hour' : timeRange === '24h' ? 'last 24 hours' : `last ${timeRange}`}
             </div>
           </CardContent>
         </Card>
@@ -175,10 +204,14 @@ export function PerformanceMonitor() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0.23%</div>
-            <div className="flex items-center gap-1 text-sm text-green-600">
-              <TrendingDown className="h-3 w-3" />
-              <span>-0.05%</span>
+            <div className="text-2xl font-bold">{stats.errorRate}%</div>
+            <div className={`flex items-center gap-1 text-sm ${parseFloat(stats.errorRate) > 1 ? 'text-red-600' : 'text-green-600'}`}>
+              {parseFloat(stats.errorRate) > 1 ? (
+                <TrendingUp className="h-3 w-3" />
+              ) : (
+                <TrendingDown className="h-3 w-3" />
+              )}
+              <span>{parseFloat(stats.errorRate) > 1 ? 'Above' : 'Below'} threshold</span>
             </div>
           </CardContent>
         </Card>
@@ -191,8 +224,8 @@ export function PerformanceMonitor() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">99.98%</div>
-            <div className="text-sm text-muted-foreground">Last 30 days</div>
+            <div className="text-2xl font-bold">{stats.uptime}%</div>
+            <div className="text-sm text-muted-foreground">System availability</div>
           </CardContent>
         </Card>
       </div>
