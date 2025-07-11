@@ -211,7 +211,7 @@ general_settings:
 ### Environment Variables (.env.local)
 ```env
 # LiteLLM Configuration
-LITELLM_PROXY_URL=https://openai-proxy-0l7e.onrender.com
+LITELLM_PROXY_URL=https://llm.rbnk.uk
 LITELLM_API_KEY=your_master_key
 LITELLM_MODEL=o4-mini
 

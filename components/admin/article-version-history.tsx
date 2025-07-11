@@ -39,6 +39,7 @@ import {
   CheckCircle2
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { MDXDiffViewer } from '@/components/admin/mdx-diff-viewer'
 
 interface Version {
   id: string
@@ -50,9 +51,10 @@ interface Version {
   created_at: string
   author: {
     id: string
-    full_name?: string
+    first_name?: string
+    last_name?: string
     email?: string
-    image_url?: string
+    avatar_url?: string
   }
 }
 
@@ -79,10 +81,10 @@ export function ArticleVersionHistory({ articleId, currentVersion }: ArticleVers
 
   const fetchVersions = async () => {
     try {
-      const response = await fetch(`/api/admin/articles/${articleId}/versions`)
+      const response = await fetch(`/api/admin/articles/${articleId}/revisions`)
       if (!response.ok) throw new Error('Failed to fetch versions')
       const data = await response.json()
-      setVersions(data.versions || [])
+      setVersions(data.revisions || [])
     } catch (error) {
       toast.error('Failed to load version history')
       console.error(error)
@@ -97,7 +99,7 @@ export function ArticleVersionHistory({ articleId, currentVersion }: ArticleVers
     setRestoring(true)
     try {
       const response = await fetch(
-        `/api/admin/articles/${articleId}/versions/${selectedVersion.id}/restore`,
+        `/api/admin/articles/${articleId}/restore/${selectedVersion.id}`,
         { method: 'POST' }
       )
       
@@ -127,13 +129,14 @@ export function ArticleVersionHistory({ articleId, currentVersion }: ArticleVers
       setCompareVersions([compareVersions[0], versionId])
       // Navigate to comparison view
       router.push(
-        `/admin/articles/${articleId}/versions/compare?from=${compareVersions[0]}&to=${versionId}`
+        `/admin/articles/${articleId}/revisions/compare?from=${compareVersions[0]}&to=${versionId}`
       )
     }
   }
 
   const getAuthorDisplay = (author: Version['author']) => {
-    const name = author.full_name || author.email || 'Unknown'
+    const fullName = `${author.first_name || ''} ${author.last_name || ''}`.trim()
+    const name = fullName || author.email || 'Unknown'
     const initials = name
       .split(' ')
       .map(n => n[0])
@@ -141,7 +144,7 @@ export function ArticleVersionHistory({ articleId, currentVersion }: ArticleVers
       .toUpperCase()
       .slice(0, 2)
     
-    return { name, initials, image: author.image_url }
+    return { name, initials, image: author.avatar_url }
   }
 
   if (loading) {
@@ -255,7 +258,7 @@ export function ArticleVersionHistory({ articleId, currentVersion }: ArticleVers
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => 
-                                    router.push(`/admin/articles/${articleId}/versions/${version.id}/preview`)
+                                    router.push(`/admin/articles/${articleId}/revisions/${version.id}/preview`)
                                   }
                                 >
                                   <Eye className="w-4 h-4" />

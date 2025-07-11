@@ -98,6 +98,7 @@ export default function SignUpPage() {
               },
             }}
             redirectUrl={`/onboarding?userType=${selectedUserType}`}
+            afterSignUpUrl={`/onboarding?userType=${selectedUserType}`}
           />
 
           <div className="text-center">

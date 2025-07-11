@@ -25,7 +25,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **CMS**: Custom-built content management system with MDX support ✅
 - **Authentication**: Clerk (latest) for user management and auth flows ✅
 - **Database**: Supabase (PostgreSQL) with Row Level Security ✅
-- **AI Integration**: LiteLLM proxy (https://openai-proxy-0l7e.onrender.com) - using o4-mini reasoning model ✅
+- **AI Integration**: LiteLLM proxy (https://llm.rbnk.uk) - using o4-mini reasoning model ✅
 - **Web Search**: Perplexity API (real-time) and Exa API (semantic search) ✅
 - **Payments**: Stripe (not yet implemented) ❌
 - **Analytics**: PostHog (not yet implemented) ❌
@@ -276,7 +276,7 @@ Added comprehensive security headers in `next.config.mjs`:
 
 Allowed CSP domains:
 - Clerk authentication: `https://clerk.accounts.dev`, `https://*.clerk.accounts.dev`, `https://actual-feline-35.accounts.dev`
-- AI proxy: `https://openai-proxy-0l7e.onrender.com`
+- AI proxy: `https://llm.rbnk.uk`
 - Supabase: `https://*.supabase.co`
 - Resend email: `https://api.resend.com`
 

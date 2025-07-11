@@ -9,6 +9,8 @@ export const ResearchRequestSchema = z.object({
   sourcesCount: z.number().int().min(5).max(20).default(10),
   focusMedical: z.boolean().default(true),
   includeCitations: z.boolean().default(true),
+  audience: z.enum(['general', 'professional']).default('general'),
+  readingLevel: z.enum(['basic', 'intermediate', 'advanced']).default('intermediate'),
 })
 
 export const ResearchResponseSchema = z.object({
@@ -24,6 +26,8 @@ export const ResearchResponseSchema = z.object({
     sources_count: z.number(),
     medical_focus: z.boolean(),
     word_count: z.number(),
+    audience: z.string().optional(),
+    reading_level: z.string().optional(),
   }),
   generated_at: z.string(),
 })
@@ -53,6 +57,8 @@ export class ResearchService {
         sources_count: request.sourcesCount,
         focus_medical: request.focusMedical,
         include_citations: request.includeCitations,
+        audience: request.audience,
+        reading_level: request.readingLevel,
       }),
     })
 
@@ -78,6 +84,8 @@ export class ResearchService {
         sources_count: request.sourcesCount,
         focus_medical: true,
         include_citations: request.includeCitations,
+        audience: 'professional',
+        reading_level: request.readingLevel || 'intermediate',
       }),
     })
 
@@ -101,14 +109,19 @@ export class ResearchService {
 }
 
 export function formatResearchAsMarkdown(research: ResearchResponse): string {
+  const audience = research.metadata.audience || 'general'
+  const readingLevel = research.metadata.reading_level || 'intermediate'
+  
   const header = `---
 title: "Draft: ${research.topic}"
 excerpt: "An AI-generated research report on ${research.topic}."
 category: "dental-problems"
-tags: ["AI-generated", "draft", "research"]
+tags: ["AI-generated", "draft", "research", audience, readingLevel]
 status: "draft"
 featured: false
 reviewed: false
+audience: "${audience}"
+readingLevel: "${readingLevel}"
 generatedAt: "${research.generated_at}"
 ---
 

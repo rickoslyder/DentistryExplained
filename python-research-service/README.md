@@ -71,7 +71,7 @@ The service will be available at http://localhost:8000
   - `RESEARCH_SERVICE_AUTH_TOKEN`: Secure token for API authentication
 
 - **Optional**:
-  - `LITELLM_PROXY_URL`: LiteLLM proxy URL (default: https://openai-proxy-0l7e.onrender.com)
+  - `LITELLM_PROXY_URL`: LiteLLM proxy URL (default: https://llm.rbnk.uk)
   - `FAST_LLM_MODEL`: Model for quick tasks (default: o4-mini)
   - `SMART_LLM_MODEL`: Model for complex tasks (default: o4)
   - `EMBEDDING_MODEL`: Model for embeddings (default: text-embedding-3-small)

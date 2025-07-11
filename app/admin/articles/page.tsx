@@ -25,7 +25,7 @@ async function getArticles(page: number = 1) {
     .select(`
       *,
       category:categories(name),
-      author:profiles!articles_author_id_fkey(full_name)
+      author:profiles!articles_author_id_fkey(first_name, last_name, email)
     `)
     .order('created_at', { ascending: false })
     .range(offset, offset + ITEMS_PER_PAGE - 1)
@@ -39,11 +39,12 @@ async function getArticles(page: number = 1) {
 }
 
 interface PageProps {
-  searchParams: { page?: string }
+  searchParams: Promise<{ page?: string }>
 }
 
 export default async function ArticlesPage({ searchParams }: PageProps) {
-  const currentPage = parseInt(searchParams.page || '1')
+  const params = await searchParams
+  const currentPage = parseInt(params.page || '1')
   const { articles, totalCount } = await getArticles(currentPage)
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
   

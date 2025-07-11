@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
+import { NextResponse } from "next/server"
 
 // Routes accessible to everyone (logged in or not)
 const isPublicRoute = createRouteMatcher([
@@ -98,7 +99,7 @@ export default clerkMiddleware(async (auth, req) => {
     if (!userId) {
       // For RSC requests, return 401 instead of redirecting to avoid CORS issues
       if (isRSCRequest) {
-        return new Response('Unauthorized', { 
+        return NextResponse.json({ error: 'Unauthorized' }, { 
           status: 401,
           headers: {
             'Access-Control-Allow-Origin': '*',
@@ -109,7 +110,7 @@ export default clerkMiddleware(async (auth, req) => {
       // For regular requests, redirect to sign-in with proper origin
       const signInUrl = new URL('/sign-in', req.url)
       signInUrl.searchParams.set('redirect_url', req.url)
-      return Response.redirect(signInUrl)
+      return NextResponse.redirect(signInUrl)
     }
   }
 
@@ -129,7 +130,7 @@ export default clerkMiddleware(async (auth, req) => {
     if (!userId) {
       // For RSC requests, return 401 instead of redirecting
       if (isRSCRequest) {
-        return new Response('Unauthorized', { 
+        return NextResponse.json({ error: 'Unauthorized' }, { 
           status: 401,
           headers: {
             'Access-Control-Allow-Origin': '*',
@@ -138,7 +139,7 @@ export default clerkMiddleware(async (auth, req) => {
         })
       }
       // For regular requests, redirect to sign-in
-      return Response.redirect(new URL("/sign-in", req.url))
+      return NextResponse.redirect(new URL("/sign-in", req.url))
     }
     // The actual admin check happens in the admin layout
   }
@@ -155,7 +156,7 @@ export default clerkMiddleware(async (auth, req) => {
     // For protected routes, redirect to sign-in
     const signInUrl = new URL('/sign-in', req.url)
     signInUrl.searchParams.set('redirect_url', req.url)
-    return Response.redirect(signInUrl)
+    return NextResponse.redirect(signInUrl)
   }
 })
 

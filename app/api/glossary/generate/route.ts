@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { auth } from '@clerk/nextjs/server'
+import { liteLLMConfig, isLiteLLMConfigured } from '@/lib/config/litellm'
 
 // Schema for generated terms
 const generatedTermSchema = z.object({
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('user_id', userId)
+      .eq('clerk_id', userId)
       .single()
 
     if (!profile || profile.role !== 'admin') {
@@ -92,33 +93,53 @@ Important:
 - Only include pronunciation for complex terms
 - Related terms should reference other glossary terms when possible`
 
-    // Call OpenAI API with o4-mini reasoning model
-    const openAIResponse = await fetch('https://openai-proxy-0l7e.onrender.com/v1/chat/completions', {
+    // Check if LiteLLM is configured
+    if (!isLiteLLMConfigured()) {
+      return NextResponse.json({ 
+        error: 'AI service not configured' 
+      }, { status: 503 })
+    }
+
+    // Call LiteLLM API
+    const response = await fetch(`${liteLLMConfig.proxyUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`
+        'Authorization': `Bearer ${liteLLMConfig.apiKey}`
       },
       body: JSON.stringify({
-        model: process.env.LITELLM_REASONING_MODEL || 'o4-mini',
+        model: liteLLMConfig.defaultModel,
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt + '\n\nReturn your response as a JSON array.' }
         ],
         temperature: 0.7,
-        reasoning_effort: 'medium', // Reasoning models support this parameter
-        max_completion_tokens: 4000, // Higher limit for reasoning tokens
-        response_format: { type: 'json_object' }
+        max_tokens: 3000,
+        stream: false
       })
     })
 
-    if (!openAIResponse.ok) {
-      console.error('OpenAI API error:', await openAIResponse.text())
+    if (!response.ok) {
+      console.error('LiteLLM API error:', await response.text())
       return NextResponse.json({ error: 'Failed to generate terms' }, { status: 500 })
     }
 
-    const aiData = await openAIResponse.json()
-    const generatedContent = JSON.parse(aiData.choices[0].message.content)
+    const aiData = await response.json()
+    let content = aiData.choices[0]?.message?.content || '[]'
+    
+    // Clean up the response - remove markdown code blocks if present
+    content = content.trim()
+    if (content.startsWith('```json')) {
+      content = content.slice(7)
+    } else if (content.startsWith('```')) {
+      content = content.slice(3)
+    }
+    if (content.endsWith('```')) {
+      content = content.slice(0, -3)
+    }
+    content = content.trim()
+    
+    const generatedContent = JSON.parse(content)
 
     // Extract array from response (handle different response formats)
     let terms = Array.isArray(generatedContent) ? generatedContent : 

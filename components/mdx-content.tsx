@@ -14,8 +14,25 @@ import {
   Info, 
   CheckCircle2, 
   XCircle,
-  ChevronRight
+  ChevronRight,
+  Lightbulb,
+  FileText,
+  AlertTriangle,
+  Stethoscope
 } from 'lucide-react'
+import { SymptomSeverityScale } from '@/components/dental/symptom-severity-scale'
+import { TreatmentComparisonTable } from '@/components/dental/treatment-comparison-table'
+import { InteractiveToothChart } from '@/components/dental/interactive-tooth-chart'
+import { MedicationCard } from '@/components/dental/medication-card'
+import { BeforeAfterGallery } from '@/components/dental/before-after-gallery'
+import { AppointmentChecklist } from '@/components/dental/appointment-checklist'
+import { SmartFAQ } from '@/components/dental/smart-faq'
+import { AlertEnhanced } from '@/components/ui/alert-enhanced'
+import { ClinicalCalculator } from '@/components/dental/clinical-calculator'
+import { VideoConsultationCard } from '@/components/dental/video-consultation-card'
+import { InsuranceInfoBox } from '@/components/dental/insurance-info-box'
+import { EnhancedCostTable } from '@/components/dental/enhanced-cost-table'
+import { BranchingTimeline } from '@/components/dental/branching-timeline'
 
 // Custom MDX components
 const components = {
@@ -127,16 +144,24 @@ const components = {
   Alert: ({ type = 'info', title, children, ...props }: any) => {
     const icons = {
       info: <Info className="h-4 w-4" />,
-      warning: <AlertCircle className="h-4 w-4" />,
+      warning: <AlertTriangle className="h-4 w-4" />,
       success: <CheckCircle2 className="h-4 w-4" />,
-      error: <XCircle className="h-4 w-4" />
+      error: <XCircle className="h-4 w-4" />,
+      tip: <Lightbulb className="h-4 w-4" />,
+      note: <FileText className="h-4 w-4" />,
+      emergency: <AlertCircle className="h-4 w-4" />,
+      'clinical-note': <Stethoscope className="h-4 w-4" />
     }
     
     const variants = {
-      info: 'default',
-      warning: 'destructive',
-      success: 'default',
-      error: 'destructive'
+      info: 'info',
+      warning: 'warning',
+      success: 'success',
+      error: 'destructive',
+      tip: 'tip',
+      note: 'note',
+      emergency: 'emergency',
+      'clinical-note': 'clinical-note'
     }
     
     return (
@@ -160,9 +185,121 @@ const components = {
     </Card>
   ),
   
+  // Dental-specific components
+  ToothDiagram: ({ teeth = [] }: { teeth?: number[] }) => (
+    <div className="tooth-diagram p-4 bg-gray-50 rounded-lg my-4">
+      <div className="grid grid-cols-8 gap-2">
+        {Array.from({ length: 32 }, (_, i) => (
+          <div
+            key={i + 1}
+            className={`tooth ${teeth.includes(i + 1) ? 'bg-red-500' : 'bg-gray-300'} w-8 h-8 rounded text-center text-white text-xs flex items-center justify-center`}
+          >
+            {i + 1}
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
+  
+  Timeline: ({ children }: any) => (
+    <div className="timeline border-l-2 border-primary ml-4 pl-8 space-y-6 my-4">
+      {children}
+    </div>
+  ),
+  
+  TimelineItem: ({ date, title, children }: any) => (
+    <div className="relative">
+      <div className="absolute -left-10 w-4 h-4 bg-primary rounded-full"></div>
+      <div className="text-sm text-gray-500 mb-1">{date}</div>
+      <h4 className="font-semibold mb-2">{title}</h4>
+      <div className="text-gray-700">{children}</div>
+    </div>
+  ),
+  
+  CostTable: ({ costs = [] }: { costs?: Array<{ item: string; cost: string; nhs?: boolean }> }) => (
+    <div className="overflow-x-auto my-4">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Treatment
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Cost
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              NHS Available
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {costs.map((item, index) => (
+            <tr key={index}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                {item.item}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {item.cost}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {item.nhs ? '✓' : '✗'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ),
+  
+  FAQ: ({ question, children }: any) => (
+    <div className="faq mb-4 p-4 bg-gray-50 rounded-lg">
+      <h4 className="font-semibold mb-2">Q: {question}</h4>
+      <div className="text-gray-700">A: {children}</div>
+    </div>
+  ),
+  
+  ProcedureSteps: ({ children }: any) => (
+    <ol className="procedure-steps space-y-4 list-decimal list-inside my-4">
+      {children}
+    </ol>
+  ),
+  
+  VideoEmbed: ({ url, title }: any) => (
+    <div className="video-embed mb-6">
+      <div className="relative pb-[56.25%] h-0">
+        <iframe
+          src={url}
+          title={title || 'Video'}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full rounded-lg"
+        />
+      </div>
+      {title && <p className="text-sm text-gray-600 mt-2 text-center">{title}</p>}
+    </div>
+  ),
+  
   Badge,
   Button,
-  ChevronRight
+  ChevronRight,
+  
+  // New dental-specific components
+  SymptomSeverityScale,
+  TreatmentComparisonTable,
+  InteractiveToothChart,
+  MedicationCard,
+  BeforeAfterGallery,
+  AppointmentChecklist,
+  SmartFAQ,
+  ClinicalCalculator,
+  VideoConsultationCard,
+  InsuranceInfoBox,
+  EnhancedCostTable,
+  BranchingTimeline,
+  
+  // Enhanced Alert with collapsible and timestamp support
+  AlertEnhanced
 }
 
 interface MDXContentProps {

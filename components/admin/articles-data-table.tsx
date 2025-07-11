@@ -54,7 +54,7 @@ interface Article {
   views: number
   is_featured: boolean
   category: { name: string } | null
-  author: { full_name: string } | null
+  author: { first_name?: string; last_name?: string; email?: string } | null
 }
 
 interface ArticlesDataTableProps {
@@ -262,7 +262,12 @@ export function ArticlesDataTable({ articles }: ArticlesDataTableProps) {
                     </div>
                   </TableCell>
                   <TableCell>{article.category?.name || '-'}</TableCell>
-                  <TableCell>{article.author?.full_name || '-'}</TableCell>
+                  <TableCell>
+                    {article.author ? 
+                      `${article.author.first_name || ''} ${article.author.last_name || ''}`.trim() || article.author.email || '-' : 
+                      '-'
+                    }
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       {getStatusBadge(article.status)}

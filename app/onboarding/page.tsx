@@ -156,7 +156,14 @@ export default function OnboardingPage() {
       if (userType === "professional") {
         router.push("/professional/verify")
       } else {
-        router.push("/")
+        // Check if there was a redirect URL stored
+        const redirectUrl = sessionStorage.getItem('post_onboarding_redirect')
+        if (redirectUrl) {
+          sessionStorage.removeItem('post_onboarding_redirect')
+          router.push(redirectUrl)
+        } else {
+          router.push("/dashboard")
+        }
       }
     } catch (error) {
       console.error("Onboarding error:", error)

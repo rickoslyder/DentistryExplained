@@ -1,0 +1,240 @@
+---
+title: MDX Edge Cases Test Document
+description: Testing various MDX expressions and edge cases
+author: Test Suite
+date: 2025-01-11
+tags: [test, mdx, edge-cases]
+---
+
+# MDX Edge Cases and Expression Testing
+
+This document tests various edge cases and MDX expressions to ensure the rich text editor handles them properly.
+
+## 1. Basic MDX Components
+
+### Simple Alert
+<Alert type="info">This is a simple info alert</Alert>
+
+### Alert with Complex Content
+<Alert type="warning">
+  This alert contains **bold text**, *italic text*, and even `inline code`.
+  
+  It also has multiple paragraphs and a [link](https://example.com).
+</Alert>
+
+### Nested Components
+<Alert type="error">
+  <FAQ question="Can components be nested?">
+    Yes! This FAQ is inside an Alert component.
+  </FAQ>
+</Alert>
+
+## 2. MDX Expressions
+
+### Simple Expression
+The current year is {new Date().getFullYear()}.
+
+### Math Expression
+2 + 2 = {2 + 2}
+
+### Complex Expression
+{(() => {
+  const items = ['Apple', 'Banana', 'Orange'];
+  return items.map((item, i) => <span key={i}>{item}{i < items.length - 1 ? ', ' : ''}</span>);
+})()}
+
+## 3. Mixed Content
+
+### MDX Component with Markdown Inside
+<CostTable 
+  costs={[
+    { item: "**Initial Consultation**", cost: "£50", nhs: true },
+    { item: "*Follow-up Visit*", cost: "£30", nhs: false },
+    { item: "`Emergency` Treatment", cost: "£100", nhs: true }
+  ]} 
+/>
+
+### Markdown with Inline MDX
+This is a paragraph with an inline <Alert type="tip" inline>tip alert</Alert> in the middle of the text.
+
+## 4. Edge Cases
+
+### Empty Component
+<Timeline />
+
+### Component with Special Characters
+<FAQ question="What's the cost? (£50-£100)">
+  The cost varies between £50 and £100, depending on the treatment.
+  Special chars: & < > " ' @ # $ % ^ * ( ) { } [ ] | \ / ? ! ~
+</FAQ>
+
+### Long Component Props
+<MedicationCard 
+  name="Amoxicillin"
+  dosage="500mg"
+  frequency="Three times daily"
+  duration="7 days"
+  warnings={["May cause drowsiness", "Take with food", "Complete the full course"]}
+  sideEffects={["Nausea", "Diarrhea", "Rash"]}
+  interactions={["Warfarin", "Methotrexate", "Oral contraceptives"]}
+  contraindications={["Penicillin allergy", "Severe renal impairment"]}
+  notes="This is a very long note that contains multiple sentences and goes on for quite a bit to test how the editor handles long text props. It should wrap properly and not break the component rendering."
+/>
+
+### Unicode and Emojis
+<Alert type="note">
+  Unicode test: café, naïve, résumé
+  Emojis: 🦷 😊 ⚕️ 💊 🏥
+  Math symbols: ∑ ∏ ∫ ∂ ∇ ∞ ≈ ≠ ≤ ≥
+</Alert>
+
+## 5. Complex Nesting
+
+### List with Components
+- First item with <Alert type="tip" inline>inline alert</Alert>
+- Second item with **bold** and *italic*
+- Third item with component:
+  <FAQ question="Nested in list?">
+    Yes, components can be in lists!
+  </FAQ>
+
+### Table with MDX
+| Treatment | Cost | Notes |
+|-----------|------|-------|
+| Cleaning | £60 | <Alert type="info" inline>NHS available</Alert> |
+| Filling | £90 | Includes *all materials* |
+| Crown | £500 | **Premium option** available |
+
+## 6. Syntax Conflicts
+
+### Curly Braces in Text
+To use curly braces { } in JSX, you need to escape them or use expressions.
+
+### HTML Entities
+Less than: &lt; Greater than: &gt; Ampersand: &amp;
+
+### Code Blocks with MDX-like Syntax
+```jsx
+// This should not be parsed as actual MDX
+<Alert type="warning">
+  This is inside a code block
+</Alert>
+
+const component = <MyComponent prop={value} />;
+```
+
+## 7. Self-Closing vs Paired Tags
+
+### Self-Closing
+<ToothDiagram teeth={[{ number: 11, status: "cavity" }]} />
+
+### Paired with Content
+<ToothDiagram teeth={[{ number: 11, status: "healthy" }]}>
+  Additional content inside the component
+</ToothDiagram>
+
+## 8. Import/Export Statements
+
+import { someFunction } from './utils'
+export const myVariable = 42
+
+## 9. Comments
+
+{/* This is an MDX comment and should be handled properly */}
+
+<!-- This is an HTML comment -->
+
+## 10. Malformed MDX (Testing Error Handling)
+
+### Unclosed Component
+This line has an unclosed <Alert type="error"> component
+
+### Mismatched Tags
+<Alert type="info">
+  Content here
+</FAQ>
+
+### Invalid Props
+<CostTable costs={this should break} />
+
+## 11. Component Variations
+
+### Timeline with Items
+<Timeline>
+  <TimelineItem date="2024-01-01" title="First Visit">
+    Initial consultation and examination
+  </TimelineItem>
+  <TimelineItem date="2024-02-01" title="Treatment">
+    Root canal treatment completed
+  </TimelineItem>
+</Timeline>
+
+### Symptom Scale
+<SymptomSeverityScale 
+  title="Rate your pain level" 
+  min={0} 
+  max={10} 
+  defaultValue={5}
+/>
+
+### Treatment Comparison
+<TreatmentComparisonTable
+  option1={{
+    name: "Composite Filling",
+    pros: ["Tooth-colored", "Single visit", "Less drilling"],
+    cons: ["More expensive", "May stain over time"],
+    cost: "£150-250"
+  }}
+  option2={{
+    name: "Amalgam Filling", 
+    pros: ["Durable", "Less expensive", "Long-lasting"],
+    cons: ["Silver color", "Contains mercury", "More tooth removal"],
+    cost: "£50-100"
+  }}
+/>
+
+## 12. Frontmatter Edge Cases
+
+The frontmatter at the top should be preserved and displayed properly in the editor.
+
+## 13. Performance Test
+
+### Multiple Components in Sequence
+<Alert type="info">Alert 1</Alert>
+<Alert type="warning">Alert 2</Alert>
+<Alert type="error">Alert 3</Alert>
+<Alert type="success">Alert 4</Alert>
+<Alert type="tip">Alert 5</Alert>
+<Alert type="note">Alert 6</Alert>
+<Alert type="caution">Alert 7</Alert>
+<Alert type="important">Alert 8</Alert>
+
+### Large Component
+<ProcedureSteps
+  steps={[
+    { title: "Step 1", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { title: "Step 2", description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { title: "Step 3", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+    { title: "Step 4", description: "Duis aute irure dolor in reprehenderit in voluptate velit esse." },
+    { title: "Step 5", description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa." },
+    { title: "Step 6", description: "Qui officia deserunt mollit anim id est laborum." },
+    { title: "Step 7", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+    { title: "Step 8", description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+    { title: "Step 9", description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+    { title: "Step 10", description: "Duis aute irure dolor in reprehenderit in voluptate velit esse." }
+  ]}
+/>
+
+## Summary
+
+This document tests various edge cases including:
+- ✅ Basic MDX components
+- ✅ MDX expressions and JavaScript
+- ✅ Nested components
+- ✅ Mixed markdown and MDX
+- ✅ Special characters and Unicode
+- ✅ Syntax conflicts
+- ✅ Error cases
+- ✅ Performance with multiple components
+
+The editor should handle all these cases gracefully, either by rendering them correctly or falling back to a safe mode.

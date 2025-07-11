@@ -46,6 +46,7 @@ export function ProfessionalResearchTool() {
   const [topic, setTopic] = useState('')
   const [reportType, setReportType] = useState('research_report')
   const [sourcesCount, setSourcesCount] = useState(10)
+  const [readingLevel, setReadingLevel] = useState<'basic' | 'intermediate' | 'advanced'>('intermediate')
   const [isResearching, setIsResearching] = useState(false)
   const [result, setResult] = useState<ResearchResult | null>(null)
   const [recentSearches, setRecentSearches] = useState<string[]>([])
@@ -70,6 +71,7 @@ export function ProfessionalResearchTool() {
           sourcesCount,
           focusMedical: true,
           includeCitations: true,
+          readingLevel,
         }),
       })
 
@@ -167,7 +169,7 @@ ${result.sources.map((source, index) =>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="reportType">Report Type</Label>
                 <Select value={reportType} onValueChange={setReportType} disabled={isResearching}>
@@ -197,6 +199,39 @@ ${result.sources.map((source, index) =>
                     <SelectItem value="10">10 sources</SelectItem>
                     <SelectItem value="15">15 sources</SelectItem>
                     <SelectItem value="20">20 sources</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="readingLevel">Complexity Level</Label>
+                <Select 
+                  value={readingLevel} 
+                  onValueChange={(v) => setReadingLevel(v as 'basic' | 'intermediate' | 'advanced')}
+                  disabled={isResearching}
+                >
+                  <SelectTrigger id="readingLevel">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="basic">
+                      <div className="flex flex-col">
+                        <span>Basic</span>
+                        <span className="text-xs text-muted-foreground">For students or quick reference</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="intermediate">
+                      <div className="flex flex-col">
+                        <span>Intermediate</span>
+                        <span className="text-xs text-muted-foreground">Standard clinical terminology</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="advanced">
+                      <div className="flex flex-col">
+                        <span>Advanced</span>
+                        <span className="text-xs text-muted-foreground">Detailed mechanisms & research</span>
+                      </div>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>

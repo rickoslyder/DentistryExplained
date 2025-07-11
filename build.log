@@ -1,0 +1,237 @@
+
+> dentistry-explained@0.1.0 build
+> next build
+
+   ▲ Next.js 15.3.5
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ (pwa) Compiling for server...
+ ✓ (pwa) Compiling for server...
+ ✓ (pwa) Compiling for client (static)...
+ ○ (pwa) Service worker: /Users/rkb/DentistryExplained/dentistry-explained/public/sw.js
+ ○ (pwa)   URL: /sw.js
+ ○ (pwa)   Scope: /
+ ○ (pwa) Custom runtimeCaching array found, using it instead of the default one.
+ ✓ Compiled successfully in 16.0s
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+(node:63325) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63331) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63332) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63328) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63330) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63327) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63326) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63323) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63324) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+   Generating static pages (0/112) ...
+(node:63640) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63639) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63641) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+   Generating static pages (28/112) 
+   Generating static pages (56/112) 
+(node:63643) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:63642) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+   Generating static pages (84/112) 
+ ✓ Generating static pages (112/112)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                                        Size  First Load JS
+┌ ○ /                                                           10.7 kB         271 kB
+├ ○ /_not-found                                                   403 B         105 kB
+├ ƒ /[category]/[slug]                                          7.29 kB         489 kB
+├ ○ /about                                                      4.38 kB         264 kB
+├ ○ /access-denied                                                245 B         255 kB
+├ ƒ /admin                                                        39 kB         304 kB
+├ ƒ /admin/activity                                             10.1 kB         159 kB
+├ ƒ /admin/analytics                                            8.11 kB         272 kB
+├ ƒ /admin/analytics/test                                       1.49 kB         122 kB
+├ ƒ /admin/analytics/test-dashboard                             7.97 kB         128 kB
+├ ƒ /admin/articles                                             13.5 kB         179 kB
+├ ƒ /admin/articles/[id]/edit                                     194 B         429 kB
+├ ƒ /admin/articles/[id]/preview                                 148 kB         370 kB
+├ ƒ /admin/articles/[id]/versions/[versionId]/preview            3.1 kB         400 kB
+├ ƒ /admin/articles/[id]/versions/compare                       10.9 kB         145 kB
+├ ƒ /admin/articles/new                                           194 B         429 kB
+├ ƒ /admin/categories                                           10.2 kB         153 kB
+├ ƒ /admin/comments                                               403 B         105 kB
+├ ƒ /admin/email-templates                                      8.54 kB         154 kB
+├ ƒ /admin/email-templates/[id]                                 7.38 kB         171 kB
+├ ƒ /admin/email-templates/[id]/preview                         5.02 kB         117 kB
+├ ƒ /admin/glossary                                               12 kB         156 kB
+├ ƒ /admin/media                                                4.62 kB         162 kB
+├ ƒ /admin/monitoring                                           13.3 kB         311 kB
+├ ƒ /admin/search                                               24.3 kB         173 kB
+├ ƒ /admin/settings                                             7.79 kB         129 kB
+├ ƒ /admin/users                                                7.83 kB         165 kB
+├ ƒ /admin/verifications                                        13.6 kB         171 kB
+├ ƒ /api/admin/ai/generate-excerpt                                403 B         105 kB
+├ ƒ /api/admin/ai/generate-seo                                    403 B         105 kB
+├ ƒ /api/admin/ai/generate-tags                                   403 B         105 kB
+├ ƒ /api/admin/ai/mdx-suggestions                                 403 B         105 kB
+├ ƒ /api/admin/ai/model-info                                      403 B         105 kB
+├ ƒ /api/admin/ai/models                                          403 B         105 kB
+├ ƒ /api/admin/ai/test-model                                      403 B         105 kB
+├ ƒ /api/admin/ai/token-count                                     403 B         105 kB
+├ ƒ /api/admin/articles                                           403 B         105 kB
+├ ƒ /api/admin/articles/[id]                                      403 B         105 kB
+├ ƒ /api/admin/articles/[id]/active-users                         403 B         105 kB
+├ ƒ /api/admin/articles/[id]/comments                             403 B         105 kB
+├ ƒ /api/admin/articles/[id]/comments/[commentId]                 403 B         105 kB
+├ ƒ /api/admin/articles/[id]/duplicate                            403 B         105 kB
+├ ƒ /api/admin/articles/[id]/restore/[revisionId]                 403 B         105 kB
+├ ƒ /api/admin/articles/[id]/revisions                            403 B         105 kB
+├ ƒ /api/admin/articles/[id]/revisions/[revisionId]               403 B         105 kB
+├ ƒ /api/admin/articles/[id]/schedule                             403 B         105 kB
+├ ƒ /api/admin/articles/[id]/versions                             403 B         105 kB
+├ ƒ /api/admin/articles/[id]/versions/[versionId]                 403 B         105 kB
+├ ƒ /api/admin/articles/[id]/versions/[versionId]/restore         403 B         105 kB
+├ ƒ /api/admin/articles/[id]/versions/compare                     403 B         105 kB
+├ ƒ /api/admin/articles/bulk-delete                               403 B         105 kB
+├ ƒ /api/admin/articles/export                                    403 B         105 kB
+├ ƒ /api/admin/articles/import                                    403 B         105 kB
+├ ƒ /api/admin/categories                                         403 B         105 kB
+├ ƒ /api/admin/categories/[id]                                    403 B         105 kB
+├ ƒ /api/admin/categories/reorder                                 403 B         105 kB
+├ ƒ /api/admin/check                                              403 B         105 kB
+├ ƒ /api/admin/dashboard/layout                                   403 B         105 kB
+├ ƒ /api/admin/dashboard/widgets/activity                         403 B         105 kB
+├ ƒ /api/admin/dashboard/widgets/content-status                   403 B         105 kB
+├ ƒ /api/admin/dashboard/widgets/stats                            403 B         105 kB
+├ ƒ /api/admin/dashboard/widgets/user-growth                      403 B         105 kB
+├ ƒ /api/admin/email-templates                                    403 B         105 kB
+├ ƒ /api/admin/email-templates/[id]                               403 B         105 kB
+├ ƒ /api/admin/email-templates/[id]/preview                       403 B         105 kB
+├ ƒ /api/admin/email-templates/[id]/test                          403 B         105 kB
+├ ƒ /api/admin/glossary                                           403 B         105 kB
+├ ƒ /api/admin/glossary/[id]                                      403 B         105 kB
+├ ƒ /api/admin/grant-access                                       403 B         105 kB
+├ ƒ /api/admin/media/[fileName]                                   403 B         105 kB
+├ ƒ /api/admin/media/upload                                       403 B         105 kB
+├ ƒ /api/admin/monitoring/rate-limits                             403 B         105 kB
+├ ƒ /api/admin/performance                                        403 B         105 kB
+├ ƒ /api/admin/research                                           403 B         105 kB
+├ ƒ /api/admin/research/stream                                    403 B         105 kB
+├ ƒ /api/admin/search/advanced                                    403 B         105 kB
+├ ƒ /api/admin/settings                                           403 B         105 kB
+├ ƒ /api/admin/users/[id]                                         403 B         105 kB
+├ ƒ /api/admin/users/[id]/role                                    403 B         105 kB
+├ ƒ /api/admin/verifications                                      403 B         105 kB
+├ ƒ /api/admin/verifications/[verificationId]/documents           403 B         105 kB
+├ ƒ /api/admin/verifications/[verificationId]/review              403 B         105 kB
+├ ƒ /api/analytics/ga4                                            403 B         105 kB
+├ ƒ /api/analytics/ga4/test                                       403 B         105 kB
+├ ƒ /api/analytics/server/test                                    403 B         105 kB
+├ ƒ /api/article-views                                            403 B         105 kB
+├ ƒ /api/auth/csrf                                                403 B         105 kB
+├ ƒ /api/auth/debug                                               403 B         105 kB
+├ ƒ /api/bookmarks                                                403 B         105 kB
+├ ƒ /api/categories                                               403 B         105 kB
+├ ƒ /api/categories/[slug]/articles                               403 B         105 kB
+├ ƒ /api/chat                                                     403 B         105 kB
+├ ƒ /api/chat/analytics                                           403 B         105 kB
+├ ƒ /api/chat/generate-title                                      403 B         105 kB
+├ ƒ /api/chat/messages                                            403 B         105 kB
+├ ƒ /api/chat/sessions                                            403 B         105 kB
+├ ƒ /api/chat/sessions/[sessionId]                                403 B         105 kB
+├ ƒ /api/chat/suggestions                                         403 B         105 kB
+├ ƒ /api/dashboard/stats                                          403 B         105 kB
+├ ƒ /api/emergency/audit                                          403 B         105 kB
+├ ƒ /api/emergency/services                                       403 B         105 kB
+├ ƒ /api/glossary                                                 403 B         105 kB
+├ ƒ /api/glossary/analytics                                       403 B         105 kB
+├ ƒ /api/glossary/generate                                        403 B         105 kB
+├ ƒ /api/glossary/quiz                                            403 B         105 kB
+├ ƒ /api/glossary/search                                          403 B         105 kB
+├ ƒ /api/glossary/term-of-day                                     403 B         105 kB
+├ ƒ /api/glossary/track                                           403 B         105 kB
+├ ƒ /api/professional/consent-forms/download                      403 B         105 kB
+├ ƒ /api/professional/research                                    403 B         105 kB
+├ ƒ /api/professional/resources/consent-forms/[formId]            403 B         105 kB
+├ ƒ /api/professional/resources/download                          403 B         105 kB
+├ ƒ /api/professional/resources/patient-education/[materialId]    403 B         105 kB
+├ ƒ /api/professional/stats                                       403 B         105 kB
+├ ƒ /api/professional/verification                                403 B         105 kB
+├ ƒ /api/professional/verification/document/[documentId]          403 B         105 kB
+├ ƒ /api/professional/verification/upload                         403 B         105 kB
+├ ƒ /api/reading-history                                          403 B         105 kB
+├ ƒ /api/reading-streak                                           403 B         105 kB
+├ ƒ /api/search                                                   403 B         105 kB
+├ ƒ /api/search/suggestions                                       403 B         105 kB
+├ ƒ /api/search/trending                                          403 B         105 kB
+├ ƒ /api/web-search                                               403 B         105 kB
+├ ƒ /api/webhooks/clerk                                           403 B         105 kB
+├ ƒ /categories/[slug]                                          1.66 kB         256 kB
+├ ○ /chat                                                       9.22 kB         264 kB
+├ ƒ /conditions                                                   245 B         255 kB
+├ ○ /consent-forms                                               4.8 kB         259 kB
+├ ○ /contact                                                    4.55 kB         266 kB
+├ ○ /cookies                                                      403 B         105 kB
+├ ○ /dashboard                                                  10.5 kB         265 kB
+├ ○ /dashboard/bookmarks                                        3.99 kB         154 kB
+├ ○ /dashboard/reading-history                                  7.18 kB         152 kB
+├ ○ /dashboard/settings                                         9.35 kB         270 kB
+├ ○ /dental-problems                                              904 B         261 kB
+├ ○ /dental-problems/gum-disease                                3.35 kB         301 kB
+├ ○ /dental-problems/tooth-decay                                 1.2 kB         296 kB
+├ ○ /emergency                                                  38.6 kB         299 kB
+├ ○ /faq                                                        2.79 kB         257 kB
+├ ○ /find-dentist                                               7.39 kB         268 kB
+├ ƒ /find-dentist/[id]                                          8.79 kB         269 kB
+├ ƒ /glossary                                                   10.9 kB         265 kB
+├ ○ /onboarding                                                 7.08 kB         175 kB
+├ ○ /prevention                                                   904 B         261 kB
+├ ○ /prevention/daily-oral-hygiene                              4.42 kB         299 kB
+├ ○ /privacy                                                      244 B         255 kB
+├ ○ /professional                                                 10 kB         265 kB
+├ ○ /professional/consent-forms                                 8.22 kB         269 kB
+├ ○ /professional/dashboard                                     4.08 kB         259 kB
+├ ○ /professional/patient-materials                               403 B         105 kB
+├ ƒ /professional/practice                                      2.55 kB         264 kB
+├ ƒ /professional/research                                      10.2 kB         164 kB
+├ ○ /professional/resources                                     3.42 kB         258 kB
+├ ○ /professional/resources/consent-forms                       7.51 kB         262 kB
+├ ○ /professional/resources/patient-education                    8.6 kB         263 kB
+├ ○ /professional/upgrade                                       3.68 kB         258 kB
+├ ○ /professional/verify                                        7.99 kB         269 kB
+├ ○ /resources                                                    245 B         255 kB
+├ ○ /search                                                     5.65 kB         267 kB
+├ ƒ /sign-in/[[...sign-in]]                                       354 B         138 kB
+├ ƒ /sign-up/[[...sign-up]]                                     5.37 kB         150 kB
+├ ○ /support                                                    1.36 kB         113 kB
+├ ○ /terms                                                        244 B         255 kB
+├ ○ /test-chat                                                  3.33 kB         258 kB
+├ ○ /test-citations                                             3.62 kB         133 kB
+├ ○ /test-tooltips                                              5.51 kB         263 kB
+├ ○ /topics                                                       245 B         255 kB
+├ ○ /treatments                                                   904 B         261 kB
+├ ○ /treatments/dental-fillings                                 4.85 kB         300 kB
+└ ○ /treatments/dental-implants                                 3.39 kB         204 kB
++ First Load JS shared by all                                    105 kB
+  ├ chunks/2721-4e3acf15bde4549b.js                             48.9 kB
+  ├ chunks/4bd1b696-e61c9a7ec692f6d6.js                         53.2 kB
+  └ other shared chunks (total)                                 2.71 kB
+
+
+ƒ Middleware                                                      79 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

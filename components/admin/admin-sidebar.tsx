@@ -17,7 +17,10 @@ import {
   ScrollText,
   Search,
   Activity,
-  Mail
+  Mail,
+  BookOpen,
+  UserCheck,
+  Wrench
 } from 'lucide-react'
 
 const navigation = [
@@ -25,13 +28,16 @@ const navigation = [
   { name: 'Articles', href: '/admin/articles', icon: FileText },
   { name: 'Advanced Search', href: '/admin/search', icon: Search },
   { name: 'Categories', href: '/admin/categories', icon: FolderOpen },
+  { name: 'Glossary', href: '/admin/glossary', icon: BookOpen },
   { name: 'Media', href: '/admin/media', icon: Image },
   { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
   { name: 'Users', href: '/admin/users', icon: Users },
+  { name: 'Verifications', href: '/admin/verifications', icon: UserCheck },
   { name: 'Email Templates', href: '/admin/email-templates', icon: Mail },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart },
   { name: 'Activity Logs', href: '/admin/activity', icon: ScrollText },
   { name: 'Monitoring', href: '/admin/monitoring', icon: Activity },
+  { name: 'Dev Tools', href: '/admin/dev', icon: Wrench },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 

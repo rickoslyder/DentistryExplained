@@ -63,7 +63,7 @@ litellm --config litellm_config.yaml --port 8000
 ### 2. Configure Environment Variables
 Add to `.env.local`:
 ```env
-LITELLM_PROXY_URL=https://openai-proxy-0l7e.onrender.com
+LITELLM_PROXY_URL=https://llm.rbnk.uk
 LITELLM_API_KEY=your_master_key
 LITELLM_MODEL=o4-mini  # Latest OpenAI model (July 2025) - best cost/performance ratio
 ```

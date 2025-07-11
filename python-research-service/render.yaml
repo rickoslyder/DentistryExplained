@@ -5,7 +5,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: LITELLM_PROXY_URL
-        value: https://openai-proxy-0l7e.onrender.com
+        value: https://llm.rbnk.uk
       - key: LITELLM_API_KEY
         sync: false
       - key: TAVILY_API_KEY
