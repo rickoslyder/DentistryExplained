@@ -345,11 +345,18 @@ generatedAt: "{research.generated_at}"
     
     content = research.report
     
+    # Build sources list
+    sources_list = []
+    for i, source in enumerate(research.sources):
+        sources_list.append(f'{i+1}. [{source["title"]}]({source["url"]})\n   {source["snippet"]}')
+    
+    sources_formatted = '\n\n'.join(sources_list)
+    
     sources_section = f"""
 
 ## Sources
 
-{(chr(10) + chr(10)).join([f'{i+1}. [{source["title"]}]({source["url"]}){chr(10)}   {source["snippet"]}' for i, source in enumerate(research.sources)])}
+{sources_formatted}
 
 ---
 
