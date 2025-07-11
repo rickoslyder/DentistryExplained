@@ -349,7 +349,7 @@ generatedAt: "{research.generated_at}"
 
 ## Sources
 
-{chr(10).join([f'{i+1}. [{source["title"]}]({source["url"]})\n   {source["snippet"]}' for i, source in enumerate(research.sources)])}
+{chr(10).join([f'{i+1}. [{source["title"]}]({source["url"]}){chr(10)}   {source["snippet"]}' for i, source in enumerate(research.sources)])}
 
 ---
 
