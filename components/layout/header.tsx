@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { Menu, Search, BookOpen, MapPin, Users, FileText, Shield, AlertCircle, HelpCircle, Phone, Stethoscope, CreditCard, Heart, Info, Clock } from "lucide-react"
+import { Menu, Search, BookOpen, MapPin, Users, FileText, Shield, AlertCircle, HelpCircle, Phone, Stethoscope, CreditCard, Heart, Info, Clock, Image, MessageSquare, Mail, LayoutDashboard, BarChart, ScrollText, Activity, Settings, Wrench } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -89,6 +89,24 @@ export function Header() {
           description: "Organize content categories",
           href: "/admin/categories",
           icon: BookOpen
+        },
+        {
+          title: "Glossary",
+          description: "Manage dental terms",
+          href: "/admin/glossary",
+          icon: BookOpen
+        },
+        {
+          title: "Media Library",
+          description: "Manage images and documents",
+          href: "/admin/media",
+          icon: Image
+        },
+        {
+          title: "Comments",
+          description: "Moderate user comments",
+          href: "/admin/comments",
+          icon: MessageSquare
         }
       ]
     },
@@ -106,17 +124,64 @@ export function Header() {
           description: "Professional verification requests",
           href: "/admin/verifications",
           icon: Shield
+        },
+        {
+          title: "Email Templates",
+          description: "Manage email communications",
+          href: "/admin/email-templates",
+          icon: Mail
         }
       ]
     },
     {
-      title: "Analytics",
+      title: "Analytics & Monitoring",
       items: [
         {
           title: "Dashboard",
-          description: "Site analytics overview",
+          description: "Site overview and widgets",
           href: "/admin",
-          icon: Info
+          icon: LayoutDashboard
+        },
+        {
+          title: "Analytics",
+          description: "Detailed analytics reports",
+          href: "/admin/analytics",
+          icon: BarChart
+        },
+        {
+          title: "Activity Logs",
+          description: "System activity history",
+          href: "/admin/activity",
+          icon: ScrollText
+        },
+        {
+          title: "Monitoring",
+          description: "System health and performance",
+          href: "/admin/monitoring",
+          icon: Activity
+        }
+      ]
+    },
+    {
+      title: "System",
+      items: [
+        {
+          title: "Advanced Search",
+          description: "Powerful search tools",
+          href: "/admin/search",
+          icon: Search
+        },
+        {
+          title: "Settings",
+          description: "System configuration",
+          href: "/admin/settings",
+          icon: Settings
+        },
+        {
+          title: "Dev Tools",
+          description: "Development utilities",
+          href: "/admin/dev",
+          icon: Wrench
         }
       ]
     }
@@ -330,8 +395,8 @@ export function Header() {
                     Admin
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-[500px] p-4">
-                      <div className="space-y-4">
+                    <div className="w-[700px] p-4">
+                      <div className="grid grid-cols-2 gap-6">
                         {adminResources.map((category, idx) => (
                           <div key={idx} className="space-y-3">
                             <h3 className="font-medium text-sm text-muted-foreground">{category.title}</h3>
