@@ -3,6 +3,7 @@ import { RateLimitMonitor } from '@/components/admin/rate-limit-monitor'
 import { ActivityLogsMonitor } from '@/components/admin/activity-logs-monitor'
 import { PerformanceMonitor } from '@/components/admin/performance-monitor'
 import { ErrorTracker } from '@/components/admin/error-tracker'
+import { ErrorAnalysisEnhanced } from '@/components/admin/error-analysis-enhanced'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,6 +23,7 @@ export default function MonitoringPage() {
           <TabsTrigger value="activity">Activity Logs</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="errors">Error Tracking</TabsTrigger>
+          <TabsTrigger value="error-analysis">Error Analysis</TabsTrigger>
         </TabsList>
 
         <TabsContent value="rate-limits">
@@ -38,6 +40,10 @@ export default function MonitoringPage() {
 
         <TabsContent value="errors">
           <ErrorTracker />
+        </TabsContent>
+
+        <TabsContent value="error-analysis">
+          <ErrorAnalysisEnhanced />
         </TabsContent>
       </Tabs>
     </div>

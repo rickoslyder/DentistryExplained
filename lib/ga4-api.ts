@@ -70,12 +70,14 @@ class GA4Client {
     if (cached) return cached;
 
     try {
+      console.log('GA4: Attempting to fetch realtime data for property:', this.propertyId);
+      
       const [response] = await this.client.runRealtimeReport({
         property: `properties/${this.propertyId}`,
         dimensions: [
           { name: 'eventName' },
-          { name: 'unifiedPagePathScreen' },
-          { name: 'firstUserDefaultChannelGroup' },
+          { name: 'unifiedScreenName' },
+          { name: 'platform' },  // Changed from invalid dimension
         ],
         metrics: [
           { name: 'activeUsers' },
@@ -86,8 +88,24 @@ class GA4Client {
       const data = this.processRealtimeData(response);
       this.setCache(cacheKey, data);
       return data;
-    } catch (error) {
+    } catch (error: any) {
       console.error('GA4 realtime data error:', error);
+      
+      // Log more detailed error information
+      if (error.code === 7) {
+        console.error('GA4 Error Details:');
+        console.error('- Code: INVALID_ARGUMENT');
+        console.error('- This usually means:');
+        console.error('  1. The service account doesn\'t have access to the GA4 property');
+        console.error('  2. The Google Analytics Data API is not enabled in Google Cloud Console');
+        console.error('  3. The property ID is incorrect');
+        console.error('- Property ID used:', this.propertyId);
+      }
+      
+      if (error.details) {
+        console.error('- Error details:', error.details);
+      }
+      
       return {
         activeUsers: 0,
         usersByPage: [],
@@ -318,7 +336,8 @@ class GA4Client {
 
   // Process real-time data response
   private processRealtimeData(response: any): RealtimeData {
-    const activeUsers = response.rows?.[0]?.metricValues?.[0]?.value || 0;
+    // Calculate total active users from all rows
+    let totalActiveUsers = 0;
     const usersByPage: any[] = [];
     const usersBySource: any[] = [];
     const recentEvents: any[] = [];
@@ -327,9 +346,12 @@ class GA4Client {
     response.rows?.forEach((row: any) => {
       const eventName = row.dimensionValues[0]?.value;
       const page = row.dimensionValues[1]?.value;
-      const source = row.dimensionValues[2]?.value;
+      const platform = row.dimensionValues[2]?.value;  // Changed from source to platform
       const users = parseInt(row.metricValues[0]?.value || '0');
       const eventCount = parseInt(row.metricValues[1]?.value || '0');
+
+      // Sum up active users
+      totalActiveUsers = Math.max(totalActiveUsers, users);
 
       if (page && users > 0) {
         const existing = usersByPage.find(p => p.page === page);
@@ -340,12 +362,13 @@ class GA4Client {
         }
       }
 
-      if (source && users > 0) {
-        const existing = usersBySource.find(s => s.source === source);
+      // Group by platform instead of source
+      if (platform && users > 0) {
+        const existing = usersBySource.find(s => s.source === platform);
         if (existing) {
           existing.users += users;
         } else {
-          usersBySource.push({ source, users });
+          usersBySource.push({ source: platform, users });
         }
       }
 
@@ -364,7 +387,7 @@ class GA4Client {
     recentEvents.sort((a, b) => b.count - a.count);
 
     return {
-      activeUsers: parseInt(activeUsers),
+      activeUsers: totalActiveUsers,
       usersByPage: usersByPage.slice(0, 10),
       usersBySource: usersBySource.slice(0, 5),
       recentEvents: recentEvents.slice(0, 10),
@@ -419,9 +442,29 @@ export function createGA4Client(): GA4Client | null {
   }
 
   // Check if we have service account credentials
-  const credentials = process.env.GA4_SERVICE_ACCOUNT_KEY ? 
-    JSON.parse(process.env.GA4_SERVICE_ACCOUNT_KEY) : undefined;
+  let credentials;
+  if (process.env.GA4_SERVICE_ACCOUNT_KEY) {
+    try {
+      credentials = JSON.parse(process.env.GA4_SERVICE_ACCOUNT_KEY);
+      
+      // Validate required fields
+      const requiredFields = ['type', 'project_id', 'private_key', 'client_email'];
+      const missingFields = requiredFields.filter(field => !credentials[field]);
+      
+      if (missingFields.length > 0) {
+        console.error('GA4_SERVICE_ACCOUNT_KEY missing required fields:', missingFields);
+        return null;
+      }
+    } catch (error) {
+      console.error('Failed to parse GA4_SERVICE_ACCOUNT_KEY:', error);
+      return null;
+    }
+  }
 
+  console.log('Creating GA4 client with:');
+  console.log('- Property ID:', propertyId);
+  console.log('- Credentials:', credentials ? 'Service Account' : 'Default (ADC)');
+  
   return new GA4Client({
     propertyId,
     credentials,

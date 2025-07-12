@@ -432,6 +432,7 @@ export function MDXSmartTemplatesPanel({
   const [selectedComponentType, setSelectedComponentType] = useState<string>('Alert')
   const [componentProps, setComponentProps] = useState<Record<string, any>>({})
   const [detectedComponents, setDetectedComponents] = useState<string[]>([])
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false)
 
   // Use external tab if provided, otherwise use internal state
   const activeTab = externalActiveTab || internalActiveTab
@@ -446,8 +447,14 @@ export function MDXSmartTemplatesPanel({
   // Update suggestions when content changes
   useEffect(() => {
     if (content.length > 50) {
-      const suggestions = getSuggestedTemplates(content, 3)
-      setSuggestedTemplates(suggestions)
+      setIsLoadingSuggestions(true)
+      // Simulate async load for better UX
+      const timer = setTimeout(() => {
+        const suggestions = getSuggestedTemplates(content, 3)
+        setSuggestedTemplates(suggestions)
+        setIsLoadingSuggestions(false)
+      }, 300)
+      return () => clearTimeout(timer)
     }
   }, [content])
 
