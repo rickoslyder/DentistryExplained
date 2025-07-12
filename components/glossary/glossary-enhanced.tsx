@@ -41,7 +41,17 @@ interface GlossaryTerm {
 }
 
 // Category configuration with icons and colors
-const categoryConfig = {
+type CategoryConfig = {
+  [key: string]: {
+    icon: React.ComponentType<{ className?: string }>
+    label: string
+    color: string
+    bgGradient: string
+    description: string
+  }
+}
+
+const categoryConfig: CategoryConfig = {
   anatomy: { 
     icon: Stethoscope, 
     label: 'Anatomy', 
@@ -146,6 +156,8 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
   const [termOfTheDay, setTermOfTheDay] = useState<GlossaryTerm | null>(null)
   const [showQuiz, setShowQuiz] = useState(false)
   const [activeTab, setActiveTab] = useState('browse')
+  const [trendingTerms, setTrendingTerms] = useState<Array<GlossaryTerm & { stats?: any }>>([])
+  const [trendingLoading, setTrendingLoading] = useState(true)
 
   // Handle term expansion with tracking
   const handleTermToggle = (term: string) => {
@@ -210,6 +222,30 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
       })
   }, [terms])
 
+  // Fetch trending terms from API
+  useEffect(() => {
+    setTrendingLoading(true)
+    fetch('/api/glossary/trending?limit=8&timeframe=7d')
+      .then(res => res.json())
+      .then(data => {
+        if (data.terms) {
+          setTrendingTerms(data.terms)
+        }
+      })
+      .catch(err => {
+        console.error('Failed to fetch trending terms:', err)
+        // Fallback to default terms
+        const defaultTrending = ['Implant', 'Wisdom Teeth', 'Crown', 'Root Canal', 'Clear Aligners', 'Cavity', 'Gum Disease', 'Veneer']
+        const fallbackTerms = defaultTrending
+          .map(termName => terms.find(t => t.term === termName))
+          .filter(Boolean) as GlossaryTerm[]
+        setTrendingTerms(fallbackTerms)
+      })
+      .finally(() => {
+        setTrendingLoading(false)
+      })
+  }, [terms])
+
   // Filter terms
   const filteredTerms = useMemo(() => {
     return terms.filter(item => {
@@ -253,8 +289,6 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
     return grouped
   }, [terms])
 
-  // Get trending/popular terms (mock data - in real app would be from analytics)
-  const trendingTerms = ['Implant', 'Wisdom Teeth', 'Crown', 'Root Canal', 'Clear Aligners', 'Cavity', 'Gum Disease', 'Veneer']
 
   const pronounceTerm = (term: string, pronunciation?: string) => {
     if (!pronunciation) return
@@ -548,6 +582,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                   categoryConfig={categoryConfig}
                   onCopy={copyToClipboard}
                   onYouTube={searchYouTube}
+                  onRelatedClick={handleTermSelection}
                 />
               ))
             )}
@@ -627,33 +662,54 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                 Most Searched Terms
               </CardTitle>
               <CardDescription>
-                Popular terms other users are looking up
+                Popular terms other users are looking up this week
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                {trendingTerms.map((termName, index) => {
-                  const term = terms.find(t => t.term === termName)
-                  if (!term) return null
-
-                  return (
+              {trendingLoading ? (
+                <div className="space-y-3">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex items-start gap-4 p-4 animate-pulse">
+                      <div className="w-8 h-8 bg-gray-200 rounded-full" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-5 bg-gray-200 rounded w-1/3" />
+                        <div className="h-4 bg-gray-200 rounded w-3/4" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : trendingTerms.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <TrendingUp className="h-12 w-12 mx-auto mb-2 text-gray-300" />
+                  <p>No trending data available yet</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {trendingTerms.map((term, index) => (
                     <div
-                      key={termName}
+                      key={term.term}
                       className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                      onClick={() => handleTermSelection(termName, 'trending')}
+                      onClick={() => handleTermSelection(term.term, 'trending')}
                     >
                       <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-700 font-semibold text-sm">
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium">{term.term}</h4>
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-medium">{term.term}</h4>
+                          {term.stats && (
+                            <Badge variant="secondary" className="text-xs">
+                              {term.stats.total} views
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-gray-600 line-clamp-2">{term.definition}</p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-gray-400 mt-0.5" />
                     </div>
-                  )
-                })}
-              </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -689,6 +745,7 @@ export function GlossaryEnhanced({ terms }: GlossaryEnhancedProps) {
                     categoryConfig={categoryConfig}
                     onCopy={copyToClipboard}
                     onYouTube={searchYouTube}
+                    onRelatedClick={handleTermSelection}
                   />
                 )
               })}
@@ -711,7 +768,8 @@ function GlossaryTermCard({
   onToggleBookmark,
   categoryConfig,
   onCopy,
-  onYouTube
+  onYouTube,
+  onRelatedClick
 }: {
   term: GlossaryTerm
   isExpanded: boolean
@@ -720,9 +778,10 @@ function GlossaryTermCard({
   isPronouncing: boolean
   isBookmarked: boolean
   onToggleBookmark: () => void
-  categoryConfig: typeof categoryConfig
+  categoryConfig: CategoryConfig
   onCopy: (text: string) => void
   onYouTube: (term: string) => void
+  onRelatedClick: (term: string, source: string) => void
 }) {
   const config = term.category ? categoryConfig[term.category as keyof typeof categoryConfig] || {
     icon: BookOpen,
@@ -815,8 +874,8 @@ function GlossaryTermCard({
                             variant="outline" 
                             className="text-xs cursor-pointer hover:bg-gray-100"
                             onClick={() => {
-                              // In real app, would search for this term
-                              console.log('Search for:', related)
+                              // Search for the related term
+                              onRelatedClick(related, 'related')
                             }}
                           >
                             {related}
