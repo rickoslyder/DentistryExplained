@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Search, MapPin, Phone, Globe, Clock, Star, Filter } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Search, MapPin, Phone, Globe, Clock, Star, Filter, Loader2 } from "lucide-react"
 import { PracticeMap } from "@/components/find-dentist/practice-map"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
@@ -12,25 +12,19 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { usePracticeSearch, useUserLocation, type Practice } from '@/hooks/use-practice-search'
+import { toast } from 'sonner'
 
-interface DentistPractice {
-  id: string
-  name: string
-  address: string
-  postcode: string
-  phone: string
-  website?: string
-  distance: number
-  rating: number
-  reviewCount: number
-  services: string[]
-  nhsAccepted: boolean
-  privateAccepted: boolean
-  openingHours: {
-    today: string
-    isOpen: boolean
+interface DentistPractice extends Practice {
+  postcode?: string
+  rating?: number
+  reviewCount?: number
+  openingHours?: {
+    today?: string
+    isOpen?: boolean
+    [key: string]: any
   }
-  nextAvailable: string
+  nextAvailable?: string
   image?: string
 }
 
@@ -46,9 +40,40 @@ export default function FindDentistPage() {
     services: [] as string[],
   })
   const [selectedPractice, setSelectedPractice] = useState<DentistPractice | null>(null)
+  
+  const { location, loading: locationLoading, error: locationError, requestLocation } = useUserLocation()
+  
+  const { data, loading, error } = usePracticeSearch({
+    query: searchQuery,
+    latitude: location?.latitude,
+    longitude: location?.longitude,
+    radius: parseFloat(selectedRadius),
+    nhsOnly: filters.nhsOnly,
+    privateOnly: filters.privateOnly,
+    services: filters.services,
+    wheelchairAccess: filters.wheelchairAccess,
+    emergencyAppointments: filters.emergencyServices,
+  })
+  
+  useEffect(() => {
+    if (locationError) {
+      toast.error('Unable to get your location. You can still search by postcode.')
+    }
+  }, [locationError])
+  
+  // Format practices from API or use mock data
+  const formattedPractices: DentistPractice[] = data?.practices.map(p => ({
+    ...p,
+    postcode: p.address?.postcode || '',
+    address: `${p.address?.line1 || ''}${p.address?.line2 ? ', ' + p.address.line2 : ''}${p.address?.city ? ', ' + p.address.city : ''}`,
+    rating: p.rating || 4.5,
+    reviewCount: p.reviewCount || 0,
+    openingHours: p.openingHours || { today: '9:00 AM - 5:00 PM', isOpen: true },
+    nextAvailable: p.nextAvailable || 'Contact for availability',
+  })) || []
 
-  // Mock data for demonstration
-  const practices: DentistPractice[] = [
+  // Mock data as fallback for demo
+  const mockPractices: DentistPractice[] = [
     {
       id: "1",
       name: "Smile Dental Practice",
@@ -117,6 +142,9 @@ export default function FindDentistPage() {
     "Oral Surgery",
     "Teeth Whitening",
   ]
+  
+  // Use API data if available, otherwise use mock data
+  const practices = formattedPractices.length > 0 ? formattedPractices : mockPractices
 
   return (
     <div className="min-h-screen bg-white">
@@ -147,6 +175,26 @@ export default function FindDentistPage() {
               </div>
             </div>
             <div className="flex gap-4">
+              {!location && (
+                <Button 
+                  onClick={requestLocation}
+                  disabled={locationLoading}
+                  className="h-12"
+                  variant="outline"
+                >
+                  {locationLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Getting location...
+                    </>
+                  ) : (
+                    <>
+                      <MapPin className="w-4 h-4 mr-2" />
+                      Use my location
+                    </>
+                  )}
+                </Button>
+              )}
               <Select value={selectedRadius} onValueChange={setSelectedRadius}>
                 <SelectTrigger className="w-32 h-12">
                   <SelectValue />
@@ -300,7 +348,19 @@ export default function FindDentistPage() {
               </Select>
             </div>
 
-            {practices.map((practice) => (
+            {loading ? (
+              <div className="flex items-center justify-center p-8">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : practices.length === 0 ? (
+              <Card className="p-8 text-center">
+                <CardContent>
+                  <p className="text-gray-600 mb-4">No practices found in this area.</p>
+                  <p className="text-sm text-gray-500">Try adjusting your search or expanding the search radius.</p>
+                </CardContent>
+              </Card>
+            ) : (
+              practices.map((practice) => (
               <Card 
                 key={practice.id} 
                 className={`hover-lift hover-glow cursor-pointer transition-all ${
@@ -381,7 +441,8 @@ export default function FindDentistPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            ))
+            )}
           </div>
         </div>
       </div>
