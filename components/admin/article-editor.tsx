@@ -48,6 +48,7 @@ import {
 } from '@/components/ui/tooltip'
 import { validateMDX } from '@/lib/mdx'
 import { processMDXPreview } from '@/lib/mdx-utils'
+import { useAutosave } from '@/hooks/use-autosave'
 import { sanitizeArticleContent, sanitizePlainText } from '@/lib/sanitization'
 import dynamic from 'next/dynamic'
 import { ResearchProgressModal, ResearchStage } from '@/components/admin/research-progress-modal'
@@ -178,6 +179,37 @@ Start writing your article content here...`,
   const [researchStages, setResearchStages] = useState<ResearchStage[]>([])
   const [researchError, setResearchError] = useState<string | null>(null)
   const [references, setReferences] = useState<MedicalReference[]>([])
+  
+  // Setup autosave
+  const { isSaving, lastSaved, draftId, saveNow } = useAutosave(
+    {
+      articleId: article?.id,
+      title: formData.title,
+      slug: formData.slug,
+      content: formData.content,
+      excerpt: formData.excerpt,
+      seo_title: formData.meta_title,
+      seo_description: formData.meta_description,
+      category_id: formData.category_id || null,
+      tags: formData.tags,
+      featured: formData.is_featured,
+      featured_image: null, // Add this to formData if needed
+      difficulty_level: researchSettings.readingLevel,
+      metadata: {
+        status: formData.status,
+        allow_comments: formData.allow_comments,
+        meta_keywords: formData.meta_keywords,
+        references,
+      }
+    },
+    {
+      enabled: true,
+      delay: 3000, // 3 seconds
+      onError: (error) => {
+        console.error('Autosave failed:', error)
+      }
+    }
+  )
   
   // Generate slug from title
   const generateSlug = useCallback((title: string) => {
@@ -589,13 +621,23 @@ Start writing your article content here...`,
                 )
               } else if (data.type === 'content') {
                 researchContent = data.content
+              } else if (data.type === 'draft_created') {
+                // Draft was automatically created from research
+                if (data.draftId) {
+                  toast.success(data.message || 'Draft saved automatically')
+                }
               } else if (data.type === 'complete') {
                 if (researchContent) {
                   setFormData(prev => ({
                     ...prev,
                     content: researchContent
                   }))
-                  toast.success(`AI research draft generated for ${researchSettings.audience} audience!`)
+                  // Manual save to trigger autosave immediately with the new content
+                  saveNow()
+                  const successMessage = data.draftId 
+                    ? `AI research draft generated and saved!`
+                    : `AI research draft generated for ${researchSettings.audience} audience!`
+                  toast.success(successMessage)
                   setShowProgressModal(false)
                 }
               } else if (data.type === 'error') {
@@ -1155,22 +1197,37 @@ Start writing your article content here...`,
           )}
         </div>
         
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            onClick={() => router.back()}
-            disabled={isSubmitting}
-            className="bg-transparent"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSave}
-            disabled={isSubmitting}
-          >
-            <Save className="w-4 h-4 mr-2" />
-            {isSubmitting ? 'Saving...' : (article ? 'Update' : 'Create')} Article
-          </Button>
+        <div className="flex items-center gap-4 flex-1">
+          <div className="text-sm text-muted-foreground">
+            {isSaving && (
+              <span className="flex items-center gap-2">
+                <div className="h-2 w-2 bg-orange-500 rounded-full animate-pulse" />
+                Saving draft...
+              </span>
+            )}
+            {!isSaving && lastSaved && (
+              <span>
+                Draft saved {new Date(lastSaved).toLocaleTimeString()}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2 ml-auto">
+            <Button
+              variant="outline"
+              onClick={() => router.back()}
+              disabled={isSubmitting}
+              className="bg-transparent"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              disabled={isSubmitting}
+            >
+              <Save className="w-4 h-4 mr-2" />
+              {isSubmitting ? 'Saving...' : (article ? 'Update' : 'Create')} Article
+            </Button>
+          </div>
         </div>
       </div>
       
