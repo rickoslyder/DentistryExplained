@@ -8,6 +8,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { z } from 'zod'
 import { currentUser } from '@clerk/nextjs/server'
 import { serverAnalytics } from '@/lib/analytics-server'
+import { getSettings } from '@/lib/settings'
 
 // Schema for chat message
 const chatMessageSchema = z.object({
@@ -54,6 +55,15 @@ const chatHandler = compose(
     const requestId = getRequestId(request)
     
     try {
+    // Check if chat is enabled
+    const settings = await getSettings()
+    if (!settings.chat_enabled) {
+      return NextResponse.json(
+        { error: 'Chat feature is currently disabled' },
+        { status: 503 }
+      )
+    }
+    
     const body = await request.json()
     
     // Validate request body
@@ -89,7 +99,7 @@ const chatHandler = compose(
           session_id: newSessionId,
           user_id: userProfile.id,
           page_context: pageContext || {},
-          expires_at: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString() // 180 days
+          expires_at: new Date(Date.now() + settings.chat_retention_days * 24 * 60 * 60 * 1000).toISOString()
         })
         .select()
         .single()

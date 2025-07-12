@@ -187,10 +187,22 @@ export function AISettingsEnhanced({ settings, onUpdate }: AISettingsEnhancedPro
 
   // Count tokens when prompt changes
   useEffect(() => {
-    countTokens(debouncedPrompt)
+    if (debouncedPrompt) {
+      countTokens(debouncedPrompt)
+    } else {
+      setTokenCount(0)
+    }
   }, [debouncedPrompt, countTokens])
 
   const selectedModel = models.find(m => m.id === settings.model)
+  
+  // Get unique providers from models
+  const providers = Array.from(new Set(models.map(m => m.provider))).sort()
+  
+  // Filter models by selected provider
+  const filteredModels = selectedProvider === 'all' 
+    ? models 
+    : models.filter(m => m.provider === selectedProvider)
 
   return (
     <Card>
@@ -214,36 +226,56 @@ export function AISettingsEnhanced({ settings, onUpdate }: AISettingsEnhancedPro
           <TabsContent value="model" className="space-y-4">
             <div>
               <Label htmlFor="ai-model">AI Model</Label>
-              <div className="flex gap-2 mt-2">
-                <Select
-                  value={settings.model}
-                  onValueChange={(value) => onUpdate('model', value)}
-                  disabled={loadingModels}
-                >
-                  <SelectTrigger id="ai-model" className="flex-1">
-                    <SelectValue placeholder={loadingModels ? "Loading models..." : "Select a model"} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {models.map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
-                        <div className="flex items-center gap-2">
-                          <span>{model.displayName}</span>
-                          <Badge variant="outline" className="text-xs">
-                            {model.provider}
-                          </Badge>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={fetchModels}
-                  disabled={loadingModels}
-                >
-                  <RefreshCw className={`h-4 w-4 ${loadingModels ? 'animate-spin' : ''}`} />
-                </Button>
+              <div className="space-y-2 mt-2">
+                <div className="flex gap-2">
+                  <Select
+                    value={selectedProvider}
+                    onValueChange={setSelectedProvider}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Filter by provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Providers</SelectItem>
+                      {providers.map((provider) => (
+                        <SelectItem key={provider} value={provider}>
+                          {provider.charAt(0).toUpperCase() + provider.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select
+                    value={settings.model}
+                    onValueChange={(value) => onUpdate('model', value)}
+                    disabled={loadingModels}
+                  >
+                    <SelectTrigger id="ai-model" className="flex-1">
+                      <SelectValue placeholder={loadingModels ? "Loading models..." : "Select a model"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {filteredModels.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <div className="flex items-center gap-2">
+                            <span>{model.displayName}</span>
+                            <Badge variant="outline" className="text-xs">
+                              {model.provider}
+                            </Badge>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={fetchModels}
+                    disabled={loadingModels}
+                  >
+                    <RefreshCw className={`h-4 w-4 ${loadingModels ? 'animate-spin' : ''}`} />
+                  </Button>
+                </div>
               </div>
             </div>
             
@@ -384,7 +416,7 @@ export function AISettingsEnhanced({ settings, onUpdate }: AISettingsEnhancedPro
               )}
             </div>
             
-            {selectedModelInfo?.supportedParams && (
+            {selectedModelInfo?.supportedParams && Object.keys(selectedModelInfo.supportedParams).length > 0 && (
               <div>
                 <Label className="text-sm text-muted-foreground">Advanced Parameters</Label>
                 <div className="mt-2 space-y-2">
@@ -400,6 +432,15 @@ export function AISettingsEnhanced({ settings, onUpdate }: AISettingsEnhancedPro
                   ))}
                 </div>
               </div>
+            )}
+            
+            {(!selectedModelInfo?.supportedParams || Object.keys(selectedModelInfo.supportedParams).length === 0) && (
+              <Alert>
+                <Info className="h-4 w-4" />
+                <AlertDescription>
+                  Advanced parameter information is not available for this model.
+                </AlertDescription>
+              </Alert>
             )}
           </TabsContent>
           

@@ -45,7 +45,7 @@ import {
   Eye
 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
-import { createClientSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
 interface Comment {
@@ -89,34 +89,40 @@ export function CommentsList({ initialComments = [] }: CommentsListProps) {
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [sortBy, setSortBy] = useState<string>('created_at')
   const { toast } = useToast()
-  const supabase = createClientSupabaseClient()
 
   useEffect(() => {
     fetchComments()
 
-    // Set up real-time subscription
-    const channel = supabase
-      .channel('comments-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'comments'
-        },
-        () => {
-          // Refresh comments when any change occurs
-          fetchComments()
-        }
-      )
-      .subscribe()
+    // Set up real-time subscription if supabase is available
+    if (supabase) {
+      const channel = supabase
+        .channel('comments-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'comments'
+          },
+          () => {
+            // Refresh comments when any change occurs
+            fetchComments()
+          }
+        )
+        .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
+      return () => {
+        supabase.removeChannel(channel)
+      }
     }
   }, [statusFilter, sortBy])
 
   const fetchComments = async () => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+    
     setLoading(true)
     try {
       let query = supabase
@@ -155,6 +161,8 @@ export function CommentsList({ initialComments = [] }: CommentsListProps) {
   }
 
   const updateCommentStatus = async (commentId: string, status: string) => {
+    if (!supabase) return
+    
     try {
       const { error } = await supabase
         .from('comments')
@@ -184,6 +192,7 @@ export function CommentsList({ initialComments = [] }: CommentsListProps) {
 
   const deleteComment = async (commentId: string) => {
     if (!confirm('Are you sure you want to delete this comment?')) return
+    if (!supabase) return
 
     try {
       const { error } = await supabase

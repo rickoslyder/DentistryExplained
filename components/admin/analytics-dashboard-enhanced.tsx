@@ -82,9 +82,24 @@ export function EnhancedAnalyticsDashboard({ data, defaultDays = 7 }: EnhancedAn
     setTimeout(() => setIsRefreshing(false), 1000)
   }
 
-  const handleExport = () => {
-    // Export analytics data as CSV
-    const csvContent = `Dentistry Explained Analytics Report
+  const handleExport = async () => {
+    try {
+      const response = await fetch(`/api/analytics/export?days=${timeRange}&format=csv`)
+      if (!response.ok) throw new Error('Export failed')
+      
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `analytics-export-${new Date().toISOString().split('T')[0]}.csv`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Export failed:', error)
+      // Fallback to basic export
+      const csvContent = `Dentistry Explained Analytics Report
 Generated: ${new Date().toLocaleString()}
 Time Range: Last ${timeRange} days
 
@@ -102,16 +117,16 @@ Verification Submitted,${data.funnelData.verificationSubmitted}
 Verified,${data.funnelData.verified}
 Active Subscribers,${data.funnelData.activeSubscribers}
 `
-    
-    const blob = new Blob([csvContent], { type: 'text/csv' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `analytics-report-${new Date().toISOString().split('T')[0]}.csv`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+      const blob = new Blob([csvContent], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `analytics-fallback-${new Date().toISOString().split('T')[0]}.csv`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    }
   }
 
   return (
@@ -183,7 +198,7 @@ Active Subscribers,${data.funnelData.activeSubscribers}
         </TabsContent>
 
         <TabsContent value="realtime">
-          <RealtimeMetrics useGA4={true} />
+          <RealtimeMetrics />
         </TabsContent>
 
         <TabsContent value="basic">

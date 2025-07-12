@@ -21,7 +21,8 @@ export async function updateUserMetadata(metadata: {
     }
 
     // Update publicMetadata (secure, backend-only)
-    await clerkClient.users.updateUserMetadata(userId, {
+    const client = await clerkClient()
+    await client.users.updateUserMetadata(userId, {
       publicMetadata: metadata
     })
 
@@ -43,7 +44,8 @@ export async function updateUserMetadata(metadata: {
 export async function grantAdminAccess(clerkUserId: string) {
   try {
     // Update Clerk publicMetadata
-    await clerkClient.users.updateUserMetadata(clerkUserId, {
+    const client = await clerkClient()
+    await client.users.updateUserMetadata(clerkUserId, {
       publicMetadata: {
         userType: 'professional',
         role: 'admin'

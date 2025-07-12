@@ -11,7 +11,7 @@ import {
   TrendingUp,
   Users
 } from 'lucide-react'
-import { createClientSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 
 interface CommentStats {
   totalComments: number
@@ -36,13 +36,17 @@ export function CommentsStats() {
     averageVotes: 0
   })
   const [loading, setLoading] = useState(true)
-  const supabase = createClientSupabaseClient()
 
   useEffect(() => {
     fetchStats()
   }, [])
 
   const fetchStats = async () => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+    
     try {
       // Fetch comment counts by status
       const { data: comments } = await supabase

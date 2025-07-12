@@ -1,3 +1,108 @@
+# Security Features Implementation Plan
+
+## Overview
+This plan outlines the implementation of comprehensive security features that can be configured via admin settings for the Dentistry Explained platform.
+
+## Todo Items
+
+### 1. Database Schema for Security Settings
+- [ ] Create migration for security-related tables
+  - [ ] `api_keys` table for API key management
+  - [ ] `ip_blocklist` table for IP-based blocking
+  - [ ] `rate_limit_rules` table for custom rate limiting rules
+  - [ ] `security_logs` table for security events
+  - [ ] `session_management` table for active sessions tracking
+
+### 2. Enhanced Rate Limiting System
+- [ ] Implement configurable rate limiting strategies
+  - [ ] IP-based rate limiting with customizable windows
+  - [ ] User-based rate limiting with role-based limits
+  - [ ] API key-based rate limiting
+  - [ ] Endpoint-specific rate limiting rules
+- [ ] Add rate limit monitoring and analytics
+- [ ] Implement distributed rate limiting using Redis/Supabase
+
+### 3. DDoS Protection Mechanisms
+- [ ] Implement request pattern analysis
+  - [ ] Detect and block suspicious traffic patterns
+  - [ ] Implement progressive challenge system
+- [ ] Add geo-blocking capabilities
+- [ ] Implement automatic IP reputation checking
+- [ ] Add traffic spike detection and mitigation
+
+### 4. Content Security Policy (CSP) Management
+- [ ] Create dynamic CSP header generation
+- [ ] Implement CSP violation reporting endpoint
+- [ ] Add CSP testing and validation tools
+- [ ] Create CSP preset templates for different security levels
+
+### 5. Enhanced CORS Configuration
+- [ ] Implement per-route CORS configuration
+- [ ] Add dynamic origin validation
+- [ ] Implement CORS preflight caching
+- [ ] Add CORS policy testing tools
+
+### 6. Session Security Enhancements
+- [ ] Implement secure session management
+  - [ ] Session fingerprinting
+  - [ ] Concurrent session limiting
+  - [ ] Session activity monitoring
+- [ ] Add JWT token rotation
+- [ ] Implement device tracking and management
+- [ ] Add suspicious activity detection
+
+### 7. Input Validation and Sanitization
+- [ ] Create centralized validation schemas
+- [ ] Implement request body sanitization middleware
+- [ ] Add file upload validation and scanning
+- [ ] Create validation rule builder for admin
+
+### 8. SQL Injection Prevention
+- [ ] Audit all database queries for parameterization
+- [ ] Implement query logging and analysis
+- [ ] Add automated SQL injection testing
+- [ ] Create query builder with built-in protection
+
+### 9. XSS Protection Strategies
+- [ ] Implement output encoding helpers
+- [ ] Add DOM purification for user content
+- [ ] Create XSS detection and prevention middleware
+- [ ] Implement Content-Type validation
+
+### 10. Admin Security Dashboard
+- [ ] Create comprehensive security monitoring UI
+- [ ] Add real-time threat detection alerts
+- [ ] Implement security event timeline
+- [ ] Add security health score calculation
+
+### 11. API Key Management System
+- [ ] Implement API key generation and rotation
+- [ ] Add API key permissions and scoping
+- [ ] Create API key usage analytics
+- [ ] Implement API key rate limiting
+
+### 12. Security Logging and Auditing
+- [ ] Implement comprehensive security event logging
+- [ ] Add log analysis and alerting
+- [ ] Create security audit reports
+- [ ] Implement log retention policies
+
+## Implementation Priority
+1. Database schema and migrations
+2. Enhanced rate limiting system
+3. Session security enhancements
+4. Input validation and sanitization
+5. Admin security dashboard
+6. Other features in parallel
+
+## Notes
+- All security features should be configurable via the admin panel
+- Implement gradual rollout capabilities for new security rules
+- Ensure minimal performance impact
+- Add comprehensive documentation for each feature
+
+---
+
 # GPT-Researcher Integration Todo List
 
 ## Completed Tasks ✅
@@ -692,3 +797,48 @@ This implementation successfully makes MDX component creation accessible to non-
 5. **Medical focus** - Default snippets cover common dental documentation needs
 
 This implementation significantly speeds up content creation by providing reusable, medically-focused text snippets that can be inserted with a single click.
+
+---
+
+# Fix TypeScript Errors in Analytics Page
+
+## Overview
+The analytics page has TypeScript errors related to Supabase query patterns and data structures. The queries are expecting structures that don't match the actual database schema.
+
+## Todo Items
+
+### 1. Fix article_views query issues
+- [ ] Update the popular articles query to match actual database schema
+  - [ ] Change from non-existent `article_id` and `count` columns to proper aggregation
+  - [ ] Update to use `article_slug` instead of `article_id`
+  - [ ] Implement proper COUNT aggregation for view counts
+- [ ] Fix the article performance query with similar issues
+  - [ ] Update column references to match actual schema
+  - [ ] Fix the nested select to properly join with articles table
+
+### 2. Fix profiles relationship in chat_sessions
+- [ ] Update the recent sessions query to properly handle the profiles relationship
+  - [ ] Ensure the profiles select returns a single object, not an array
+  - [ ] Fix TypeScript expectations for the profiles data structure
+
+### 3. Update type definitions
+- [ ] Create proper TypeScript interfaces for the query results
+- [ ] Ensure the data transformations match the expected types
+- [ ] Add type safety to prevent future issues
+
+### 4. Refactor queries to use proper Supabase patterns
+- [ ] Use proper aggregation queries for counting views
+- [ ] Implement correct join patterns for related data
+- [ ] Follow Supabase best practices for nested selects
+
+## Implementation Priority
+1. Fix the immediate TypeScript errors blocking the build
+2. Update queries to match actual database schema
+3. Add proper type definitions
+4. Test the analytics page functionality
+
+## Notes
+- The article_views table uses `article_slug` not `article_id`
+- There is no `count` column in article_views - it needs to be aggregated
+- The profiles relationship should return a single object when using !inner
+- Consider creating database views for complex aggregations

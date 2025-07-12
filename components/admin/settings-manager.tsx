@@ -20,14 +20,68 @@ import {
   ToggleLeft,
   Save,
   Plus,
-  X
+  X,
+  Shield,
+  MessageSquare,
+  BarChart,
+  Zap,
+  Plug2,
+  Archive
 } from 'lucide-react'
 
-// Dynamically import AI settings component to avoid SSR issues
+// Dynamically import settings components to avoid SSR issues
 const AISettingsEnhanced = dynamic(() => import('@/components/admin/ai-settings-enhanced').then(mod => ({ default: mod.AISettingsEnhanced })), {
   ssr: false,
   loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
 })
+
+const SecuritySettings = dynamic(
+  () => import('@/components/admin/security-settings').then(mod => mod.SecuritySettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
+
+const ContentModerationSettings = dynamic(
+  () => import('@/components/admin/content-moderation-settings').then(mod => mod.ContentModerationSettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
+
+const AnalyticsSettings = dynamic(
+  () => import('@/components/admin/analytics-settings').then(mod => mod.AnalyticsSettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
+
+const CacheSettings = dynamic(
+  () => import('@/components/admin/cache-settings').then(mod => mod.CacheSettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
+
+const IntegrationsSettings = dynamic(
+  () => import('@/components/admin/integrations-settings').then(mod => mod.IntegrationsSettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
+
+const BackupSettings = dynamic(
+  () => import('@/components/admin/backup-settings').then(mod => mod.BackupSettings),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-50 animate-pulse rounded-lg" />
+  }
+)
 
 interface SiteSettings {
   site: {
@@ -59,18 +113,431 @@ interface SiteSettings {
     max_tokens: number
     system_prompt: string
   }
+  // Security settings
+  security?: any
+  // Content moderation settings
+  content_moderation?: any
+  // Analytics settings
+  analytics?: any
+  // Cache settings
+  cache?: any
+  // Integrations settings
+  integrations?: any
+  // Backup settings
+  backup?: any
 }
 
 interface SettingsManagerProps {
   settings: SiteSettings
 }
 
+// Default settings getters
+function getDefaultSecuritySettings() {
+  return {
+    rate_limiting: {
+      enabled: true,
+      requests_per_minute: 60,
+      requests_per_hour: 1000,
+      burst_limit: 10,
+      block_duration_minutes: 15
+    },
+    cors: {
+      enabled: true,
+      allowed_origins: ['https://dentistry-explained.vercel.app'],
+      allowed_methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowed_headers: ['Content-Type', 'Authorization'],
+      credentials: true,
+      max_age_seconds: 86400
+    },
+    csp: {
+      enabled: true,
+      directives: {
+        default_src: ["'self'"],
+        script_src: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        style_src: ["'self'", "'unsafe-inline'"],
+        img_src: ["'self'", "data:", "https:"],
+        font_src: ["'self'"],
+        connect_src: ["'self'"],
+        frame_src: ["'self'"]
+      },
+      report_uri: null
+    },
+    session: {
+      timeout_minutes: 60,
+      refresh_enabled: true,
+      concurrent_sessions_limit: 3,
+      secure_cookies: true
+    },
+    authentication: {
+      two_factor_required: false,
+      password_min_length: 8,
+      password_require_uppercase: true,
+      password_require_numbers: true,
+      password_require_symbols: true,
+      failed_login_attempts_limit: 5,
+      lockout_duration_minutes: 30
+    }
+  }
+}
+
+function getDefaultModerationSettings() {
+  return {
+    comments: {
+      enabled: true,
+      auto_approve_threshold: 50,
+      require_approval_for_new_users: true,
+      new_user_comment_limit: 3,
+      spam_detection_enabled: true,
+      profanity_filter_enabled: true,
+      max_length: 1000,
+      min_length: 10,
+      allow_links: false,
+      moderation_queue_size_limit: 100
+    },
+    banned_words: {
+      enabled: true,
+      words: [],
+      action: 'flag' as const,
+      replacement_character: '*'
+    },
+    user_reputation: {
+      enabled: true,
+      auto_trust_threshold: 100,
+      flag_threshold: -50,
+      ban_threshold: -100,
+      points_for_approved_comment: 5,
+      points_for_flagged_comment: -10,
+      points_for_helpful_vote: 1
+    },
+    ai_moderation: {
+      enabled: false,
+      toxicity_threshold: 0.7,
+      spam_threshold: 0.8,
+      use_for_auto_approval: false,
+      review_flagged_content: true
+    },
+    content_reporting: {
+      enabled: true,
+      reasons: ['spam', 'inappropriate', 'harassment', 'misinformation', 'other'],
+      auto_hide_threshold: 3,
+      notify_moderators: true,
+      allow_anonymous_reports: false
+    }
+  }
+}
+
+function getDefaultAnalyticsSettings() {
+  return {
+    tracking: {
+      enabled: false,
+      provider: 'posthog' as const,
+      tracking_id: null,
+      track_page_views: true,
+      track_user_interactions: true,
+      track_performance_metrics: true,
+      anonymize_ip: true,
+      respect_dnt: true,
+      cookie_consent_required: true
+    },
+    metrics: {
+      enabled: true,
+      collection_interval_seconds: 60,
+      retention_days: 30,
+      tracked_endpoints: ['/api/chat', '/api/search'],
+      sample_rate: 100,
+      exclude_patterns: [],
+      aggregate_by: ['endpoint', 'hour'] as any
+    },
+    alerts: {
+      enabled: false,
+      channels: ['email'] as any,
+      rules: []
+    },
+    custom_events: {
+      enabled: false,
+      events: []
+    },
+    privacy: {
+      gdpr_compliant: true,
+      data_retention_days: 180,
+      allow_data_export: true,
+      allow_data_deletion: true,
+      mask_sensitive_data: true,
+      excluded_fields: ['email', 'password', 'ip_address']
+    }
+  }
+}
+
+function getDefaultCacheSettings() {
+  return {
+    browser_cache: {
+      enabled: true,
+      static_assets_max_age: 86400 * 30, // 30 days
+      html_max_age: 600, // 10 minutes
+      api_max_age: 0,
+      service_worker_enabled: false,
+      offline_mode_enabled: false
+    },
+    server_cache: {
+      enabled: true,
+      provider: 'memory' as const,
+      ttl_seconds: 300,
+      max_size_mb: 128,
+      eviction_policy: 'lru' as const,
+      warm_cache_on_start: false
+    },
+    database_cache: {
+      enabled: true,
+      query_cache_enabled: true,
+      query_cache_size_mb: 64,
+      result_cache_ttl: 300,
+      cached_queries: []
+    },
+    cdn: {
+      enabled: false,
+      provider: 'cloudflare' as const,
+      purge_on_deploy: true,
+      image_optimization: true,
+      auto_webp: true,
+      lazy_loading: true
+    },
+    performance: {
+      minify_assets: true,
+      compress_responses: true,
+      bundle_splitting: true,
+      preload_critical_assets: true,
+      prefetch_links: false,
+      resource_hints: []
+    },
+    web_search_cache: {
+      enabled: true,
+      ttl_hours: 24,
+      max_entries: 1000,
+      cache_perplexity: true,
+      cache_exa: true
+    }
+  }
+}
+
+function getDefaultIntegrationsSettings() {
+  return {
+    email: {
+      provider: 'resend' as const,
+      api_key: '',
+      from_email: 'noreply@dentistry-explained.com',
+      from_name: 'Dentistry Explained',
+      enabled: false,
+      verified: false
+    },
+    payment: {
+      provider: 'stripe' as const,
+      publishable_key: '',
+      secret_key: '',
+      webhook_secret: '',
+      enabled: false,
+      test_mode: true
+    },
+    ai: {
+      litellm_proxy_url: 'https://llm.rbnk.uk',
+      litellm_api_key: '',
+      openai_api_key: '',
+      anthropic_api_key: '',
+      enabled: true
+    },
+    search: {
+      perplexity_api_key: '',
+      perplexity_enabled: false,
+      exa_api_key: '',
+      exa_enabled: false,
+      google_search_api_key: '',
+      google_search_engine_id: '',
+      google_enabled: false
+    },
+    gdc: {
+      api_key: '',
+      api_url: '',
+      enabled: true,
+      mock_mode: true
+    },
+    nhs: {
+      api_key: '',
+      api_url: '',
+      enabled: true,
+      mock_mode: true
+    },
+    slack: {
+      webhook_url: '',
+      enabled: false,
+      channels: {
+        errors: '#errors',
+        alerts: '#alerts',
+        feedback: '#feedback'
+      }
+    },
+    webhooks: {
+      enabled: false,
+      endpoints: []
+    }
+  }
+}
+
+function getDefaultBackupSettings() {
+  return {
+    automatic_backups: {
+      enabled: false,
+      frequency: 'daily' as const,
+      time: '03:00',
+      retention_count: 7,
+      include_uploads: true,
+      compress: true,
+      encrypt: false
+    },
+    backup_destinations: {
+      local: {
+        enabled: true,
+        path: '/var/backups/dentistry'
+      },
+      s3: {
+        enabled: false,
+        bucket: '',
+        region: 'us-east-1',
+        access_key: '',
+        secret_key: ''
+      },
+      supabase: {
+        enabled: false,
+        use_storage: true
+      }
+    },
+    data_retention: {
+      enabled: true,
+      policies: [
+        {
+          type: 'api_logs',
+          retention_days: 30,
+          action: 'delete' as const,
+          enabled: true
+        },
+        {
+          type: 'chat_messages',
+          retention_days: 180,
+          action: 'delete' as const,
+          enabled: true
+        }
+      ]
+    },
+    gdpr: {
+      enabled: true,
+      auto_delete_on_request: false,
+      anonymize_after_days: 730,
+      export_format: 'json' as const,
+      include_in_export: ['profile', 'comments', 'chat_history', 'bookmarks']
+    },
+    disaster_recovery: {
+      enabled: false,
+      test_restore_frequency_days: 30,
+      last_test_date: null,
+      notification_email: ''
+    }
+  }
+}
+
 export function SettingsManager({ settings: initialSettings }: SettingsManagerProps) {
-  const [settings, setSettings] = useState(initialSettings)
+  // Ensure all settings have default values
+  const [settings, setSettings] = useState({
+    ...initialSettings,
+    security: initialSettings.security || getDefaultSecuritySettings(),
+    content_moderation: initialSettings.content_moderation || getDefaultModerationSettings(),
+    analytics: initialSettings.analytics || getDefaultAnalyticsSettings(),
+    cache: initialSettings.cache || getDefaultCacheSettings(),
+    integrations: initialSettings.integrations || getDefaultIntegrationsSettings(),
+    backup: initialSettings.backup || getDefaultBackupSettings()
+  })
   const [saving, setSaving] = useState(false)
   const [newKeyword, setNewKeyword] = useState('')
+  const [activeTab, setActiveTab] = useState('general')
+  
+  // Tab descriptions for better UX
+  const tabDescriptions: Record<string, string> = {
+    general: 'Basic site information and configuration',
+    seo: 'Search engine optimization and metadata',
+    features: 'Enable or disable platform features',
+    email: 'Email service configuration',
+    ai: 'AI model and behavior settings',
+    security: 'Security policies and access control',
+    moderation: 'Content moderation and user management',
+    analytics: 'Tracking and performance monitoring',
+    cache: 'Performance and caching configuration',
+    integrations: 'Third-party service connections',
+    backup: 'Backup and data retention policies'
+  }
   
   const updateSettings = (section: keyof SiteSettings, field: string, value: any) => {
+    // Validate specific fields
+    if (section === 'site' && field === 'url') {
+      // Validate URL
+      try {
+        new URL(value)
+      } catch {
+        toast({
+          title: 'Invalid URL',
+          description: 'Please enter a valid URL starting with http:// or https://',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
+    
+    if (section === 'site' && field === 'contact_email' || 
+        section === 'email' && (field === 'from_email' || field === 'reply_to')) {
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(value)) {
+        toast({
+          title: 'Invalid Email',
+          description: 'Please enter a valid email address',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
+    
+    if (section === 'features' && field === 'chat_rate_limit') {
+      // Validate rate limit
+      if (value < 1 || value > 1000) {
+        toast({
+          title: 'Invalid Rate Limit',
+          description: 'Rate limit must be between 1 and 1000',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
+    
+    if (section === 'ai' && field === 'temperature') {
+      // Validate temperature
+      if (value < 0 || value > 2) {
+        toast({
+          title: 'Invalid Temperature',
+          description: 'Temperature must be between 0 and 2',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
+    
+    if (section === 'ai' && field === 'max_tokens') {
+      // Validate max tokens
+      if (value < 100 || value > 32000) {
+        toast({
+          title: 'Invalid Max Tokens',
+          description: 'Max tokens must be between 100 and 32000',
+          variant: 'destructive'
+        })
+        return
+      }
+    }
+    
     setSettings(prev => ({
       ...prev,
       [section]: {
@@ -160,6 +627,31 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
             max_tokens: settings.ai.max_tokens,
             system_prompt: settings.ai.system_prompt
           }
+        },
+        // Advanced settings
+        {
+          key: 'security_config',
+          value: settings.security
+        },
+        {
+          key: 'moderation_config',
+          value: settings.content_moderation
+        },
+        {
+          key: 'analytics_config',
+          value: settings.analytics
+        },
+        {
+          key: 'cache_config',
+          value: settings.cache
+        },
+        {
+          key: 'integrations_config',
+          value: settings.integrations
+        },
+        {
+          key: 'backup_config',
+          value: settings.backup
         }
       ]
       
@@ -182,8 +674,8 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
       }
       
       toast({
-        title: 'Settings saved',
-        description: 'Your changes have been saved successfully',
+        title: '✅ Settings saved',
+        description: `Successfully updated ${result.results?.length || settingsToSave.length} settings`,
       })
     } catch (error) {
       toast({
@@ -198,14 +690,80 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
   
   return (
     <div className="space-y-6">
-      <Tabs defaultValue="general" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="seo">SEO</TabsTrigger>
-          <TabsTrigger value="features">Features</TabsTrigger>
-          <TabsTrigger value="email">Email</TabsTrigger>
-          <TabsTrigger value="ai">AI Settings</TabsTrigger>
-        </TabsList>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Settings</h1>
+          <p className="text-muted-foreground mt-1">
+            {tabDescriptions[activeTab] || 'Configure your platform settings'}
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="font-mono text-xs">
+            Last saved: {new Date().toLocaleTimeString()}
+          </Badge>
+        </div>
+      </div>
+      
+      <Tabs defaultValue="general" className="space-y-6" onValueChange={setActiveTab}>
+        <div className="space-y-4">
+          {/* Main Settings Tabs */}
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">Core Settings</h3>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 h-auto p-1">
+              <TabsTrigger value="general" className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Globe className="h-4 w-4" />
+                <span className="hidden sm:inline">General</span>
+              </TabsTrigger>
+              <TabsTrigger value="seo" className="flex items-center gap-2">
+                <Search className="h-4 w-4" />
+                <span className="hidden sm:inline">SEO</span>
+              </TabsTrigger>
+              <TabsTrigger value="features" className="flex items-center gap-2">
+                <ToggleLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Features</span>
+              </TabsTrigger>
+              <TabsTrigger value="email" className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <span className="hidden sm:inline">Email</span>
+              </TabsTrigger>
+              <TabsTrigger value="ai" className="flex items-center gap-2">
+                <Bot className="h-4 w-4" />
+                <span className="hidden sm:inline">AI</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
+          
+          {/* Advanced Settings Tabs */}
+          <div>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">Advanced Settings</h3>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto p-1">
+              <TabsTrigger value="security" className="flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                <span className="hidden sm:inline">Security</span>
+              </TabsTrigger>
+              <TabsTrigger value="moderation" className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                <span className="hidden sm:inline">Moderation</span>
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-2">
+                <BarChart className="h-4 w-4" />
+                <span className="hidden sm:inline">Analytics</span>
+              </TabsTrigger>
+              <TabsTrigger value="cache" className="flex items-center gap-2">
+                <Zap className="h-4 w-4" />
+                <span className="hidden sm:inline">Cache</span>
+              </TabsTrigger>
+              <TabsTrigger value="integrations" className="flex items-center gap-2">
+                <Plug2 className="h-4 w-4" />
+                <span className="hidden sm:inline">Integrations</span>
+              </TabsTrigger>
+              <TabsTrigger value="backup" className="flex items-center gap-2">
+                <Archive className="h-4 w-4" />
+                <span className="hidden sm:inline">Backup</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </div>
         
         <TabsContent value="general" className="space-y-4">
           <Card>
@@ -441,12 +999,147 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
             onUpdate={(field, value) => updateSettings('ai', field, value)}
           />
         </TabsContent>
+        
+        <TabsContent value="security" className="space-y-4">
+          <SecuritySettings
+            settings={settings.security}
+            onUpdate={(section, field, value) => {
+              const currentSecurity = settings.security || getDefaultSecuritySettings()
+              const currentSection = currentSecurity[section as keyof typeof currentSecurity] || {}
+              setSettings(prev => ({
+                ...prev,
+                security: {
+                  ...currentSecurity,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
+        
+        <TabsContent value="moderation" className="space-y-4">
+          <ContentModerationSettings
+            settings={settings.content_moderation}
+            onUpdate={(section, field, value) => {
+              const currentModeration = settings.content_moderation || getDefaultModerationSettings()
+              const currentSection = currentModeration[section as keyof typeof currentModeration] || {}
+              setSettings(prev => ({
+                ...prev,
+                content_moderation: {
+                  ...currentModeration,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
+        
+        <TabsContent value="analytics" className="space-y-4">
+          <AnalyticsSettings
+            settings={settings.analytics}
+            onUpdate={(section, field, value) => {
+              const currentAnalytics = settings.analytics || getDefaultAnalyticsSettings()
+              const currentSection = currentAnalytics[section as keyof typeof currentAnalytics] || {}
+              setSettings(prev => ({
+                ...prev,
+                analytics: {
+                  ...currentAnalytics,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
+        
+        <TabsContent value="cache" className="space-y-4">
+          <CacheSettings
+            settings={settings.cache}
+            onUpdate={(section, field, value) => {
+              const currentCache = settings.cache || getDefaultCacheSettings()
+              const currentSection = currentCache[section as keyof typeof currentCache] || {}
+              setSettings(prev => ({
+                ...prev,
+                cache: {
+                  ...currentCache,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
+        
+        <TabsContent value="integrations" className="space-y-4">
+          <IntegrationsSettings
+            settings={settings.integrations}
+            onUpdate={(section, field, value) => {
+              const currentIntegrations = settings.integrations || getDefaultIntegrationsSettings()
+              const currentSection = currentIntegrations[section as keyof typeof currentIntegrations] || {}
+              setSettings(prev => ({
+                ...prev,
+                integrations: {
+                  ...currentIntegrations,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
+        
+        <TabsContent value="backup" className="space-y-4">
+          <BackupSettings
+            settings={settings.backup}
+            onUpdate={(section, field, value) => {
+              const currentBackup = settings.backup || getDefaultBackupSettings()
+              const currentSection = currentBackup[section as keyof typeof currentBackup] || {}
+              setSettings(prev => ({
+                ...prev,
+                backup: {
+                  ...currentBackup,
+                  [section]: {
+                    ...currentSection,
+                    [field]: value
+                  }
+                }
+              }))
+            }}
+          />
+        </TabsContent>
       </Tabs>
       
-      <div className="flex justify-end">
-        <Button onClick={handleSave} disabled={saving}>
-          <Save className="h-4 w-4 mr-2" />
-          {saving ? 'Saving...' : 'Save Settings'}
+      {/* Floating save button */}
+      <div className="fixed bottom-6 right-6 z-10">
+        <Button 
+          onClick={handleSave} 
+          disabled={saving}
+          size="lg"
+          className="shadow-lg"
+        >
+          {saving ? (
+            <>
+              <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <Save className="h-4 w-4 mr-2" />
+              Save All Settings
+            </>
+          )}
         </Button>
       </div>
     </div>

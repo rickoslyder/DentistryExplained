@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { z } from 'zod'
 import { ApiErrors } from '@/lib/api-errors'
+import { cacheInvalidator } from '@/lib/cache'
 
 const updateTermSchema = z.object({
   term: z.string().min(1).optional(),
@@ -89,6 +90,9 @@ export async function PATCH(
       return ApiErrors.databaseError(error)
     }
     
+    // Invalidate glossary cache
+    await cacheInvalidator.invalidateByTags(['glossary'])
+    
     return NextResponse.json({ term: data })
     
   } catch (error) {
@@ -122,6 +126,9 @@ export async function DELETE(
     if (error) {
       return ApiErrors.databaseError(error)
     }
+    
+    // Invalidate glossary cache
+    await cacheInvalidator.invalidateByTags(['glossary'])
     
     return NextResponse.json({ success: true })
     

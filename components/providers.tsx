@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { GlossaryProvider } from "@/contexts/glossary-provider"
 import { ConsentProvider } from "@/components/consent/consent-provider"
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider"
+import { PostHogProvider } from "@/components/analytics/posthog-provider"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -35,9 +36,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         <ConsentProvider>
           <AnalyticsProvider>
-            <GlossaryProvider>
-              {children}
-            </GlossaryProvider>
+            <PostHogProvider>
+              <GlossaryProvider>
+                {children}
+              </GlossaryProvider>
+            </PostHogProvider>
           </AnalyticsProvider>
         </ConsentProvider>
       </ThemeProvider>

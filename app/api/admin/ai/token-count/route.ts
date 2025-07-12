@@ -29,41 +29,57 @@ export async function POST(request: NextRequest) {
       return new NextResponse('Text is required', { status: 400 })
     }
     
-    // Use LiteLLM's token counter utility
-    const response = await fetch(`${process.env.LITELLM_PROXY_URL}/utils/token_counter`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text,
-        model: model || 'gpt-3.5-turbo', // Default model for counting
-      }),
-    })
-    
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('LiteLLM token count error:', errorText)
-      throw new Error(`Failed to count tokens: ${response.statusText}`)
+    // Create a proper request format for LiteLLM
+    const requestBody = {
+      messages: [{ role: 'user', content: text }],
+      model: model || 'gpt-3.5-turbo'
     }
     
-    const data = await response.json()
+    // Try LiteLLM's token counter utility
+    let tokenCount = 0
+    let counted = false
+    
+    try {
+      const response = await fetch(`${process.env.LITELLM_PROXY_URL}/utils/token_counter`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        tokenCount = data.input_tokens || data.token_count || data.count || 0
+        counted = true
+      }
+    } catch (error) {
+      console.log('Could not count tokens with LiteLLM:', error)
+    }
+    
+    // Fallback: Use rough estimation if LiteLLM fails
+    if (!counted) {
+      // Rough estimation: ~4 characters per token for English text
+      tokenCount = Math.ceil(text.length / 4)
+    }
     
     // Calculate approximate costs
     const costs = calculateTokenCosts(model || 'gpt-3.5-turbo', { 
-      prompt_tokens: data.count || 0,
+      prompt_tokens: tokenCount,
       completion_tokens: 0,
     })
     
     return NextResponse.json({
-      tokenCount: data.count || 0,
+      tokenCount,
       model: model || 'gpt-3.5-turbo',
       approximateCost: costs.inputCost,
       // Add character count for reference
       characterCount: text.length,
       // Rough estimate of tokens to characters ratio
-      ratio: text.length > 0 ? (data.count || 0) / text.length : 0,
+      ratio: text.length > 0 ? tokenCount / text.length : 0,
+      // Indicate if this was an estimation
+      estimated: !counted,
     })
   } catch (error) {
     console.error('Error counting tokens:', error)

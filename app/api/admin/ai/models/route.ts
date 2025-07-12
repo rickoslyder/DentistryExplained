@@ -37,10 +37,13 @@ export async function GET() {
     const data = await response.json()
     
     // Transform the response to include additional metadata
-    const models = data.data.map((model: any) => ({
+    const allModels = data.data.map((model: any) => ({
       id: model.id,
       name: model.id,
-      provider: model.id.split('/')[0] || 'unknown',
+      provider: model.id.split('/')[0] || model.id.includes('gpt') ? 'openai' : 
+                model.id.includes('claude') ? 'anthropic' : 
+                model.id.includes('gemini') ? 'google' : 
+                model.id.includes('o4') || model.id.includes('o3') || model.id.includes('o1') ? 'openai' : 'unknown',
       created: model.created,
       // Add friendly display names
       displayName: getModelDisplayName(model.id),
@@ -48,9 +51,17 @@ export async function GET() {
       capabilities: getModelCapabilities(model.id),
     }))
     
+    // Remove duplicates by id
+    const uniqueModels = allModels.reduce((acc: any[], model: any) => {
+      if (!acc.find(m => m.id === model.id)) {
+        acc.push(model)
+      }
+      return acc
+    }, [])
+    
     return NextResponse.json({
-      models,
-      total: models.length,
+      models: uniqueModels,
+      total: uniqueModels.length,
     })
   } catch (error) {
     console.error('Error fetching models:', error)

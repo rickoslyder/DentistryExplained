@@ -5,8 +5,18 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:log": "./scripts/dev-with-logs.sh",
+    "dev:log:advanced": "./scripts/dev-advanced-logs.sh",
+    "dev:background": "./scripts/dev-background.sh",
+    "dev:stop": "./scripts/dev-stop.sh",
+    "dev:logs:tail": "tail -f logs/dev/dev_background.log",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "monitor:start": "./scripts/start-monitor.sh",
+    "monitor:stop": "./scripts/stop-monitor.sh",
+    "monitor:logs": "./scripts/view-logs.sh",
+    "monitor:logs:follow": "./scripts/view-logs.sh -f",
+    "monitor:logs:errors": "./scripts/view-logs.sh -e"
   },
   "dependencies": {
     "@clerk/nextjs": "latest",
@@ -78,6 +88,7 @@
     "embla-carousel-react": "8.5.1",
     "gray-matter": "^4.0.3",
     "input-otp": "1.4.1",
+    "isomorphic-dompurify": "^2.26.0",
     "jose": "^6.0.11",
     "jsdom": "^26.1.0",
     "json2csv": "^6.0.0-alpha.2",
@@ -90,6 +101,7 @@
     "next-themes": "^0.4.4",
     "pdf-lib": "^1.17.1",
     "pg": "^8.16.3",
+    "posthog-js": "^1.257.0",
     "react": "^19.1.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^19.1.0",

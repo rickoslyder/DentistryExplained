@@ -5,6 +5,7 @@ import { withOptionalAuth, withRateLimit, compose } from '@/lib/api-middleware'
 import { rateLimiters } from '@/lib/rate-limiter'
 import { z } from 'zod'
 import { serverAnalytics } from '@/lib/analytics-server'
+import { cacheManager, createCacheKey } from '@/lib/cache'
 
 // Validation schema for search parameters
 const searchParamsSchema = z.object({
@@ -46,17 +47,41 @@ const searchHandler = compose(
     
     const supabase = context.supabase!
     
-    // Use our PostgreSQL full-text search function
-    const { data: searchResults, error: searchError } = await supabase
-      .rpc('search_content', {
-        search_query: query,
-        search_category: category && category !== 'all' ? category : null,
-        result_limit: limit,
-        result_offset: offset
-      })
+    // Create cache key for this search
+    const cacheKey = createCacheKey('search', query.toLowerCase(), category || 'all', limit, offset)
+    const CACHE_TTL = 300 // 5 minutes for search results
     
-    if (searchError) {
-      return ApiErrors.fromDatabaseError(searchError, 'search_content', requestId)
+    // Try to get cached results
+    const cached = await cacheManager.get(cacheKey)
+    let searchResults
+    let fromCache = false
+    
+    if (cached) {
+      searchResults = cached
+      fromCache = true
+    } else {
+      // Use our PostgreSQL full-text search function
+      const { data, error: searchError } = await supabase
+        .rpc('search_content', {
+          search_query: query,
+          search_category: category && category !== 'all' ? category : null,
+          result_limit: limit,
+          result_offset: offset
+        })
+      
+      if (searchError) {
+        return ApiErrors.fromDatabaseError(searchError, 'search_content', requestId)
+      }
+      
+      searchResults = data
+      
+      // Cache the results if we got any
+      if (searchResults && searchResults.length > 0) {
+        await cacheManager.set(cacheKey, searchResults, {
+          ttl: CACHE_TTL,
+          tags: ['search', `search:${category || 'all'}`]
+        })
+      }
     }
     
     // Get search suggestions for autocomplete
@@ -76,8 +101,8 @@ const searchHandler = compose(
       console.error(`[Search ${requestId}] Suggestions error:`, error)
     }
     
-    // Track the search query for analytics (non-blocking)
-    if (context.userId) {
+    // Track the search query for analytics (non-blocking) - only if not from cache
+    if (!fromCache && context.userId) {
       supabase
         .from('search_queries')
         .insert({

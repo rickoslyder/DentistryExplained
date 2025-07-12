@@ -36,6 +36,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/chat/(.*)",
   "/api/articles/(.*)/views",
   "/api/article-views",
+  "/api/analytics/(.*)",
   "/api/webhooks/(.*)",
   "/api/auth/(.*)",
   "/sign-in(.*)",

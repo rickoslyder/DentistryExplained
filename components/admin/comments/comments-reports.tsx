@@ -40,7 +40,7 @@ import {
   FileText
 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
-import { createClientSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 
 interface CommentReport {
   id: string
@@ -82,34 +82,40 @@ export function CommentsReports() {
   const [statusFilter, setStatusFilter] = useState<string>('pending')
   const [selectedReport, setSelectedReport] = useState<CommentReport | null>(null)
   const { toast } = useToast()
-  const supabase = createClientSupabaseClient()
 
   useEffect(() => {
     fetchReports()
 
-    // Set up real-time subscription
-    const channel = supabase
-      .channel('comment-reports-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'comment_reports'
-        },
-        () => {
-          // Refresh reports when any change occurs
-          fetchReports()
-        }
-      )
-      .subscribe()
+    // Set up real-time subscription if supabase is available
+    if (supabase) {
+      const channel = supabase
+        .channel('comment-reports-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'comment_reports'
+          },
+          () => {
+            // Refresh reports when any change occurs
+            fetchReports()
+          }
+        )
+        .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
+      return () => {
+        supabase.removeChannel(channel)
+      }
     }
   }, [statusFilter])
 
   const fetchReports = async () => {
+    if (!supabase) {
+      setLoading(false)
+      return
+    }
+    
     setLoading(true)
     try {
       let query = supabase
@@ -158,6 +164,8 @@ export function CommentsReports() {
   }
 
   const updateReportStatus = async (reportId: string, status: string, commentAction?: string) => {
+    if (!supabase) return
+    
     try {
       const { data: { user } } = await supabase.auth.getUser()
       

@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useRouter } from "next/navigation"
 import { useDebouncedCallback } from "use-debounce"
-import { analytics } from "@/lib/analytics-enhanced"
+import { useAnalytics } from "@/hooks/use-analytics"
 
 interface SearchDialogProps {
   open: boolean
@@ -38,6 +38,7 @@ interface TrendingSearch {
 
 export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
   const router = useRouter()
+  const { trackSearch, trackClick } = useAnalytics()
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<SearchResult[]>([])
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([])
@@ -83,8 +84,8 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         setResults(data.results || [])
         setSuggestions(data.suggestions || [])
         
-        // Track search with analytics
-        analytics.trackSearch(searchQuery, data.results?.length || 0)
+        // Track search with unified analytics
+        trackSearch(searchQuery, data.results?.length || 0, 'site')
       } else {
         console.error('Search failed')
         setResults([])

@@ -20,7 +20,8 @@ import {
   Mail,
   BookOpen,
   UserCheck,
-  Wrench
+  Wrench,
+  ShieldCheck
 } from 'lucide-react'
 
 const navigation = [
@@ -31,6 +32,7 @@ const navigation = [
   { name: 'Glossary', href: '/admin/glossary', icon: BookOpen },
   { name: 'Media', href: '/admin/media', icon: Image },
   { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
+  { name: 'Moderation', href: '/admin/moderation', icon: ShieldCheck },
   { name: 'Users', href: '/admin/users', icon: Users },
   { name: 'Verifications', href: '/admin/verifications', icon: UserCheck },
   { name: 'Email Templates', href: '/admin/email-templates', icon: Mail },

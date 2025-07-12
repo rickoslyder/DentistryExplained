@@ -29,44 +29,95 @@ export async function GET(request: NextRequest) {
       return new NextResponse('Model ID is required', { status: 400 })
     }
     
-    // Fetch model info from LiteLLM proxy
-    const response = await fetch(`${process.env.LITELLM_PROXY_URL}/v1/model/info`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ model: modelId }),
-    })
-    
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('LiteLLM model info error:', errorText)
-      throw new Error(`Failed to fetch model info: ${response.statusText}`)
+    // Try to fetch model info from LiteLLM proxy
+    let modelInfo = null
+    try {
+      const response = await fetch(`${process.env.LITELLM_PROXY_URL}/model/info`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        // Find the specific model in the response
+        if (data.data && Array.isArray(data.data)) {
+          const modelData = data.data.find((m: any) => 
+            m.model_name === modelId || 
+            m.litellm_params?.model === modelId ||
+            m.model_info?.id === modelId
+          )
+          if (modelData) {
+            modelInfo = modelData
+          }
+        }
+      }
+    } catch (error) {
+      console.log('Could not fetch model info from LiteLLM:', error)
     }
     
-    const data = await response.json()
+    // If we couldn't get model info, provide basic defaults
+    if (!modelInfo) {
+      modelInfo = {
+        model_name: modelId,
+        litellm_params: {
+          model: modelId,
+        },
+        model_info: {
+          id: modelId,
+          mode: 'chat',
+          supports_function_calling: modelId.includes('gpt') || modelId.includes('claude'),
+          supports_parallel_function_calling: modelId.includes('gpt-4'),
+          supports_vision: modelId.includes('vision') || modelId.includes('gpt-4o'),
+        }
+      }
+    }
     
-    // Also check supported OpenAI params
-    const paramsResponse = await fetch(`${process.env.LITELLM_PROXY_URL}/utils/supported_openai_params`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ model: modelId }),
-    })
-    
+    // Try to check supported OpenAI params
     let supportedParams = {}
-    if (paramsResponse.ok) {
-      supportedParams = await paramsResponse.json()
+    try {
+      const paramsResponse = await fetch(`${process.env.LITELLM_PROXY_URL}/utils/supported_openai_params`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.LITELLM_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ model: modelId }),
+      })
+      
+      if (paramsResponse.ok) {
+        supportedParams = await paramsResponse.json()
+      }
+    } catch (error) {
+      console.log('Could not fetch supported params:', error)
+      // Provide reasonable defaults
+      supportedParams = {
+        temperature: true,
+        top_p: true,
+        max_tokens: true,
+        stream: true,
+        frequency_penalty: modelId.includes('gpt'),
+        presence_penalty: modelId.includes('gpt'),
+        n: true,
+        stop: true,
+      }
     }
     
     return NextResponse.json({
-      modelInfo: data,
+      modelInfo,
       supportedParams,
       // Add usage recommendations
       recommendations: getModelRecommendations(modelId),
+      // Add model capabilities based on ID
+      capabilities: {
+        streaming: true,
+        functionCalling: modelId.includes('gpt') || modelId.includes('claude'),
+        vision: modelId.includes('vision') || modelId.includes('gpt-4o'),
+        reasoning: modelId.includes('o1') || modelId.includes('o4'),
+        contextWindow: getContextWindow(modelId),
+      }
     })
   } catch (error) {
     console.error('Error fetching model info:', error)
@@ -150,6 +201,23 @@ Key guidelines:
     maxTokens: 1500,
     systemPrompt: basePrompt,
   }
+}
+
+function getContextWindow(modelId: string): number {
+  const contextWindows: Record<string, number> = {
+    'o4-mini': 100000,
+    'gpt-4o': 128000,
+    'gpt-4o-mini': 128000,
+    'gpt-4-turbo': 128000,
+    'gpt-4': 8192,
+    'gpt-3.5-turbo': 16385,
+    'claude-3-opus': 200000,
+    'claude-3-sonnet': 200000,
+    'claude-3-haiku': 200000,
+    'gemini-pro': 32768,
+  }
+  
+  return contextWindows[modelId] || 4096
 }
 
 // Handle OPTIONS requests for CORS

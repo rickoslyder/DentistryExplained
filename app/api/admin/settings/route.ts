@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { createServerSupabaseClient } from '@/lib/supabase-auth'
 import { logActivity, ActivityMetadata } from '@/lib/activity-logger'
+import { clearSettingsCache } from '@/lib/settings'
 import { z } from 'zod'
 
 // Schema for updating settings
@@ -148,6 +149,9 @@ export async function PUT(request: NextRequest) {
       metadata: ActivityMetadata.settingsUpdate(key, value)
     })
     
+    // Clear settings cache after update
+    clearSettingsCache()
+    
     return NextResponse.json({ 
       success: true,
       setting: updatedSetting 
@@ -238,6 +242,11 @@ export async function POST(request: NextRequest) {
         keys: settings.map(s => s.key)
       }
     })
+    
+    // Clear settings cache after batch update
+    if (results.length > 0) {
+      clearSettingsCache()
+    }
     
     return NextResponse.json({
       results,

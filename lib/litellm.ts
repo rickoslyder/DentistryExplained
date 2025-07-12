@@ -4,6 +4,7 @@ import { dentalKnowledgeBase, detectEmergency, categorizeQuery, generateSystemPr
 import { webSearch, searchDentalResearch, searchNHSInfo, searchDentalNews, type SearchResult } from "@/lib/web-search"
 import { processCitations } from "@/lib/citation-processor"
 import type { Citation } from "@/lib/citation-processor"
+import { getSettings } from "@/lib/settings"
 
 interface LiteLLMResponse {
   choices: Array<{
@@ -61,8 +62,18 @@ export interface UserContext {
 }
 
 // Helper function to determine if a query needs web search
-function shouldPerformWebSearch(message: string, webSearchEnabled?: boolean): boolean {
+async function shouldPerformWebSearch(message: string, webSearchEnabled?: boolean): Promise<boolean> {
+  // Check user preference first
   if (!webSearchEnabled) return false
+  
+  // Check global web search setting (only at runtime, not during build)
+  try {
+    const settings = await getSettings()
+    if (!settings.web_search_enabled) return false
+  } catch (error) {
+    // If settings can't be loaded (e.g., during build), default to checking user preference only
+    console.warn('Could not load settings for web search check:', error)
+  }
   
   const lowerMessage = message.toLowerCase()
   const webSearchTriggers = [
@@ -176,7 +187,22 @@ export async function generateAIResponse(
     const queryCategory = categorizeQuery(message)
     
     // Build conversation history with dynamic system prompt
-    const systemPrompt = generateSystemPrompt(userContext)
+    let settings
+    try {
+      settings = await getSettings()
+    } catch (error) {
+      console.warn('Could not load settings for AI response:', error)
+      // Use defaults if settings can't be loaded
+      settings = {
+        ai_system_prompt: null,
+        ai_model: 'o4-mini',
+        ai_temperature: 0.7,
+        ai_max_tokens: 4096
+      }
+    }
+    
+    // Use custom system prompt if available, otherwise use generated one
+    const systemPrompt = settings.ai_system_prompt || generateSystemPrompt(userContext)
     const messages = [
       { role: "system", content: systemPrompt },
     ]
@@ -233,7 +259,7 @@ Provide additional context, examples, and explanations to help the user understa
     let searchError: string | null = null
     let searchMetadata: AIResponseWithSearch['searchResults'] | undefined
     
-    if (shouldPerformWebSearch(message, userContext?.webSearchEnabled)) {
+    if (await shouldPerformWebSearch(message, userContext?.webSearchEnabled)) {
       const searchStartTime = Date.now()
       try {
         const searchResponse = await performContextualWebSearch(message, userContext?.webSearchType, sessionInfo)
@@ -289,9 +315,14 @@ Provide additional context, examples, and explanations to help the user understa
 
     // Add current message
     messages.push({ role: "user", content: message })
-
-    // Get model configuration
-    const modelConfig = getModelConfig()
+    
+    // Override model config with settings
+    const modelConfig = {
+      model: settings.ai_model,
+      temperature: settings.ai_temperature,
+      max_tokens: settings.ai_max_tokens,
+      stream,
+    }
     
     // Make API request
     const response = await fetchWithRetry(
@@ -305,7 +336,6 @@ Provide additional context, examples, and explanations to help the user understa
         body: JSON.stringify({
           ...modelConfig,
           messages,
-          stream,
         }),
       }
     )
