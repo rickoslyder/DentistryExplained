@@ -1,6 +1,6 @@
 # Deployment Guide for Dentistry Explained
 
-**Current Status**: Live at https://dentistry-explained.vercel.app/ (as of January 15, 2025)
+**Current Status**: Live at https://dentistry-explained.vercel.app/ (as of July 15, 2025)
 
 ## Vercel Deployment
 

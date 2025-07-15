@@ -30,7 +30,7 @@ Migrations need to be run manually in the Supabase dashboard:
 3. Copy and paste the migration files in order
 4. Click "Run"
 
-## Migration Files (as of January 15, 2025)
+## Migration Files (as of July 15, 2025)
 
 ### Core Infrastructure
 - `20250703234645_extensions.sql` - Enables required PostgreSQL extensions
@@ -95,4 +95,4 @@ Migrations need to be run manually in the Supabase dashboard:
 - Migrations should be run in order (by timestamp)
 - The `web_search_cache` table is missing and needs a migration
 - Total migrations: 35 files covering all major features
-- Latest migration: January 14, 2025
+- Latest migration: July 14, 2025
