@@ -22,7 +22,7 @@ export default function HomePage() {
             {/* Hero Content */}
             <div className="text-center lg:text-left">
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                The UK's Trusted Source for
+                Your Trusted Source for
                 <span className="text-primary block">Dental Education</span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl">
